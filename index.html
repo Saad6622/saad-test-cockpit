@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Saad's Trading Cockpit</title>
-<noscript><meta http-equiv="refresh" content="0; url=https://845ebd8596b450.lhr.life/home"></noscript>
+<noscript><meta http-equiv="refresh" content="0; url=https://5e41389a950e7b.lhr.life/home"></noscript>
 <style>
 body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;background:#0f172a;color:#e2e8f0;margin:0}
 main{text-align:center;padding:2rem;max-width:30rem}
@@ -24,11 +24,11 @@ button:active{transform:scale(.97)}
 <h1 id="headline">Connecting to your cockpit…</h1>
 <p id="detail" class="small">Finding the fastest route — this usually takes a few seconds.</p>
 <p><button id="retry" type="button">Try again now</button></p>
-<p class="small">If this keeps spinning, you can <a id="direct" href="https://845ebd8596b450.lhr.life/home">open the cockpit directly</a>.</p>
+<p class="small">If this keeps spinning, you can <a id="direct" href="https://5e41389a950e7b.lhr.life/home">open the cockpit directly</a>.</p>
 </main>
 <script>
 (function(){
-var LANDING="https://845ebd8596b450.lhr.life/home";
+var LANDING="https://5e41389a950e7b.lhr.life/home";
 var headline=document.getElementById('headline');
 var detail=document.getElementById('detail');
 var direct=document.getElementById('direct');
@@ -45,11 +45,12 @@ function load(){
       direct.href=target;
       var base=target.slice(-5)==='/home'?target.slice(0,-5):target;
       say('Checking the live link…','Making sure the cockpit is reachable before opening it.');
-      // Probe the cockpit's real landing page and require the dashboard marker
-      // ('mode-switch') so a wrong-content tunnel mapping can never redirect Saad.
+      // Probe the cockpit's real landing page and require a cockpit identity
+      // marker ('TV-Exec' shell or Night Desk 'bottomnav') so a wrong-content
+      // tunnel mapping can never redirect Saad.
       return fetch(base+'/',{mode:'cors',cache:'no-store'})
         .then(function(r){if(!r.ok){throw new Error('home '+r.status);}return r.text();})
-        .then(function(t){if(t.indexOf('mode-switch')<0){throw new Error('wrong content');}return target;});
+        .then(function(t){if(t.indexOf('TV-Exec')<0&&t.indexOf('bottomnav')<0){throw new Error('wrong content');}return target;});
     })
     .then(function(target){
       say('Connected.','Opening your cockpit now.');
