@@ -45,7 +45,7 @@ function load(){
       direct.href=target;
       var base=target.slice(-5)==='/home'?target.slice(0,-5):target;
       say('Checking the live link…','Making sure the cockpit is reachable before opening it.');
-      return fetch(base+'/healthz',{mode:'no-cors'}).then(function(){return target;});
+      return fetch(base+'/healthz',{mode:'cors',cache:'no-store'}).then(function(r){if(!r.ok){throw new Error('health '+r.status);}return target;});
     })
     .then(function(target){
       say('Connected.','Opening your cockpit now.');
