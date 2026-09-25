@@ -43,16 +43,11 @@ function load(){
     .then(function(s){
       var target=(s&&s.url)?s.url:LANDING;
       direct.href=target;
-      var base=target.slice(-5)==='/home'?target.slice(0,-5):target;
-      say('Checking the live link…','Making sure the cockpit is reachable before opening it.');
-      // Probe the cockpit's real landing page and require a cockpit identity
-      // marker ('TV-Exec' shell or Night Desk 'bottomnav') so a wrong-content
-      // tunnel mapping can never redirect Saad.
-      return fetch(base+'/',{mode:'cors',cache:'no-store'})
-        .then(function(r){if(!r.ok){throw new Error('home '+r.status);}return r.text();})
-        .then(function(t){if(t.indexOf('TV-Exec')<0&&t.indexOf('bottomnav')<0){throw new Error('wrong content');}return target;});
-    })
-    .then(function(target){
+      // Redirect straight to the published link. keepalive.sh already
+      // content-verifies the tunnel (TV-Exec / bottomnav markers) before it
+      // ever publishes a URL here; an in-page CORS probe can never pass
+      // because the tunnel sends no Access-Control-Allow-Origin header,
+      // which trapped the page on the spinner forever (Saad, 2026-09-25).
       say('Connected.','Opening your cockpit now.');
       window.location.replace(target);
     })
