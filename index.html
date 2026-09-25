@@ -42,13 +42,26 @@ var headline=document.getElementById('headline');
 var detail=document.getElementById('detail');
 var direct=document.getElementById('direct');
 var retry=document.getElementById('retry');
+// Retry cadence: quick first attempts, then a calm 30s rhythm. A tunnel
+// rotation takes ~1 min for the Pages rebuild, so the fresh link lands
+// within a couple of tries without hammering the server.
+var DELAYS=[3000,8000,20000];
+var STEADY=30000;
+var attempt=0;
 var timer=null;
 function say(h,d){headline.textContent=h;detail.textContent=d;}
+function schedule(){
+  if(timer){clearTimeout(timer);}  // harden: never stack timers
+  var wait=attempt<DELAYS.length?DELAYS[attempt]:STEADY;
+  attempt++;
+  timer=setTimeout(load,wait);
+}
 function load(){
-  say('Connecting to your cockpit…','Finding the fastest route — this usually takes a few seconds.');
+  // First attempt shows "Connecting…"; once a retry is in flight the
+  // calmer "Reconnecting…" stays put instead of flickering back.
+  if(attempt===0){say('Connecting to your cockpit…','Finding the fastest route — this usually takes a few seconds.');}
   fetch('status.json?t='+Date.now(),{cache:'no-store'})
-    .then(function(r){if(!r.ok){throw new Error('status '+r.status);}return r.json();})
-    .catch(function(){say('Refreshing the link…','The latest link could not be loaded yet. Retrying automatically.');throw 'nostatus';})
+    .then(function(r){if(!r.ok){throw 0;}return r.json();})
     .then(function(s){
       var target=(s&&s.url)?s.url:LANDING;
       direct.href=target;
@@ -60,13 +73,16 @@ function load(){
       say('Connected.','Opening your cockpit now.');
       window.location.replace(target);
     })
-    .catch(function(e){
-      if(e!=='nostatus'){say('Still connecting…','The cockpit link is being refreshed. Retrying automatically.');}
+    .catch(function(){
+      // Calm, honest status — no error codes, no "connection lost" language.
+      // schedule() keeps retrying on its own; the button and the direct
+      // link below stay as manual fallbacks.
+      say('Reconnecting…','The cockpit link is refreshing. This usually clears in under a minute.');
+      schedule();
     });
 }
-retry.addEventListener('click',function(){if(timer){clearInterval(timer);}load();timer=setInterval(load,4000);});
+retry.addEventListener('click',function(){attempt=0;if(timer){clearTimeout(timer);}load();});
 load();
-timer=setInterval(load,4000);
 })();
 </script>
 </body>
