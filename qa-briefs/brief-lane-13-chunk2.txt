@@ -1,0 +1,603 @@
+QA LANE 13 — CHUNK 2 — cases T-2451–T-2500 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-2451 · Trading sessions · Preview names its confirm step explicitly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Open /trading, click "Start trading" to open the preview. Do NOT click "Yes, start". 2. Read what the preview says about confirming.
+
+Expected: The preview makes clear nothing starts until a confirm control is used -- there is no silent auto-start.
+
+---
+
+### T-2452 · Trading sessions · Leftover record card is present and read-only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-30
+
+Steps: 1. Open /trading on a healthy load. 2. Find the "Leftover record" card. 3. Look for any action button on it.
+
+Expected: The card reads "Leftover record -- not a live holding" and offers no trade action -- it is information only.
+
+---
+
+### T-2453 · Trading sessions · Leftover record names the venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-30
+
+Steps: 1. Open /trading. 2. Read the "Leftover record" card.
+
+Expected: The card names Gate.io as the venue (2 contracts / 0.0002 BTC, entry $83,963.00, opened Sep 23, 2026).
+
+---
+
+### T-2454 · Trading sessions · Connection-error card heading when the engine is unreachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. If the "Couldn't reach the trading engine" card ever appears on /trading (e.g. during a tunnel wobble), read it. Do not force this state.
+
+Expected: The card heading reads "Couldn't reach the trading engine" and its text says the start and stop controls cannot load until the connection works, that nothing is broken on the tester's side, and that the page keeps retrying on its own.
+
+---
+
+### T-2455 · Trading sessions · Connection-error card offers Retry now
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. If the "Couldn't reach the trading engine" card appears, look for its action. Do not force this state.
+
+Expected: A "Retry now" button is visible on the card.
+
+---
+
+### T-2456 · Trading sessions · Retry now brings the controls back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. If the "Couldn't reach the trading engine" card appears, wait for the connection to recover, then click "Retry now".
+
+Expected: The start/stop controls return; the error card hides.
+
+---
+
+### T-2457 · Trading sessions · Page retries on its own without Retry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. If the "Couldn't reach the trading engine" card appears, do nothing for one minute and watch.
+
+Expected: The page retries by itself and the error card clears once the engine is reachable again -- no click required.
+
+---
+
+### T-2458 · Trading sessions · Status strip flips while the error card shows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-28
+
+Steps: 1. If the "Couldn't reach the trading engine" card appears, read the status strip.
+
+Expected: The strip reads "not reachable" / "Unknown" while the card is shown, and flips back to reachable when the card clears.
+
+---
+
+### T-2459 · Trading sessions · No dead page: at least one card on every healthy load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Load /trading three times in a row, waiting for "Data freshness" each time. 2. Count the cards each time.
+
+Expected: Every load shows at least one of: the start card, the live session card, the emergency stop card, or the connection-error card. Zero cards with zero explanation never happens.
+
+---
+
+### T-2460 · Trading sessions · No banned words on /trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading. 2. Read the full page text top to bottom.
+
+Expected: The tester scans the full page text for the two words the project's standing UI-copy rule forbids, and finds neither.
+
+---
+
+### T-2461 · Trading sessions · Start card inputs usable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading at 390px width on a healthy load. 2. Tap each money input and type.
+
+Expected: Both inputs accept typing at phone width with no auto-zoom and no overlap.
+
+---
+
+### T-2462 · Trading sessions · Preview readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-29
+
+Steps: 1. At 390px width, open /trading and click "Start trading" to open the preview. Do NOT click "Yes, start". 2. Read the preview, then Go back.
+
+Expected: The preview text fits the phone width; "Go back" is tappable and returns to the start card.
+
+---
+
+### T-2463 · Trading sessions · Live session card shows a stop control when a session runs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-91
+
+Steps: 1. Only if a session is currently live on the TEST setup, open /trading and read the live session card. Never start a session for this case.
+
+Expected: The live session card shows a stop control with its consequence named before any confirm.
+
+---
+
+### T-2464 · Trading sessions · Emergency stop card present on /trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-90
+
+Steps: 1. Open /trading. 2. Look for the emergency stop card.
+
+Expected: The emergency stop card is present and its text names what it stops before any confirm step.
+
+---
+
+### T-2465 · Trading sessions · Emergency stop confirm names the consequence, Cancel is safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-90
+
+Steps: 1. Open /trading. 2. Open the emergency stop confirm step. 3. Read it, then press Cancel.
+
+Expected: The confirm names that it stops everything; pressing Cancel leaves the page exactly as it was -- nothing stops.
+
+---
+
+### T-2466 · Trading sessions · Start card hidden while a session is live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Only if a session is currently live on the TEST setup, open /trading. Never start a session for this case.
+
+Expected: The "Start trading" card is replaced by the live session card -- the page never offers to start a second session on top.
+
+---
+
+### T-2467 · Trading sessions · Session stop names its consequence before acting
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Only if a session is currently live on the TEST setup, open its stop confirm step, read it, then Cancel. Never confirm a stop the tester did not intend.
+
+Expected: The confirm names what stopping does; Cancel leaves the session running exactly as before.
+
+---
+
+### T-2468 · Trading sessions · Start button never starts silently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-29
+
+Steps: 1. Open /trading. 2. Click "Start trading", then "Go back" without touching "Yes, start". 3. Check the status strip.
+
+Expected: The strip still reads "Session quiet" -- clicking Start and going back changed nothing.
+
+---
+
+### T-2469 · Trading sessions · Regression summary: /trading always explains itself
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading on a healthy load, then again during any connection wobble. 2. Compare.
+
+Expected: Healthy: controls visible. Unreachable: the plain-words error card with Retry. There is no third state where the page is blank and silent.
+
+---
+
+### T-2470 · Trading sessions · Start card paint survives the poll cycle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-29
+
+Steps: 1. Open /trading on a healthy load. 2. Watch through two full 15-second poll cycles.
+
+Expected: The "Start trading" card stays painted through every poll -- it never blinks out to a card-less page.
+
+---
+
+### T-2471 · Strategies · Signals sent explainer reads in full on desktop
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+
+Steps: 1. Open /strategies on a desktop-width window. 2. Find the "Signals sent" explainer. 3. Read it to the end.
+
+Expected: The sentence reads in full and ends with "the sum of every strategy's chips." -- it is not cut off mid-sentence.
+
+---
+
+### T-2472 · Strategies · Signals sent explainer reads in full at tablet width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+
+Steps: 1. Open /strategies at about 900px width. 2. Read the "Signals sent" explainer to the end.
+
+Expected: The full sentence is visible, ending with "the sum of every strategy's chips.".
+
+---
+
+### T-2473 · Strategies · Signals sent explainer reads in full at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+
+Steps: 1. Open /strategies at 390px width. 2. Read the "Signals sent" explainer to the end.
+
+Expected: The full sentence is visible at phone width, ending with "the sum of every strategy's chips.".
+
+---
+
+### T-2474 · Strategies · Explainer never ends mid-word
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open /strategies at desktop, tablet, and 390px widths. 2. Read the "Signals sent" explainer at each.
+
+Expected: At every width the sentence completes -- no trailing cut like "...the Signals" with the rest missing.
+
+---
+
+### T-2475 · Strategies · Refresh button reads Refresh the list now
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Find the refresh button near the strategy list. 3. Read its label.
+
+Expected: The button is labeled "Refresh the list now".
+
+---
+
+### T-2476 · Strategies · Hint text sits beneath the refresh button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the text directly beneath the "Refresh the list now" button.
+
+Expected: A hint is visible beneath the button in plain words.
+
+---
+
+### T-2477 · Strategies · Hint says the runner keeps its own schedule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+
+Steps: 1. Open /strategies. 2. Read the hint beneath the "Refresh the list now" button carefully.
+
+Expected: The hint says the button reloads the strategy list and the runner status above, and that it does not make the runner check strategies any sooner -- the runner keeps its own schedule.
+
+---
+
+### T-2478 · Strategies · Old Refresh signal flow label is gone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Search the whole page text for "Refresh signal flow".
+
+Expected: The old label appears nowhere on the page.
+
+---
+
+### T-2479 · Strategies · Clicking refresh reloads the strategy list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Note the strategies listed. 3. Click "Refresh the list now". 4. Watch the list.
+
+Expected: The list reloads and shows the current strategies; the page does not navigate away.
+
+---
+
+### T-2480 · Strategies · Refresh does not fire an early runner check
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+
+Steps: 1. Open /strategies. 2. Read the "Next check" time in the runner status. 3. Click "Refresh the list now". 4. Read "Next check" again.
+
+Expected: The "Next check" time is unchanged -- the button only reloads the list, it never hurries the runner.
+
+---
+
+### T-2481 · Strategies · Runner status block still shows above the button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+
+Steps: 1. Open /strategies. 2. Look above the "Refresh the list now" button.
+
+Expected: The runner status (Runner / Last check / Next check / Signals sent) is shown above the button.
+
+---
+
+### T-2482 · Strategies · Refresh button is keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Press Tab until the "Refresh the list now" button is focused. 3. Press Enter.
+
+Expected: The button receives visible focus and activates with Enter, reloading the list.
+
+---
+
+### T-2483 · Strategies · Refresh label and hint readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-39
+
+Steps: 1. Open /strategies at 390px width. 2. Read the refresh button and its hint.
+
+Expected: Both the label and the hint fit the phone width and are readable.
+
+---
+
+### T-2484 · Strategies · Manual refresh then auto-refresh still ticks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click "Refresh the list now". 3. Wait just over one minute and watch the list.
+
+Expected: The automatic minute refresh still happens after the manual one -- the list updates on its own.
+
+---
+
+### T-2485 · Strategies · Strategy count unchanged by refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Count the strategies. 3. Click "Refresh the list now". 4. Count again.
+
+Expected: The same strategies are listed -- refresh reloads, it never adds or drops rows by itself.
+
+---
+
+### T-2486 · Strategies · Signal chips unchanged by refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-34
+
+Steps: 1. Open /strategies. 2. Note a strategy's signal-count chip. 3. Click "Refresh the list now". 4. Compare.
+
+Expected: The chips show the same counts -- refresh does not invent or clear signal history.
+
+---
+
+### T-2487 · Strategies · Enable toggle still works after a refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open /strategies. 2. Click "Refresh the list now". 3. Flip any strategy's enable toggle, then flip it back.
+
+Expected: The toggle responds normally after the refresh.
+
+---
+
+### T-2488 · Strategies · Hint wording matches the button's real behavior
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Read the hint, then click the button and observe what actually reloads.
+
+Expected: What reloads (the strategy list and the runner status above) is exactly what the hint says reloads -- nothing more.
+
+---
+
+### T-2489 · Strategies · Refresh button label has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the button label as a first-time user would.
+
+Expected: "Refresh the list now" needs no glossary -- its meaning is obvious.
+
+---
+
+### T-2490 · Strategies · Explainer text selectable for copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Drag-select the "Signals sent" explainer text.
+
+Expected: The text selects cleanly to the final period -- selection is not clipped by layout.
+
+---
+
+### T-2491 · Strategies · Refresh while a check is running
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies just as the runner's minute check fires. 2. Click "Refresh the list now" during it. 3. Watch.
+
+Expected: The page stays coherent -- the list settles on the fresh data with no duplicated rows.
+
+---
+
+### T-2492 · Strategies · Refresh button does not move the page scroll
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies and scroll halfway down the strategy list. 2. Click "Refresh the list now".
+
+Expected: The scroll position stays where the tester left it -- the button does not jump the page.
+
+---
+
+### T-2493 · Strategies · Explainer and hint survive a reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Reload the page. 3. Read the "Signals sent" explainer and the refresh hint again.
+
+Expected: Both texts render identically after the reload -- full sentence and hint intact.
+
+---
+
+### T-2494 · Strategies · Regression summary: strategies page texts stay whole and honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Confirm the explainer ends with "the sum of every strategy's chips.", the button reads "Refresh the list now" with its hint, and the old label is absent.
+
+Expected: All three hold at once -- the page's words are complete and the button says what it does.
+
+---
+
+### T-2495 · Strategies · Technical details expands on a refused signal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Find a strategy card whose signal was refused. 3. Expand its "Technical details" disclosure.
+
+Expected: The disclosure opens and shows an explanation in plain words -- not a raw server message.
+
+---
+
+### T-2496 · Strategies · Disclosure shows What happened
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Expand "Technical details" on a refused-signal card. 3. Read the sections.
+
+Expected: A "What happened" section names the setup, the symbol, the side, and that the engine hit an internal error and could not take the signal.
+
+---
+
+### T-2497 · Strategies · Disclosure shows What this means
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Expand "Technical details" on a refused-signal card. 3. Read the sections.
+
+Expected: A "What this means" section says the strategy is still running and watching, that no order was placed and no money moved.
+
+---
+
+### T-2498 · Strategies · Disclosure shows What to do next
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Expand "Technical details" on a refused-signal card. 3. Read the sections.
+
+Expected: A "What to do next" section says the signal stays eligible and retries automatically, that "Check now" retries sooner, and when to tell the agent team (with the time and the HTTP code).
+
+---
+
+### T-2499 · Strategies · No raw server text in the disclosure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Expand "Technical details" on a refused-signal card. 3. Read every line.
+
+Expected: No raw engine string appears -- the card never shows bare server wording.
+
+---
+
+### T-2500 · Strategies · Words Internal Server Error absent from the card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open /strategies. 2. Read the full text of a refused-signal strategy card, disclosure expanded.
+
+Expected: The words "Internal Server Error" appear nowhere on the card.
+
+---
