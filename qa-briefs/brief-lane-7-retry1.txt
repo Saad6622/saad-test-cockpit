@@ -1,0 +1,39 @@
+QA LANE 7 — RETRY 1 — cases T-1357, T-1358, T-1359 (3 cases, re-run of context-BLOCKED)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases; no state window needed. Never invent steps — this text is authoritative.
+================================================================================
+
+### T-1357 · Cockpit · Validator clears its old result on new paste
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Validate once, then paste a different envelope.
+
+Expected: The previous result clears as soon as the text changes — stale results never linger.
+
+---
+
+### T-1358 · Cockpit · Validator handles a very long envelope
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Paste an envelope with a long description field. 3. Click Validate.
+
+Expected: The validator still checks every rule and the box scrolls instead of breaking the layout.
+
+---
+
+### T-1359 · Cockpit · Validate button keyboard accessible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Tab to the envelope textbox, paste JSON, then Tab to Validate and press Enter.
+
+Expected: Validation runs from the keyboard exactly as it does with the mouse.
+
+---
