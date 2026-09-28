@@ -1,0 +1,604 @@
+QA LANE 7 — CHUNK 2 — cases T-1251–T-1300 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-1251 · AI · Disable stops new predictions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the AI enable/disable control. Switch it off. Wait one full scan cycle.
+
+Expected: No new predictions appear -- disabled means disabled.
+
+---
+
+### T-1252 · AI · Re-enable resumes predictions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control back on. Wait one full scan cycle.
+
+Expected: Scanning resumes visibly -- the panel reports the state change.
+
+---
+
+### T-1253 · AI · Toggle is keyboard-operable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Tab to the AI enable/disable control. Toggle it with Space.
+
+Expected: Focus is visible and Space flips the state -- no mouse needed.
+
+---
+
+### T-1254 · AI · Toggle state survives reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control off. Reload the page.
+
+Expected: It is still off -- the setting persists, not a per-render illusion.
+
+---
+
+### T-1255 · AI · Enable and disable control labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the AI enable/disable control's label.
+
+Expected: Plain label such as "AI scanning" with an on/off state -- never a bare switch with no name.
+
+---
+
+### T-1256 · AI · Disabled state visibly distinct
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control off. Look at the panel.
+
+Expected: The panel looks off -- dimmed or badged -- not identical to the on state.
+
+---
+
+### T-1257 · AI · Disabled panel reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control off. Read the panel.
+
+Expected: "AI scanning off" -- honest, not fake data left on screen as if live.
+
+---
+
+### T-1258 · AI · In-flight prediction handled on disable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control off while a scan is mid-flight, if timing allows.
+
+Expected: The in-flight prediction is labeled (completed or dropped) -- never dropped silently.
+
+---
+
+### T-1259 · AI · Re-enable does not backfill fake history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control off for two minutes, then back on.
+
+Expected: No predictions are invented for the gap -- history shows the real gap.
+
+---
+
+### T-1260 · AI · Disable stops paid calls if cost is shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If cost is shown, note the total. Switch the AI control off. Wait one cycle.
+
+Expected: No new cost accrues -- off means no paid calls.
+
+---
+
+### T-1261 · AI · Re-enable asks to confirm if the UI asks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If switching on opens a confirm dialog, read it, then click Cancel.
+
+Expected: The dialog is honest and Cancel keeps the AI off -- the tester never confirms a paid action.
+
+---
+
+### T-1262 · AI · Toggle label is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the AI toggle label and helper text.
+
+Expected: Plain words -- no model or provider jargon.
+
+---
+
+### T-1263 · AI · Disabled copy has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control off. Read the disabled copy.
+
+Expected: Plain words -- no internals.
+
+---
+
+### T-1264 · AI · State change reflects within one poll
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Toggle the AI control and watch the state line.
+
+Expected: The new state shows within one poll interval -- no long lie about being on while off.
+
+---
+
+### T-1265 · AI · No predictions arrive while disabled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Switch the AI control off. Watch the panel for two full scan cycles.
+
+Expected: Zero new predictions -- the silence is the honest off state.
+
+---
+
+### T-1266 · AI · Cooldown timer ticks down
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI panel is currently in cooldown, read the timer twice a minute apart.
+
+Expected: The countdown decreases live -- never a frozen number.
+
+---
+
+### T-1267 · AI · Calls resume after cooldown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI panel was in cooldown, watch it through the end of the cooldown.
+
+Expected: Scanning resumes visibly when the timer hits zero -- recovery is observable.
+
+---
+
+### T-1268 · AI · Cooldown triggers on the documented condition
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the panel's cooldown rule text.
+
+Expected: The trigger condition is stated in plain words (rate limit, error streak) -- not a mystery.
+
+---
+
+### T-1269 · AI · Timer resets honestly on a new trigger
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a new cooldown triggers while watching, read the timer.
+
+Expected: The timer restarts from the full interval and says why -- never a silent extension.
+
+---
+
+### T-1270 · AI · Cooldown badge renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI panel is currently in cooldown, look at the badge.
+
+Expected: A visible cooldown badge -- not a subtle grey the tester must hunt.
+
+---
+
+### T-1271 · AI · Cooldown reason shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI panel is currently in cooldown, read the reason.
+
+Expected: The reason is stated next to the badge.
+
+---
+
+### T-1272 · AI · Cooldown explained in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI panel is currently in cooldown, read the explanation.
+
+Expected: Plain words: what cooldown means and how long it lasts.
+
+---
+
+### T-1273 · AI · No predictions during cooldown read as paused, not broken
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI panel is currently in cooldown, read the predictions area.
+
+Expected: "Paused during cooldown" -- honest, not an error and not fake silence.
+
+---
+
+### T-1274 · AI · Cooldown never hides an error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a gateway error is shown while cooldown is active, read both.
+
+Expected: Both are visible -- cooldown never covers up a failure.
+
+---
+
+### T-1275 · AI · Cooldown copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read all cooldown text on the panel.
+
+Expected: Plain words -- no internals.
+
+---
+
+### T-1276 · AI · No raw rate-limit strings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan the cooldown display for machine text.
+
+Expected: No raw provider codes or headers -- prose only.
+
+---
+
+### T-1277 · AI · Cooldown detail expands if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the cooldown badge offers a detail control, click it.
+
+Expected: Trigger, remaining time and resume behavior render; clicking again collapses.
+
+---
+
+### T-1278 · AI · Manual recheck during cooldown is refused politely if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a manual recheck control exists, click it during cooldown.
+
+Expected: A polite refusal names the remaining wait -- never silent, never a forced call.
+
+---
+
+### T-1279 · AI · No cost accrues during cooldown if cost is shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If cost is shown, note the total at cooldown start and end.
+
+Expected: The total does not move -- cooldown means no paid calls.
+
+---
+
+### T-1280 · AI · Call count pauses during cooldown if shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a call count is shown, note it at cooldown start and end.
+
+Expected: The count is frozen for the whole cooldown -- it never advances silently.
+
+---
+## Section K · Cockpit deep-dive (240 cases: T-1281–T-1520)
+
+### T-1281 · Cockpit · Expand the detail row for alert alr-d4b5f3c9b35d
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the ALERTS & LOGS region. 3. Click the "Show detail for alert alr-d4b5f3c9b35d" button.
+
+Expected: The detail expands beneath the row and the button leaves its collapsed state; the row's other cells stay put.
+
+---
+
+### T-1282 · Cockpit · Status cell reads VETOED for alert alr-d4b5f3c9b35d
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-d4b5f3c9b35d in the alerts table. 3. Read the STATUS cell.
+
+Expected: The STATUS cell reads "VETOED" in plain words.
+
+---
+
+### T-1283 · Cockpit · Action cell reads ENTRY for alert alr-d4b5f3c9b35d
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-d4b5f3c9b35d. 3. Read the ACTION cell.
+
+Expected: The ACTION cell reads "ENTRY".
+
+---
+
+### T-1284 · Cockpit · Age cell present for alert alr-d4b5f3c9b35d
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-d4b5f3c9b35d. 3. Read the AGE cell.
+
+Expected: An age such as "8h 52m" is shown, telling the tester how long ago the alert arrived.
+
+---
+
+### T-1285 · Cockpit · Triage cell present for alert alr-d4b5f3c9b35d
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-d4b5f3c9b35d. 3. Read the TRIAGE cell.
+
+Expected: The TRIAGE cell is present and readable, even when it holds no action yet.
+
+---
+
+### T-1286 · Cockpit · Expand the detail row for alert alr-aede758c9eac
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the ALERTS & LOGS region. 3. Click the "Show detail for alert alr-aede758c9eac" button.
+
+Expected: The detail expands beneath the row and the button leaves its collapsed state; the row's other cells stay put.
+
+---
+
+### T-1287 · Cockpit · Status cell reads VETOED for alert alr-aede758c9eac
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-aede758c9eac in the alerts table. 3. Read the STATUS cell.
+
+Expected: The STATUS cell reads "VETOED" in plain words.
+
+---
+
+### T-1288 · Cockpit · Action cell reads ENTRY for alert alr-aede758c9eac
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-aede758c9eac. 3. Read the ACTION cell.
+
+Expected: The ACTION cell reads "ENTRY".
+
+---
+
+### T-1289 · Cockpit · Age cell present for alert alr-aede758c9eac
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-aede758c9eac. 3. Read the AGE cell.
+
+Expected: An age such as "8h 52m" is shown, telling the tester how long ago the alert arrived.
+
+---
+
+### T-1290 · Cockpit · Triage cell present for alert alr-aede758c9eac
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-aede758c9eac. 3. Read the TRIAGE cell.
+
+Expected: The TRIAGE cell is present and readable, even when it holds no action yet.
+
+---
+
+### T-1291 · Cockpit · Expand the detail row for alert alr-8ae92fe20305
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the ALERTS & LOGS region. 3. Click the "Show detail for alert alr-8ae92fe20305" button.
+
+Expected: The detail expands beneath the row and the button leaves its collapsed state; the row's other cells stay put.
+
+---
+
+### T-1292 · Cockpit · Status cell reads UNCERTAIN — HELD for alert alr-8ae92fe20305
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-8ae92fe20305 in the alerts table. 3. Read the STATUS cell.
+
+Expected: The STATUS cell reads "UNCERTAIN — HELD" in plain words.
+
+---
+
+### T-1293 · Cockpit · Action cell reads ENTRY for alert alr-8ae92fe20305
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-8ae92fe20305. 3. Read the ACTION cell.
+
+Expected: The ACTION cell reads "ENTRY".
+
+---
+
+### T-1294 · Cockpit · Age cell present for alert alr-8ae92fe20305
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-8ae92fe20305. 3. Read the AGE cell.
+
+Expected: An age such as "8h 52m" is shown, telling the tester how long ago the alert arrived.
+
+---
+
+### T-1295 · Cockpit · Triage cell present for alert alr-8ae92fe20305
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-8ae92fe20305. 3. Read the TRIAGE cell.
+
+Expected: The TRIAGE cell is present and readable, even when it holds no action yet.
+
+---
+
+### T-1296 · Cockpit · Expand the detail row for alert alr-33152a5da376
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the ALERTS & LOGS region. 3. Click the "Show detail for alert alr-33152a5da376" button.
+
+Expected: The detail expands beneath the row and the button leaves its collapsed state; the row's other cells stay put.
+
+---
+
+### T-1297 · Cockpit · Status cell reads VETOED for alert alr-33152a5da376
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-33152a5da376 in the alerts table. 3. Read the STATUS cell.
+
+Expected: The STATUS cell reads "VETOED" in plain words.
+
+---
+
+### T-1298 · Cockpit · Action cell reads ENTRY for alert alr-33152a5da376
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-33152a5da376. 3. Read the ACTION cell.
+
+Expected: The ACTION cell reads "ENTRY".
+
+---
+
+### T-1299 · Cockpit · Age cell present for alert alr-33152a5da376
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-33152a5da376. 3. Read the AGE cell.
+
+Expected: An age such as "8h 52m" is shown, telling the tester how long ago the alert arrived.
+
+---
+
+### T-1300 · Cockpit · Triage cell present for alert alr-33152a5da376
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the row for alert alr-33152a5da376. 3. Read the TRIAGE cell.
+
+Expected: The TRIAGE cell is present and readable, even when it holds no action yet.
+
+---
