@@ -1,0 +1,603 @@
+QA LANE 18 — CHUNK 2 — cases T-3451–T-3500 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-3451 · Keys · settings: ui boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-70
+
+Steps: 1. Open /settings. 2. If the settings: ui has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-3452 · Keys · settings: cron input limit enforced politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-71
+
+Steps: 1. Open /settings. 2. If the settings: cron has a text input with a limit, type past it.
+
+Expected: Extra input is refused politely with the limit stated -- never silently eaten.
+
+---
+
+### T-3453 · Keys · settings: cron empty input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-71
+
+Steps: 1. Open /settings. 2. If the settings: cron has a submit control, submit it empty.
+
+Expected: A plain-words message names what is missing -- never a silent no-op, never a crash.
+
+---
+
+### T-3454 · Keys · settings: cron boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-71
+
+Steps: 1. Open /settings. 2. If the settings: cron has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-3455 · Keys · settings: bots-cage input limit enforced politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-72
+
+Steps: 1. Open /settings. 2. If the settings: bots-cage has a text input with a limit, type past it.
+
+Expected: Extra input is refused politely with the limit stated -- never silently eaten.
+
+---
+
+### T-3456 · Keys · settings: bots-cage empty input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-72
+
+Steps: 1. Open /settings. 2. If the settings: bots-cage has a submit control, submit it empty.
+
+Expected: A plain-words message names what is missing -- never a silent no-op, never a crash.
+
+---
+
+### T-3457 · Keys · settings: bots-cage boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-72
+
+Steps: 1. Open /settings. 2. If the settings: bots-cage has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-3458 · Keys · settings: palette honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-76
+
+Steps: 1. Open /settings. 2. View the settings: palette with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3459 · Keys · settings: palette never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-76
+
+Steps: 1. Open /settings. 2. Watch the settings: palette loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+### T-3460 · Keys · settings: palette failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-76
+
+Steps: 1. Open /settings. 2. If the settings: palette is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-3461 · Keys · settings: palette input limit enforced politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-76
+
+Steps: 1. Open /settings. 2. If the settings: palette has a text input with a limit, type past it.
+
+Expected: Extra input is refused politely with the limit stated -- never silently eaten.
+
+---
+
+### T-3462 · Keys · settings: palette empty input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-76
+
+Steps: 1. Open /settings. 2. If the settings: palette has a submit control, submit it empty.
+
+Expected: A plain-words message names what is missing -- never a silent no-op, never a crash.
+
+---
+
+### T-3463 · Keys · settings: palette boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-76
+
+Steps: 1. Open /settings. 2. If the settings: palette has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-3464 · Notify · settings: replay input limit enforced politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-77
+
+Steps: 1. Open /settings. 2. If the settings: replay has a text input with a limit, type past it.
+
+Expected: Extra input is refused politely with the limit stated -- never silently eaten.
+
+---
+
+### T-3465 · Notify · settings: replay empty input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-77
+
+Steps: 1. Open /settings. 2. If the settings: replay has a submit control, submit it empty.
+
+Expected: A plain-words message names what is missing -- never a silent no-op, never a crash.
+
+---
+
+### T-3466 · Notify · settings: replay boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-77
+
+Steps: 1. Open /settings. 2. If the settings: replay has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-3467 · Notify · settings: kill-t3 input limit enforced politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-79
+
+Steps: 1. Open /settings. 2. If the settings: kill-t3 has a text input with a limit, type past it.
+
+Expected: Extra input is refused politely with the limit stated -- never silently eaten.
+
+---
+
+### T-3468 · Notify · settings: kill-t3 empty input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-79
+
+Steps: 1. Open /settings. 2. If the settings: kill-t3 has a submit control, submit it empty.
+
+Expected: A plain-words message names what is missing -- never a silent no-op, never a crash.
+
+---
+
+### T-3469 · Notify · settings: kill-t3 boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-79
+
+Steps: 1. Open /settings. 2. If the settings: kill-t3 has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-3470 · Notify · settings: persistence input limit enforced politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-80
+
+Steps: 1. Open /settings. 2. If the settings: persistence has a text input with a limit, type past it.
+
+Expected: Extra input is refused politely with the limit stated -- never silently eaten.
+
+---
+
+### T-3471 · Notify · settings: persistence empty input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-80
+
+Steps: 1. Open /settings. 2. If the settings: persistence has a submit control, submit it empty.
+
+Expected: A plain-words message names what is missing -- never a silent no-op, never a crash.
+
+---
+
+### T-3472 · Notify · settings: persistence boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-80
+
+Steps: 1. Open /settings. 2. If the settings: persistence has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-3473 · Notify · journal KPIs copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read all journal KPIs copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3474 · Notify · journal KPIs no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Scan the journal KPIs for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3475 · Notify · journal KPIs helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the journal KPIs helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3476 · Notify · journal calendar renders on /journal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Scroll to the journal calendar. 3. Read every label and value.
+
+Expected: The journal calendar renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3477 · Notify · journal calendar labels are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Read every label on the journal calendar character for character.
+
+Expected: Every label is a plain word or phrase -- no internal codes, no abbreviations a trader would not know.
+
+---
+
+### T-3478 · Notify · journal calendar layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Note the journal calendar layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-3479 · Notify · journal calendar primary control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Click the journal calendar main control. 3. Watch for 5 seconds.
+
+Expected: It responds visibly -- the control is never silent.
+
+---
+
+### T-3480 · Notify · journal calendar control is keyboard-operable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Tab to the journal calendar main control. 3. Activate it with Space or Enter.
+
+Expected: Focus is visible and the keyboard activates it -- no mouse needed.
+
+---
+
+### T-3481 · Notify · journal calendar expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-83
+
+Steps: 1. Open /journal. 2. If the journal calendar offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-3482 · Notify · journal calendar honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-83
+
+Steps: 1. Open /journal. 2. View the journal calendar with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3483 · Notify · journal calendar never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Watch the journal calendar loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+### T-3484 · Notify · journal calendar failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-83
+
+Steps: 1. Open /journal. 2. If the journal calendar is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-3485 · Notify · journal calendar copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Read all journal calendar copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3486 · Notify · journal calendar no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Scan the journal calendar for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3487 · Notify · journal calendar helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-83
+
+Steps: 1. Open /journal. 2. Read the journal calendar helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3488 · Settings · journal leaderboard honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-84
+
+Steps: 1. Open /journal. 2. View the journal leaderboard with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3489 · Settings · journal leaderboard never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-84
+
+Steps: 1. Open /journal. 2. Watch the journal leaderboard loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+### T-3490 · Settings · journal leaderboard failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-84
+
+Steps: 1. Open /journal. 2. If the journal leaderboard is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-3491 · Settings · journal leaderboard matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-84
+
+Steps: 1. Open /journal. 2. Read a journal leaderboard value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+### T-3492 · Settings · journal leaderboard counts reconcile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-84
+
+Steps: 1. Open /journal. 2. Count the visible journal leaderboard rows. 3. Read the journal leaderboard count label.
+
+Expected: The label matches the visible rows -- no silent extras, no missing rows.
+
+---
+
+### T-3493 · Settings · journal leaderboard totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-84
+
+Steps: 1. Open /journal. 2. Add the journal leaderboard line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+### T-3494 · Settings · journal leaderboard copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-84
+
+Steps: 1. Open /journal. 2. Read all journal leaderboard copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3495 · Settings · journal leaderboard no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-84
+
+Steps: 1. Open /journal. 2. Scan the journal leaderboard for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3496 · Settings · journal leaderboard helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-84
+
+Steps: 1. Open /journal. 2. Read the journal leaderboard helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3497 · Settings · browser tab title copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-85
+
+Steps: 1. Open all. 2. Read all browser tab title copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3498 · Settings · browser tab title no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-85
+
+Steps: 1. Open all. 2. Scan the browser tab title for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3499 · Settings · browser tab title helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-85
+
+Steps: 1. Open all. 2. Read the browser tab title helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3500 · Cockpit · tunnel banner renders on all
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-87
+
+Steps: 1. Open all. 2. Scroll to the tunnel banner. 3. Read every label and value.
+
+Expected: The tunnel banner renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
