@@ -1,0 +1,405 @@
+QA LANE 1 — CHUNK 3 — cases T-101–T-150 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-101 · Home page · Strategies card reaches the strategies list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-22
+Steps: 1. Open the /home page. 2. Click the "Strategies" card. 3. Wait for the page to load and look at its content.
+Expected: A strategies list or strategies overview is shown.
+
+### T-102 · Home page · Backtests card reaches the backtests list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-23
+Steps: 1. Open the /home page. 2. Click the "Backtests" card. 3. Wait for the page to load and look at its content.
+Expected: A backtests list or backtests overview is shown.
+
+### T-103 · Home page · History card reaches the history view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-24
+Steps: 1. Open the /home page. 2. Click the "History" card. 3. Wait for the page to load and look at its content.
+Expected: A history view (past sessions, trades, or activity) is shown.
+
+### T-104 · Home page · Notifications card reaches the notifications view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-26
+Steps: 1. Open the /home page. 2. Click the "Notifications" card. 3. Wait for the page to load and look at its content.
+Expected: A notifications view is shown, with current notifications or an empty state.
+
+### T-105 · Home page · Keys card reminds the key must be saved before trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-25
+Steps: 1. Open the /home page. 2. Read the "Keys" card description. 3. Click the "Keys" card and look at the page.
+Expected: The card and the Keys page both make clear the exchange key must be saved there before trading can start.
+
+## Section B — Trading sessions, Strategies
+
+### T-106 · Trading sessions · /trading loads with both money inputs visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Open /trading in the browser. 2. Look at the "Start trading" form.
+Expected: The page loads and both money inputs ("The largest position this session can open." and "The session stops on its own once losses reach this.") are visible with default values filled in.
+
+### T-107 · Trading sessions · explainer text present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Open /trading. 2. Read the introductory copy above the form.
+Expected: The line "Safe defaults, picked for you. You can only change the two money numbers, within safe limits." is shown.
+
+### T-108 · Trading sessions · BTC-only trading stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Open /trading. 2. Read the session description text.
+Expected: The page states that auto-sessions trade Bitcoin (BTC) only.
+
+### T-109 · Trading sessions · 2-hour session duration stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Open /trading. 2. Read the session description text.
+Expected: The page states that each session runs 2 hours.
+
+### T-110 · Trading sessions · valid whole numbers accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type 200 in "The largest position this session can open." 2. Type 50 in "The session stops on its own once losses reach this." 3. Check for error messages and the Start button state.
+Expected: Both values are accepted with no error message and Start remains enabled.
+
+### T-111 · Trading sessions · valid decimal in largest position accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type 150.75 in "The largest position this session can open." 2. Type a valid value in the stop-loss field.
+Expected: The decimal value is accepted with no error.
+
+### T-112 · Trading sessions · valid decimal in stop-loss accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type a valid value in the largest-position field. 2. Type 25.50 in "The session stops on its own once losses reach this."
+Expected: The decimal value is accepted with no error.
+
+### T-113 · Trading sessions · zero in largest position refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type 0 in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-114 · Trading sessions · zero in stop-loss refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type a valid largest position. 2. Type 0 in "The session stops on its own once losses reach this."
+Expected: An error message appears and Start is blocked.
+
+### T-115 · Trading sessions · negative in largest position refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type -100 in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-116 · Trading sessions · negative in stop-loss refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type a valid largest position. 2. Type -10 in "The session stops on its own once losses reach this."
+Expected: An error message appears and Start is blocked.
+
+### T-117 · Trading sessions · letters in largest position refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type abc in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-118 · Trading sessions · letters in stop-loss refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type a valid largest position. 2. Type xyz in "The session stops on its own once losses reach this."
+Expected: An error message appears and Start is blocked.
+
+### T-119 · Trading sessions · mixed letters and numbers refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type 1a2b in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-120 · Trading sessions · special characters refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type $#@ in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-121 · Trading sessions · blank largest position refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Clear "The largest position this session can open." completely. 2. Try to proceed.
+Expected: An error message appears or Start is disabled.
+
+### T-122 · Trading sessions · blank stop-loss refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Fill the largest position with a valid value. 2. Clear "The session stops on its own once losses reach this." completely. 3. Try to proceed.
+Expected: An error message appears or Start is disabled.
+
+### T-123 · Trading sessions · whitespace-only input refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type only spaces in "The largest position this session can open." 2. Try to proceed.
+Expected: The input is treated as blank, an error appears, and Start is blocked.
+
+### T-124 · Trading sessions · huge largest position above max refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type 999999999 in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears naming the safe limit, and Start is blocked.
+
+### T-125 · Trading sessions · huge stop-loss above max refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type a valid largest position. 2. Type 999999999 in "The session stops on its own once losses reach this." 3. Try to proceed.
+Expected: An error message appears naming the safe limit, and Start is blocked.
+
+### T-126 · Trading sessions · exact maximum largest position accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type the documented maximum allowed value in "The largest position this session can open." 2. Fill the stop-loss with a valid value. 3. Check for errors.
+Expected: The boundary value is accepted with no error.
+
+### T-127 · Trading sessions · one cent above maximum largest position refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type the documented maximum plus 0.01 in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-128 · Trading sessions · exact minimum largest position accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type the documented minimum allowed value in "The largest position this session can open." 2. Fill the stop-loss with a valid value. 3. Check for errors.
+Expected: The boundary value is accepted with no error.
+
+### T-129 · Trading sessions · one cent below minimum largest position refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type the documented minimum minus 0.01 in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-130 · Trading sessions · exact maximum stop-loss accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill the largest position with a valid value. 2. Type the documented maximum allowed value in "The session stops on its own once losses reach this." 3. Check for errors.
+Expected: The boundary value is accepted with no error.
+
+### T-131 · Trading sessions · one cent above maximum stop-loss refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Fill the largest position with a valid value. 2. Type the documented maximum plus 0.01 in "The session stops on its own once losses reach this." 3. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-132 · Trading sessions · exact minimum stop-loss accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill the largest position with a valid value. 2. Type the documented minimum allowed value in "The session stops on its own once losses reach this." 3. Check for errors.
+Expected: The boundary value is accepted with no error.
+
+### T-133 · Trading sessions · one cent below minimum stop-loss refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Fill the largest position with a valid value. 2. Type the documented minimum minus 0.01 in "The session stops on its own once losses reach this." 3. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-134 · Trading sessions · thousands separator handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type 1,000 in "The largest position this session can open." 2. Observe the result.
+Expected: The value is either parsed as 1000 with no error, or refused with a clear message saying separators are not allowed.
+
+### T-135 · Trading sessions · dollar sign typed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type $100 in "The largest position this session can open." 2. Observe the result.
+Expected: The value is either parsed as 100 with no error, or refused with a clear message.
+
+### T-136 · Trading sessions · leading zeros accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type 00100 in "The largest position this session can open." 2. Fill the stop-loss with a valid value. 3. Check for errors.
+Expected: The value is accepted as 100 with no error.
+
+### T-137 · Trading sessions · leading and trailing spaces trimmed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type " 100 " (with spaces) in "The largest position this session can open." 2. Fill the stop-loss with a valid value. 3. Check for errors.
+Expected: The value is trimmed and accepted as 100 with no error.
+
+### T-138 · Trading sessions · scientific notation refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type 1e3 in "The largest position this session can open." 2. Try to proceed.
+Expected: An error message appears and Start is blocked.
+
+### T-139 · Trading sessions · pasted value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Copy 250 to the clipboard. 2. Paste it into "The largest position this session can open." 3. Fill the stop-loss with a valid value. 4. Check for errors.
+Expected: The pasted value is accepted with no error.
+
+### T-140 · Trading sessions · error message sits next to the offending field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type an invalid value in "The largest position this session can open." 2. Look at where the error message appears.
+Expected: The error message is displayed adjacent to that input, making clear which field is wrong.
+
+### T-141 · Trading sessions · Start blocked with invalid input
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type -5 in "The largest position this session can open." 2. Look at the Start button and try clicking it.
+Expected: Start is disabled, or clicking it shows the error without moving forward.
+
+### T-142 · Trading sessions · error clears after correcting the input
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type an invalid value and confirm the error appears. 2. Replace it with a valid value. 3. Check the error and Start.
+Expected: The error message disappears and Start becomes enabled.
+
+### T-143 · Trading sessions · fields validated independently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type an invalid value in the largest-position field. 2. Type a valid value in the stop-loss field. 3. Observe the errors.
+Expected: Only the invalid field is flagged; the valid field shows no error.
+
+### T-144 · Trading sessions · Start with valid values opens the confirm screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both money inputs with valid values. 2. Click Start.
+Expected: The browser moves to a confirm screen instead of starting the session immediately.
+
+### T-145 · Trading sessions · confirm screen repeats the chosen values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with distinctive valid values (e.g. 220 and 40). 2. Click Start. 3. Read the confirm screen.
+Expected: The confirm screen shows the exact two money numbers that were entered.
+
+### T-146 · Trading sessions · confirm screen shows BTC and 2 hours
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Click Start. 3. Read the confirm screen.
+Expected: The confirm screen states the session trades Bitcoin (BTC) and runs 2 hours.
+
+### T-147 · Trading sessions · confirming starts the session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Click Start. 3. Click Confirm on the confirm screen.
+Expected: The session starts and a running-session view appears.
+
+### T-148 · Trading sessions · running state display
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Look at /trading while it runs.
+Expected: The page shows the session is running, with elapsed or remaining time visible.
+
+### T-149 · Trading sessions · "stop it any time" hint shown while running
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Read the running-session text on /trading.
+Expected: The page says the session can be stopped any time from this page.
+
+### T-150 · Trading sessions · halt note shown while running
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Read the running-session text on /trading.
+Expected: The page says the Halt trading button halts all trading everywhere.
