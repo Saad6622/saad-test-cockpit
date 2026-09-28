@@ -1,0 +1,603 @@
+QA LANE 16 — CHUNK 3 — cases T-3101–T-3150 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-3101 · Dead text · Saved-state text is truthful
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-51
+
+Steps: 1. Open /keys. 2. Read the saved-state text for the Gate.io slot.
+
+Expected: It states the slot is saved without showing values -- a state contradicting reality is flagged.
+
+---
+
+### T-3102 · Dead text · Error text names the problem
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-53
+
+Steps: 1. Open /keys. 2. Submit the Add slot form empty and read the error.
+
+Expected: The error names the missing field -- a generic "error" with no detail is flagged.
+
+---
+
+### T-3103 · Dead text · Label rules are enforced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-53
+
+Steps: 1. Open /keys. 2. Try a Slot name with a space and read the answer.
+
+Expected: The form refuses with the naming rule quoted -- silently accepted bad names are flagged.
+
+---
+
+### T-3104 · Dead text · Keys sweep summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-42
+
+Steps: 1. Review the /keys dead-text cases above. 2. List every text flagged dead.
+
+Expected: The tester produces one list of dead texts on /keys with the evidence for each.
+
+---
+
+### T-3105 · Dead text · Connect state is explicit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. Read the Telegram connection state.
+
+Expected: Connected or not-connected, stated plainly -- a permanently vague state is flagged.
+
+---
+
+### T-3106 · Dead text · Saved boxes stay blank
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. Read the Bot Secret and Chat ID boxes.
+
+Expected: Blank when saved -- echoed secrets are flagged as a defect, not dead text.
+
+---
+
+### T-3107 · Dead text · Topic states persist
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-58
+
+Steps: 1. Open /notifications. 2. Toggle a topic, reload, check.
+
+Expected: State persists -- a toggle that forgets is flagged.
+
+---
+
+### T-3108 · Dead text · Test message reports
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-60
+
+Steps: 1. Open /notifications. 2. Click "Try it out". 3. Read the report.
+
+Expected: Sent or failed with a reason -- a button that never reports is flagged.
+
+---
+
+### T-3109 · Dead text · Message-alerts status is honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-04
+
+Steps: 1. Open /notifications. 2. Read the message-alerts status before any test.
+
+Expected: Not green before a real preview -- premature green is flagged.
+
+---
+
+### T-3110 · Dead text · Notifications push status is explicit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-61
+
+Steps: 1. Open /notifications. 2. Read the push status.
+
+Expected: On or off with a reason -- permanently vague status is flagged.
+
+---
+
+### T-3111 · Dead text · Daily budget is a number
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-61
+
+Steps: 1. Open /notifications. 2. Read the push daily budget.
+
+Expected: A real number -- a budget that is never stated is flagged.
+
+---
+
+### T-3112 · Dead text · BotFather hint is static by design
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. Read the @BotFather / @userinfobot hints. 3. Reload and re-read.
+
+Expected: Identical after reload -- recorded as intentionally static guidance, not dead.
+
+---
+
+### T-3113 · Dead text · Open push settings link works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-61
+
+Steps: 1. Open /notifications. 2. Click the "Open push settings" link.
+
+Expected: It reaches the push settings -- a link going nowhere is flagged.
+
+---
+
+### T-3114 · Dead text · Notifications sweep summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-42
+
+Steps: 1. Review the /notifications dead-text cases above. 2. List every text flagged dead.
+
+Expected: The tester produces one list of dead texts on /notifications with the evidence for each.
+
+---
+
+### T-3115 · Dead text · Risk caps badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open /settings. 2. Open the Risk caps group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3116 · Dead text · Confirm PIN badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-64
+
+Steps: 1. Open /settings. 2. Open the Confirm PIN group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3117 · Dead text · Blackouts badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-65
+
+Steps: 1. Open /settings. 2. Open the Blackouts group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3118 · Dead text · Scanner universe badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-66
+
+Steps: 1. Open /settings. 2. Open the Scanner universe group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3119 · Dead text · Venues badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-67
+
+Steps: 1. Open /settings. 2. Open the Venues group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3120 · Dead text · Market feeds badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-68
+
+Steps: 1. Open /settings. 2. Open the Market feeds group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3121 · Dead text · Push notifications badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-61
+
+Steps: 1. Open /settings. 2. Open the Push notifications group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3122 · Dead text · Interface badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-70
+
+Steps: 1. Open /settings. 2. Open the Interface group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3123 · Dead text · Schedules badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-71
+
+Steps: 1. Open /settings. 2. Open the Schedules group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3124 · Dead text · Bot cage badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-72
+
+Steps: 1. Open /settings. 2. Open the Bot cage group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3125 · Dead text · Audit export badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-73
+
+Steps: 1. Open /settings. 2. Open the Audit export group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3126 · Dead text · Tax report (CSV) badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-74
+
+Steps: 1. Open /settings. 2. Open the Tax report (CSV) group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3127 · Dead text · Copy trading Read-only badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-29
+
+Steps: 1. Open /settings. 2. Open the Copy trading Read-only group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3128 · Dead text · Command palette badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-07
+
+Steps: 1. Open /settings. 2. Open the Command palette group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3129 · Dead text · Replay badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-17
+
+Steps: 1. Open /settings. 2. Open the Replay group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3130 · Dead text · Economic calendar badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-83
+
+Steps: 1. Open /settings. 2. Open the Economic calendar group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3131 · Dead text · Halt trading badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-03
+
+Steps: 1. Open /settings. 2. Open the Halt trading group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3132 · Dead text · Persistence badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-80
+
+Steps: 1. Open /settings. 2. Open the Persistence group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3133 · Dead text · AI profile badge reflects saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-81
+
+Steps: 1. Open /settings. 2. Open the AI profile group. 3. Read its badge and shown values. 4. Reload and re-read.
+
+Expected: The badge and values match the saved state after the reload -- a badge contradicting the group's own values is flagged.
+
+---
+
+### T-3134 · Dead text · Settings sweep summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-42
+
+Steps: 1. Review the /settings dead-text cases above. 2. List every text flagged dead.
+
+Expected: The tester produces one list of dead texts on /settings with the evidence for each.
+
+---
+
+### T-3135 · Dead text · Preview-only always previews
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-29
+
+Steps: 1. Open /. 2. Draft a ticket. 3. Click Preview-only.
+
+Expected: A preview appears every time -- a Preview-only that sometimes does nothing is flagged.
+
+---
+
+### T-3136 · Dead text · Copy buttons copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-05
+
+Steps: 1. Open /. 2. Click a Copy button (Pine script or webhook secret). 3. Paste elsewhere.
+
+Expected: The value pastes -- a Copy button that copies nothing is flagged.
+
+---
+
+### T-3137 · Dead text · Discard confirm Cancel keeps the row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-13
+
+Steps: 1. Open /. 2. Click Discard on a failed-message row, then Cancel.
+
+Expected: The row stays -- a Cancel that still discards is flagged as a defect, not dead text.
+
+---
+
+### T-3138 · Dead text · Disclosures toggle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-35
+
+Steps: 1. Open /. 2. Click five different disclosure triangles open and closed.
+
+Expected: Each toggles -- a disclosure that never opens is flagged.
+
+---
+
+### T-3139 · Dead text · Bottom nav tabs navigate
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-01
+
+Steps: 1. Open /. 2. Tap each bottom-nav tab.
+
+Expected: Each navigates -- a tab that goes nowhere is flagged.
+
+---
+
+### T-3140 · Dead text · Halt modal Cancel is safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-03
+
+Steps: 1. Open /. 2. Open the Halt modal, press Cancel.
+
+Expected: Nothing changes -- a Cancel with side effects is flagged as a defect.
+
+---
+
+### T-3141 · Dead text · Drill confirms Cancel is safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-92
+
+Steps: 1. Open /. 2. Open each drill's confirm step, press Cancel.
+
+Expected: Nothing runs -- a Cancel that runs the drill is flagged as a defect.
+
+---
+
+### T-3142 · Dead text · Refresh-list button reloads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click "Refresh the list now".
+
+Expected: The list reloads -- a refresh that never reloads is flagged.
+
+---
+
+### T-3143 · Dead text · Check-now button reports
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-36
+
+Steps: 1. Open /strategies. 2. Press "Check now" on a card.
+
+Expected: The card reports -- a Check-now that never answers is flagged.
+
+---
+
+### T-3144 · Dead text · Try-it-out reports
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Click "Try it out".
+
+Expected: A result is reported -- a button that never answers is flagged.
+
+---
+
+### T-3145 · Dead text · Envelope Validate answers
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-06
+
+Steps: 1. Open /. 2. Paste JSON and click Validate.
+
+Expected: A verdict appears -- a Validate that never answers is flagged.
+
+---
+
+### T-3146 · Dead text · Risk-check Run check outputs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open /. 2. Click Run check.
+
+Expected: Verdicts appear -- a Run check with no output is flagged.
+
+---
+
+### T-3147 · Dead text · Replay speed control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-17
+
+Steps: 1. Open /. 2. Change the replay Speed control.
+
+Expected: Playback speed changes -- a control with no effect is flagged.
+
+---
+
+### T-3148 · Dead text · Director keys act
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-51
+
+Steps: 1. Open /. 2. With a tape wired, press the arrow keys and Space.
+
+Expected: The playhead moves and playback toggles -- dead keys are flagged.
+
+---
+
+### T-3149 · Dead text · Loading overview resolves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-13
+
+Steps: 1. Open /. 2. Watch the Overview panel from the first paint.
+
+Expected: "Loading overview..." is replaced by real content -- a permanent loading line is flagged.
+
+---
+
+### T-3150 · Dead text · Loading positions resolves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-14
+
+Steps: 1. Open /. 2. Watch the Positions panel from the first paint.
+
+Expected: "Loading positions..." is replaced by real content -- a permanent loading line is flagged.
+
+---
