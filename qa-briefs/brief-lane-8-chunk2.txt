@@ -1,0 +1,603 @@
+QA LANE 8 — CHUNK 2 — cases T-1451–T-1500 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-1451 · Cockpit · Esc closes the palette
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette, then press Esc.
+
+Expected: The palette closes and focus returns to the page.
+
+---
+
+### T-1452 · Cockpit · Clicking outside closes the palette
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette, then click outside it.
+
+Expected: The palette closes without running any command.
+
+---
+
+### T-1453 · Cockpit · Arrow keys move through commands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette and press the down arrow twice.
+
+Expected: The highlight moves down the list with each press.
+
+---
+
+### T-1454 · Cockpit · Enter runs the highlighted command
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette, highlight a read-only command (e.g. refresh panels), and press Enter.
+
+Expected: The highlighted command runs and the palette closes.
+
+---
+
+### T-1455 · Cockpit · No-match search states itself
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette and type a nonsense string.
+
+Expected: The palette states plainly that no commands match.
+
+---
+
+### T-1456 · Cockpit · Palette is keyboard-trapped while open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette and press Tab repeatedly.
+
+Expected: Focus stays inside the palette until it closes.
+
+---
+
+### T-1457 · Cockpit · Palette opens from the keyboard on every route
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open /history. 2. Press Ctrl+K. 3. Repeat on /strategies and /settings.
+
+Expected: The palette opens on every route, not just the cockpit.
+
+---
+
+### T-1458 · Cockpit · Palette commands never place orders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Read the full command list.
+
+Expected: No command places an order directly — commands open panels, run checks or refresh.
+
+---
+
+### T-1459 · Cockpit · Palette labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette.
+
+Expected: The palette carries a "command cockpit" name so assistive tech announces it.
+
+---
+
+### T-1460 · Cockpit · Palette closes after a command runs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Run a read-only command from the palette.
+
+Expected: The palette closes by itself once the command runs.
+
+---
+
+### T-1461 · Cockpit · Sidebar Halt trading button opens the modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Halt trading" button in the sidebar. 3. Do not confirm.
+
+Expected: A modal asking "Halt all trading?" opens over the page.
+
+---
+
+### T-1462 · Cockpit · Halt modal title is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal.
+
+Expected: The title reads "Halt all trading?" with the engine-halt consequences explained beneath.
+
+---
+
+### T-1463 · Cockpit · Halt modal Cancel closes without halting
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal and click Cancel.
+
+Expected: The modal closes and trading keeps running — Cancel never halts.
+
+---
+
+### T-1464 · Cockpit · Halt modal Esc closes without halting
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal and press Esc.
+
+Expected: The modal closes and trading keeps running.
+
+---
+
+### T-1465 · Cockpit · Halt modal backdrop click closes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal and click the dark backdrop.
+
+Expected: The modal closes and trading keeps running.
+
+---
+
+### T-1466 · Cockpit · Halt modal focus starts on Cancel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal via keyboard.
+
+Expected: Focus lands on Cancel — the safe choice — not on confirm.
+
+---
+
+### T-1467 · Cockpit · Risk-control halt button present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the Risk control region.
+
+Expected: A second halt control sits in the risk-control panel.
+
+---
+
+### T-1468 · Cockpit · Risk-control halt shows the current halt state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Read the risk-control halt text.
+
+Expected: It states the halt state plainly, e.g. that halt is off and trading is running.
+
+---
+
+### T-1469 · Cockpit · "Nothing to resume" message when halt is off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Read the risk-control halt line.
+
+Expected: When halt is off it reads "Nothing to resume" so the tester knows there is nothing to undo.
+
+---
+
+### T-1470 · Cockpit · Sidebar halt button description warns
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar halt button's description.
+
+Expected: It warns "Stop all trading immediately" before the tester clicks anything.
+
+---
+
+### T-1471 · Cockpit · Halt modal lists what halt stops
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal and read its body.
+
+Expected: The modal names what halt stops: entries, the runner, queued signals.
+
+---
+
+### T-1472 · Cockpit · Halt modal lists what halt does not stop
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal and read its body.
+
+Expected: The modal states plainly what halt does not do, so expectations are set before confirming.
+
+---
+
+### T-1473 · Cockpit · Halt modal is keyboard-trappable while open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal and press Tab repeatedly.
+
+Expected: Focus stays inside the modal until it closes.
+
+---
+
+### T-1474 · Cockpit · Second halt click while modal open does nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal, then click the sidebar halt button again.
+
+Expected: No second modal opens — the one open modal keeps focus.
+
+---
+
+### T-1475 · Cockpit · Halt modal labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open the full cockpit page (/). 2. Open the halt modal.
+
+Expected: The modal is announced as the "Halt all trading?" dialog.
+
+---
+
+### T-1476 · Cockpit · Drills region present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-92
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the Risk control region.
+
+Expected: A DRILLS area with "Run halt drill" and "Run blackout drill" buttons is shown.
+
+---
+
+### T-1477 · Cockpit · Run halt drill button present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-92
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Run halt drill" button.
+
+Expected: The button is present in the DRILLS area.
+
+---
+
+### T-1478 · Cockpit · Halt drill runs read-only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-92
+
+Steps: 1. Open the full cockpit page (/). 2. Click "Run halt drill". 3. Read the drill output.
+
+Expected: The drill reports what a halt would do without halting anything — state is unchanged after the drill.
+
+---
+
+### T-1479 · Cockpit · Halt drill output is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-92
+
+Steps: 1. Open the full cockpit page (/). 2. Run the halt drill. 3. Read the output.
+
+Expected: The output describes each step of a halt in plain words, not codes.
+
+---
+
+### T-1480 · Cockpit · Run blackout drill button present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Run blackout drill" button.
+
+Expected: The button is present in the DRILLS area.
+
+---
+
+### T-1481 · Cockpit · Blackout drill runs read-only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Click "Run blackout drill". 3. Read the drill output.
+
+Expected: The drill reports what a blackout would do without blacking anything out.
+
+---
+
+### T-1482 · Cockpit · Blackout drill output is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Run the blackout drill. 3. Read the output.
+
+Expected: The output describes each blackout step in plain words.
+
+---
+
+### T-1483 · Cockpit · Drills re-runnable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-92
+
+Steps: 1. Open the full cockpit page (/). 2. Run the halt drill twice in a row.
+
+Expected: The drill runs cleanly both times — drills are repeatable.
+
+---
+
+### T-1484 · Cockpit · Drill output labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-92
+
+Steps: 1. Open the full cockpit page (/). 2. Run a drill.
+
+Expected: The drill output is announced as text so assistive tech reads the result.
+
+---
+
+### T-1485 · Cockpit · Drills do not need a code or PIN
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-92
+
+Steps: 1. Open the full cockpit page (/). 2. Run both drills.
+
+Expected: Neither drill asks for a PIN or approval code — they are safe rehearsals.
+
+---
+
+### T-1486 · Cockpit · CHECK RISK LIMITS heading present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the Risk control region.
+
+Expected: A heading reading "CHECK RISK LIMITS" is shown.
+
+---
+
+### T-1487 · Cockpit · Safe-to-run note present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Read the note under the CHECK RISK LIMITS heading.
+
+Expected: It states "Safe to run — changes nothing, places no orders."
+
+---
+
+### T-1488 · Cockpit · Risk check Symbol combobox options
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Open the Symbol combobox in the risk check.
+
+Expected: It offers GATEIO:BTCUSDT.P and GATEIO:ETHUSDT.P.
+
+---
+
+### T-1489 · Cockpit · Risk check Symbol defaults to BTC
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Read the Symbol combobox.
+
+Expected: It defaults to GATEIO:BTCUSDT.P.
+
+---
+
+### T-1490 · Cockpit · Risk check side radios LONG/SHORT
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Look at the SIDE group in the risk check.
+
+Expected: LONG and SHORT radios are present with LONG checked by default.
+
+---
+
+### T-1491 · Cockpit · Risk check RISK % spinbutton default 0.75
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Read the RISK % spinbutton.
+
+Expected: It defaults to 0.75, matching the per-trade cap.
+
+---
+
+### T-1492 · Cockpit · Risk check STOP % is required
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Read the STOP % label.
+
+Expected: It reads "STOP % (required)".
+
+---
+
+### T-1493 · Cockpit · Stop-less entry warning shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the description under STOP %.
+
+Expected: It warns "every entry needs a stop — a stop-less entry is vetoed."
+
+---
+
+### T-1494 · Cockpit · Run check button present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Run check" button.
+
+Expected: The button is present in the risk check panel.
+
+---
+
+### T-1495 · Cockpit · Run check with valid inputs passes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Leave the defaults (BTC, LONG, 0.75% risk, 1% stop). 3. Click "Run check".
+
+Expected: The check reports a pass — the example trade fits inside the caps.
+
+---
+
+### T-1496 · Cockpit · Run check over the per-trade cap fails
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Set RISK % to 5. 3. Click "Run check".
+
+Expected: The check fails, naming the 0.75% per-trade cap as the breached rule.
+
+---
+
+### T-1497 · Cockpit · Run check with no stop fails
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Clear the STOP % field. 3. Click "Run check".
+
+Expected: The check fails on the required-stop rule — nothing is placed either way.
+
+---
+
+### T-1498 · Cockpit · Risk check result names the breached rule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Run a failing check. 3. Read the result.
+
+Expected: The result names the exact rule that failed, not a generic "failed".
+
+---
+
+### T-1499 · Cockpit · Risk check never places an order
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Run the check three times. 3. Check the receipt timeline.
+
+Expected: No receipt appears — the check is pure arithmetic, never an order.
+
+---
+
+### T-1500 · Cockpit · Cap bars PER_TRADE 0.75% shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Read the cap bars under the risk check.
+
+Expected: The PER_TRADE bar reads 0.75%.
+
+---
