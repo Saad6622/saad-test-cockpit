@@ -1,0 +1,806 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 8** — cases **T-1401–T-1600** — Section K (T-1401–T-1520) + Section L (T-1521–T-1600)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR steered chunks of 50. Below are cases T-1401–T-1450 (full text). Run these 50 now, in order. When you finish all 50, the coordinator will steer you the next 50. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- **T-1411** — Tick arm checkbox — ARMS ticket
+- **T-1412** — Tick arm checkbox — ARMS ticket
+- **T-1413** — Tick arm checkbox — ARMS ticket
+- **T-1528** — Click Check now — RUNS runner check; updates last-check
+- **T-1529** — Click Check now twice — RUNS runner checks
+- **T-1580** — Enable strategy — ENABLES strategy
+- **T-1581** — Disable strategy — DISABLES strategy
+- **T-1582** — Disable strategy + Check now — DISABLES strategy; RUNS check
+- **T-1584** — Keyboard toggle — SETS strategy toggle state
+- **T-1587** — Rapid toggling — SETS strategy toggle state
+- **T-1588** — Check now + mid-check toggle — RUNS check; SETS toggle
+- **T-1589** — Disable EVERY strategy — DISABLES all strategies (restore: re-enable)
+- **T-1590** — Toggle strategy — SETS strategy toggle state
+- **T-1591** — Check now — RUNS runner check
+- **T-1592** — Check now — RUNS runner check; updates last-check
+- **T-1593** — Check now — RUNS runner check
+- **T-1594** — Check now during feed outage — RUNS runner check
+- **T-1595** — Check now twice — RUNS runner checks
+- **T-1596** — Check now — RUNS runner check
+- **T-1597** — Disable strategy + Check now — DISABLES; RUNS check
+- **T-1598** — Check now during halt — RUNS runner check
+- **T-1599** — Check now during blackout — RUNS runner check
+- **T-1600** — Check now via keyboard — RUNS runner check
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 8 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 8 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+re-enable any strategies disabled (esp. T-1589 all-off); ticket disarmed.
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 8 COMPLETE — T-1401–T-1600
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-1401–T-1450) — full text
+
+### T-1401 · Cockpit · Protection BREAKEVEN TRIGGER % present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the PROTECTION region. 3. Find the breakeven trigger field.
+
+Expected: The BREAKEVEN TRIGGER % spinbutton is present.
+
+---
+
+---
+
+### T-1402 · Cockpit · Protection TRAIL OFFSET % present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the PROTECTION region. 3. Find the trail offset field.
+
+Expected: The TRAIL OFFSET % spinbutton is present.
+
+---
+
+---
+
+### T-1403 · Cockpit · Protection TRAIL STEP % present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the PROTECTION region. 3. Find the trail step field.
+
+Expected: The TRAIL STEP % spinbutton is present.
+
+---
+
+---
+
+### T-1404 · Cockpit · Estimates region shows notional, margin, taker fee
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the ESTIMATES region.
+
+Expected: Est. notional, Est. margin and Est. taker fee terms are all shown.
+
+---
+
+---
+
+### T-1405 · Cockpit · Estimates cite the Gate.io fee note
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the fee note under ESTIMATES.
+
+Expected: It cites Gate.io USDT-M futures VIP0, maker 0.020% / taker 0.050%, matching the Gate.io fee caps.
+
+---
+
+---
+
+### T-1406 · Cockpit · Ticket preview JSON block present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the "Preview — nothing is sent" region.
+
+Expected: A JSON block shows symbol, side, qty_mode and qty_value, updating as the ticket is edited.
+
+---
+
+---
+
+### T-1407 · Cockpit · Preview heading promises nothing is sent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the preview region heading.
+
+Expected: It reads "Preview — nothing is sent", and the helper text repeats that nothing is sent until confirmation.
+
+---
+
+---
+
+### T-1408 · Cockpit · Arm checkbox present with plain label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Find the arm checkbox below the preview.
+
+Expected: It reads "I’ve reviewed every leg — arm the ticket".
+
+---
+
+---
+
+### T-1409 · Cockpit · Preview button disabled before arming
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Look at the "CONFIRM ABOVE — THEN PREVIEW" button before ticking the arm box.
+
+Expected: The preview button is disabled until the arm checkbox is ticked.
+
+---
+
+---
+
+### T-1410 · Cockpit · Live-fire button disabled before arming
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Look at the "CONFIRM ABOVE — THEN FIRE LIVE" button before ticking the arm box.
+
+Expected: The red live-fire button is disabled until the ticket is armed.
+
+---
+
+---
+
+### T-1411 · Cockpit · Arming enables the preview button only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Tick the "I’ve reviewed every leg — arm the ticket" checkbox. 3. Read both buttons.
+
+Expected: The PREVIEW button enables; the tester stops here and never touches the live-fire button.
+
+---
+
+---
+
+### T-1412 · Cockpit · Preview posts to the preview endpoint only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Arm the ticket. 3. Read the preview button's description.
+
+Expected: Its description states it posts the ticket JSON to the preview endpoint for validation — no order is placed, ever.
+
+---
+
+---
+
+### T-1413 · Cockpit · Disarming is one untick
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Tick the arm checkbox, then untick it. 3. Read both buttons.
+
+Expected: Both buttons return to disabled — disarming is one untick.
+
+---
+
+---
+
+### T-1414 · Cockpit · Live-fire button description warns it is the real thing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the live-fire button's description without clicking it.
+
+Expected: It warns the red button fires through the live order path with PIN-gated confirm, so a real order can result — the tester never clicks it.
+
+---
+
+---
+
+### T-1415 · Cockpit · Ticket edits update the preview JSON live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Change the AMOUNT spinbutton. 3. Watch the preview JSON.
+
+Expected: The preview JSON's qty_value updates immediately to match the edit.
+
+---
+
+---
+
+### T-1416 · Cockpit · Ticket keeps values across panel refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Edit the ticket amount. 3. Click "Refresh panels".
+
+Expected: The ticket keeps the edited values — a refresh does not wipe the draft.
+
+---
+
+---
+
+### T-1417 · Cockpit · Ticket SYMBOL textbox accepts typing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Click the SYMBOL textbox and type a symbol. 3. Read the preview JSON.
+
+Expected: The typed symbol appears in the preview JSON's symbol field.
+
+---
+
+---
+
+### T-1418 · Cockpit · Ticket LIMIT type reveals a limit price field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Select LIMIT in the TYPE group.
+
+Expected: A limit price field appears for the limit order.
+
+---
+
+---
+
+### T-1419 · Cockpit · Ticket region labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Check the SmartTrade ticket region.
+
+Expected: The region carries the "SmartTrade ticket" name for assistive tech.
+
+---
+
+---
+
+### T-1420 · Cockpit · Take-profit leg arm markers readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the arm markers beside the take-profit legs.
+
+Expected: Armed legs show their ARMED marker and disarmed legs show none, all in plain text.
+
+---
+
+---
+
+### T-1421 · Cockpit · Estimates update when the ticket changes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Change the ticket amount. 3. Re-read the ESTIMATES region.
+
+Expected: Est. notional, margin and taker fee update to match the new amount.
+
+---
+
+---
+
+### T-1422 · Cockpit · Ticket preview shows the venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the preview JSON.
+
+Expected: The venue is visible in the preview so the tester always knows where the ticket would route.
+
+---
+
+---
+
+### T-1423 · Cockpit · Ticket AMOUNT rejects a negative number
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Type -1 into the AMOUNT spinbutton. 3. Read the preview.
+
+Expected: A negative amount is refused — the ticket never arms a negative size.
+
+---
+
+---
+
+### T-1424 · Cockpit · Ticket stop percent zero is allowed with exits
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Set STOP % to 0 while TP1 stays armed. 3. Read the ticket rule.
+
+Expected: The ticket arms — a zero stop is fine when take-profits are present.
+
+---
+
+---
+
+### T-1425 · Cockpit · Ticket region does not overlap the receipt timeline
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll between the ticket and the receipt timeline.
+
+Expected: The ticket panel never overlaps the receipts beneath it at desktop width.
+
+---
+
+---
+
+### T-1426 · Cockpit · Trading calendar CSV download present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the Journal region. 3. Find the "Trading calendar (CSV)" link.
+
+Expected: A link reading "Trading calendar (CSV)" is present.
+
+---
+
+---
+
+### T-1427 · Cockpit · Trading calendar CSV downloads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Trading calendar (CSV)" link. 3. Open the downloaded file.
+
+Expected: A CSV file downloads and opens with calendar rows — it is a file, not a page navigation.
+
+---
+
+---
+
+### T-1428 · Cockpit · Tax report 2026 CSV download present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-74
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Tax report 2026 (CSV)" link in the Journal region.
+
+Expected: A link reading "Tax report 2026 (CSV)" is present.
+
+---
+
+---
+
+### T-1429 · Cockpit · Tax report CSV downloads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-74
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Tax report 2026 (CSV)" link. 3. Open the downloaded file.
+
+Expected: A CSV file downloads and opens with tax rows.
+
+---
+
+---
+
+### T-1430 · Cockpit · Audit log jsonl download present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-73
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Audit log (jsonl)" link in the Journal region.
+
+Expected: A link reading "Audit log (jsonl)" is present.
+
+---
+
+---
+
+### T-1431 · Cockpit · Audit log jsonl downloads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-73
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Audit log (jsonl)" link. 3. Open the downloaded file.
+
+Expected: A jsonl file downloads with one JSON object per line.
+
+---
+
+---
+
+### T-1432 · Cockpit · Journal KPI NET P&L readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the NET P&L term in the Journal region.
+
+Expected: The NET P&L value (e.g. -$0.0215) is shown with its definition.
+
+---
+
+---
+
+### T-1433 · Cockpit · Journal KPIs show gross, fees and expectancy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the GROSS P&L, FEES and EXPECTANCY terms.
+
+Expected: Gross P&L, fees and per-trade expectancy (net and gross) are all shown in plain words.
+
+---
+
+---
+
+### T-1434 · Cockpit · Notes searchbox filters notes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Type "verify-probe" into the Notes searchbox. 3. Read the notes list.
+
+Expected: Only matching notes remain visible.
+
+---
+
+---
+
+### T-1435 · Cockpit · Filter by tag combobox present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Open the "Filter by tag" combobox in the Notes region.
+
+Expected: The combobox lists the tags in use.
+
+---
+
+---
+
+### T-1436 · Cockpit · ALERT ID textbox present for a new note
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "ALERT ID (optional)" textbox in the Notes composer.
+
+Expected: The textbox is present with a 0/64 character counter.
+
+---
+
+---
+
+### T-1437 · Cockpit · NOTE textbox has a 4000 character limit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "NOTE" textbox. 3. Read its counter.
+
+Expected: The counter reads 0/4000 and updates as the tester types.
+
+---
+
+---
+
+### T-1438 · Cockpit · TAGS textbox accepts comma-separated tags
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "TAGS (comma-separated, optional)" textbox.
+
+Expected: The textbox accepts comma-separated tags with a 0/200 counter.
+
+---
+
+---
+
+### T-1439 · Cockpit · Save note button present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Save note" button in the Notes composer.
+
+Expected: The button is present beneath the composer textboxes.
+
+---
+
+---
+
+### T-1440 · Cockpit · Existing note verify-probe-117 listed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Read the notes list.
+
+Expected: The note "verify-probe-117" is listed with its tag and timestamp.
+
+---
+
+---
+
+### T-1441 · Cockpit · Notes list count is shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Read the notes list heading.
+
+Expected: The count (e.g. "1 note") is shown so the tester knows the list is complete.
+
+---
+
+---
+
+### T-1442 · Cockpit · Empty search shows a no-match message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-96
+
+Steps: 1. Open the full cockpit page (/). 2. Type a nonsense string into the Notes searchbox.
+
+Expected: The list states plainly that no notes match, instead of going blank.
+
+---
+
+---
+
+### T-1443 · Cockpit · Journal region labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Check the Journal region.
+
+Expected: The region carries the "Journal" name for assistive tech.
+
+---
+
+---
+
+### T-1444 · Cockpit · Downloads do not navigate away
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-73
+
+Steps: 1. Open the full cockpit page (/). 2. Click each of the three download links in turn.
+
+Expected: Every click downloads a file and the page stays exactly where it was.
+
+---
+
+---
+
+### T-1445 · Cockpit · Copy leaderboard badge visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-84
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the copy leaderboard card.
+
+Expected: The badge (e.g. SOAKING) and its meaning legend are shown in plain words.
+
+---
+
+---
+
+### T-1446 · Cockpit · Open command cockpit button present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Open command cockpit (Ctrl or Cmd K)" button in the sidebar.
+
+Expected: The button is present with its keyboard shortcut in the label.
+
+---
+
+---
+
+### T-1447 · Cockpit · Ctrl+K opens the command palette
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Press Ctrl+K (Cmd+K on Mac).
+
+Expected: The command palette opens over the page.
+
+---
+
+---
+
+### T-1448 · Cockpit · Clicking the button opens the palette
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Open command cockpit" button.
+
+Expected: The palette opens exactly as it does with the keyboard shortcut.
+
+---
+
+---
+
+### T-1449 · Cockpit · Palette lists the available commands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the command palette. 3. Read the list.
+
+Expected: Every command is listed with its name in plain words.
+
+---
+
+---
+
+### T-1450 · Cockpit · Typing filters the command list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open the full cockpit page (/). 2. Open the palette and type "halt".
+
+Expected: The list narrows to matching commands as the tester types.
+
+---

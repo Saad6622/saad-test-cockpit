@@ -1,0 +1,786 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 10** — cases **T-1801–T-2000** — Section M (T-1801–T-1870) + Section N (T-1871–T-2000)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR steered chunks of 50. Below are cases T-1801–T-1850 (full text). Run these 50 now, in order. When you finish all 50, the coordinator will steer you the next 50. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- **T-1966** — Flip topic + Save — SAVES notification topics
+- **T-1967** — Click Save — SAVES notification settings
+- **T-1999** — Send preview message — SENDS real Telegram message to Saad's own account
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 10 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 10 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+notification topics restored to start-of-run values.
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 10 COMPLETE — T-1801–T-2000
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-1801–T-1850) — full text
+
+### T-1801 · Settings · Settings group Copy trading Read-only opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Click the "Copy trading Read-only" group.
+
+Expected: The "Copy trading Read-only" group expands and shows its settings.
+
+---
+
+---
+
+### T-1802 · Settings · Settings group Copy trading Read-only closes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+
+Steps: 1. Open the /settings page with "Copy trading Read-only" expanded. 2. Click the group heading again.
+
+Expected: The group collapses and its settings hide.
+
+---
+
+---
+
+### T-1803 · Settings · Settings group Copy trading Read-only heading and slug
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Read the group heading.
+
+Expected: The heading reads "Copy trading Read-only" and its anchor slug is "copy-trading".
+
+---
+
+---
+
+### T-1804 · Settings · Settings group Copy trading Read-only badge readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Read the badge on the "Copy trading Read-only" group.
+
+Expected: The badge (e.g. Sealed) is readable in plain words.
+
+---
+
+---
+
+### T-1805 · Settings · Settings group Copy trading Read-only shows current values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Expand "Copy trading Read-only". 3. Read the current values.
+
+Expected: Current values are shown (Copy trading read-only settings).
+
+---
+
+---
+
+### T-1806 · Settings · Settings group Copy trading Read-only JSON disclosure expands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Expand "Copy trading Read-only". 3. Click its JSON disclosure.
+
+Expected: The raw JSON for the group is shown, matching the displayed values.
+
+---
+
+---
+
+### T-1807 · Settings · Settings group Copy trading Read-only JSON disclosure collapses
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-75
+
+Steps: 1. Open the /settings page with the "Copy trading Read-only" JSON disclosure open. 2. Click it again.
+
+Expected: The JSON hides again.
+
+---
+
+---
+
+### T-1808 · Settings · Group Copy trading Read-only values editable inline
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Expand "Copy trading Read-only". 3. Read the editing affordance.
+
+Expected: The group explains how its values are changed (inline edit or its own control).
+
+---
+
+---
+
+### T-1809 · Settings · Group Copy trading Read-only rollback read-through
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Expand "Copy trading Read-only". 3. Read the rollback text.
+
+Expected: The group explains how to roll its values back to the previous version.
+
+---
+
+---
+
+### T-1810 · Settings · Settings group Copy trading Read-only labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+
+Steps: 1. Open the /settings page. 2. Check the "Copy trading Read-only" group.
+
+Expected: The group carries its "Copy trading Read-only" name for assistive tech.
+
+---
+
+---
+
+### T-1811 · Settings · Settings group Command palette opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Click the "Command palette" group.
+
+Expected: The "Command palette" group expands and shows its settings.
+
+---
+
+---
+
+### T-1812 · Settings · Settings group Command palette closes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-76
+
+Steps: 1. Open the /settings page with "Command palette" expanded. 2. Click the group heading again.
+
+Expected: The group collapses and its settings hide.
+
+---
+
+---
+
+### T-1813 · Settings · Settings group Command palette heading and slug
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Read the group heading.
+
+Expected: The heading reads "Command palette" and its anchor slug is "command-palette".
+
+---
+
+---
+
+### T-1814 · Settings · Settings group Command palette badge readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Read the badge on the "Command palette" group.
+
+Expected: The badge (e.g. Sealed) is readable in plain words.
+
+---
+
+---
+
+### T-1815 · Settings · Settings group Command palette shows current values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Expand "Command palette". 3. Read the current values.
+
+Expected: Current values are shown (Command palette settings).
+
+---
+
+---
+
+### T-1816 · Settings · Settings group Command palette JSON disclosure expands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Expand "Command palette". 3. Click its JSON disclosure.
+
+Expected: The raw JSON for the group is shown, matching the displayed values.
+
+---
+
+---
+
+### T-1817 · Settings · Settings group Command palette JSON disclosure collapses
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-76
+
+Steps: 1. Open the /settings page with the "Command palette" JSON disclosure open. 2. Click it again.
+
+Expected: The JSON hides again.
+
+---
+
+---
+
+### T-1818 · Settings · Group Command palette values editable inline
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Expand "Command palette". 3. Read the editing affordance.
+
+Expected: The group explains how its values are changed (inline edit or its own control).
+
+---
+
+---
+
+### T-1819 · Settings · Group Command palette rollback read-through
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Expand "Command palette". 3. Read the rollback text.
+
+Expected: The group explains how to roll its values back to the previous version.
+
+---
+
+---
+
+### T-1820 · Settings · Settings group Command palette labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-76
+
+Steps: 1. Open the /settings page. 2. Check the "Command palette" group.
+
+Expected: The group carries its "Command palette" name for assistive tech.
+
+---
+
+---
+
+### T-1821 · Settings · Settings group Replay opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Click the "Replay" group.
+
+Expected: The "Replay" group expands and shows its settings.
+
+---
+
+---
+
+### T-1822 · Settings · Settings group Replay closes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-77
+
+Steps: 1. Open the /settings page with "Replay" expanded. 2. Click the group heading again.
+
+Expected: The group collapses and its settings hide.
+
+---
+
+---
+
+### T-1823 · Settings · Settings group Replay heading and slug
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Read the group heading.
+
+Expected: The heading reads "Replay" and its anchor slug is "replay".
+
+---
+
+---
+
+### T-1824 · Settings · Settings group Replay badge readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Read the badge on the "Replay" group.
+
+Expected: The badge (e.g. Sealed) is readable in plain words.
+
+---
+
+---
+
+### T-1825 · Settings · Settings group Replay shows current values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Expand "Replay". 3. Read the current values.
+
+Expected: Current values are shown (Replay settings).
+
+---
+
+---
+
+### T-1826 · Settings · Settings group Replay JSON disclosure expands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Expand "Replay". 3. Click its JSON disclosure.
+
+Expected: The raw JSON for the group is shown, matching the displayed values.
+
+---
+
+---
+
+### T-1827 · Settings · Settings group Replay JSON disclosure collapses
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-77
+
+Steps: 1. Open the /settings page with the "Replay" JSON disclosure open. 2. Click it again.
+
+Expected: The JSON hides again.
+
+---
+
+---
+
+### T-1828 · Settings · Group Replay values editable inline
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Expand "Replay". 3. Read the editing affordance.
+
+Expected: The group explains how its values are changed (inline edit or its own control).
+
+---
+
+---
+
+### T-1829 · Settings · Group Replay rollback read-through
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Expand "Replay". 3. Read the rollback text.
+
+Expected: The group explains how to roll its values back to the previous version.
+
+---
+
+---
+
+### T-1830 · Settings · Settings group Replay labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-77
+
+Steps: 1. Open the /settings page. 2. Check the "Replay" group.
+
+Expected: The group carries its "Replay" name for assistive tech.
+
+---
+
+---
+
+### T-1831 · Settings · Settings group Economic calendar opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the /settings page. 2. Click the "Economic calendar" group.
+
+Expected: The "Economic calendar" group expands and shows its settings.
+
+---
+
+---
+
+### T-1832 · Settings · Settings group Economic calendar closes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the /settings page with "Economic calendar" expanded. 2. Click the group heading again.
+
+Expected: The group collapses and its settings hide.
+
+---
+
+---
+
+### T-1833 · Settings · Settings group Economic calendar heading and slug
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the /settings page. 2. Read the group heading.
+
+Expected: The heading reads "Economic calendar" and its anchor slug is "economic-calendar".
+
+---
+
+---
+
+### T-1834 · Settings · Settings group Economic calendar badge readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-78
+
+Steps: 1. Open the /settings page. 2. Read the badge on the "Economic calendar" group.
+
+Expected: The badge (e.g. Sealed) is readable in plain words.
+
+---
+
+---
+
+### T-1835 · Settings · Settings group Economic calendar shows current values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the /settings page. 2. Expand "Economic calendar". 3. Read the current values.
+
+Expected: Current values are shown (Economic calendar settings).
+
+---
+
+---
+
+### T-1836 · Settings · Settings group Economic calendar JSON disclosure expands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-78
+
+Steps: 1. Open the /settings page. 2. Expand "Economic calendar". 3. Click its JSON disclosure.
+
+Expected: The raw JSON for the group is shown, matching the displayed values.
+
+---
+
+---
+
+### T-1837 · Settings · Settings group Economic calendar JSON disclosure collapses
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-78
+
+Steps: 1. Open the /settings page with the "Economic calendar" JSON disclosure open. 2. Click it again.
+
+Expected: The JSON hides again.
+
+---
+
+---
+
+### T-1838 · Settings · Sealed group Economic calendar shows the 3-step read-through
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the /settings page. 2. Expand "Economic calendar". 3. Read the sealed-value region.
+
+Expected: It shows the 3-step read-through: request a code, read it back, enter it — the value is never shown directly.
+
+---
+
+---
+
+### T-1839 · Settings · Sealed group Economic calendar step 1 issues a one-time code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+
+Steps: 1. Open the /settings page. 2. Expand "Economic calendar". 3. Start the read-through and read step 1 output, then stop.
+
+Expected: Step 1 issues a one-time code and states it expires in 10 minutes.
+
+---
+
+---
+
+### T-1840 · Settings · Settings group Economic calendar labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-78
+
+Steps: 1. Open the /settings page. 2. Check the "Economic calendar" group.
+
+Expected: The group carries its "Economic calendar" name for assistive tech.
+
+---
+
+---
+
+### T-1841 · Settings · Settings group Halt trading opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-79
+
+Steps: 1. Open the /settings page. 2. Click the "Halt trading" group.
+
+Expected: The "Halt trading" group expands and shows its settings.
+
+---
+
+---
+
+### T-1842 · Settings · Settings group Halt trading closes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-79
+
+Steps: 1. Open the /settings page with "Halt trading" expanded. 2. Click the group heading again.
+
+Expected: The group collapses and its settings hide.
+
+---
+
+---
+
+### T-1843 · Settings · Settings group Halt trading heading and slug
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-79
+
+Steps: 1. Open the /settings page. 2. Read the group heading.
+
+Expected: The heading reads "Halt trading" and its anchor slug is "halt-trading".
+
+---
+
+---
+
+### T-1844 · Settings · Settings group Halt trading badge readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-79
+
+Steps: 1. Open the /settings page. 2. Read the badge on the "Halt trading" group.
+
+Expected: The badge (e.g. Sealed) is readable in plain words.
+
+---
+
+---
+
+### T-1845 · Settings · Settings group Halt trading shows current values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-79
+
+Steps: 1. Open the /settings page. 2. Expand "Halt trading". 3. Read the current values.
+
+Expected: Current values are shown (Halt trading settings).
+
+---
+
+---
+
+### T-1846 · Settings · Settings group Halt trading JSON disclosure expands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-79
+
+Steps: 1. Open the /settings page. 2. Expand "Halt trading". 3. Click its JSON disclosure.
+
+Expected: The raw JSON for the group is shown, matching the displayed values.
+
+---
+
+---
+
+### T-1847 · Settings · Settings group Halt trading JSON disclosure collapses
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-79
+
+Steps: 1. Open the /settings page with the "Halt trading" JSON disclosure open. 2. Click it again.
+
+Expected: The JSON hides again.
+
+---
+
+---
+
+### T-1848 · Settings · Sealed group Halt trading shows the 3-step read-through
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-79
+
+Steps: 1. Open the /settings page. 2. Expand "Halt trading". 3. Read the sealed-value region.
+
+Expected: It shows the 3-step read-through: request a code, read it back, enter it — the value is never shown directly.
+
+---
+
+---
+
+### T-1849 · Settings · Sealed group Halt trading step 1 issues a one-time code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+
+Steps: 1. Open the /settings page. 2. Expand "Halt trading". 3. Start the read-through and read step 1 output, then stop.
+
+Expected: Step 1 issues a one-time code and states it expires in 10 minutes.
+
+---
+
+---
+
+### T-1850 · Settings · Settings group Halt trading labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-79
+
+Steps: 1. Open the /settings page. 2. Check the "Halt trading" group.
+
+Expected: The group carries its "Halt trading" name for assistive tech.
+
+---

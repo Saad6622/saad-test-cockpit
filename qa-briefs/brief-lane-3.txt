@@ -1,0 +1,611 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 3** — cases **T-401–T-600** — Section C (T-401–T-460) + Section D (T-461–T-600)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR steered chunks of 50. Below are cases T-401–T-450 (full text). Run these 50 now, in order. When you finish all 50, the coordinator will steer you the next 50. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- **T-424** — Accepted key-slot save — SAVES key to slot
+- **T-425** — Accepted key-slot save — SAVES key to slot
+- **T-428** — Accepted key-slot save — SAVES key to slot
+- **T-434** — Accepted key-slot save — SAVES key to slot
+- **T-435** — Accepted key-slot save — SAVES key to slot
+- **T-437** — Accepted key-slot save — SAVES key to slot
+- **T-438** — Accepted key-slot save — SAVES key to slot
+- **T-449** — Replace slot key + save — SAVES key to slot
+- **T-455** — Confirmed slot delete — DELETES key from slot
+- **T-456** — Confirmed slot delete — DELETES key from slot
+- **T-466** — Save bot secret — SAVES secret
+- **T-489** — Toggle + save notification — SAVES setting
+- **T-490** — Toggle + save notification — SAVES setting
+- **T-515** — Enter submits chat ID — SAVES chat ID
+- **T-543** — Tick arm + preview — ARMS ticket
+- **T-544** — Tick arm + preview — ARMS ticket
+- **T-550** — Tick arm + preview — ARMS ticket
+- **T-551** — Tick arm + preview — ARMS ticket
+- **T-554** — Tick arm + preview — ARMS ticket
+- **T-561** — Tick arm + preview — ARMS ticket
+- **T-569** — Tick arm + preview — ARMS ticket
+- **T-570** — Tick arm + preview — ARMS ticket
+- **T-571** — Tick arm + preview — ARMS ticket
+- **T-572** — Tick arm + preview — ARMS ticket
+- **T-577** — Tick arm + preview — ARMS ticket
+- **T-581** — Tick arm + preview — ARMS ticket
+- **T-585** — Tick arm + preview — ARMS ticket
+- **T-592** — Tick arm + preview — ARMS ticket
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 3 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 3 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+slot edit/delete cases (T-449/T-455/T-456) operate ONLY on slots this lane created (e.g. 'gate2' from T-424) — NEVER edit or delete a pre-existing slot; if a case needs 'a saved slot', create one first via the T-424 pattern. Before T-515, record the current Chat ID from the UI and restore it after the case. Before T-889/T-891, record the current ntfy/Apprise URLs; T-898's clear is restored by re-saving the recorded URLs. Arm-checkbox ticks: leave the ticket disarmed.
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 3 COMPLETE — T-401–T-600
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-401–T-450) — full text
+
+### T-401 · Keys · Form shows Exchange field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Read the form labels. 3. Find the exchange selector.
+Expected: An "Exchange" dropdown or selector is present in the form.
+
+---
+
+### T-402 · Keys · Form shows Alternate account field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Read the form labels. 3. Find the alternate account input.
+Expected: An "Alternate account" field is present in the form.
+
+---
+
+### T-403 · Keys · Form shows Exchange Key field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Read the form labels. 3. Find the exchange key input.
+Expected: An "Exchange Key" field is present in the form.
+
+---
+
+### T-404 · Keys · Form shows Exchange Secret field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Read the form labels. 3. Find the exchange secret input.
+Expected: An "Exchange Secret" field is present with the rule "Paste the full value — anything shorter than 8 characters is rejected."
+
+---
+
+### T-405 · Keys · Form shows Passphrase field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Read the form labels. 3. Find the passphrase input.
+Expected: A "Passphrase" field is present with the note "only if the exchange needs one."
+
+---
+
+### T-406 · Keys · Exchange dropdown lists Gate.io
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+Steps: 1. Open /keys and click "Add slot". 2. Click the Exchange dropdown to open it. 3. Read the options.
+Expected: "Gate.io" appears as a selectable option in the Exchange dropdown.
+
+---
+
+### T-407 · Keys · Exchange dropdown lists Bitget
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+Steps: 1. Open /keys and click "Add slot". 2. Click the Exchange dropdown to open it. 3. Read the options.
+Expected: "Bitget" appears as a selectable option in the Exchange dropdown.
+
+---
+
+### T-408 · Keys · Exchange dropdown lists WEEX
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+Steps: 1. Open /keys and click "Add slot". 2. Click the Exchange dropdown to open it. 3. Read the options.
+Expected: "WEEX" appears as a selectable option in the Exchange dropdown.
+
+---
+
+### T-409 · Keys · Select Gate.io in the dropdown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Open the Exchange dropdown. 3. Click "Gate.io".
+Expected: The Exchange field shows Gate.io as the selected value.
+
+---
+
+### T-410 · Keys · Select Bitget in the dropdown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Open the Exchange dropdown. 3. Click "Bitget".
+Expected: The Exchange field shows Bitget as the selected value.
+
+---
+
+### T-411 · Keys · Select WEEX in the dropdown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Open the Exchange dropdown. 3. Click "WEEX".
+Expected: The Exchange field shows WEEX as the selected value.
+
+---
+
+### T-412 · Keys · Connection-check note visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Scan the form text. 3. Find the connection check note.
+Expected: The note "Connection check currently works for Gate.io, Bitget, WEEX." is visible near the Exchange field.
+
+---
+
+### T-413 · Keys · Telegram token note visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys. 2. Scan the page text. 3. Find the note about Telegram tokens.
+Expected: The note "A Telegram bot token is not an exchange key — connect it on the Notifications page instead." is visible.
+
+---
+
+### T-414 · Keys · Add slot with all valid inputs succeeds
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+Steps: 1. Open /keys and click "Add slot". 2. Fill in: Slot name "gate_main", Label "Gate.io", Exchange "Gate.io", Exchange Key with a valid key, Exchange Secret with 10+ characters, leave Alternate account and Passphrase empty. 3. Click the save button.
+Expected: The slot is saved successfully with no error.
+
+---
+
+### T-415 · Keys · Success message shown after save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and add a slot with valid inputs. 2. Click the save button. 3. Watch for confirmation.
+Expected: A clear success message confirms the slot was saved.
+
+---
+
+### T-416 · Keys · New slot appears in the Slots list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and add a slot with valid inputs. 2. Save the form. 3. Look at the Slots list.
+Expected: The new slot appears in the Slots list immediately after saving.
+
+---
+
+### T-417 · Keys · Saved slot shows its label in the list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and add a slot with Label "My Gate Key". 2. Save the form. 3. Find the new entry in the Slots list.
+Expected: The new entry in the Slots list shows the label "My Gate Key".
+
+---
+
+### T-418 · Keys · Form closes after save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and add a slot with valid inputs. 2. Click the save button. 3. Look at the form area.
+Expected: The add-slot form closes (or clears) after a successful save; the Slots list is the focus again.
+
+---
+
+### T-419 · Keys · Duplicate slot name refused with clear error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and save a slot named "gate_main". 2. Click "Add slot" again. 3. Enter slot name "gate_main" with other valid inputs and save.
+Expected: The save is refused with a clear error stating the name is already taken.
+
+---
+
+### T-420 · Keys · Duplicate error names the conflict
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and save a slot named "bitget_main". 2. Try to add another slot named "bitget_main". 3. Read the error message.
+Expected: The error message clearly explains that the slot name is already in use and suggests choosing a different name.
+
+---
+
+### T-421 · Keys · Slot name with uppercase refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Enter slot name "GateMain" with other valid inputs. 3. Click save.
+Expected: The save is refused with a clear error that only small letters, numbers, and underscores are allowed.
+
+---
+
+### T-422 · Keys · Slot name with spaces refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Enter slot name "gate main" with other valid inputs. 3. Click save.
+Expected: The save is refused with a clear error about the naming rule.
+
+---
+
+### T-423 · Keys · Slot name with symbols refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Enter slot name "gate-main!" with other valid inputs. 3. Click save.
+Expected: The save is refused with a clear error about the naming rule.
+
+---
+
+### T-424 · Keys · Slot name with numbers accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Enter slot name "gate2" with other valid inputs. 3. Click save.
+Expected: The slot saves successfully; numbers are accepted in slot names.
+
+---
+
+### T-425 · Keys · Slot name with underscores accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Enter slot name "gate_main_key" with other valid inputs. 3. Click save.
+Expected: The slot saves successfully; underscores are accepted in slot names.
+
+---
+
+### T-426 · Keys · Secret shorter than 8 characters rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Enter a valid slot name, label, exchange, and key, but type "abc" as the Exchange Secret. 3. Click save.
+Expected: The save is refused with a clear error that the secret is too short.
+
+---
+
+### T-427 · Keys · Secret of exactly 7 characters rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all fields validly except Exchange Secret, which gets exactly 7 characters ("abcdefg"). 3. Click save.
+Expected: The save is refused; the 8-character minimum is enforced at the boundary.
+
+---
+
+### T-428 · Keys · Secret of exactly 8 characters accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all fields validly with Exchange Secret of exactly 8 characters ("abcdefgh"). 3. Click save.
+Expected: The slot saves successfully; an 8-character secret meets the minimum.
+
+---
+
+### T-429 · Keys · Empty secret rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all fields validly but leave Exchange Secret empty. 3. Click save.
+Expected: The save is refused with a clear error that the secret is required.
+
+---
+
+### T-430 · Keys · Empty exchange key rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all fields validly but leave Exchange Key empty. 3. Click save.
+Expected: The save is refused with a clear error that the exchange key is required.
+
+---
+
+### T-431 · Keys · Empty slot name rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all fields validly but leave Slot name empty. 3. Click save.
+Expected: The save is refused with a clear error that a slot name is required.
+
+---
+
+### T-432 · Keys · Whitespace-only slot name rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Type only spaces into the Slot name field, with other fields valid. 3. Click save.
+Expected: The save is refused; a name of only spaces is not accepted as valid.
+
+---
+
+### T-433 · Keys · Empty label behavior
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all fields validly but leave Label empty. 3. Click save.
+Expected: Either the save is refused with a clear "label required" error, or it succeeds and the Slots list shows the slot name as its display name; the behavior is consistent and clear.
+
+---
+
+### T-434 · Keys · Alternate account optional, save without it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all required fields, leaving Alternate account empty. 3. Click save.
+Expected: The slot saves successfully without an alternate account value.
+
+---
+
+### T-435 · Keys · Save with alternate account filled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all required fields and type "sub1" in Alternate account. 3. Click save.
+Expected: The slot saves successfully with the alternate account recorded.
+
+---
+
+### T-436 · Keys · Alternate account value never displayed back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and save a slot with Alternate account "sub1". 2. Find the slot in the Slots list. 3. Inspect the entry, including hover and click.
+Expected: The alternate account value is never shown in the Slots list or revealed by interacting with the entry.
+
+---
+
+### T-437 · Keys · Passphrase optional, save without it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Select Exchange "Gate.io", fill required fields, leave Passphrase empty. 3. Click save.
+Expected: The slot saves successfully without a passphrase.
+
+---
+
+### T-438 · Keys · Save with passphrase filled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill all required fields and type a passphrase value. 3. Click save.
+Expected: The slot saves successfully with the passphrase recorded.
+
+---
+
+### T-439 · Keys · Passphrase never displayed back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and save a slot with a passphrase. 2. Find the slot in the Slots list. 3. Inspect the entry, including hover and click.
+Expected: The passphrase value is never shown in the Slots list or revealed by interacting with the entry.
+
+---
+
+### T-440 · Keys · Key field masked while typing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Type into the Exchange Key field. 3. Watch the characters as they are typed.
+Expected: Typed characters in the Exchange Key field are masked (dots or asterisks), not shown in plain text.
+
+---
+
+### T-441 · Keys · Secret field masked while typing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Type into the Exchange Secret field. 3. Watch the characters as they are typed.
+Expected: Typed characters in the Exchange Secret field are masked (dots or asterisks), not shown in plain text.
+
+---
+
+### T-442 · Keys · No reveal control exposes saved values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-51
+Steps: 1. Open /keys with a saved slot. 2. Look for any eye icon, "show", or reveal control on the slot entry. 3. Click anything that looks like one.
+Expected: There is no control that reveals saved key, secret, or passphrase values; saved values stay hidden.
+
+---
+
+### T-443 · Keys · Cancel button discards the form
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill in several fields. 3. Click the "Cancel" button.
+Expected: The add-slot form closes without saving anything.
+
+---
+
+### T-444 · Keys · Cancel leaves the Slots list unchanged
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and note the current slots. 2. Click "Add slot", fill fields, then click "Cancel". 3. Compare the Slots list with before.
+Expected: The Slots list is exactly as it was; the cancelled slot was not added.
+
+---
+
+### T-445 · Keys · Close control discards unsaved inputs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill in several fields. 3. Click the form's close (X) control if present.
+Expected: The form closes and none of the typed values are saved.
+
+---
+
+### T-446 · Keys · Reopen form after cancel shows empty fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys, click "Add slot", type values, then cancel. 2. Click "Add slot" again. 3. Read the form fields.
+Expected: The reopened form shows empty fields; the cancelled values are not carried over.
+
+---
+
+### T-447 · Keys · Partially filled form then cancel saves nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and click "Add slot". 2. Fill only the Slot name and Label fields. 3. Click "Cancel", then check the Slots list.
+Expected: No partial slot is saved; the Slots list is unchanged.
+
+---
+
+### T-448 · Keys · Edit control offered on a slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-54
+Steps: 1. Open /keys with a saved slot. 2. Look at the slot entry. 3. Find the edit or replace control.
+Expected: If editing is offered, each slot entry shows a visible edit/replace control.
+
+---
+
+### T-449 · Keys · Replace slot key with a new value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys with a saved slot. 2. Open the edit control for the slot. 3. Enter a new Exchange Key and Secret, then save.
+Expected: The slot is updated successfully with a confirmation message.
+
+---
+
+### T-450 · Keys · Old value not shown during edit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-54
+Steps: 1. Open /keys with a saved slot. 2. Open the edit control for the slot. 3. Read the Key and Secret fields.
+Expected: The existing key and secret values are not shown in the edit form; the fields are empty or masked.

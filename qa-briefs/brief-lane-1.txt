@@ -1,0 +1,597 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 1** — cases **T-1–T-200** — Section A (T-1–T-105) + Section B (T-106–T-200)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR steered chunks of 50. Below are cases T-1–T-50 (full text). Run these 50 now, in order. When you finish all 50, the coordinator will steer you the next 50. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- **T-22** — Confirms 'Halt trading?' — HALTS TRADING
+- **T-23** — Uses halt as setup — HALTS TRADING
+- **T-24** — Uses halt as setup — HALTS TRADING
+- **T-25** — Halt then resume — HALTS then RESUMES
+- **T-26** — Uses halt as setup — HALTS TRADING
+- **T-34** — Enter on confirm dialog — HALTS TRADING
+- **T-44** — Uses halt as setup — HALTS TRADING
+- **T-150** — Starts a trading session — SESSION STARTED
+- **T-159** — Starts a trading session — SESSION STARTED
+- **T-160** — Starts session then halts — SESSION + HALT
+- **T-161** — Starts session then halts — SESSION + HALT
+- **T-170** — Enter submits session form — SESSION STARTED
+- **T-192** — Uploads valid .py — CREATES strategy record
+- **T-193** — Uploads valid .py — CREATES strategy record
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 1 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 1 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+re-halt or resume so trading state matches the run's start recording; delete any test strategies uploaded by T-192/T-193 (keep the 15 live strategies untouched).
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 1 COMPLETE — T-1–T-200
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-1–T-50) — full text
+
+### T-001 · Navigation · Switch Home to Cockpit via bottom nav
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+Steps: 1. Open the app and go to /home. 2. Tap the "Cockpit" tab in the bottom navigation bar (id="bottomnav"). 3. Wait for the page to finish loading.
+Expected: The full cockpit page (/) opens, showing the Overview section and the sidebar with the red-outlined "Halt trading" button.
+
+---
+
+### T-002 · Navigation · Switch Cockpit to Home via bottom nav
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+Steps: 1. Open the app on the full cockpit page (/). 2. Tap the "Home" tab in the bottom navigation bar (id="bottomnav"). 3. Wait for the page to finish loading.
+Expected: The /home page opens, showing the tagline "Your trading, all in one place." and the 7 cards.
+
+---
+
+### T-003 · Navigation · Tapping the already-active bottom-nav tab
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the app on /home. 2. Tap the "Home" tab again, which is already active. 3. Observe the page.
+Expected: The page stays on /home with no reload flicker and no navigation error.
+
+---
+
+### T-004 · Navigation · Bottom nav shows Home and Cockpit labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the app on the full cockpit page (/). 2. Look at the bottom navigation bar (id="bottomnav"). 3. Read the labels on each tab.
+Expected: Two tabs are shown, labeled "Home" and "Cockpit", both readable and tappable.
+
+---
+
+### T-005 · Navigation · Bottom nav present on the full cockpit page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the bottom of the screen. 3. Check the bottom navigation bar is on screen.
+Expected: The bottom nav (id="bottomnav") with Home/Cockpit tabs is visible without scrolling past the end of the page content.
+
+---
+
+### T-006 · Navigation · Bottom nav present on /home
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the /home page. 2. Scroll to the bottom of the screen. 3. Check the bottom navigation bar is on screen.
+Expected: The bottom nav (id="bottomnav") with Home/Cockpit tabs is visible on /home.
+
+---
+
+### T-007 · Navigation · Halt button visible in sidebar on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Look at the sidebar. 3. Find the small "Halt trading" button.
+Expected: The red-outlined "Halt trading" button is visible in the sidebar on the cockpit page.
+
+---
+
+### T-008 · Navigation · Halt button visible in sidebar on /home
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the /home page. 2. Look at the sidebar. 3. Find the small "Halt trading" button.
+Expected: The red-outlined "Halt trading" button is visible in the sidebar on the home page.
+
+---
+
+### T-009 · Navigation · Halt button visible on Strategies view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the app and go to the Strategies section. 2. Look at the sidebar. 3. Find the small "Halt trading" button.
+Expected: The red-outlined "Halt trading" button is visible in the sidebar on the Strategies view.
+
+---
+
+### T-010 · Navigation · Halt button visible on Settings view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the app and go to the Settings section. 2. Look at the sidebar. 3. Find the small "Halt trading" button.
+Expected: The red-outlined "Halt trading" button is visible in the sidebar on the Settings view.
+
+---
+
+### T-011 · Navigation · Halt button visible on Journal view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the app and go to the Journal section. 2. Look at the sidebar. 3. Find the small "Halt trading" button.
+Expected: The red-outlined "Halt trading" button is visible in the sidebar on the Journal view.
+
+---
+
+### T-012 · Navigation · Halt button visible on Funding view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the app and go to the Funding section. 2. Look at the sidebar. 3. Find the small "Halt trading" button.
+Expected: The red-outlined "Halt trading" button is visible in the sidebar on the Funding view.
+
+---
+
+### T-013 · Navigation · Halt button visible on AI view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the app and go to the AI section. 2. Look at the sidebar. 3. Find the small "Halt trading" button.
+Expected: The red-outlined "Halt trading" button is visible in the sidebar on the AI view.
+
+---
+
+### T-014 · Navigation · Halt button has a red outline
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Look at the "Halt trading" button in the sidebar. 3. Check its border color.
+Expected: The button has a clearly visible red outline that distinguishes it from the other controls.
+
+---
+
+### T-015 · Navigation · Halt button is labeled "Halt trading"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Look at the small button in the sidebar. 3. Read its label text.
+Expected: The button label reads "Halt trading".
+
+---
+
+### T-016 · Navigation · Clicking the halt button opens the modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Click the small red-outlined "Halt trading" button in the sidebar. 3. Observe what appears.
+Expected: The "Halt all trading?" modal opens on top of the page.
+
+---
+
+### T-017 · Navigation · Modal heading reads "Halt all trading?"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Click the "Halt trading" button in the sidebar. 3. Read the heading text of the modal.
+Expected: The modal heading reads "Halt all trading?".
+
+---
+
+### T-018 · Navigation · Modal shows a Cancel button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Click the "Halt trading" button in the sidebar. 3. Look at the buttons inside the modal.
+Expected: A "Cancel" button is shown in the modal.
+
+---
+
+### T-019 · Navigation · Modal shows a confirm control
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Click the "Halt trading" button in the sidebar. 3. Look at the buttons inside the modal.
+Expected: A confirm control (e.g. a "Halt" / "Yes, halt" button) is shown next to Cancel in the modal.
+
+---
+
+### T-020 · Navigation · Cancel closes the modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal by clicking "Halt trading" in the sidebar. 2. Click the "Cancel" button in the modal. 3. Observe the page.
+Expected: The modal closes and the cockpit page is fully usable again.
+
+---
+
+### T-021 · Navigation · Cancel leaves trading running
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the halt modal by clicking "Halt trading" in the sidebar. 2. Click "Cancel". 3. Check the trading state shown on the page.
+Expected: Trading is not halted; the page shows the same running state as before the modal was opened.
+
+---
+
+### T-022 · Navigation · Confirm halts trading and closes the modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal by clicking "Halt trading" in the sidebar. 2. Click the confirm control in the modal. 3. Observe the page.
+Expected: The modal closes and trading is halted.
+
+---
+
+### T-023 · Navigation · Halted state is visible after confirming
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the halt modal by clicking "Halt trading" in the sidebar. 2. Click the confirm control. 3. Look for a halted-state indicator on the page.
+Expected: The UI shows that trading is halted (e.g. a halted status message or banner).
+
+---
+
+### T-024 · Navigation · Resume control appears while halted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Halt trading by confirming the "Halt all trading?" modal. 2. Look at the sidebar where the "Halt trading" button was. 3. Check for a way to resume.
+Expected: A control to resume/start trading again is visible while trading is halted.
+
+---
+
+### T-025 · Navigation · Resume trading from the halted state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Halt trading by confirming the "Halt all trading?" modal. 2. Click the resume/start control. 3. Check the trading state shown on the page.
+Expected: Trading is running again and the sidebar shows the "Halt trading" button as normal.
+
+---
+
+### T-026 · Navigation · Reopen the halt modal while already halted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Halt trading by confirming the "Halt all trading?" modal. 2. If a halt control is still shown, click it. 3. Observe what happens.
+Expected: Either no second modal opens, or the UI clearly explains trading is already halted; trading stays halted.
+
+---
+
+### T-027 · Navigation · Escape closes the modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal by clicking "Halt trading" in the sidebar. 2. Press the Escape key. 3. Observe the page.
+Expected: The modal closes and trading keeps running, exactly as if Cancel had been clicked.
+
+---
+
+### T-028 · Navigation · Escape with no modal open does nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the full cockpit page (/) with no modal open. 2. Press the Escape key. 3. Observe the page.
+Expected: Nothing changes; no modal opens and no navigation happens.
+
+---
+
+### T-029 · Navigation · Clicking outside the modal closes it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal by clicking "Halt trading" in the sidebar. 2. Click on the dimmed background outside the modal box. 3. Observe the page.
+Expected: The modal closes and trading keeps running, exactly as if Cancel had been clicked.
+
+---
+
+### T-030 · Navigation · Clicking inside the modal keeps it open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal by clicking "Halt trading" in the sidebar. 2. Click on the modal text or an empty area inside the modal box. 3. Observe the modal.
+Expected: The modal stays open; trading is not halted.
+
+---
+
+### T-031 · Navigation · Focus moves into the modal when it opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Click the "Halt trading" button in the sidebar. 3. Press Tab once and watch where focus goes.
+Expected: Keyboard focus starts inside the modal (e.g. on the Cancel button), not on the page behind it.
+
+---
+
+### T-032 · Navigation · Tab stays inside the modal while open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the halt modal. 2. Press Tab repeatedly, cycling through all focusable elements. 3. Watch where focus goes after the last element.
+Expected: Focus cycles only within the modal and never moves to the page behind it.
+
+---
+
+### T-033 · Navigation · Enter on Cancel closes the modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal. 2. Press Tab until the "Cancel" button has focus. 3. Press Enter.
+Expected: The modal closes and trading keeps running.
+
+---
+
+### T-034 · Navigation · Enter on confirm halts trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal. 2. Press Tab until the confirm control has focus. 3. Press Enter.
+Expected: The modal closes and trading is halted.
+
+---
+
+### T-035 · Navigation · Double-clicking the halt button opens one modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Double-click the "Halt trading" button quickly. 3. Count the modals on screen.
+Expected: Only one "Halt all trading?" modal is open.
+
+---
+
+### T-036 · Navigation · Background page cannot be tabbed to while modal is open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the halt modal. 2. Press Tab many times, going past the last control in the modal. 3. Check whether focus ever lands on the page behind the modal.
+Expected: Focus never leaves the modal; controls on the page behind it are not reachable by keyboard while it is open.
+
+---
+
+### T-037 · Navigation · The / route loads the full cockpit with Overview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Type the app address with the / route into the browser address bar. 2. Press Enter. 3. Wait for the page to finish loading.
+Expected: The full cockpit loads and the Overview section is shown.
+
+---
+
+### T-038 · Navigation · The /home route loads the seven cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Type the app address with the /home route into the browser address bar. 2. Press Enter. 3. Wait for the page to finish loading.
+Expected: The /home page loads with the tagline and all 7 cards.
+
+---
+
+### T-039 · Navigation · Browser tab title on the cockpit page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+Steps: 1. Open the full cockpit page (/). 2. Wait for it to finish loading. 3. Read the browser tab title.
+Expected: The tab title names the cockpit/trading software (not blank and not an error title).
+
+---
+
+### T-040 · Navigation · Browser tab title on /home
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+Steps: 1. Open the /home page. 2. Wait for it to finish loading. 3. Read the browser tab title.
+Expected: The tab title names the app or home page (not blank and not an error title).
+
+---
+
+### T-041 · Navigation · Refresh on / stays on the cockpit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the full cockpit page (/). 2. Press the browser refresh button (or F5/Cmd+R). 3. Wait for the reload to finish.
+Expected: The page reloads back onto the full cockpit (/), not onto a different page.
+
+---
+
+### T-042 · Navigation · Refresh on /home stays on home
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the /home page. 2. Press the browser refresh button (or F5/Cmd+R). 3. Wait for the reload to finish.
+Expected: The page reloads back onto /home with the 7 cards, not onto a different page.
+
+---
+
+### T-043 · Navigation · Refresh clears an open halt modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the halt modal on the cockpit page. 2. Press the browser refresh button while the modal is open. 3. Wait for the reload to finish.
+Expected: The reloaded page shows no open modal.
+
+---
+
+### T-044 · Navigation · Refresh keeps the halted state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Halt trading by confirming the "Halt all trading?" modal. 2. Press the browser refresh button. 3. Wait for the reload to finish and check the trading state.
+Expected: Trading is still halted after the reload; the halted state is not lost.
+
+---
+
+### T-045 · Navigation · Browser Back from /home returns to /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the full cockpit page (/). 2. Tap the "Home" tab in the bottom nav. 3. Press the browser Back button.
+Expected: The browser returns to the full cockpit page (/).
+
+---
+
+### T-046 · Navigation · Browser Forward after Back returns forward
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open /, go to /home via the bottom nav, then press browser Back to return to /. 2. Press the browser Forward button. 3. Observe the page.
+Expected: The browser moves forward to /home again.
+
+---
+
+### T-047 · Navigation · Browser Back with no history leaves the app open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open a brand-new browser tab and go directly to /home. 2. Press the browser Back button. 3. Observe what happens.
+Expected: The app page stays open; the browser does not show a broken or error page for the app.
+
+---
+
+### T-048 · Navigation · Deep link directly to /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. In a new browser tab, paste the full app URL ending in /. 2. Press Enter. 3. Wait for the page to finish loading.
+Expected: The full cockpit page loads directly, without needing to visit another page first.
+
+---
+
+### T-049 · Navigation · Deep link directly to /home
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. In a new browser tab, paste the full app URL ending in /home. 2. Press Enter. 3. Wait for the page to finish loading.
+Expected: The /home page loads directly, without needing to visit another page first.
+
+---
+
+### T-050 · Navigation · Deep link to an unknown route
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. In a new browser tab, paste the app URL with a made-up route such as /no-such-page. 2. Press Enter. 3. Wait for the page to finish loading.
+Expected: The app shows a clear not-found message or sends the user to a valid page; no blank white screen.

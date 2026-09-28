@@ -1,0 +1,601 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 4** — cases **T-601–T-800** — Section D (T-601–T-640) + Section E (T-641–T-800)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR steered chunks of 50. Below are cases T-601–T-650 (full text). Run these 50 now, in order. When you finish all 50, the coordinator will steer you the next 50. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- **T-602** — Tick/untick arm — ARMS/DISARMS ticket
+- **T-603** — Tick/untick arm — ARMS/DISARMS ticket
+- **T-606** — Tick arm + preview — ARMS ticket
+- **T-607** — Tick arm + preview — ARMS ticket
+- **T-608** — Tick arm + preview — ARMS ticket
+- **T-609** — Tick arm + preview — ARMS ticket
+- **T-612** — Tick arm + live-fire to PIN — ARMS ticket
+- **T-619** — Tick arm + live-fire — ARMS ticket
+- **T-620** — Complete live-fire with valid inputs — PLACES REAL ORDER on TEST setup (approval authority 2026-09-27)
+- **T-625** — Tick arm + preview — ARMS ticket
+- **T-630** — Tick arm — ARMS ticket
+- **T-632** — Space toggles arm twice — ARMS ticket
+- **T-634** — Tick arm + preview — ARMS ticket
+- **T-635** — Tick arm + preview — ARMS ticket
+- **T-639** — Tick arm + preview — ARMS ticket
+- **T-640** — Tick arm + preview — ARMS ticket
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 4 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 4 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+leave the Smart Trade ticket DISARMED; any order placed by T-620 stands on the TEST setup (no real money).
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 4 COMPLETE — T-601–T-800
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-601–T-650) — full text
+
+### T-601 · Smart Trade · Arm checkbox label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Find the arm checkbox. 2. Read its label. 3. Confirm the wording.
+Expected: The label reads "I've reviewed every leg — arm the ticket".
+
+---
+
+### T-602 · Smart Trade · Ticking arm enables the Preview button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. With the box unticked, note the Preview button state. 2. Tick the arm box. 3. Check the button.
+Expected: The Preview button becomes enabled only after ticking the arm box.
+
+---
+
+### T-603 · Smart Trade · Unticking disarms the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Tick the arm box. 2. Untick it. 3. Check the Preview button.
+Expected: The ticket disarms with one untick; the Preview button is disabled again.
+
+---
+
+### T-604 · Smart Trade · Preview button text states it never sends
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+Steps: 1. Read the Preview button and its nearby description. 2. Confirm the wording.
+Expected: The text states "Preview only — this button never sends anything", that ticking the review box arms the ticket for validation and preview, and that no order is placed, ever.
+
+---
+
+### T-605 · Smart Trade · Preview without arming is blocked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Fill in a valid ticket. 2. Leave the arm box unticked. 3. Try the Preview button.
+Expected: The preview does not run; the page prompts to tick the review box first.
+
+---
+
+### T-606 · Smart Trade · Preview with invalid ticket shows validation errors
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Tick the arm box on a ticket with fractions totaling 1.20. 2. Press Preview. 3. Read the errors.
+Expected: Validation errors are shown plainly, naming the fraction-total problem.
+
+---
+
+### T-607 · Smart Trade · Preview error for missing protection names the rule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Build a ticket with no TP legs, no stop, no trail, and no breakeven. 2. Tick the arm box and preview. 3. Read the error.
+Expected: The error states a ticket with no take-profit, stop, trail, or breakeven is rejected.
+
+---
+
+### T-608 · Smart Trade · Preview error for bad limit price names the field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Set a Limit order with price -100. 2. Tick the arm box and preview. 3. Read the error.
+Expected: The error names the Limit price field and the problem.
+
+---
+
+### T-609 · Smart Trade · Fixing errors then preview succeeds
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Trigger a validation error on the ticket. 2. Correct the field. 3. Tick the arm box and preview again.
+Expected: The error clears and the preview succeeds.
+
+---
+
+### T-610 · Smart Trade · Live-fire button is visually distinct
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Find the live-fire button. 2. Note its color and label. 3. Read its description.
+Expected: A red button for live fire with text warning it is the real thing and a real order can result.
+
+---
+
+### T-611 · Smart Trade · Live fire without arming is blocked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Fill in a valid ticket with the arm box unticked. 2. Click the red live-fire button. 3. Observe.
+Expected: Nothing fires; the page requires ticking the arm box first.
+
+---
+
+### T-612 · Smart Trade · Live fire with arm opens PIN-gated confirm
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. On the TEST setup, fill in a valid ticket and tick the arm box. 2. Click the red live-fire button. 3. Observe.
+Expected: A PIN entry screen appears before anything else; no order is placed yet.
+
+---
+
+### T-613 · Smart Trade · Wrong PIN is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. On the TEST setup, reach the PIN screen. 2. Enter an incorrect PIN. 3. Submit.
+Expected: The PIN is rejected with an error; no order is placed and the ticket stays armed.
+
+---
+
+### T-614 · Smart Trade · Correct PIN opens final confirmation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. On the TEST setup, reach the PIN screen. 2. Enter the correct PIN. 3. Submit.
+Expected: A final confirmation screen appears summarizing the ticket; still no order is placed.
+
+---
+
+### T-615 · Smart Trade · Final confirmation shows full ticket summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. On the TEST setup, reach the final confirmation. 2. Read every field shown. 3. Compare with the ticket.
+Expected: The summary matches the ticket exactly — symbol, side, type, price, leverage, legs, and protections.
+
+---
+
+### T-616 · Smart Trade · Cancelling at the PIN step fires nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. On the TEST setup, reach the PIN screen. 2. Cancel or close it. 3. Check the order history and the ticket.
+Expected: No order is placed; the ticket remains armed and editable.
+
+---
+
+### T-617 · Smart Trade · Cancelling at the final confirmation fires nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. On the TEST setup, enter the correct PIN to reach the final confirmation. 2. Cancel. 3. Check the order history.
+Expected: No order is placed; the ticket stays armed.
+
+---
+
+### T-618 · Smart Trade · Confirming on the TEST setup proceeds
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. On the TEST setup only, pass the PIN and the final confirmation. 2. Confirm. 3. Check the order history and status.
+Expected: The ticket fires through the live order path and the resulting order and status are visible. Do this only on the TEST setup — never on a real-money setup.
+
+---
+
+### T-619 · Smart Trade · Live fire with invalid ticket blocked before PIN
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Tick the arm box on a ticket with fractions totaling 1.20. 2. Click the red live-fire button. 3. Observe.
+Expected: The flow stops with the validation error; the PIN screen never appears.
+
+---
+
+### T-620 · Smart Trade · Ticket disarms after live fire completes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. On the TEST setup, complete a live-fire confirmation. 2. Return to the ticket. 3. Check the arm box.
+Expected: The arm box is unticked after firing; firing again requires re-arming.
+
+---
+
+### T-621 · Smart Trade · Live-fire description warns to preview first
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Read the live-fire description text. 2. Confirm the guidance. 3. Note the PIN mention.
+Expected: The text advises previewing the ticket first and describes the PIN-gated confirm, risk checks, and worker.
+
+---
+
+### T-622 · Smart Trade · MCP drafts section visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Find the "MCP drafts" area on the ticket. 2. Read its description. 3. Check for drafts.
+Expected: The section explains drafts from the MCP create_draft tool appear there and that loading fills the ticket for review.
+
+---
+
+### T-623 · Smart Trade · Loading an MCP draft fills the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-08
+Steps: 1. With an MCP draft available, load it. 2. Check side, type, price, leverage, legs, and protections. 3. Compare with the draft.
+Expected: Every ticket field is filled from the draft.
+
+---
+
+### T-624 · Smart Trade · Loading a draft fires nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-08
+Steps: 1. Load an MCP draft. 2. Watch for orders or confirm screens. 3. Check the arm box.
+Expected: Nothing fires on load; the ticket is not armed — arming and confirming are still required.
+
+---
+
+### T-625 · Smart Trade · Draft with invalid values shows validation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Load an MCP draft containing an invalid value (for example fractions above 1.00). 2. Tick the arm box. 3. Press Preview.
+Expected: The preview shows validation errors naming the bad values; nothing is sent.
+
+---
+
+### T-626 · Smart Trade · Empty MCP drafts state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. With no MCP drafts available, open the drafts area. 2. Read it. 3. Confirm no stale draft loads.
+Expected: A clear empty state shows; no old draft data fills the ticket.
+
+---
+
+### T-627 · Smart Trade · Symbol display on the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Open the ticket. 2. Find the symbol display. 3. Read it.
+Expected: The symbol reads GATEIO:BTCUSDT.P.
+
+---
+
+### T-628 · Smart Trade · Symbol consistent between ticket and preview JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+Steps: 1. Read the ticket's symbol display. 2. Read the preview JSON symbol. 3. Compare.
+Expected: Both read GATEIO:BTCUSDT.P.
+
+---
+
+### T-629 · Smart Trade · Refresh keeps the ticket draft
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Fill in side, leverage, a stop %, and two TP legs. 2. Refresh the page. 3. Re-read the ticket.
+Expected: The draft values are preserved after refresh.
+
+---
+
+### T-630 · Smart Trade · Refresh disarms the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Tick the arm box. 2. Refresh the page. 3. Check the arm box.
+Expected: The arm box is unticked after refresh — arming never survives a reload silently.
+
+---
+
+### T-631 · Smart Trade · Keyboard tab order through the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Click into the ticket. 2. Press Tab repeatedly. 3. Note the focus order.
+Expected: Focus moves in a logical order — side, order type, price, leverage, legs, protections, arm box, Preview, live fire — with a visible indicator.
+
+---
+
+### T-632 · Smart Trade · Space toggles the arm checkbox
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Tab to the arm checkbox. 2. Press Space. 3. Check its state, then press Space again.
+Expected: The checkbox ticks and unticks via the keyboard.
+
+---
+
+### T-633 · Smart Trade · Ticket usable at mobile width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Resize the browser to a narrow phone width. 2. Open the ticket. 3. Scroll through all sections.
+Expected: Every control — legs, protections, arm box, and both buttons — remains reachable with no overlap.
+
+---
+
+### T-634 · Smart Trade · Quantity value invalid rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Clear the quantity or risk value field, or type "abc" into it. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error names the quantity field.
+
+---
+
+### T-635 · Smart Trade · Quantity value zero rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type 0 as the quantity value. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the quantity must be greater than zero.
+
+---
+
+### T-636 · Smart Trade · Changing leverage updates preview JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Read the preview JSON leverage. 2. Change leverage to 5. 3. Re-read the JSON.
+Expected: The JSON leverage value updates to 5.
+
+---
+
+### T-637 · Smart Trade · Order type change updates preview JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Read the JSON order type. 2. Switch Market to Limit with a valid price. 3. Re-read the JSON.
+Expected: The JSON order type and price update accordingly.
+
+---
+
+### T-638 · Smart Trade · Removing all legs shows empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Add two TP legs. 2. Remove both. 3. Check the legs area and the preview JSON.
+Expected: The legs area shows its empty state and take_profits is empty in the JSON.
+
+---
+
+### T-639 · Smart Trade · Full happy-path preview end to end
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Set Long, Market, leverage 3, two TP legs totaling 1.00, and stop 2%. 2. Tick the arm box. 3. Press Preview.
+Expected: The preview succeeds with no errors; the JSON reflects every entered value and fires:false.
+
+---
+
+### T-640 · Smart Trade · Full ticket review flow before any live fire
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. On the TEST setup, build a valid ticket and preview it. 2. Read the preview JSON fully. 3. Decide whether to proceed.
+Expected: The tester can verify every leg in the preview before touching the red button; the live-fire path always requires the arm box plus PIN plus final confirmation, and it is exercised only on the TEST setup.
+
+## Section E — Cockpit sections, Journal, Funding, AI
+
+---
+
+### T-641 · Cockpit sections · Overview section loads with account summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the TEST cockpit full page in the browser. 2. Scroll to the Overview section and wait for "Loading overview…" to be replaced. 3. Read the account summary block.
+Expected: The Overview section shows an account and venue summary instead of the placeholder text.
+
+---
+
+### T-642 · Cockpit sections · Overview shows venue name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and scroll to the Overview section. 2. Wait until "Loading overview…" is replaced with content. 3. Look at the venue label in the summary block.
+Expected: The venue name is displayed and matches the configured venue.
+
+---
+
+### T-643 · Cockpit sections · Overview loading placeholder clears
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Load the cockpit page fresh in a new tab. 2. Watch the Overview section area as the page loads. 3. Wait until loading finishes.
+Expected: The "Loading overview…" text disappears and real summary content takes its place.
+
+---
+
+### T-644 · Cockpit sections · Overview shows balance and equity figures
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Overview section and wait for it to load. 3. Read the balance and equity figures shown.
+Expected: Both balance and equity are visible as formatted numeric values with currency units.
+
+---
+
+### T-645 · Cockpit sections · Overview reloads after page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page and let the Overview section fully load. 2. Press the browser refresh button and wait. 3. Scroll to the Overview section again.
+Expected: The Overview summary reloads and shows its data again with no broken layout.
+
+---
+
+### T-646 · Cockpit sections · Positions section loads with table
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Positions section. 3. Wait for "Loading positions…" to be replaced.
+Expected: The Positions section shows an open-positions table or a clear empty message, not the placeholder.
+
+---
+
+### T-647 · Cockpit sections · Positions table column headers present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for the Positions section to load while positions are open. 2. Look at the top of the positions table. 3. Read each column header.
+Expected: Column headers are visible for symbol, side, size, entry price, and unrealized P&L.
+
+---
+
+### T-648 · Cockpit sections · Positions empty state with no open positions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-86
+Steps: 1. Open the cockpit page when no positions are open. 2. Scroll to the Positions section and wait for it to load. 3. Read the message shown.
+Expected: A clear empty message is shown instead of a blank table.
+
+---
+
+### T-649 · Cockpit sections · Position row shows symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with at least one open position. 2. Scroll to the Positions table and wait for load. 3. Read the symbol column of the first row.
+Expected: Each position row shows its trading symbol in a readable format.
+
+---
+
+### T-650 · Cockpit sections · Position row shows side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with at least one open position. 2. Scroll to the Positions table and wait for load. 3. Read the side value of each row.
+Expected: Each row shows long or short for the position.
