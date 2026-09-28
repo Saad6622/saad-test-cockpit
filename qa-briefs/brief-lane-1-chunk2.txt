@@ -1,0 +1,403 @@
+QA LANE 1 — CHUNK 2 — cases T-51–T-100 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-051 · Navigation · Deep link to /home/ with a trailing slash
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. In a new browser tab, paste the app URL ending in /home/. 2. Press Enter. 3. Wait for the page to finish loading.
+Expected: The /home page loads normally, the same as without the trailing slash.
+
+### T-052 · Navigation · Loading indicator when the tunnel is slow on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Throttle the network to a slow speed in the browser tools (or load during a known-slow tunnel). 2. Open the full cockpit page (/). 3. Watch the screen before content appears.
+Expected: A loading indicator (spinner or loading message) is shown instead of a blank page.
+
+### T-053 · Navigation · Placeholder cards on /home while loading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Throttle the network to a slow speed in the browser tools. 2. Open the /home page. 3. Watch the screen before the cards appear.
+Expected: Placeholder or skeleton cards are shown where the 7 cards will appear.
+
+### T-054 · Navigation · Loaded content replaces the loading indicators
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Load the full cockpit page (/) on a slow connection. 2. Wait for the data to arrive. 3. Watch the loading indicators.
+Expected: The spinners/placeholders are replaced by the real page content; no spinner is left stuck on screen.
+
+### T-055 · Navigation · Halt button visible while the page is loading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-03
+Steps: 1. Throttle the network to a slow speed in the browser tools. 2. Open the full cockpit page (/). 3. Look at the sidebar while content is still loading.
+Expected: The red-outlined "Halt trading" button is already visible in the sidebar during loading.
+
+### T-056 · Navigation · Bottom nav visible while the page is loading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Throttle the network to a slow speed in the browser tools. 2. Open the full cockpit page (/). 3. Look at the bottom of the screen while content is still loading.
+Expected: The bottom nav (id="bottomnav") with Home/Cockpit tabs is visible during loading.
+
+### T-057 · Navigation · Message after a very slow tunnel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Throttle the network to an extremely slow or offline speed. 2. Open the full cockpit page (/). 3. Wait well beyond the normal load time.
+Expected: A clear message appears explaining the connection is slow or unavailable, instead of a permanently blank page.
+
+### T-058 · Navigation · Reload after an error shows loading again
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Trigger a load error by opening the app while offline. 2. Restore the network connection. 3. Press the browser refresh button.
+Expected: The page shows the loading indicator again and then loads normally.
+
+### T-059 · Navigation · Rapid switching between the two tabs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+Steps: 1. Open the app on /home. 2. Tap Cockpit, then Home, then Cockpit again as fast as possible. 3. Wait for everything to settle.
+Expected: The app ends on the last tapped tab with its content fully loaded and no stuck loading state.
+
+### T-060 · Navigation · Switching tab while the halt modal is open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the halt modal on the cockpit page. 2. Tap the "Home" tab in the bottom nav. 3. Observe the page and the modal.
+Expected: The modal closes and the /home page loads; no modal is left floating over the new page.
+
+### T-061 · Navigation · Modal stays usable after the page behind it finishes loading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-03
+Steps: 1. Open the halt modal while the cockpit page is still loading its data. 2. Wait for the page behind it to finish loading. 3. Click Cancel in the modal.
+Expected: The modal still works normally and closes on Cancel; the late-loading content does not break it.
+
+### T-062 · Navigation · Halt button reachable by keyboard Tab
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Open the full cockpit page (/). 2. Click in the browser address bar, then press Tab repeatedly to move focus into the page. 3. Keep pressing Tab until the sidebar controls are reached.
+Expected: The "Halt trading" button receives keyboard focus (visible focus indicator).
+
+### T-063 · Navigation · Enter on the focused halt button opens the modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+Steps: 1. Tab through the cockpit page until the "Halt trading" button has focus. 2. Press Enter. 3. Observe the page.
+Expected: The "Halt all trading?" modal opens.
+
+### T-064 · Navigation · Sidebar visible at desktop width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Resize the browser window to a wide desktop width (e.g. 1440px). 2. Open the full cockpit page (/). 3. Look at the left side of the screen.
+Expected: The sidebar with the "Halt trading" button and navigation is fully visible.
+
+### T-065 · Navigation · Sidebar and bottom nav on a narrow phone screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Resize the browser window to a phone width (e.g. 390px). 2. Open the full cockpit page (/). 3. Look for the sidebar and the bottom nav.
+Expected: The bottom nav (id="bottomnav") is visible and tappable; the "Halt trading" button is reachable (in the sidebar or an equivalent control).
+
+### T-066 · Navigation · Sidebar collapse/expand control when present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+Steps: 1. Open the full cockpit page (/) at desktop width. 2. Look for a collapse/expand control on the sidebar. 3. If present, click it to collapse, then click again to expand.
+Expected: If the control exists, the sidebar collapses and expands and the "Halt trading" button remains reachable; if it does not exist, the sidebar simply stays visible.
+
+### T-067 · Navigation · No sideways page scroll on a phone-width screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Resize the browser window to a phone width (e.g. 390px). 2. Open the full cockpit page (/). 3. Try to scroll the page sideways.
+Expected: The page does not scroll sideways; all content fits the screen width.
+
+### T-068 · Navigation · Modal blocks background scrolling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the halt modal on a long cockpit page. 2. Try to scroll the page behind the modal with the mouse wheel or touch. 3. Observe.
+Expected: The background page does not scroll while the modal is open.
+
+### T-069 · Navigation · Closing the modal restores background scrolling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+Steps: 1. Open the halt modal on a long cockpit page. 2. Click Cancel to close the modal. 3. Scroll the page with the mouse wheel or touch.
+Expected: The page scrolls normally again after the modal is closed.
+
+### T-070 · Navigation · All cockpit sections are present on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+Steps: 1. Open the full cockpit page (/). 2. Scroll through the whole page. 3. Look for each section: Overview, Positions, Risk control, Receipt, Alerts, Strategies, Journal, Funding, AI, Settings.
+Expected: Every listed section is present on the page with its heading visible.
+
+### T-071 · Home page · Trading card navigates to the trading session page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-21
+Steps: 1. Open the /home page. 2. Click the "Trading" card. 3. Wait for the page to load.
+Expected: A trading session page opens where a session can be started, watched, and stopped.
+
+### T-072 · Home page · Trading card description text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-21
+Steps: 1. Open the /home page. 2. Find the "Trading" card. 3. Read its description text.
+Expected: The card reads "Start a trading session, watch it run, and stop it any time".
+
+### T-073 · Home page · Strategies card navigates to Strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-22
+Steps: 1. Open the /home page. 2. Click the "Strategies" card. 3. Wait for the page to load.
+Expected: The Strategies page opens.
+
+### T-074 · Home page · Backtests card navigates to Backtests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-23
+Steps: 1. Open the /home page. 2. Click the "Backtests" card. 3. Wait for the page to load.
+Expected: The Backtests page opens.
+
+### T-075 · Home page · History card navigates to History
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-24
+Steps: 1. Open the /home page. 2. Click the "History" card. 3. Wait for the page to load.
+Expected: The History page opens.
+
+### T-076 · Home page · Keys card navigates to Keys
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-25
+Steps: 1. Open the /home page. 2. Click the "Keys" card. 3. Wait for the page to load.
+Expected: The Keys page opens.
+
+### T-077 · Home page · Keys card description text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-25
+Steps: 1. Open the /home page. 2. Find the "Keys" card. 3. Read its description text.
+Expected: The card reads "Your exchange keys. Your key must be saved here before trading can start".
+
+### T-078 · Home page · Notifications card navigates to Notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-26
+Steps: 1. Open the /home page. 2. Click the "Notifications" card. 3. Wait for the page to load.
+Expected: The Notifications page opens.
+
+### T-079 · Home page · Cockpit card navigates to the full cockpit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-27
+Steps: 1. Open the /home page. 2. Click the "Cockpit" card. 3. Wait for the page to load.
+Expected: The full cockpit page (/) opens with the Overview section.
+
+### T-080 · Home page · Cockpit card description text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-27
+Steps: 1. Open the /home page. 2. Find the "Cockpit" card. 3. Read its description text.
+Expected: The card describes "The full cockpit — orders, risk controls, and the Halt trading control".
+
+### T-081 · Home page · Main tagline is visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Look at the top of the page. 3. Read the tagline text.
+Expected: The tagline "Your trading, all in one place." is visible near the top of the page.
+
+### T-082 · Home page · Secondary tagline is visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Look near the main tagline. 3. Read the secondary line.
+Expected: The line "Plain words on every screen." is visible near the tagline.
+
+### T-083 · Home page · All seven cards are shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Scroll through the page. 3. Count the cards: Trading, Strategies, Backtests, History, Keys, Notifications, Cockpit.
+Expected: All 7 cards are present on the page.
+
+### T-084 · Home page · Card titles are readable and not cut off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-95
+Steps: 1. Open the /home page. 2. Look at each of the 7 card titles. 3. Check for clipped or overlapping text.
+Expected: Every card title is fully readable with no cut-off or overlapping text.
+
+### T-085 · Home page · Card descriptions are readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-95
+Steps: 1. Open the /home page. 2. Look at each of the 7 card descriptions. 3. Check for clipped or overlapping text.
+Expected: Every card description is fully readable with no cut-off or overlapping text.
+
+### T-086 · Home page · Cards are keyboard-focusable with Tab
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-95
+Steps: 1. Open the /home page. 2. Click in the browser address bar, then press Tab repeatedly into the page. 3. Continue until all cards have been passed.
+Expected: Each of the 7 cards receives keyboard focus in turn, with a visible focus indicator.
+
+### T-087 · Home page · Focused card opens with Enter
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Press Tab until the "Trading" card has focus. 3. Press Enter.
+Expected: The trading session page opens, the same as clicking the card.
+
+### T-088 · Home page · Tab order follows the visual card order
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-95
+Steps: 1. Open the /home page. 2. Press Tab through all 7 cards. 3. Note the order in which they receive focus.
+Expected: Focus moves through the cards in the same order they appear visually, top to bottom and left to right.
+
+### T-089 · Home page · Clicking the same card twice in a row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-95
+Steps: 1. Open the /home page. 2. Click the "Trading" card, then press browser Back to return to /home. 3. Click the "Trading" card again.
+Expected: The trading session page opens again normally, with no error from the repeated click.
+
+### T-090 · Home page · Home page after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Press the browser refresh button (or F5/Cmd+R). 3. Wait for the reload to finish.
+Expected: The /home page reloads with the tagline and all 7 cards intact.
+
+### T-091 · Home page · Cards stack on a narrow phone screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Resize the browser window to a phone width (e.g. 390px). 2. Open the /home page. 3. Look at how the 7 cards are arranged.
+Expected: The cards stack vertically in a single column, each fully visible without sideways scrolling.
+
+### T-092 · Home page · Cards use a multi-column layout on a wide screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Resize the browser window to a wide desktop width (e.g. 1440px). 2. Open the /home page. 3. Look at how the 7 cards are arranged.
+Expected: The cards are arranged in a grid with multiple columns, using the available width.
+
+### T-093 · Home page · Visible focus indicator on the focused card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Press Tab until a card has focus. 3. Look at the focused card.
+Expected: The focused card shows a clear visible focus indicator (outline or highlight).
+
+### T-094 · Home page · Tap feedback on a card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page on a touch-sized screen. 2. Press and hold a card briefly without releasing. 3. Observe the card.
+Expected: The card shows visible press feedback (e.g. a highlight or scale change) while pressed.
+
+### T-095 · Home page · Browser Back from a card target returns to /home
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Click the "Strategies" card. 3. Press the browser Back button.
+Expected: The browser returns to the /home page with all 7 cards.
+
+### T-096 · Home page · Deep link /home, then open the Trading card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-21
+Steps: 1. In a new browser tab, paste the full app URL ending in /home and press Enter. 2. Wait for the page to load. 3. Click the "Trading" card.
+Expected: The trading session page opens normally from the deep-linked home page.
+
+### T-097 · Home page · Long card text wraps without overflowing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Resize the browser window to a phone width (e.g. 390px). 2. Open the /home page. 3. Read the longest card descriptions.
+Expected: All text wraps inside its card; no text overflows the card edges.
+
+### T-098 · Home page · Placeholder cards appear on a slow tunnel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-95
+Steps: 1. Throttle the network to a slow speed in the browser tools. 2. Open the /home page. 3. Watch the screen before the real cards appear.
+Expected: Placeholder or skeleton cards are shown first, then replaced by the 7 real cards.
+
+### T-099 · Home page · No card is blank or missing its text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-95
+Steps: 1. Open the /home page and wait for it to finish loading. 2. Look at each of the 7 cards. 3. Check each card has a title and a description.
+Expected: Every card shows both its title and its description; no card is blank.
+
+### T-100 · Home page · Each card has a distinct title
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-95
+Steps: 1. Open the /home page. 2. Read the titles of all 7 cards. 3. Check for duplicates.
+Expected: All 7 titles are distinct: Trading, Strategies, Backtests, History, Keys, Notifications, Cockpit.
