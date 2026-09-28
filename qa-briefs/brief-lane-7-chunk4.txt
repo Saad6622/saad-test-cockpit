@@ -1,0 +1,603 @@
+QA LANE 7 — CHUNK 4 — cases T-1351–T-1400 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-1351 · Cockpit · Non-increasing seq fails the seq rule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Paste an envelope whose seq is not strictly increasing for its symbol and strategy version. 3. Click Validate.
+
+Expected: The validator fails the seq rule.
+
+---
+
+### T-1352 · Cockpit · Malformed JSON gives a readable error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Paste broken JSON (missing a brace). 3. Click Validate.
+
+Expected: The validator reports a JSON syntax problem in plain words instead of crashing or going blank.
+
+---
+
+### T-1353 · Cockpit · Empty envelope box validation is graceful
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Leave the envelope box empty. 3. Click Validate.
+
+Expected: The validator asks for an envelope instead of failing silently.
+
+---
+
+### T-1354 · Cockpit · Contract rules are listed next to the validator
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Read the "Alert JSON contract (ingress rules)" list above the validator.
+
+Expected: The rules for secret, mode, symbol, timestamp, idempotencyKey and seq are all listed in plain words.
+
+---
+
+### T-1355 · Cockpit · Validator never submits the envelope
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Paste a valid envelope and click Validate. 3. Check the Deliveries table.
+
+Expected: Validation alone never delivers the alert — the Deliveries table gains no new row.
+
+---
+
+### T-1356 · Cockpit · Validator result names each rule pass/fail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Validate an envelope that fails one rule. 3. Read the result.
+
+Expected: The result lists every rule with its own pass/fail, so the tester sees exactly which rule failed.
+
+---
+
+### T-1357 · Cockpit · Validator clears its old result on new paste
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Validate once, then paste a different envelope.
+
+Expected: The previous result clears as soon as the text changes — stale results never linger.
+
+---
+
+### T-1358 · Cockpit · Validator handles a very long envelope
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Paste an envelope with a long description field. 3. Click Validate.
+
+Expected: The validator still checks every rule and the box scrolls instead of breaking the layout.
+
+---
+
+### T-1359 · Cockpit · Validate button keyboard accessible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Tab to the envelope textbox, paste JSON, then Tab to Validate and press Enter.
+
+Expected: Validation runs from the keyboard exactly as it does with the mouse.
+
+---
+
+### T-1360 · Cockpit · Validator result readable by assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Run a validation. 3. Check how the result is announced.
+
+Expected: The pass/fail result is announced as text, not shown only by color.
+
+---
+
+### T-1361 · Cockpit · Copy Pine alert script button present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Pine alert script (builds the JSON dynamically)" heading.
+
+Expected: A "Copy Pine alert script to clipboard" button is present beneath it.
+
+---
+
+### T-1362 · Cockpit · Pine script preview text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the Pine script excerpt under its heading.
+
+Expected: The excerpt starts with the version line and the TV-Exec signal comment, telling the tester what the script builds.
+
+---
+
+### T-1363 · Cockpit · Ingress rule: mode must be live, shown in contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the ingress rules list.
+
+Expected: One rule states mode must be "live" and anything else is refused.
+
+---
+
+### T-1364 · Cockpit · Ingress rule: queued signals need Telegram approval, shown in contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the end of the ingress rules list.
+
+Expected: The list explains queued signals do not auto-execute: the engine sends a Telegram approval card and unanswered cards expire in 10 min.
+
+---
+
+### T-1365 · Cockpit · Manual fire section labelled as gated real order
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-14
+
+Steps: 1. Open the full cockpit page (/). 2. Find the "Manual fire (Gate.io — real order, gated)" heading. 3. Do not touch the Fire order button.
+
+Expected: The heading plainly warns it is a real order path and it is gated — the tester reads it and moves on without firing.
+
+---
+
+### T-1366 · Cockpit · SmartTrade ticket region present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the SmartTrade ticket region.
+
+Expected: The ticket panel with symbol, side, order, take-profits, protection, estimates and preview is all on one screen.
+
+---
+
+### T-1367 · Cockpit · Ticket SYMBOL textbox defaults to GATEIO:BTCUSDT.P
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the SYMBOL textbox in the ticket.
+
+Expected: It defaults to "GATEIO:BTCUSDT.P".
+
+---
+
+### T-1368 · Cockpit · MCP drafts combobox shows No drafts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the "Choose an MCP draft ticket" combobox.
+
+Expected: It reads "No drafts" when no MCP drafts exist.
+
+---
+
+### T-1369 · Cockpit · Load into ticket disabled with no drafts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Look at the "Load into ticket" button.
+
+Expected: The button is disabled while the drafts list reads "No drafts".
+
+---
+
+### T-1370 · Cockpit · MCP drafts helper text explains the flow
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the helper text under the MCP drafts combobox.
+
+Expected: It explains drafts appear from the MCP create_draft tool and loading only fills the ticket for review — nothing is sent.
+
+---
+
+### T-1371 · Cockpit · Ticket side LONG/SHORT radios present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Look at the SIDE group in the ticket.
+
+Expected: LONG and SHORT radios are present with LONG checked by default.
+
+---
+
+### T-1372 · Cockpit · Ticket side switches to SHORT
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Click the SHORT radio in the ticket. 3. Read the ticket preview JSON.
+
+Expected: The preview JSON updates its side to "short" — and still nothing is sent.
+
+---
+
+### T-1373 · Cockpit · Ticket type MARKET/LIMIT radios present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Look at the TYPE group in the ORDER region.
+
+Expected: MARKET and LIMIT radios are present with MARKET checked by default.
+
+---
+
+### T-1374 · Cockpit · Ticket size RISK %/NOTIONAL/CONTRACTS radios present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Look at the SIZE group in the ORDER region.
+
+Expected: RISK %, NOTIONAL and CONTRACTS radios are present with RISK % checked by default.
+
+---
+
+### T-1375 · Cockpit · Ticket AMOUNT spinbutton default 0.75
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the AMOUNT spinbutton.
+
+Expected: It defaults to 0.75, matching the per-trade risk cap.
+
+---
+
+### T-1376 · Cockpit · Ticket size NOTIONAL changes the amount label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Select NOTIONAL in the SIZE group. 3. Read the amount field.
+
+Expected: The amount field adapts to a notional amount instead of a risk percent.
+
+---
+
+### T-1377 · Cockpit · Ticket size CONTRACTS changes the amount label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Select CONTRACTS in the SIZE group. 3. Read the amount field.
+
+Expected: The amount field adapts to a contract count.
+
+---
+
+### T-1378 · Cockpit · Ticket LEVERAGE spinbutton default 1
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the LEVERAGE spinbutton.
+
+Expected: It defaults to 1.
+
+---
+
+### T-1379 · Cockpit · Leverage helper text mentions the risk cap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Read the helper text under LEVERAGE.
+
+Expected: It states leverage runs 1x up to the venue's limit and the risk engine enforces the cap.
+
+---
+
+### T-1380 · Cockpit · Take-profit leg TP1 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP1 target percent spinbutton.
+
+Expected: The TP1 target percent spinbutton is present and editable.
+
+---
+
+### T-1381 · Cockpit · Take-profit leg TP1 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP1 size fraction spinbutton.
+
+Expected: The TP1 size fraction spinbutton is present and editable.
+
+---
+
+### T-1382 · Cockpit · Take-profit leg TP2 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP2 target percent spinbutton.
+
+Expected: The TP2 target percent spinbutton is present and editable.
+
+---
+
+### T-1383 · Cockpit · Take-profit leg TP2 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP2 size fraction spinbutton.
+
+Expected: The TP2 size fraction spinbutton is present and editable.
+
+---
+
+### T-1384 · Cockpit · Take-profit leg TP3 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP3 target percent spinbutton.
+
+Expected: The TP3 target percent spinbutton is present and editable.
+
+---
+
+### T-1385 · Cockpit · Take-profit leg TP3 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP3 size fraction spinbutton.
+
+Expected: The TP3 size fraction spinbutton is present and editable.
+
+---
+
+### T-1386 · Cockpit · Take-profit leg TP4 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP4 target percent spinbutton.
+
+Expected: The TP4 target percent spinbutton is present and editable.
+
+---
+
+### T-1387 · Cockpit · Take-profit leg TP4 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP4 size fraction spinbutton.
+
+Expected: The TP4 size fraction spinbutton is present and editable.
+
+---
+
+### T-1388 · Cockpit · Take-profit leg TP5 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP5 target percent spinbutton.
+
+Expected: The TP5 target percent spinbutton is present and editable.
+
+---
+
+### T-1389 · Cockpit · Take-profit leg TP5 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP5 size fraction spinbutton.
+
+Expected: The TP5 size fraction spinbutton is present and editable.
+
+---
+
+### T-1390 · Cockpit · Take-profit leg TP6 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP6 target percent spinbutton.
+
+Expected: The TP6 target percent spinbutton is present and editable.
+
+---
+
+### T-1391 · Cockpit · Take-profit leg TP6 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP6 size fraction spinbutton.
+
+Expected: The TP6 size fraction spinbutton is present and editable.
+
+---
+
+### T-1392 · Cockpit · Take-profit leg TP7 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP7 target percent spinbutton.
+
+Expected: The TP7 target percent spinbutton is present and editable.
+
+---
+
+### T-1393 · Cockpit · Take-profit leg TP7 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP7 size fraction spinbutton.
+
+Expected: The TP7 size fraction spinbutton is present and editable.
+
+---
+
+### T-1394 · Cockpit · Take-profit leg TP8 target percent field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP8 target percent spinbutton.
+
+Expected: The TP8 target percent spinbutton is present and editable.
+
+---
+
+### T-1395 · Cockpit · Take-profit leg TP8 size fraction field present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the TAKE-PROFITS region. 3. Find the TP8 size fraction spinbutton.
+
+Expected: The TP8 size fraction spinbutton is present and editable.
+
+---
+
+### T-1396 · Cockpit · TP1 leg pre-armed values readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the TP1 target percent and size fraction.
+
+Expected: TP1 shows a 1% target with a 0.5 size fraction and an ARMED marker.
+
+---
+
+### T-1397 · Cockpit · Take-profit fractions total rule shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Read the rule under the take-profit legs.
+
+Expected: It states fractions must total ≤ 1.00.
+
+---
+
+### T-1398 · Cockpit · Fractions over 1.00 are rejected in preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Set size fractions totalling more than 1.00 across legs. 3. Read the preview.
+
+Expected: The preview flags the breach — the ticket cannot be armed with fractions over 1.00.
+
+---
+
+### T-1399 · Cockpit · Ticket with no exits is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Clear every take-profit, stop, trail and breakeven field. 3. Read the ticket rule.
+
+Expected: The ticket states a ticket with no take-profit, stop, trail, or breakeven is rejected.
+
+---
+
+### T-1400 · Cockpit · Protection STOP % spinbutton present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the PROTECTION region. 3. Read the STOP % spinbutton.
+
+Expected: The STOP % spinbutton is present with a default of 1.
+
+---
