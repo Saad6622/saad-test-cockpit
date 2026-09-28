@@ -1,0 +1,603 @@
+QA LANE 18 — CHUNK 3 — cases T-3501–T-3550 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-3501 · Cockpit · tunnel banner labels are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-87
+
+Steps: 1. Open all. 2. Read every label on the tunnel banner character for character.
+
+Expected: Every label is a plain word or phrase -- no internal codes, no abbreviations a trader would not know.
+
+---
+
+### T-3502 · Cockpit · tunnel banner layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-87
+
+Steps: 1. Open all. 2. Note the tunnel banner layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-3503 · Cockpit · tunnel banner honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-87
+
+Steps: 1. Open all. 2. View the tunnel banner with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3504 · Cockpit · tunnel banner never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-87
+
+Steps: 1. Open all. 2. Watch the tunnel banner loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+### T-3505 · Cockpit · tunnel banner failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-87
+
+Steps: 1. Open all. 2. If the tunnel banner is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-3506 · Cockpit · tunnel banner copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-87
+
+Steps: 1. Open all. 2. Read all tunnel banner copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3507 · Cockpit · tunnel banner no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-87
+
+Steps: 1. Open all. 2. Scan the tunnel banner for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3508 · Cockpit · tunnel banner helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-87
+
+Steps: 1. Open all. 2. Read the tunnel banner helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3509 · Nav · webhook receiver panel dangerous action gated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-88
+
+Steps: 1. Open /. 2. If the webhook receiver panel offers a destructive action, start it and read the confirm dialog. 3. Click Cancel.
+
+Expected: The dialog states the consequences plainly -- the tester verifies the gate and cancels without crossing it.
+
+---
+
+### T-3510 · Nav · webhook receiver panel secret never visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-88
+
+Steps: 1. Open /. 2. Scan the webhook receiver panel for key-like strings.
+
+Expected: No secret material on screen -- masked fields show dots or stay blank.
+
+---
+
+### T-3511 · Nav · webhook receiver panel gate cannot be skipped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-88
+
+Steps: 1. Open /. 2. Look for any way past the webhook receiver panel safety gate.
+
+Expected: None exists -- the tester verifies the absence and does not try to work around it.
+
+---
+
+### T-3512 · Nav · drill buttons dangerous action gated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-92
+
+Steps: 1. Open /. 2. If the drill buttons offers a destructive action, start it and read the confirm dialog. 3. Click Cancel.
+
+Expected: The dialog states the consequences plainly -- the tester verifies the gate and cancels without crossing it.
+
+---
+
+### T-3513 · Nav · drill buttons secret never visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-92
+
+Steps: 1. Open /. 2. Scan the drill buttons for key-like strings.
+
+Expected: No secret material on screen -- masked fields show dots or stay blank.
+
+---
+
+### T-3514 · Nav · drill buttons gate cannot be skipped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-92
+
+Steps: 1. Open /. 2. Look for any way past the drill buttons safety gate.
+
+Expected: None exists -- the tester verifies the absence and does not try to work around it.
+
+---
+
+### T-3515 · Nav · sign-in widget copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-93
+
+Steps: 1. Open sidebar. 2. Read all sign-in widget copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3516 · Nav · sign-in widget no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-93
+
+Steps: 1. Open sidebar. 2. Scan the sign-in widget for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3517 · Nav · sign-in widget helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-93
+
+Steps: 1. Open sidebar. 2. Read the sign-in widget helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3518 · Nav · settings page shell matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-94
+
+Steps: 1. Open /settings. 2. Read a settings page shell value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+### T-3519 · Nav · settings page shell counts reconcile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-94
+
+Steps: 1. Open /settings. 2. Count the visible settings page shell rows. 3. Read the settings page shell count label.
+
+Expected: The label matches the visible rows -- no silent extras, no missing rows.
+
+---
+
+### T-3520 · Nav · settings page shell totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-94
+
+Steps: 1. Open /settings. 2. Add the settings page shell line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+### T-3521 · Nav · settings page shell copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-94
+
+Steps: 1. Open /settings. 2. Read all settings page shell copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3522 · Nav · settings page shell no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-94
+
+Steps: 1. Open /settings. 2. Scan the settings page shell for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3523 · Nav · settings page shell helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-94
+
+Steps: 1. Open /settings. 2. Read the settings page shell helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3524 · Nav · operator notes honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-96
+
+Steps: 1. Open /. 2. View the operator notes with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3525 · Nav · operator notes never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-96
+
+Steps: 1. Open /. 2. Watch the operator notes loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+### T-3526 · Nav · operator notes failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-96
+
+Steps: 1. Open /. 2. If the operator notes is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-3527 · Nav · operator notes copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-96
+
+Steps: 1. Open /. 2. Read all operator notes copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3528 · Nav · operator notes no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-96
+
+Steps: 1. Open /. 2. Scan the operator notes for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3529 · Nav · operator notes helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-96
+
+Steps: 1. Open /. 2. Read the operator notes helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3530 · Nav · sidebar nav renders on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /. 2. Scroll to the sidebar nav. 3. Read every label and value.
+
+Expected: The sidebar nav renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3531 · Nav · sidebar nav primary control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open /. 2. Click the sidebar nav main control. 3. Watch for 5 seconds.
+
+Expected: It responds visibly -- the control is never silent.
+
+---
+
+### T-3532 · Nav · sidebar nav honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-01
+
+Steps: 1. Open /. 2. View the sidebar nav with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3533 · Nav · sidebar nav matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-01
+
+Steps: 1. Open /. 2. Read a sidebar nav value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+### T-3534 · Nav · sidebar nav copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-01
+
+Steps: 1. Open /. 2. Read all sidebar nav copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3535 · Nav · desk clock renders on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-02
+
+Steps: 1. Open /. 2. Scroll to the desk clock. 3. Read every label and value.
+
+Expected: The desk clock renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3536 · Nav · desk clock data ticks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-02
+
+Steps: 1. Open /. 2. Read a live value on the desk clock. 3. Wait one poll cycle. 4. Read it again.
+
+Expected: The value or its timestamp moves -- the data is live, not painted once.
+
+---
+
+### T-3537 · Nav · desk clock units labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-02
+
+Steps: 1. Open /. 2. Read every number on the desk clock.
+
+Expected: Every number carries its unit ($, %, ms) -- never a bare figure the tester must guess.
+
+---
+
+### T-3538 · Nav · halt button + halt modal renders on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open /. 2. Scroll to the halt button + halt modal. 3. Read every label and value.
+
+Expected: The halt button + halt modal renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3539 · Nav · halt button + halt modal primary control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open /. 2. Click the halt button + halt modal main control. 3. Watch for 5 seconds.
+
+Expected: It responds visibly -- the control is never silent.
+
+---
+
+### T-3540 · Nav · halt button + halt modal honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-03
+
+Steps: 1. Open /. 2. View the halt button + halt modal with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3541 · Nav · halt button + halt modal copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-03
+
+Steps: 1. Open /. 2. Read all halt button + halt modal copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3542 · Nav · halt button + halt modal dangerous action gated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-03
+
+Steps: 1. Open /. 2. If the halt button + halt modal offers a destructive action, start it and read the confirm dialog. 3. Click Cancel.
+
+Expected: The dialog states the consequences plainly -- the tester verifies the gate and cancels without crossing it.
+
+---
+
+### T-3543 · Nav · alerts panel renders on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open /. 2. Scroll to the alerts panel. 3. Read every label and value.
+
+Expected: The alerts panel renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3544 · Nav · alerts panel data ticks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-04
+
+Steps: 1. Open /. 2. Read a live value on the alerts panel. 3. Wait one poll cycle. 4. Read it again.
+
+Expected: The value or its timestamp moves -- the data is live, not painted once.
+
+---
+
+### T-3545 · Nav · alerts panel primary control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-04
+
+Steps: 1. Open /. 2. Click the alerts panel main control. 3. Watch for 5 seconds.
+
+Expected: It responds visibly -- the control is never silent.
+
+---
+
+### T-3546 · Nav · alerts panel honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-04
+
+Steps: 1. Open /. 2. View the alerts panel with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3547 · Nav · alerts panel matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Open /. 2. Read a alerts panel value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+### T-3548 · Nav · alerts panel copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-04
+
+Steps: 1. Open /. 2. Read all alerts panel copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3549 · Nav · alerts panel dangerous action gated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-04
+
+Steps: 1. Open /. 2. If the alerts panel offers a destructive action, start it and read the confirm dialog. 3. Click Cancel.
+
+Expected: The dialog states the consequences plainly -- the tester verifies the gate and cancels without crossing it.
+
+---
+
+### T-3550 · Nav · pine snippet shows no placeholder text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-05
+
+Steps: 1. Open /. 2. Scan the pine snippet for filler text.
+
+Expected: No lorem ipsum, no 'undefined', no 'null', no TODO text -- every string is real copy.
+
+---
