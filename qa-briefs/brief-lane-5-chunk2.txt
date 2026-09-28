@@ -1,0 +1,403 @@
+QA LANE 5 — CHUNK 2 — cases T-851–T-900 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-851 · Settings · Settings page loads all 19 setting groups
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open /settings in the browser. 2. Wait for the "Loading settings…" text to be replaced by the group list. 3. Scroll through the full list.
+Expected: All 19 groups are listed: Risk caps, Confirm PIN, Blackouts, Scanner universe, Venues, Market feeds, Push notifications, Interface, Schedules, Bot cage, Audit export, Tax report (CSV), Copy trading, Command palette, Replay, Economic calendar, Halt trading, Persistence, AI profile. No group is missing and none errors out.
+
+### T-852 · Settings · Unprotected group editor opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. On /settings, click the Interface group. 2. Observe the editor panel that appears. 3. Look at the fields inside it.
+Expected: The Interface group's editor loads with its settings fields visible and editable; each field shows its current value.
+
+### T-853 · Settings · Changing an unprotected setting saves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Interface group. 2. Change one visible setting to a different valid value. 3. Click the Save/apply button for the group.
+Expected: A success confirmation appears and the new value is the one shown as current.
+
+### T-854 · Settings · Saved unprotected value shown on reopen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Change an Interface setting and save it. 2. Close the group editor (or navigate away). 3. Reopen the Interface group.
+Expected: The value you saved is displayed as the current value.
+
+### T-855 · Settings · Invalid value rejected in an unprotected group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-94
+Steps: 1. Open a group with a numeric field (e.g. Market feeds poll interval). 2. Type letters or symbols into the numeric field. 3. Click Save.
+Expected: An inline error message appears, the save does not happen, and the previous valid value is kept.
+
+### T-856 · Settings · Empty required field rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-94
+Steps: 1. Open a group whose field is required. 2. Delete the field's content so it is empty. 3. Click Save.
+Expected: A validation error is shown, nothing is saved, and the previous value remains.
+
+### T-857 · Settings · Cancel discards unsaved edits
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Interface group. 2. Change a field but do not save. 3. Click Cancel or close the editor without saving.
+Expected: Reopening the group shows the original value unchanged; the unsaved edit is gone.
+
+### T-858 · Settings · Changing another unprotected setting saves (Market feeds)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Market feeds group. 2. Change the poll-interval value to a different valid number. 3. Click Save.
+Expected: Success confirmation appears and the new poll interval is shown as current.
+
+### T-859 · Settings · Changing an unprotected setting saves (Schedules)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Schedules group. 2. Change a schedule option to a different valid value. 3. Click Save.
+Expected: Success confirmation appears and the new value is shown as current.
+
+### T-860 · Settings · Changing an unprotected setting saves (Command palette)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Command palette group. 2. Change a visible setting to a different valid value. 3. Click Save.
+Expected: Success confirmation appears and the new value is shown as current.
+
+### T-861 · Settings · Changing an unprotected setting saves (Replay)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Replay group. 2. Change a visible setting to a different valid value. 3. Click Save.
+Expected: Success confirmation appears and the new value is shown as current.
+
+### T-862 · Settings · Changing an unprotected setting saves (Economic calendar)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Economic calendar group. 2. Change the grouping option to a different valid value. 3. Click Save.
+Expected: Success confirmation appears and the new grouping is shown as current.
+
+### T-863 · Settings · Tax report group CSV control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-74
+Steps: 1. Open the Tax report (CSV) group. 2. Click its download/CSV button. 3. Check the browser's downloads.
+Expected: A CSV file downloads successfully and opens with rows of data in it.
+
+### T-864 · Settings · Audit export group produces an export
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-73
+Steps: 1. Open the Audit export group. 2. Click its export button. 3. Check the result.
+Expected: An export file is generated and downloads (or a download link appears), containing audit rows.
+
+### T-865 · Settings · Scanner universe group explains delegated control
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-66
+Steps: 1. Open the Scanner universe group. 2. Read the editor text shown.
+Expected: The group explains in plain words that the scanner universe is managed elsewhere (delegated, not edited here) instead of showing editable fields that silently do nothing.
+
+### T-866 · Settings · Protected group shows the three-step confirm flow
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. On /settings, click the Risk caps group. 2. Start editing a protected value. 3. Observe the confirmation flow that appears.
+Expected: A three-step flow is shown: get a one-time code, approve it, then apply — matching the text shown on the cockpit page.
+
+### T-867 · Settings · Requesting a one-time code works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Risk caps group and start the three-step flow. 2. Click the button to get a one-time code. 3. Observe the confirmation shown.
+Expected: The page confirms the one-time code has been sent/issued and shows the code-entry field.
+
+### T-868 · Settings · Wrong one-time code is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-94
+Steps: 1. Start the three-step flow on a protected group. 2. Get a one-time code. 3. Type a wrong code into the code field and submit.
+Expected: An error message says the code is wrong/invalid; the flow does not advance to approval.
+
+### T-869 · Settings · Blank one-time code is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-94
+Steps: 1. Start the three-step flow on a protected group. 2. Get a one-time code. 3. Leave the code field empty and submit.
+Expected: An error message asks for the code; the flow does not advance.
+
+### T-870 · Settings · Correct code enables the approve step
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-94
+Steps: 1. Start the three-step flow on a protected group. 2. Get a one-time code. 3. Enter the correct code and submit.
+Expected: The code is accepted and the Approve step becomes available.
+
+### T-871 · Settings · Apply without approval is blocked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-94
+Steps: 1. Start the three-step flow on a protected group. 2. Get and enter the one-time code correctly but do not click Approve. 3. Try to Apply the change anyway.
+Expected: The apply action is blocked with a message that approval is required first.
+
+### T-872 · Settings · Approve then apply saves the protected change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Risk caps group, change the daily loss cap to a different valid value. 2. Get the one-time code, enter it, and click Approve. 3. Click Apply.
+Expected: The change is saved, a success confirmation appears, and the new cap is shown as current.
+
+### T-873 · Settings · Cancelling at the code step changes nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open a protected group and change a value. 2. Start the three-step flow and request a code. 3. Click Cancel/close the flow before entering the code.
+Expected: The flow closes and the group's values are unchanged.
+
+### T-874 · Settings · Cancelling at the approve step changes nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open a protected group, change a value, request and enter the code. 2. At the approve step, click Cancel/close. 3. Reopen the group.
+Expected: The value is unchanged; no partial change was applied.
+
+### T-875 · Settings · Cancelling at the apply step changes nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open a protected group, change a value, get the code and click Approve. 2. At the apply step, click Cancel/close. 3. Reopen the group.
+Expected: The value is unchanged; approving without applying saves nothing.
+
+### T-876 · Settings · Expired one-time code is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-94
+Steps: 1. Request a one-time code on a protected group. 2. Wait until the code expires (if the flow has an expiry). 3. Enter the expired code and submit.
+Expected: An error says the code has expired; requesting a fresh code works.
+
+### T-877 · Settings · One-time code cannot be reused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Complete the full three-step flow once on a protected group. 2. Start a second flow on the same group. 3. Enter the previously used code.
+Expected: The reused code is rejected; a newly requested code is required.
+
+### T-878 · Settings · Rapid second write to the same protected group is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-94
+Steps: 1. Complete a full three-step change on the Risk caps group. 2. Immediately start a second three-step change on the same group. 3. Try to apply it.
+Expected: The second write is refused with a cooldown message; the first change remains in place.
+
+### T-879 · Settings · Confirm PIN protected flow completes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Confirm PIN group and change a value. 2. Get the one-time code, enter it, click Approve. 3. Click Apply.
+Expected: The change is saved with a success confirmation.
+
+### T-880 · Settings · Blackouts protected flow completes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Blackouts group and change a value. 2. Get the one-time code, enter it, click Approve. 3. Click Apply.
+Expected: The change is saved with a success confirmation.
+
+### T-881 · Settings · Venues protected flow completes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Venues group and change a value. 2. Get the one-time code, enter it, click Approve. 3. Click Apply.
+Expected: The change is saved with a success confirmation.
+
+### T-882 · Settings · Bot cage protected flow completes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Bot cage group and change a value. 2. Get the one-time code, enter it, click Approve. 3. Click Apply.
+Expected: The change is saved with a success confirmation.
+
+### T-883 · Settings · Halt trading protected flow completes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the Halt trading group and change a value. 2. Get the one-time code, enter it, click Approve. 3. Click Apply.
+Expected: The change is saved with a success confirmation.
+
+### T-884 · Settings · AI profile protected flow completes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open the AI profile group and change a value. 2. Get the one-time code, enter it, click Approve. 3. Click Apply.
+Expected: The change is saved with a success confirmation.
+
+### T-885 · Settings · Protected groups are marked as protected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. On /settings, look at the group list. 2. Find Risk caps, Confirm PIN, Blackouts, Venues, Bot cage, Halt trading, AI profile. 3. Compare with an unprotected group like Interface.
+Expected: Each protected group carries a visible protected/sealed badge or label that the unprotected groups do not have.
+
+### T-886 · Settings · Protected change appears in the change history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Complete a full three-step change on the Risk caps group. 2. Find the group's version or history view. 3. Open it.
+Expected: The change appears as a new history entry (version bumped) with the new value.
+
+### T-887 · Settings · Push deep link auto-opens the push group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open /settings?group=push directly in the browser. 2. Wait for the settings to load. 3. Observe which group opens.
+Expected: The Push notifications group opens automatically, instead of showing the bare group list with no hint where push settings live.
+
+### T-888 · Settings · Push group shows ntfy, Apprise, and daily budget fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Look at the fields shown. 3. Read the labels and help text.
+Expected: There is an ntfy URL field, an Apprise webhook field, and a daily message budget field; the budget is labeled in USD.
+
+### T-889 · Settings · Saving a valid ntfy URL works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter a valid ntfy topic URL (e.g. https://ntfy.sh/your-topic). 3. Click Save.
+Expected: A success confirmation appears and the ntfy URL is shown as the saved value.
+
+### T-890 · Settings · Invalid ntfy URL is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter plain text like "not a url" in the ntfy field. 3. Click Save.
+Expected: An error message appears, the save does not happen, and the previous ntfy value is kept.
+
+### T-891 · Settings · Saving a valid Apprise webhook URL works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter a valid Apprise webhook URL. 3. Click Save.
+Expected: A success confirmation appears and the webhook URL is shown as the saved value.
+
+### T-892 · Settings · Invalid Apprise webhook URL is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter garbage text in the Apprise webhook field. 3. Click Save.
+Expected: An error message appears, the save does not happen, and the previous value is kept.
+
+### T-893 · Settings · Daily budget accepts a valid value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter a valid daily budget such as 2.50. 3. Click Save.
+Expected: A success confirmation appears and the budget shows 2.50 USD.
+
+### T-894 · Settings · Daily budget of zero is handled clearly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter 0 as the daily budget. 3. Click Save.
+Expected: The page shows a clear result — either the zero is saved and shown as 0 USD, or a message explains zero is not allowed and the previous value is kept.
+
+### T-895 · Settings · Daily budget rejects a negative value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter -5 as the daily budget. 3. Click Save.
+Expected: An error message appears, the save does not happen, and the previous budget is kept.
+
+### T-896 · Settings · Daily budget rejects non-numeric text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Type letters like "abc" into the daily budget field. 3. Click Save.
+Expected: An error message appears, the save does not happen, and the previous budget is kept.
+
+### T-897 · Settings · Oversized daily budget is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Enter an absurdly large number like 99999999999 as the budget. 3. Click Save.
+Expected: The oversized value is rejected with an error; the previous budget is kept.
+
+### T-898 · Settings · Clearing both push URLs saves with a fallback note
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Empty both the ntfy and Apprise webhook fields. 3. Click Save.
+Expected: The save succeeds and the page explains in plain words where notifications go now (the fallback channel), instead of silently sending nothing.
+
+### T-899 · Settings · Push budget field shows the USD unit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Open the Push notifications group. 2. Look at the daily budget field. 3. Read its label and surrounding text.
+Expected: The budget field is clearly labeled in USD so there is no confusion about the currency.
+
+### T-900 · Settings · Push settings persist after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-69
+Steps: 1. Change the ntfy URL and daily budget, then save. 2. Reload the /settings page. 3. Reopen the Push notifications group.
+Expected: The saved ntfy URL and budget are still shown; nothing reverted.
