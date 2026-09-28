@@ -1,0 +1,787 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 13** — cases **T-2401–T-2600** — Section Q (T-2401–T-2440) + Section R (T-2441–T-2560) + Section S (T-2561–T-2600)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR chunks of 50. Below are cases T-2401–T-2450 (full text). Run these 50 now, in order. When you finish all 50, WAIT — the coordinator will steer you the next 50. Your four chunks: T-2401–T-2450, T-2451–T-2500, T-2501–T-2550, T-2551–T-2600. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- IMPORTANT: the bookmark is a redirect page — it sends your browser to the current live tunnel address (a `*.lhr.life` URL). Arriving at the tunnel address VIA the bookmark redirect is the bookmark working correctly: proceed. The rule above means never hunt for tunnel URLs yourself and never bypass the bookmark.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- **T-2436** — Trigger a save confirmation — SAVES a setting
+- **T-2487** — Flip a strategy toggle then back — SETS strategy toggle state
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 13 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 13 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+Restore whatever setting T-2436's save changed to its start-of-run value. Verify the T-2487 strategy toggle is back at its start-of-run state (the case flips it back itself — verify).
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 13 COMPLETE — T-2401–T-2600
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-2401–T-2450) — full text
+
+### T-2401 · Mobile · Alert rows tappable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, tap an alert's "Show detail" button.
+
+Expected: The detail expands at phone width.
+
+---
+
+---
+
+### T-2402 · Mobile · Alert status readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. At 390px width, read the STATUS column.
+
+Expected: Statuses read in full — no clipping mid-word.
+
+---
+
+---
+
+### T-2403 · Mobile · Status meanings disclosure tappable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. At 390px width, tap the "Status meanings" disclosure.
+
+Expected: The meanings list opens readably at phone width.
+
+---
+
+---
+
+### T-2404 · Mobile · Failed queue readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. At 390px width, read the failed-message queue.
+
+Expected: Reason, key and the Discard button are all reachable.
+
+---
+
+---
+
+### T-2405 · Mobile · Deliveries table usable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, read the Deliveries table.
+
+Expected: Alert ids and statuses are readable at phone width.
+
+---
+
+---
+
+### T-2406 · Mobile · Journal KPIs stack at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Open the full cockpit page (/) at 390px width. 2. Read the Journal KPIs.
+
+Expected: KPIs stack readably with their definitions.
+
+---
+
+---
+
+### T-2407 · Mobile · Journal downloads tappable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. At 390px width, find the three download links.
+
+Expected: All three links are tappable at phone width.
+
+---
+
+---
+
+### T-2408 · Mobile · Notes composer usable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, read the Notes composer fields.
+
+Expected: Alert-id, note and tags fields are all usable at phone width.
+
+---
+
+---
+
+### T-2409 · Mobile · Notes list readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. At 390px width, read the notes list.
+
+Expected: Notes read in full with their tags and timestamps.
+
+---
+
+---
+
+### T-2410 · Mobile · Desk clock visible at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/) at 390px width. 2. Open the menu.
+
+Expected: The desk clock is visible in the menu and ticking.
+
+---
+
+---
+
+### T-2411 · Mobile · Sign-in line visible at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, open the menu.
+
+Expected: The "No sign-in needed" line is in the menu.
+
+---
+
+---
+
+### T-2412 · Mobile · Halt button reachable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. At 390px width, open the menu.
+
+Expected: The "Halt trading" button is in the menu and tappable.
+
+---
+
+---
+
+### T-2413 · Mobile · No auto-zoom on text fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+
+Steps: 1. At 390px width, tap into the envelope JSON textbox.
+
+Expected: The page does not auto-zoom — fields use a zoom-safe font size.
+
+---
+
+---
+
+### T-2414 · Mobile · No auto-zoom on the ticket amount
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. At 390px width, tap the ticket AMOUNT field.
+
+Expected: No auto-zoom on focus.
+
+---
+
+---
+
+### T-2415 · Mobile · No auto-zoom on settings fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+
+Steps: 1. Open /settings at 390px width. 2. Tap a text field.
+
+Expected: No auto-zoom on focus.
+
+---
+
+---
+
+### T-2416 · Mobile · No auto-zoom on the keys form
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+
+Steps: 1. Open /keys at 390px width. 2. Open the add form and tap the name field.
+
+Expected: No auto-zoom on focus.
+
+---
+
+---
+
+### T-2417 · Mobile · No auto-zoom on notifications fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+
+Steps: 1. Open /notifications at 390px width. 2. Tap the chat-id field.
+
+Expected: No auto-zoom on focus.
+
+---
+
+---
+
+### T-2418 · Mobile · No auto-zoom on strategy id field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+
+Steps: 1. Open /strategies at 390px width. 2. Tap the strategy id field.
+
+Expected: No auto-zoom on focus.
+
+---
+
+---
+
+### T-2419 · Mobile · Menu button labelled at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/) at 390px width. 2. Find the menu button.
+
+Expected: The button is labelled as a menu in words, not an icon alone.
+
+---
+
+---
+
+### T-2420 · Mobile · Menu opens and closes at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, open the menu, then close it.
+
+Expected: The menu opens and closes cleanly.
+
+---
+
+---
+
+### T-2421 · Mobile · Menu traps focus while open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, open the menu and press Tab repeatedly.
+
+Expected: Focus stays inside the menu until it closes.
+
+---
+
+---
+
+### T-2422 · Mobile · Menu Esc closes at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, open the menu and press Esc.
+
+Expected: The menu closes and focus returns to the menu button.
+
+---
+
+---
+
+### T-2423 · Mobile · Every cockpit disclosure tappable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. At 390px width, find every disclosure triangle on the cockpit.
+
+Expected: Every disclosure is tappable — none is too small to hit.
+
+---
+
+---
+
+### T-2424 · Mobile · Disclosure triangles tappable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. At 390px width, tap several disclosure triangles.
+
+Expected: Each opens its content readably at phone width.
+
+---
+
+---
+
+### T-2425 · Mobile · Cap bars readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. At 390px width, read the PER_TRADE, HEAT and DAILY CLUSTER bars.
+
+Expected: All three bars are readable at phone width.
+
+---
+
+---
+
+### T-2426 · Mobile · Funding rail readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. At 390px width, read the funding rail.
+
+Expected: Rate, threshold and PASS state are readable.
+
+---
+
+---
+
+### T-2427 · Mobile · Risk check panel usable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, run the risk check with defaults.
+
+Expected: The panel's fields and Run check button work at phone width.
+
+---
+
+---
+
+### T-2428 · Mobile · Drill buttons tappable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, find the drill buttons.
+
+Expected: Both drill buttons are tappable.
+
+---
+
+---
+
+### T-2429 · Mobile · Envelope validator usable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, paste JSON into the envelope box and validate.
+
+Expected: The box and Validate button work at phone width.
+
+---
+
+---
+
+### T-2430 · Mobile · Copy buttons tappable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. At 390px width, find the Copy buttons (Pine script, webhook secret).
+
+Expected: Every copy button is tappable at phone width.
+
+---
+
+---
+
+### T-2431 · Mobile · Tables never break the page at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, scroll through every table on the cockpit.
+
+Expected: Each table contains its own sideways scroll — the page never scrolls sideways.
+
+---
+
+---
+
+### T-2432 · Mobile · Headings hierarchy kept at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, check the heading order.
+
+Expected: Headings stay in order at phone width.
+
+---
+
+---
+
+### T-2433 · Mobile · Focus visible at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, Tab through the page.
+
+Expected: Every focused control shows a visible indicator.
+
+---
+
+---
+
+### T-2434 · Mobile · No keyboard traps at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. At 390px width, Tab through the entire cockpit.
+
+Expected: Focus never gets stuck.
+
+---
+
+---
+
+### T-2435 · Mobile · Dialogs fit at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. At 390px width, open each dialog (halt modal, delete confirms).
+
+Expected: Every dialog fits the phone width.
+
+---
+
+---
+
+### T-2436 · Mobile · Toast messages readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. At 390px width, trigger a save confirmation.
+
+Expected: The confirmation message is readable and does not cover controls.
+
+---
+
+---
+
+### T-2437 · Mobile · Page works in landscape at 390px height
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+
+Steps: 1. Rotate to landscape with the width near 390px height. 2. Use the cockpit.
+
+Expected: The page stays usable in the short-viewport orientation.
+
+---
+
+---
+
+### T-2438 · Mobile · Pinch-zoom still available
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+
+Steps: 1. At 390px width, pinch-zoom the page.
+
+Expected: The tester can still zoom manually — nothing blocks it.
+
+---
+
+---
+
+### T-2439 · Mobile · Backtests families readable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. Open /backtests at 390px width. 2. Read the four family cards.
+
+Expected: Mean reversion, Trend following, Momentum and Breakout cards stack readably with their record counts.
+
+---
+
+---
+
+### T-2440 · Mobile · History filters usable at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-46
+
+Steps: 1. Open /history at 390px width. 2. Use the Times shown in, Result, Reason and Order comboboxes.
+
+Expected: All four filter comboboxes are usable at phone width.
+
+---
+
+## Section R · Regression: walkthrough fixes (120 cases: T-2441–T-2560)
+
+---
+
+### T-2441 · Trading sessions · Start trading card paints on a healthy load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading in the browser. 2. Wait until "Data freshness" reads "updated Xs ago" (one poll at most). 3. Look for the session card area.
+
+Expected: The "Start trading" card is visible -- heading "Start trading", the "Auto-sessions: Bitcoin (BTC) only" pill, the two money inputs, and the "Start trading" button. The page never shows a button-less page on a healthy load.
+
+---
+
+---
+
+### T-2442 · Trading sessions · Status strip reads engine reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-28
+
+Steps: 1. Open /trading. 2. Wait for the status list to finish loading. 3. Read the strip.
+
+Expected: The strip shows "Trading engine reachable" and "Session quiet -- open leg is log-only".
+
+---
+
+---
+
+### T-2443 · Trading sessions · Data freshness ticks forward
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-28
+
+Steps: 1. Open /trading. 2. Read the "Data freshness" text. 3. Watch it for 20 seconds.
+
+Expected: The text updates (e.g. "updated 5s ago" becomes "updated 20s ago", then resets after a poll) -- it is live, not frozen.
+
+---
+
+---
+
+### T-2444 · Trading sessions · Start card shows the BTC-only pill
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-28
+
+Steps: 1. Open /trading on a healthy load. 2. Read the pill on the start card.
+
+Expected: The pill reads "Auto-sessions: Bitcoin (BTC) only".
+
+---
+
+---
+
+### T-2445 · Trading sessions · Money inputs show 25 and 20 defaults
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading on a healthy load. 2. Read the two money inputs on the start card.
+
+Expected: The inputs show $25 (largest position) and $20 (session stop-loss).
+
+---
+
+---
+
+### T-2446 · Trading sessions · Start trading button opens the preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Open /trading on a healthy load. 2. Click the "Start trading" button. 3. Read the screen that appears. Do NOT click "Yes, start".
+
+Expected: The "Ready to start?" preview screen appears. No session starts from the button alone -- a confirm step stands in between.
+
+---
+
+---
+
+### T-2447 · Trading sessions · Preview shows Maximum per-trade amount 25
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Open /trading, click "Start trading" to open the preview. Do NOT click "Yes, start". 2. Read the preview amounts.
+
+Expected: The preview shows "Maximum per-trade amount: $25".
+
+---
+
+---
+
+### T-2448 · Trading sessions · Preview shows Halt-everything-at 20
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Open /trading, click "Start trading" to open the preview. Do NOT click "Yes, start". 2. Read the preview amounts.
+
+Expected: The preview shows "Halt everything at total loss: $20".
+
+---
+
+---
+
+### T-2449 · Trading sessions · Preview shows the 2-hour run length
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Open /trading, click "Start trading" to open the preview. Do NOT click "Yes, start". 2. Read the preview text.
+
+Expected: The preview states the session "Runs for 2 hours".
+
+---
+
+---
+
+### T-2450 · Trading sessions · Go back returns to the start card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading, click "Start trading" to open the preview. 2. Click "Go back". 3. Look at the page.
+
+Expected: The page returns to the "Start trading" card; the "Ready to start?" screen is gone. No session was started.
+
+---

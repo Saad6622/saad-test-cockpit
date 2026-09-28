@@ -1,0 +1,784 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 17** — cases **T-3201–T-3400** — Section V (T-3201–T-3400)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR chunks of 50. Below are cases T-3201–T-3250 (full text). Run these 50 now, in order. When you finish all 50, WAIT — the coordinator will steer you the next 50. Your four chunks: T-3201–T-3250, T-3251–T-3300, T-3301–T-3350, T-3351–T-3400. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- IMPORTANT: the bookmark is a redirect page — it sends your browser to the current live tunnel address (a `*.lhr.life` URL). Arriving at the tunnel address VIA the bookmark redirect is the bookmark working correctly: proceed. The rule above means never hunt for tunnel URLs yourself and never bypass the bookmark.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- (none)
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 17 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 17 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+No state-changing cases in this lane — general restore only.
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 17 COMPLETE — T-3201–T-3400
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-3201–T-3250) — full text
+
+### T-3201 · Session · settings compact no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-16
+
+Steps: 1. Open /. 2. Scan the settings compact for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3202 · Session · settings compact helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-16
+
+Steps: 1. Open /. 2. Read the settings compact helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+---
+
+### T-3203 · Session · replay booth copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open /. 2. Read all replay booth copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+---
+
+### T-3204 · Session · replay booth no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open /. 2. Scan the replay booth for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3205 · Session · replay booth helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open /. 2. Read the replay booth helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+---
+
+### T-3206 · Session · refresh panels renders on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-18
+
+Steps: 1. Open /. 2. Scroll to the refresh panels. 3. Read every label and value.
+
+Expected: The refresh panels renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+---
+
+### T-3207 · Session · refresh panels labels are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-18
+
+Steps: 1. Open /. 2. Read every label on the refresh panels character for character.
+
+Expected: Every label is a plain word or phrase -- no internal codes, no abbreviations a trader would not know.
+
+---
+
+---
+
+### T-3208 · Session · refresh panels layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-18
+
+Steps: 1. Open /. 2. Note the refresh panels layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+---
+
+### T-3209 · Session · refresh panels primary control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-18
+
+Steps: 1. Open /. 2. Click the refresh panels main control. 3. Watch for 5 seconds.
+
+Expected: It responds visibly -- the control is never silent.
+
+---
+
+---
+
+### T-3210 · Session · refresh panels control is keyboard-operable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-18
+
+Steps: 1. Open /. 2. Tab to the refresh panels main control. 3. Activate it with Space or Enter.
+
+Expected: Focus is visible and the keyboard activates it -- no mouse needed.
+
+---
+
+---
+
+### T-3211 · Session · refresh panels expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-18
+
+Steps: 1. Open /. 2. If the refresh panels offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+---
+
+### T-3212 · Session · refresh panels honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-18
+
+Steps: 1. Open /. 2. View the refresh panels with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+---
+
+### T-3213 · Session · refresh panels never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-18
+
+Steps: 1. Open /. 2. Watch the refresh panels loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+---
+
+### T-3214 · Session · refresh panels failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-18
+
+Steps: 1. Open /. 2. If the refresh panels is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+---
+
+### T-3215 · Session · refresh panels copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-18
+
+Steps: 1. Open /. 2. Read all refresh panels copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+---
+
+### T-3216 · Session · refresh panels no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-18
+
+Steps: 1. Open /. 2. Scan the refresh panels for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3217 · Session · refresh panels helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-18
+
+Steps: 1. Open /. 2. Read the refresh panels helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+---
+
+### T-3218 · Session · status footer renders on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-19
+
+Steps: 1. Open /. 2. Scroll to the status footer. 3. Read every label and value.
+
+Expected: The status footer renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+---
+
+### T-3219 · Session · status footer labels are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-19
+
+Steps: 1. Open /. 2. Read every label on the status footer character for character.
+
+Expected: Every label is a plain word or phrase -- no internal codes, no abbreviations a trader would not know.
+
+---
+
+---
+
+### T-3220 · Session · status footer layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-19
+
+Steps: 1. Open /. 2. Note the status footer layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+---
+
+### T-3221 · Session · status footer honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-19
+
+Steps: 1. Open /. 2. View the status footer with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+---
+
+### T-3222 · Session · status footer never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-19
+
+Steps: 1. Open /. 2. Watch the status footer loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+---
+
+### T-3223 · Session · status footer failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-19
+
+Steps: 1. Open /. 2. If the status footer is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+---
+
+### T-3224 · Session · status footer copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-19
+
+Steps: 1. Open /. 2. Read all status footer copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+---
+
+### T-3225 · Session · status footer no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-19
+
+Steps: 1. Open /. 2. Scan the status footer for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3226 · Session · status footer helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-19
+
+Steps: 1. Open /. 2. Read the status footer helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+---
+
+### T-3227 · History · home card: Trading matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-21
+
+Steps: 1. Open /home. 2. Read a home card: Trading value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+---
+
+### T-3228 · History · home card: Trading counts reconcile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-21
+
+Steps: 1. Open /home. 2. Count the visible home card: Trading rows. 3. Read the home card: Trading count label.
+
+Expected: The label matches the visible rows -- no silent extras, no missing rows.
+
+---
+
+---
+
+### T-3229 · History · home card: Trading totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-21
+
+Steps: 1. Open /home. 2. Add the home card: Trading line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+---
+
+### T-3230 · History · home card: Trading copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-21
+
+Steps: 1. Open /home. 2. Read all home card: Trading copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+---
+
+### T-3231 · History · home card: Trading no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-21
+
+Steps: 1. Open /home. 2. Scan the home card: Trading for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3232 · History · home card: Trading helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-21
+
+Steps: 1. Open /home. 2. Read the home card: Trading helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+---
+
+### T-3233 · History · home card: Strategies matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-22
+
+Steps: 1. Open /home. 2. Read a home card: Strategies value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+---
+
+### T-3234 · History · home card: Strategies counts reconcile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-22
+
+Steps: 1. Open /home. 2. Count the visible home card: Strategies rows. 3. Read the home card: Strategies count label.
+
+Expected: The label matches the visible rows -- no silent extras, no missing rows.
+
+---
+
+---
+
+### T-3235 · History · home card: Strategies totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-22
+
+Steps: 1. Open /home. 2. Add the home card: Strategies line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+---
+
+### T-3236 · History · home card: Strategies copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-22
+
+Steps: 1. Open /home. 2. Read all home card: Strategies copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+---
+
+### T-3237 · History · home card: Strategies no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-22
+
+Steps: 1. Open /home. 2. Scan the home card: Strategies for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3238 · History · home card: Strategies helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-22
+
+Steps: 1. Open /home. 2. Read the home card: Strategies helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+---
+
+### T-3239 · History · home card: Backtests matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-23
+
+Steps: 1. Open /home. 2. Read a home card: Backtests value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+---
+
+### T-3240 · History · home card: Backtests counts reconcile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-23
+
+Steps: 1. Open /home. 2. Count the visible home card: Backtests rows. 3. Read the home card: Backtests count label.
+
+Expected: The label matches the visible rows -- no silent extras, no missing rows.
+
+---
+
+---
+
+### T-3241 · History · home card: Backtests totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-23
+
+Steps: 1. Open /home. 2. Add the home card: Backtests line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+---
+
+### T-3242 · History · home card: Backtests copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-23
+
+Steps: 1. Open /home. 2. Read all home card: Backtests copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+---
+
+### T-3243 · History · home card: Backtests no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-23
+
+Steps: 1. Open /home. 2. Scan the home card: Backtests for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3244 · History · home card: Backtests helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-23
+
+Steps: 1. Open /home. 2. Read the home card: Backtests helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+---
+
+### T-3245 · History · home card: History matches the related view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-24
+
+Steps: 1. Open /home. 2. Read a home card: History value. 3. Open the related view showing the same value.
+
+Expected: Both views agree -- the same fact is never told two ways.
+
+---
+
+---
+
+### T-3246 · History · home card: History counts reconcile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-24
+
+Steps: 1. Open /home. 2. Count the visible home card: History rows. 3. Read the home card: History count label.
+
+Expected: The label matches the visible rows -- no silent extras, no missing rows.
+
+---
+
+---
+
+### T-3247 · History · home card: History totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-24
+
+Steps: 1. Open /home. 2. Add the home card: History line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+---
+
+### T-3248 · History · home card: History copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-24
+
+Steps: 1. Open /home. 2. Read all home card: History copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+---
+
+### T-3249 · History · home card: History no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-24
+
+Steps: 1. Open /home. 2. Scan the home card: History for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+---
+
+### T-3250 · History · home card: History helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-24
+
+Steps: 1. Open /home. 2. Read the home card: History helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---

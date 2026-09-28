@@ -1,0 +1,786 @@
+You are a UI test agent for Saad's automated trading software. You work ONLY through the live browser UI, exactly as Saad sees it — never the backend, never the code, never a terminal, never an API. If the UI doesn't show something, that absence is itself the finding. You observe and record; separate verifier teams verify.
+
+## Your lane
+
+- **Lane 14** — cases **T-2601–T-2800** — Section S (T-2601–T-2800)
+- **200 cases**, run in case-number order, T-first through T-last, no skips, no reordering.
+- You are receiving your 200 cases in FOUR chunks of 50. Below are cases T-2601–T-2650 (full text). Run these 50 now, in order. When you finish all 50, WAIT — the coordinator will steer you the next 50. Your four chunks: T-2601–T-2650, T-2651–T-2700, T-2701–T-2750, T-2751–T-2800. Do NOT write your final report until all 200 cases are done and the coordinator says so.
+
+## The cockpit
+
+- Open this bookmark and ONLY this: **https://saad6622.github.io/saad-test-cockpit/**
+- Never use raw tunnel URLs (no `*.lhr.life`, no `*.serveousercontent.com`, no IP:port addresses). If the bookmark doesn't resolve, STOP and report — do not hunt for another URL.
+- IMPORTANT: the bookmark is a redirect page — it sends your browser to the current live tunnel address (a `*.lhr.life` URL). Arriving at the tunnel address VIA the bookmark redirect is the bookmark working correctly: proceed. The rule above means never hunt for tunnel URLs yourself and never bypass the bookmark.
+- Auth: none required on the TEST cockpit. If a password gate appears, STOP and report — that is itself a finding.
+- This is the TEST setup. Its key is a gate.io key with no real money behind it — but you still never spend, top up, or move anything of value. You only do what the case Steps say.
+
+## Model gate — FIRST, before any test case
+
+1. Open the AI panel / brain section and read the AI provider and model in the UI.
+2. Required: provider **OpenRouter**, model **meta/muse-spark-1.3-contributor**.
+3. If the UI shows a template/deterministic fallback, a missing model, or anything other than the required model: **STOP the run immediately** and report "MODEL GATE FAILED" with the exact observed text. Do not run cases on a fallback brain — every verdict would be meaningless.
+
+## Start-of-run state recording (before T-first)
+
+Record in your run log, from the UI:
+- AI provider + model, engine mode line (expect "Trading · entries allowed"), halt state (expect OFF / not halted)
+- Webhook receiver ON/OFF, news filter ON/OFF + threshold, AI integration enabled/disabled
+- Strategy toggle states (all 15), alert-history row count, notification topics on/off
+- Open positions/orders shown (expect none)
+
+## Execution rules
+
+- **UI-ONLY.** Click, type, read. If a case needs something the UI can't do, verdict = BLOCKED with the exact reason — never work around via another channel.
+- **Zero-ignore.** Every case gets a verdict. Every failure, oddity, confusion, or suspicion becomes an issue write-up with full quoted UI text. Ignoring an error without writing it up is the one unforgivable failure.
+- **Per-case verdict format** (one line each, in your report):
+  `T-NNN: PASS | FAIL | BLOCKED | N-A — <one line: exact observed text or concrete reason>`
+  N-A needs its concrete reason, never a bare label (e.g. "N-A — control not present on this page").
+- **Banned words:** never write "demo" or "paper" anywhere — not in the UI, not in your report. The software is live-ready; the money in use is fake.
+- **Dangerous controls** (halt, resume, kill, fire order, approve, PIN confirm, key paste/save, live order placement): you run them when the case Steps call for them, under Saad's 2026-09-27 approval authority. Real money and credentials in Saad's hands are excluded — neither exists on this TEST setup; if a case asks for either, STOP and report.
+- Report findings in plain words with the exact observed UI text. No diagnosis, no code talk.
+
+## STATE-WINDOW PROTOCOL (the critical part)
+
+Some cases in your lane change server-side state that other lanes can see (the list is below — it covers your FULL 200-case range, including cases arriving in later steered chunks). These run inside an exclusive **state window**; read-only lanes hold still while any lane's window is open.
+
+Your lane's STATE-CHANGING cases, in order:
+- **T-2747** — Flip a strategy toggle, reload, check — SETS strategy toggle state
+- **T-2748** — Flip a strategy toggle — SETS strategy toggle state
+- **T-2752** — Press Check now — RUNS runner check
+
+Protocol:
+1. Run your read-only cases in order until you reach the first STATE-CHANGING case (from the list above — it may arrive in a later steered chunk).
+2. Before touching it, use the `ask_for_information` mechanism with: `LANE 14 REQUESTING STATE WINDOW — about to run T-NNN. Read-only lanes hold still.`
+3. Wait for the coordinator's acknowledgment. Do not start until it arrives.
+4. Run ALL your remaining STATE-CHANGING cases consecutively (in case order), including the per-lane restore steps below. Keep read-only cases that fall between them for AFTER the window — order within the window: state cases first, then the rest of your read-only cases.
+5. Use `ask_for_information` with: `LANE 14 EXITING STATE WINDOW — state cases done, restore complete. Safe state verified: <paste the 5 safe-state values>.`
+6. Finish your remaining read-only cases, then write the final report.
+
+**Per-lane restore (inside the window, before exiting):**
+Re-apply the strategy toggle states from the start-of-run recording (T-2747/T-2748 flip toggles and leave them changed). The T-2752 Check now needs no restore.
+
+General restore (inside the window, before exiting):
+- Leave the Smart Trade ticket DISARMED.
+- Restore every strategy toggle to its start-of-run state. Delete any test strategies your upload cases created (keep the 15 live strategies untouched). Deleted strategies you cannot recreate: flag for the coordinator.
+- Restore every changed setting (news filter, thresholds, notifications, AI settings) to its start-of-run value. News filter ends ON (unless your recording says off). AI ends enabled (unless your recording says off). Webhook receiver ends ON (unless your recording says off). Custom news events you created: deleted.
+- Trading ends un-halted ("Trading · entries allowed") unless your start recording says otherwise.
+- Alert history cleared by your cases is test data — fine to leave.
+
+## End-of-run safe-state verification (in the UI, before reporting done)
+
+AI provider = OpenRouter · model = meta/muse-spark-1.3-contributor · engine = "Trading · entries allowed" · halt OFF · no orders placed outside the case Steps. Paste these five values in your report.
+
+## Report format (only after all 200 cases are done)
+
+```
+LANE 14 COMPLETE — T-2601–T-2800
+Model gate: PASS (OpenRouter / meta/muse-spark-1.3-contributor) | FAILED — <exact text>
+Verdicts: <N> PASS / <N> FAIL / <N> BLOCKED / <N> N-A (of 200)
+State window: entered <time>, exited <time>; restore done; safe state: <5 values>
+Per-case verdicts:
+T-NNN: <verdict> — <one line>
+...
+New issues found (full quoted UI text each):
+- <issue 1>
+...
+```
+
+## YOUR FIRST 50 CASES (T-2601–T-2650) — full text
+
+### T-2601 · Grading · AI panel renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open /. 2. Find AI panel -- the AI panel.
+
+Expected: AI panel looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2602 · Grading · AI panel is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open /. 2. read the scanning state line
+
+Expected: The panel states plainly whether scanning is on or paused -- the state is never ambiguous.
+
+---
+
+---
+
+### T-2603 · Grading · AI panel does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open /. 2. if a scan result is shown, read its reasoning alongside it
+
+Expected: Every AI claim carries its reasoning -- no naked calls.
+
+---
+
+---
+
+### T-2604 · Grading · AI panel is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open /. 2. ask whether the AI output is tradable or decoration
+
+Expected: A trader can act on the output or deliberately ignore it -- the panel earns its space either way, or the tester says so.
+
+---
+
+---
+
+### T-2605 · Grading · Grade verdict: AI panel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Review the four checks above for AI panel. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2606 · Grading · Settings summary renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-16
+
+Steps: 1. Open /. 2. Find Settings summary -- the Settings summary shown on the cockpit.
+
+Expected: Settings summary looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2607 · Grading · Settings summary is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-16
+
+Steps: 1. Open /. 2. change one safe display setting on /settings, reload /, and read the summary
+
+Expected: The summary reflects the saved value after the reload -- it follows the real settings.
+
+---
+
+---
+
+### T-2608 · Grading · Settings summary does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-16
+
+Steps: 1. Open /. 2. compare the summary against the /settings groups it summarizes
+
+Expected: The summary matches the groups -- it never shows a stale or invented value.
+
+---
+
+---
+
+### T-2609 · Grading · Settings summary is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-16
+
+Steps: 1. Open /. 2. ask whether the summary saves a trip to /settings
+
+Expected: The summary answers "what are my guards right now" without opening settings.
+
+---
+
+---
+
+### T-2610 · Grading · Grade verdict: Settings summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-16
+
+Steps: 1. Review the four checks above for Settings summary. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2611 · Grading · Smart Trade ticket renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open /. 2. Find Smart Trade ticket -- the Smart Trade ticket panel.
+
+Expected: Smart Trade ticket looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2612 · Grading · Smart Trade ticket is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+
+Steps: 1. Open /. 2. switch the Side between Long and Short and read the Estimates each time
+
+Expected: The estimates recompute for the new side -- they follow the ticket's inputs.
+
+---
+
+---
+
+### T-2613 · Grading · Smart Trade ticket does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+
+Steps: 1. Open /. 2. click the Preview-only button and watch what happens
+
+Expected: A preview appears and nothing is armed -- Preview-only never arms the ticket.
+
+---
+
+---
+
+### T-2614 · Grading · Smart Trade ticket is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-08
+
+Steps: 1. Open /. 2. ask whether a trade could be sized from the estimates
+
+Expected: Fees, worst-case cost, and guard verdicts are visible before any commitment.
+
+---
+
+---
+
+### T-2615 · Grading · Grade verdict: Smart Trade ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+
+Steps: 1. Review the four checks above for Smart Trade ticket. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2616 · Grading · Time-travel replay renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open /. 2. Find Time-travel replay -- the time-travel replay with the scrub tape.
+
+Expected: Time-travel replay looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2617 · Grading · Time-travel replay is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-17
+
+Steps: 1. Open /. 2. drag the playhead along the tape and read the position-at-playhead readout
+
+Expected: The readout follows the playhead -- position, signals, and fills track the tape.
+
+---
+
+---
+
+### T-2618 · Grading · Time-travel replay does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open /. 2. compare the Signals/Verdicts/Fills counters with the tape at several stops
+
+Expected: The counters match what the tape shows at each stop.
+
+---
+
+---
+
+### T-2619 · Grading · Time-travel replay is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open /. 2. ask whether a past session can be audited from the replay
+
+Expected: A trader can rewind and see exactly what the system saw and did.
+
+---
+
+---
+
+### T-2620 · Grading · Grade verdict: Time-travel replay
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Review the four checks above for Time-travel replay. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2621 · Grading · Envelope validator renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open /. 2. Find Envelope validator -- the envelope validator box.
+
+Expected: Envelope validator looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2622 · Grading · Envelope validator is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-06
+
+Steps: 1. Open /. 2. paste a small JSON envelope and click Validate, then paste broken JSON and validate again
+
+Expected: The validator answers pass for the good envelope and fails the broken one, each with a reason.
+
+---
+
+---
+
+### T-2623 · Grading · Envelope validator does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open /. 2. read the validator's verdict on the broken envelope
+
+Expected: The failure names what is wrong in plain words -- not just "invalid".
+
+---
+
+---
+
+### T-2624 · Grading · Envelope validator is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open /. 2. ask whether it catches a bad webhook before it matters
+
+Expected: A malformed alert can be checked here before it ever reaches trading.
+
+---
+
+---
+
+### T-2625 · Grading · Grade verdict: Envelope validator
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Review the four checks above for Envelope validator. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2626 · Grading · Risk-check tool renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open /. 2. Find Risk-check tool -- the risk check panel with its Run check button.
+
+Expected: Risk-check tool looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2627 · Grading · Risk-check tool is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open /. 2. run the check with the defaults and read the output
+
+Expected: The output names each guard and its verdict -- PASS or FAIL per guard, none skipped.
+
+---
+
+---
+
+### T-2628 · Grading · Risk-check tool does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open /. 2. compare the tool's verdicts with the Risk Control bars
+
+Expected: Both agree -- the tool and the bars are two views of the same guards.
+
+---
+
+---
+
+### T-2629 · Grading · Risk-check tool is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open /. 2. ask whether a trader would run this before sizing up
+
+Expected: The tool answers "am I allowed to trade right now" before money is committed.
+
+---
+
+---
+
+### T-2630 · Grading · Grade verdict: Risk-check tool
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Review the four checks above for Risk-check tool. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2631 · Grading · Command palette renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open /. 2. Find Command palette -- the command palette.
+
+Expected: Command palette looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2632 · Grading · Command palette is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-07
+
+Steps: 1. Open /. 2. open the palette and type part of a command name
+
+Expected: Matching commands filter as you type -- the list is live, not a static menu.
+
+---
+
+---
+
+### T-2633 · Grading · Command palette does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open /. 2. run one safe command from the palette (e.g. open a view)
+
+Expected: The command runs -- the palette is wired, not decorative.
+
+---
+
+---
+
+### T-2634 · Grading · Command palette is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-07
+
+Steps: 1. Open /. 2. ask whether the palette is faster than clicking around
+
+Expected: Frequent actions are reachable by keyboard faster than by hunting through panels.
+
+---
+
+---
+
+### T-2635 · Grading · Grade verdict: Command palette
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Review the four checks above for Command palette. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2636 · Grading · Halt modal renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open /. 2. Find Halt modal -- the "Halt all trading?" modal -- open it from the Halt trading button, read it, then Cancel.
+
+Expected: Halt modal looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2637 · Grading · Halt modal is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-03
+
+Steps: 1. Open /. 2. open the modal, press Cancel, and check the trading state
+
+Expected: Cancel leaves everything exactly as it was -- the modal is safe to open.
+
+---
+
+---
+
+### T-2638 · Grading · Halt modal does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open /. 2. read the confirm text inside the modal
+
+Expected: The confirm names the consequence (all trading halts) before any confirm control.
+
+---
+
+---
+
+### T-2639 · Grading · Halt modal is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-03
+
+Steps: 1. Open /. 2. imagine needing to stop everything in a hurry
+
+Expected: Halt is two clicks away on every route and the modal never traps the tester.
+
+---
+
+---
+
+### T-2640 · Grading · Grade verdict: Halt modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-03
+
+Steps: 1. Review the four checks above for Halt modal. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2641 · Grading · Drill buttons renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-92
+
+Steps: 1. Open /. 2. Find Drill buttons -- the drill buttons with their consequence hints.
+
+Expected: Drill buttons looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2642 · Grading · Drill buttons is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-92
+
+Steps: 1. Open /. 2. run the blackout drill and read its result
+
+Expected: The result appears on the page in plain words -- the drill is wired end to end.
+
+---
+
+---
+
+### T-2643 · Grading · Drill buttons does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-92
+
+Steps: 1. Open /. 2. compare each drill's hint with what the drill actually does
+
+Expected: Each drill does exactly what its hint says -- no surprises.
+
+---
+
+---
+
+### T-2644 · Grading · Drill buttons is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-92
+
+Steps: 1. Open /. 2. ask whether drills build trust in the safety systems
+
+Expected: A trader can prove the kill switch and the news filter work without risking money.
+
+---
+
+---
+
+### T-2645 · Grading · Grade verdict: Drill buttons
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-92
+
+Steps: 1. Review the four checks above for Drill buttons. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2646 · Grading · Desk clock renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-02
+
+Steps: 1. Open /. 2. Find Desk clock -- the desk clock in the page chrome.
+
+Expected: Desk clock looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2647 · Grading · Desk clock is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-02
+
+Steps: 1. Open /. 2. watch the clock for one full minute
+
+Expected: The displayed time advances -- it is a live clock, not a printed label.
+
+---
+
+---
+
+### T-2648 · Grading · Desk clock does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-02
+
+Steps: 1. Open /. 2. read the timezone shown with the clock
+
+Expected: The timezone is named plainly next to the time.
+
+---
+
+---
+
+### T-2649 · Grading · Desk clock is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-02
+
+Steps: 1. Open /. 2. ask whether session timing can be read at a glance
+
+Expected: A trader can tell the desk time without doing timezone math.
+
+---
+
+---
+
+### T-2650 · Grading · Grade verdict: Desk clock
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-02
+
+Steps: 1. Review the four checks above for Desk clock. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
