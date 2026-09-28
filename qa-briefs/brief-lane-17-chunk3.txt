@@ -1,0 +1,603 @@
+QA LANE 17 — CHUNK 3 — cases T-3301–T-3350 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-3301 · Ticket · toggle on/off helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-35
+
+Steps: 1. Open /strategies. 2. Read the toggle on/off helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3302 · Ticket · delete arm/disarm copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-37
+
+Steps: 1. Open /strategies. 2. Read all delete arm/disarm copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3303 · Ticket · delete arm/disarm no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-37
+
+Steps: 1. Open /strategies. 2. Scan the delete arm/disarm for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3304 · Ticket · delete arm/disarm helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-37
+
+Steps: 1. Open /strategies. 2. Read the delete arm/disarm helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3305 · Ticket · delete arm/disarm dangerous action gated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-37
+
+Steps: 1. Open /strategies. 2. If the delete arm/disarm offers a destructive action, start it and read the confirm dialog. 3. Click Cancel.
+
+Expected: The dialog states the consequences plainly -- the tester verifies the gate and cancels without crossing it.
+
+---
+
+### T-3306 · Ticket · delete arm/disarm secret never visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-37
+
+Steps: 1. Open /strategies. 2. Scan the delete arm/disarm for key-like strings.
+
+Expected: No secret material on screen -- masked fields show dots or stay blank.
+
+---
+
+### T-3307 · Ticket · delete arm/disarm gate cannot be skipped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-37
+
+Steps: 1. Open /strategies. 2. Look for any way past the delete arm/disarm safety gate.
+
+Expected: None exists -- the tester verifies the absence and does not try to work around it.
+
+---
+
+### T-3308 · Ticket · technical disclosures honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. View the technical disclosures with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
+
+### T-3309 · Ticket · technical disclosures never shows a stuck spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Watch the technical disclosures loading state for 30 seconds.
+
+Expected: Loading resolves to content or to a named state -- never a permanent spinner.
+
+---
+
+### T-3310 · Ticket · technical disclosures failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. If the technical disclosures is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-3311 · Ticket · technical disclosures copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read all technical disclosures copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3312 · Ticket · technical disclosures no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Scan the technical disclosures for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3313 · Ticket · technical disclosures helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the technical disclosures helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3314 · Cockpit · alerts link renders on /strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Scroll to the alerts link. 3. Read every label and value.
+
+Expected: The alerts link renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3315 · Cockpit · alerts link labels are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Read every label on the alerts link character for character.
+
+Expected: Every label is a plain word or phrase -- no internal codes, no abbreviations a trader would not know.
+
+---
+
+### T-3316 · Cockpit · alerts link layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Note the alerts link layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-3317 · Cockpit · alerts link primary control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Click the alerts link main control. 3. Watch for 5 seconds.
+
+Expected: It responds visibly -- the control is never silent.
+
+---
+
+### T-3318 · Cockpit · alerts link control is keyboard-operable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Tab to the alerts link main control. 3. Activate it with Space or Enter.
+
+Expected: Focus is visible and the keyboard activates it -- no mouse needed.
+
+---
+
+### T-3319 · Cockpit · alerts link expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. If the alerts link offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-3320 · Cockpit · alerts link copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Read all alerts link copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3321 · Cockpit · alerts link no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Scan the alerts link for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3322 · Cockpit · alerts link helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-40
+
+Steps: 1. Open /strategies. 2. Read the alerts link helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3323 · Cockpit · how-signals-flow copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-41
+
+Steps: 1. Open /strategies. 2. Read all how-signals-flow copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3324 · Cockpit · how-signals-flow no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-41
+
+Steps: 1. Open /strategies. 2. Scan the how-signals-flow for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3325 · Cockpit · how-signals-flow helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-41
+
+Steps: 1. Open /strategies. 2. Read the how-signals-flow helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3326 · Nav · add-strategy form copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-89
+
+Steps: 1. Open /strategies. 2. Read all add-strategy form copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3327 · Nav · add-strategy form no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-89
+
+Steps: 1. Open /strategies. 2. Scan the add-strategy form for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3328 · Nav · add-strategy form helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-89
+
+Steps: 1. Open /strategies. 2. Read the add-strategy form helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3329 · Nav · add-strategy form dangerous action gated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-89
+
+Steps: 1. Open /strategies. 2. If the add-strategy form offers a destructive action, start it and read the confirm dialog. 3. Click Cancel.
+
+Expected: The dialog states the consequences plainly -- the tester verifies the gate and cancels without crossing it.
+
+---
+
+### T-3330 · Nav · add-strategy form secret never visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-89
+
+Steps: 1. Open /strategies. 2. Scan the add-strategy form for key-like strings.
+
+Expected: No secret material on screen -- masked fields show dots or stay blank.
+
+---
+
+### T-3331 · Nav · add-strategy form gate cannot be skipped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-89
+
+Steps: 1. Open /strategies. 2. Look for any way past the add-strategy form safety gate.
+
+Expected: None exists -- the tester verifies the absence and does not try to work around it.
+
+---
+
+### T-3332 · Cockpit · family regions copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-42
+
+Steps: 1. Open /backtests. 2. Read all family regions copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3333 · Cockpit · family regions no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-42
+
+Steps: 1. Open /backtests. 2. Scan the family regions for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3334 · Cockpit · family regions helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-42
+
+Steps: 1. Open /backtests. 2. Read the family regions helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3335 · Cockpit · sortable headers renders on /backtests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Scroll to the sortable headers. 3. Read every label and value.
+
+Expected: The sortable headers renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3336 · Cockpit · sortable headers labels are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Read every label on the sortable headers character for character.
+
+Expected: Every label is a plain word or phrase -- no internal codes, no abbreviations a trader would not know.
+
+---
+
+### T-3337 · Cockpit · sortable headers layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Note the sortable headers layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-3338 · Cockpit · sortable headers primary control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Click the sortable headers main control. 3. Watch for 5 seconds.
+
+Expected: It responds visibly -- the control is never silent.
+
+---
+
+### T-3339 · Cockpit · sortable headers control is keyboard-operable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Tab to the sortable headers main control. 3. Activate it with Space or Enter.
+
+Expected: Focus is visible and the keyboard activates it -- no mouse needed.
+
+---
+
+### T-3340 · Cockpit · sortable headers expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. If the sortable headers offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-3341 · Cockpit · sortable headers copy is plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Read all sortable headers copy end to end.
+
+Expected: Plain words throughout -- no unexplained jargon.
+
+---
+
+### T-3342 · Cockpit · sortable headers no raw codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Scan the sortable headers for machine text.
+
+Expected: No HTTP codes, no JSON, no enum names, no 'undefined' -- prose only.
+
+---
+
+### T-3343 · Cockpit · sortable headers helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-44
+
+Steps: 1. Open /backtests. 2. Read the sortable headers helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-3344 · Cockpit · run-rate line renders on /backtests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-45
+
+Steps: 1. Open /backtests. 2. Scroll to the run-rate line. 3. Read every label and value.
+
+Expected: The run-rate line renders completely -- every label and value readable, nothing truncated, overlapped, or cut off.
+
+---
+
+### T-3345 · Cockpit · run-rate line labels are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-45
+
+Steps: 1. Open /backtests. 2. Read every label on the run-rate line character for character.
+
+Expected: Every label is a plain word or phrase -- no internal codes, no abbreviations a trader would not know.
+
+---
+
+### T-3346 · Cockpit · run-rate line layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-45
+
+Steps: 1. Open /backtests. 2. Note the run-rate line layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-3347 · Cockpit · run-rate line data ticks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-45
+
+Steps: 1. Open /backtests. 2. Read a live value on the run-rate line. 3. Wait one poll cycle. 4. Read it again.
+
+Expected: The value or its timestamp moves -- the data is live, not painted once.
+
+---
+
+### T-3348 · Cockpit · run-rate line timestamp advances
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-45
+
+Steps: 1. Open /backtests. 2. Read the run-rate line as-of time twice, a minute apart.
+
+Expected: The as-of time advances on its own schedule.
+
+---
+
+### T-3349 · Cockpit · run-rate line reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-45
+
+Steps: 1. Open /backtests. 2. Make a change that affects the run-rate line (if one is available). 3. Watch the run-rate line.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-3350 · Cockpit · run-rate line honest empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-45
+
+Steps: 1. Open /backtests. 2. View the run-rate line with no data available.
+
+Expected: It says so plainly -- never a blank panel pretending nothing is wrong.
+
+---
