@@ -1,0 +1,603 @@
+QA LANE 10 — CHUNK 3 — cases T-1901–T-1950 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-1901 · Keys · Slot row actions keyboard accessible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Tab through the gate_testnet row.
+
+Expected: Verify, Edit and Delete are all reachable by keyboard.
+
+---
+
+### T-1902 · Keys · Add form keyboard flow works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-53
+
+Steps: 1. Open the /keys page. 2. Open the add form and Tab through it.
+
+Expected: Every field and button is reachable in a sensible order.
+
+---
+
+### T-1903 · Keys · Cancel on the add form saves nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+
+Steps: 1. Open the /keys page. 2. Open the add form, fill it, then press Cancel.
+
+Expected: No slot is added and the list is unchanged.
+
+---
+
+### T-1904 · Keys · Form keeps typed values after a failed submit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Fill the add form with a bad name, submit, then read the form.
+
+Expected: The typed values are kept — only the bad field is flagged.
+
+---
+
+### T-1905 · Keys · Slot list count shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Read the slot list heading.
+
+Expected: The count of slots is shown.
+
+---
+
+### T-1906 · Keys · Empty slot list is a guided state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+
+Steps: 1. Open the /keys page with no slots. 2. Read the list region.
+
+Expected: The empty state guides the tester to "Add exchange key" instead of showing a bare table.
+
+---
+
+### T-1907 · Keys · Verify result announced as text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-52
+
+Steps: 1. Open the /keys page. 2. Run "Verify (read-only)" via keyboard. 3. Check the announcement.
+
+Expected: The result is announced in words, not color alone.
+
+---
+
+### T-1908 · Keys · Verify failure is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-52
+
+Steps: 1. Open the /keys page. 2. Read the verify-failure text.
+
+Expected: A failed check explains what failed in plain words — no stack trace.
+
+---
+
+### T-1909 · Keys · Edit form pre-fills the slot name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-54
+
+Steps: 1. Open the /keys page. 2. Click Edit on the slot. 3. Read the form, then cancel.
+
+Expected: The form pre-fills "gate_testnet" and its label.
+
+---
+
+### T-1910 · Keys · Edit does not reveal the secret
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-54
+
+Steps: 1. Open the /keys page. 2. Click Edit on the slot. 3. Read the secret field, then cancel.
+
+Expected: The secret field is blank — editing never reveals the stored secret.
+
+---
+
+### T-1911 · Keys · Edit cancel keeps the slot unchanged
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-54
+
+Steps: 1. Open the /keys page. 2. Click Edit, change nothing, press Cancel.
+
+Expected: The slot row is exactly as before.
+
+---
+
+### T-1912 · Keys · Slot row labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Check the slot row.
+
+Expected: The row carries the slot's name for assistive tech.
+
+---
+
+### T-1913 · Keys · Keys page works without any slots
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page with no slots. 2. Open the add form.
+
+Expected: The add form opens and works with an empty list.
+
+---
+
+### T-1914 · Keys · Page states keys stay on the server
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Read the explanatory text.
+
+Expected: The page states keys are stored server-side, never in the browser.
+
+---
+
+### T-1915 · Keys · No key material in page source claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Read the explanatory text.
+
+Expected: The page states no secret is ever rendered into the page.
+
+---
+
+### T-1916 · Keys · Slot name max length stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Read the name field, then cancel.
+
+Expected: A length guidance is visible for the slot name.
+
+---
+
+### T-1917 · Keys · Very long slot name refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Paste a 200-character name. 4. Try to submit, then cancel.
+
+Expected: The form refuses an over-long slot name.
+
+---
+
+### T-1918 · Keys · Add form labels every field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+
+Steps: 1. Open the /keys page. 2. Open the add form.
+
+Expected: Every field has a visible label — no placeholder-only fields.
+
+---
+
+### T-1919 · Keys · Required fields marked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form.
+
+Expected: Required fields are marked as required.
+
+---
+
+### T-1920 · Keys · Optional fields marked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form.
+
+Expected: Optional fields are marked as optional.
+
+---
+
+### T-1921 · Keys · Form error summary on submit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Submit it empty. 4. Cancel.
+
+Expected: A summary lists every problem in one place.
+
+---
+
+### T-1922 · Keys · First invalid field gets focus
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Submit it empty. 4. Cancel.
+
+Expected: Focus moves to the first invalid field.
+
+---
+
+### T-1923 · Keys · Exchange choice shown on the slot row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Read the gate_testnet row.
+
+Expected: The row shows which exchange the slot belongs to.
+
+---
+
+### T-1924 · Keys · Slot row shows last verified time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Read the gate_testnet row.
+
+Expected: The row shows when the slot was last verified, or that it never was.
+
+---
+
+### T-1925 · Keys · Verify updates the last-verified time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-52
+
+Steps: 1. Open the /keys page. 2. Run "Verify (read-only)". 3. Re-read the row.
+
+Expected: The last-verified time updates to the check just run.
+
+---
+
+### T-1926 · Keys · Delete confirm warns the slot stops working
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-55
+
+Steps: 1. Open the /keys page. 2. Click Delete. 3. Read the confirm, then cancel.
+
+Expected: The confirm warns that deleting the slot stops anything using it.
+
+---
+
+### T-1927 · Keys · Slot list survives reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Note the list. 3. Reload.
+
+Expected: The same slots appear in the same order.
+
+---
+
+### T-1928 · Keys · Add button disabled while form open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-53
+
+Steps: 1. Open the /keys page. 2. Open the add form.
+
+Expected: The "Add exchange key" button does not open a second form while one is open.
+
+---
+
+### T-1929 · Keys · Page heading hierarchy correct
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Check the headings.
+
+Expected: The page title is a real heading and sections follow in order.
+
+---
+
+### T-1930 · Keys · Slot-name minimum length stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Read the slot-name rule, then cancel.
+
+Expected: The rule states the minimum slot-name length.
+
+---
+
+### T-1931 · Keys · Slot name of minimum length accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Type a minimum-length name. 4. Read the validation, then cancel.
+
+Expected: A name at exactly the minimum length passes the rule.
+
+---
+
+### T-1932 · Keys · Slot name numbers accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Type "gate123". 4. Read the validation, then cancel.
+
+Expected: Digits pass the slot-name rule.
+
+---
+
+### T-1933 · Keys · Slot name underscores accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Type "gate_test". 4. Read the validation, then cancel.
+
+Expected: Underscores pass the slot-name rule.
+
+---
+
+### T-1934 · Keys · Empty name refused with a named message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Leave the name empty and submit. 4. Cancel.
+
+Expected: The error names the slot-name field and says a name is required.
+
+---
+
+### T-1935 · Keys · Secret visibility toggle hides again
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Toggle secret visibility on, then off.
+
+Expected: The secret re-masks when the toggle is switched back.
+
+---
+
+### T-1936 · Keys · Exchange key field visible as typed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Type into the API key field.
+
+Expected: The key field shows what is typed (it is not the secret field).
+
+---
+
+### T-1937 · Keys · Add form field order sensible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Read the field order top to bottom.
+
+Expected: Fields run slot name, exchange, API key, secret — the order the tester expects.
+
+---
+
+### T-1938 · Keys · Add-slot button visible at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-53
+
+Steps: 1. Open the /keys page at 390px width. 2. Find the "Add exchange key" button.
+
+Expected: The button is visible and tappable at phone width.
+
+---
+
+### T-1939 · Keys · Slot list Status column readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Read the slot list column headers.
+
+Expected: A Status column (or equivalent state cell) is present and readable.
+
+---
+
+### T-1940 · Keys · Slot list Actions header present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Read the slot list column headers.
+
+Expected: An Actions header labels the Verify/Edit/Delete column.
+
+---
+
+### T-1941 · Keys · Verify succeeds for the Gate.io slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-52
+
+Steps: 1. Open the /keys page. 2. Click "Verify (read-only)" on the gate_testnet slot. 3. Read the result.
+
+Expected: The check passes and says so in plain words - the key connects read-only.
+
+---
+
+### T-1942 · Keys · Verify success message is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-52
+
+Steps: 1. Open the /keys page. 2. Run "Verify (read-only)". 3. Read the success message.
+
+Expected: The success message is plain words with no codes or jargon.
+
+---
+
+### T-1943 · Keys · Verify button shows a running state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-52
+
+Steps: 1. Open the /keys page. 2. Click "Verify (read-only)" and watch the button.
+
+Expected: The button shows it is checking until the result arrives - it never looks dead mid-check.
+
+---
+
+### T-1944 · Keys · Edit form shows the slot's exchange
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-54
+
+Steps: 1. Open the /keys page. 2. Click Edit on the slot. 3. Read the exchange field, then cancel.
+
+Expected: The form shows Gate.io selected as the slot's exchange.
+
+---
+
+### T-1945 · Keys · Empty API key is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+
+Steps: 1. Open the /keys page. 2. Open the add form. 3. Fill everything except the API key. 4. Try to submit, then cancel.
+
+Expected: The form refuses an empty API key and names the field.
+
+---
+
+### T-1946 · Notifications · Notifications page heading present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the top of the page.
+
+Expected: A heading for notifications is shown.
+
+---
+
+### T-1947 · Notifications · Telegram bot-secret steps shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the Telegram setup steps.
+
+Expected: The steps name @BotFather and the bot-secret handoff in plain words.
+
+---
+
+### T-1948 · Notifications · Telegram chat-id steps shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the chat-id steps.
+
+Expected: The steps name @userinfobot for finding the chat id.
+
+---
+
+### T-1949 · Notifications · Token boxes stay blank
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the Telegram token boxes.
+
+Expected: The boxes stay blank — no token is ever rendered into the page.
+
+---
+
+### T-1950 · Notifications · Webhook secret one-time and read-only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the webhook secret region.
+
+Expected: The secret is shown once, read-only, and never again after the page is left.
+
+---
