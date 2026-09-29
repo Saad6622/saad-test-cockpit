@@ -1,0 +1,1207 @@
+QA BRIEF — BULK LANE B3 chunk 17/45 (T-5601–T-5700)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-5601 · AI-wired · Cards survive a page reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Reload the page and read the AI panel.
+
+Expected: Cards return -- the wiring persists.
+
+---
+
+### T-5602 · AI-wired · Prediction count updates live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch the prediction count across a scan cycle.
+
+Expected: It updates as cards arrive -- live count, not frozen.
+
+---
+
+### T-5603 · AI-wired · Feed pause labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the scan cycle stalls, read the panel header.
+
+Expected: It says the feed is paused -- the panel does not pretend to scan.
+
+---
+
+### T-5604 · AI-wired · Resume after pause brings fresh cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the feed paused and resumed, read the cards.
+
+Expected: Fresh cards arrive -- the panel recovers honestly.
+
+---
+
+### T-5605 · AI-wired · Card ages advance
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a card's age, wait two minutes, read it again.
+
+Expected: The age advances -- time passes visibly.
+
+---
+
+### T-5606 · AI-wired · No duplicate cards across cycles
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch three scan cycles and note card ids.
+
+Expected: No duplicates -- each cycle adds new cards, not copies.
+
+---
+
+### T-5607 · AI-wired · Card expands for detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click a prediction card.
+
+Expected: It expands to its detail -- rationale, inputs, and timing.
+
+---
+
+### T-5608 · AI-wired · Card collapses cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand a card, then collapse it.
+
+Expected: Collapses without residue.
+
+---
+
+### T-5609 · AI-wired · Cards keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Tab through the prediction cards.
+
+Expected: Each card receives focus and expands with Enter.
+
+---
+
+### T-5610 · AI-wired · Filter by direction works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a direction filter exists, filter to one direction.
+
+Expected: Only that direction's cards show; clearing restores all.
+
+---
+
+### T-5611 · AI-wired · Sort control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a sort control exists, sort by confidence.
+
+Expected: Cards reorder and the sort direction is announced.
+
+---
+
+### T-5612 · AI-wired · Refresh predictions control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a refresh control exists, press it.
+
+Expected: A fresh scan runs visibly -- the control is never silent.
+
+---
+
+### T-5613 · AI-wired · Card actions do not place orders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click every control on a prediction card.
+
+Expected: Nothing places an order -- predictions are read-only by design.
+
+---
+
+### T-5614 · AI-wired · Dismiss card works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a dismiss control exists, dismiss a card.
+
+Expected: The card leaves the list; the dismissal is reversible or clearly final.
+
+---
+
+### T-5615 · AI-wired · Detail view does not disturb the list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand a card, then collapse it and read the list.
+
+Expected: The list is unchanged -- viewing is safe.
+
+---
+
+### T-5616 · AI-wired · Panel scrolls independently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scroll the prediction list.
+
+Expected: The list scrolls without moving the rest of the cockpit.
+
+---
+
+### T-5617 · AI-wired · No-edge state reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the scan finds no edge, read the panel.
+
+Expected: 'No edge found' in calm words -- the AI abstains honestly instead of inventing a call.
+
+---
+
+### T-5618 · AI-wired · Uncertain predictions held visibly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find a prediction held for uncertainty.
+
+Expected: It reads as held -- the panel shows the hold, not a forced direction.
+
+---
+
+### T-5619 · AI-wired · Held predictions never pose as live calls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a held prediction's card.
+
+Expected: Clearly marked held -- a held card can never be mistaken for an active call.
+
+---
+
+### T-5620 · AI-wired · Error state reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI feed errors, read the panel.
+
+Expected: A calm explanation -- not a blank panel, not a raw error.
+
+---
+
+### T-5621 · AI-wired · Predictions never claim certainty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read five prediction cards fully.
+
+Expected: No card claims certainty -- confidence is a percent, not a promise.
+
+---
+
+### T-5622 · AI-wired · Low-confidence cards labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the lowest-confidence card.
+
+Expected: Its low confidence is visible -- the panel does not dress weak calls as strong.
+
+---
+
+### T-5623 · AI-wired · Expired predictions labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find an old prediction.
+
+Expected: Expired cards are labeled expired -- old calls never pose as fresh.
+
+---
+
+### T-5624 · AI-wired · Panel honest when gateway down
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway is down, read the AI panel.
+
+Expected: It says predictions are paused and why -- the panel does not show stale cards as live.
+
+---
+
+### T-5625 · AI-wired · Empty scan cycle honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a cycle produces nothing, read the panel.
+
+Expected: It says the cycle found nothing -- not an error, not a blank.
+
+---
+
+### T-5626 · AI-wired · Conflicting predictions both shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If two cards disagree on a symbol, read both.
+
+Expected: Both shown honestly -- the panel does not hide disagreement.
+
+---
+
+### T-5627 · AI-wired · No phantom predictions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count the cards and compare with the count line.
+
+Expected: Counts agree -- no phantom cards, no missing cards.
+
+---
+
+### T-5628 · AI-wired · Rationale honest when model abstains
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the model abstained, read the rationale.
+
+Expected: It says why it abstained -- never a made-up reason.
+
+---
+
+### T-5629 · AI-wired · Card confidence matches its detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand a card and compare its headline confidence with the detail.
+
+Expected: Both show the same percent -- headline and detail agree.
+
+---
+
+### T-5630 · AI-wired · Card symbol matches its detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand a card and compare symbols.
+
+Expected: Headline and detail name the same symbol.
+
+---
+
+### T-5631 · AI-wired · Scan time matches the cycle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a card's scan time and the panel's last-scan time.
+
+Expected: The card's time fits inside the panel's scan history.
+
+---
+
+### T-5632 · AI-wired · Prediction count matches the cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count the visible cards and read the count line.
+
+Expected: They agree.
+
+---
+
+### T-5633 · AI-wired · Direction agrees with rationale
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a card's direction and its rationale.
+
+Expected: The rationale supports the direction -- no long rationale on a short card.
+
+---
+
+### T-5634 · AI-wired · Held cards excluded from active count
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count active vs held cards and read the count line.
+
+Expected: Held cards are not counted as active predictions.
+
+---
+
+### T-5635 · AI-wired · Card ages agree with scan times
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare a card's age with its scan time and the desk clock.
+
+Expected: The three agree -- age is computed from the scan time.
+
+---
+
+### T-5636 · AI-wired · Prediction symbols exist in the universe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read three prediction symbols. 2. Open /settings and read the scanner universe.
+
+Expected: Each symbol is in the universe -- the AI predicts only what it watches.
+
+---
+
+### T-5637 · AI-wired · Direction words are trader words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read every direction label aloud.
+
+Expected: Trader words -- no model-output codes.
+
+---
+
+### T-5638 · AI-wired · Rationale reads in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read three rationales aloud.
+
+Expected: Human sentences -- no feature names, no weights.
+
+---
+
+### T-5639 · AI-wired · No-edge copy reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the no-edge state aloud.
+
+Expected: 'No edge found' -- plain, calm, complete.
+
+---
+
+### T-5640 · AI-wired · Held-state copy reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a held card's state line aloud.
+
+Expected: Plain words for why it is held.
+
+---
+
+### T-5641 · AI-wired · No model jargon on cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan five cards for model vocabulary.
+
+Expected: None -- no 'logits', 'temperature', or 'inference' on screen.
+
+---
+
+### T-5642 · AI-wired · Confidence labeled as confidence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a confidence line.
+
+Expected: Labeled 'confidence' -- not a bare percent.
+
+---
+
+### T-5643 · AI-wired · Error copy has no raw errors
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the feed errors, read the message.
+
+Expected: Human words -- no raw provider errors.
+
+---
+
+### T-5644 · AI-wired · Ages read as words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read three card ages.
+
+Expected: '2 min ago' -- not raw seconds.
+
+---
+
+### T-5645 · AI-wired · Vetoed prediction card renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find a vetoed prediction.
+
+Expected: The card renders with its vetoed state visible -- direction, confidence, and the veto mark.
+
+---
+
+### T-5646 · AI-wired · Veto reason renders on the card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a vetoed card's veto reason.
+
+Expected: A human reason -- which rule vetoed it and why.
+
+---
+
+### T-5647 · AI-wired · Veto badge distinct from held badge
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare a vetoed card with a held card.
+
+Expected: Two distinct states -- vetoed and held never look the same.
+
+---
+
+### T-5648 · AI-wired · Uncertain-held card renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find an uncertain-held prediction.
+
+Expected: The card renders with its held state and the uncertainty note.
+
+---
+
+### T-5649 · AI-wired · Veto list renders separately
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the vetoed/held list or filter.
+
+Expected: Vetoed predictions are findable as a group -- not mixed silently into active cards.
+
+---
+
+### T-5650 · AI-wired · Veto timestamp renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a vetoed card's veto time.
+
+Expected: A human time -- the tester knows when the veto landed.
+
+---
+
+### T-5651 · AI-wired · Vetoed cards render at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Load at phone width and read a vetoed card.
+
+Expected: Fully readable -- veto state not truncated.
+
+---
+
+### T-5652 · AI-wired · Veto rule name renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read which rule vetoed a card.
+
+Expected: The rule is named in words -- the veto is auditable.
+
+---
+
+### T-5653 · AI-wired · Held-uncertainty note renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read an uncertain-held card's note.
+
+Expected: It says what was uncertain -- confidence too low, or conflicting inputs.
+
+---
+
+### T-5654 · AI-wired · Vetoed card keeps its prediction data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a vetoed card fully.
+
+Expected: Direction, confidence, symbol, time all still there -- the veto adds state, it does not erase the call.
+
+---
+
+### T-5655 · AI-wired · Veto lands live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch a fresh prediction that should be vetoed.
+
+Expected: The veto mark appears as the rule fires -- live, not on reload.
+
+---
+
+### T-5656 · AI-wired · Veto list updates live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Note the vetoed count, wait for a veto, re-read.
+
+Expected: The count moves -- vetoes are live events.
+
+---
+
+### T-5657 · AI-wired · Held cards update when certainty returns
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a held prediction's inputs resolve, watch its card.
+
+Expected: The hold lifts honestly -- the card says what changed.
+
+---
+
+### T-5658 · AI-wired · Vetoed cards survive reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Reload the page and find the vetoed cards.
+
+Expected: Still vetoed -- the state persists.
+
+---
+
+### T-5659 · AI-wired · New vetoes appear at the top
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch the vetoed list across cycles.
+
+Expected: Newest veto on top -- order is newest-first.
+
+---
+
+### T-5660 · AI-wired · Veto ages advance
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a veto's age, wait, read it again.
+
+Expected: The age advances.
+
+---
+
+### T-5661 · AI-wired · Veto state survives panel refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Run the cockpit panel refresh and re-read a vetoed card.
+
+Expected: Still vetoed -- refresh never clears a veto.
+
+---
+
+### T-5662 · AI-wired · Un-veto never happens silently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a veto ever clears, read the card's history.
+
+Expected: The clearing is recorded -- vetoes do not vanish without a trace.
+
+---
+
+### T-5663 · AI-wired · Vetoed card expands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click a vetoed card.
+
+Expected: It expands -- veto reason, rule, and the original call all readable.
+
+---
+
+### T-5664 · AI-wired · Veto filter works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a veto filter exists, show only vetoed cards.
+
+Expected: Only vetoed cards show; clearing restores all.
+
+---
+
+### T-5665 · AI-wired · Held filter works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a held filter exists, show only held cards.
+
+Expected: Only held cards show.
+
+---
+
+### T-5666 · AI-wired · Veto reason expandable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click a veto reason for its detail.
+
+Expected: The full rule explanation opens -- the veto is inspectable.
+
+---
+
+### T-5667 · AI-wired · Vetoed cards keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Tab to a vetoed card and press Enter.
+
+Expected: Expands from the keyboard exactly like a click.
+
+---
+
+### T-5668 · AI-wired · No control un-vetoes by tester
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Inspect every control on a vetoed card.
+
+Expected: No tester control lifts a veto -- vetoes are system state, not tester toggles.
+
+---
+
+### T-5669 · AI-wired · Held card shows its release condition
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand an uncertain-held card.
+
+Expected: It says what would release the hold -- the condition is visible.
+
+---
+
+### T-5670 · AI-wired · Veto list scrolls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If many vetoes exist, scroll the vetoed list.
+
+Expected: Scrolls cleanly -- no dropped rows.
+
+---
+
+### T-5671 · AI-wired · Vetoed card actions read-only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click every control on a vetoed card.
+
+Expected: Viewing only -- a vetoed card offers no order path.
+
+---
+
+### T-5672 · AI-wired · Filter combinations work
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Combine direction and veto filters if both exist.
+
+Expected: The combination filters correctly; clearing restores all.
+
+---
+
+### T-5673 · AI-wired · Vetoed card never poses as active
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a vetoed card in the main list.
+
+Expected: Unmistakably vetoed -- it cannot be mistaken for a live call.
+
+---
+
+### T-5674 · AI-wired · Held card never poses as active
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a held card in the main list.
+
+Expected: Unmistakably held.
+
+---
+
+### T-5675 · AI-wired · Veto reason honest when rule misfires
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a veto looks wrong, read its reason.
+
+Expected: The reason is still truthful about which rule fired -- the panel does not hide misfires.
+
+---
+
+### T-5676 · AI-wired · Vetoed predictions excluded from counts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count active predictions vs vetoed ones and read the count line.
+
+Expected: Vetoed cards are not counted as active.
+
+---
+
+### T-5677 · AI-wired · Held predictions excluded from counts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count held cards and read the count line.
+
+Expected: Held cards are not counted as active.
+
+---
+
+### T-5678 · AI-wired · Veto never silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch a prediction get vetoed.
+
+Expected: The veto is announced on the card -- vetoes never land invisibly.
+
+---
+
+### T-5679 · AI-wired · Empty veto list honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If nothing is vetoed, read the vetoed view.
+
+Expected: An honest empty state -- not a missing section.
+
+---
+
+### T-5680 · AI-wired · Veto during gateway outage honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway is down, read the vetoed cards.
+
+Expected: Existing vetoes stay; the panel says new vetos cannot be computed -- honest about the gap.
+
+---
+
+### T-5681 · AI-wired · Veto reason never blames the trader
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read five veto reasons.
+
+Expected: Rule language -- never blame.
+
+---
+
+### T-5682 · AI-wired · Uncertain hold never forced into a call
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read an uncertain-held card fully.
+
+Expected: It stays held -- the panel never converts uncertainty into a direction.
+
+---
+
+### T-5683 · AI-wired · Vetoed card keeps honest age
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a vetoed card's age.
+
+Expected: The age is real -- vetoes do not reset the clock.
+
+---
+
+### T-5684 · AI-wired · Bulk vetoes each labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If many cards are vetoed at once, read three.
+
+Expected: Each carries its own reason -- no blanket veto without per-card truth.
+
+---
+
+### T-5685 · AI-wired · Veto state honest after reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Reload with vetoed cards present.
+
+Expected: Vetoes return exactly as they were -- reload invents none, drops none.
+
+---
+
+### T-5686 · AI-wired · Held-then-released card shows history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a hold released, read the card.
+
+Expected: The hold and its release are both visible -- the card has a memory.
+
+---
+
+### T-5687 · AI-wired · Veto count matches vetoed cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count the vetoed cards and read the veto count.
+
+Expected: They agree.
+
+---
+
+### T-5688 · AI-wired · Veto rule matches the named rule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a veto's rule name, then the rule's description if documented.
+
+Expected: The name matches a real rule -- vetoes cite real rules.
+
+---
+
+### T-5689 · AI-wired · Vetoed card data matches pre-veto
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare a vetoed card's call with its pre-veto state if visible.
+
+Expected: Direction and confidence unchanged -- the veto added state, nothing else.
+
+---
+
+### T-5690 · AI-wired · Held count matches held cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count the held cards and read the held count.
+
+Expected: They agree.
+
+---
+
+### T-5691 · AI-wired · Active count excludes vetoed and held
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Add active, vetoed, and held counts; compare with the total.
+
+Expected: The arithmetic holds -- no card counted twice, none missing.
+
+---
+
+### T-5692 · AI-wired · Veto time matches the scan cycle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a veto's time and the panel's scan history.
+
+Expected: The veto time fits a real cycle -- vetoes happen during scans.
+
+---
+
+### T-5693 · AI-wired · Veto reason consistent across twins
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the same rule vetoed two cards, read both reasons.
+
+Expected: Consistent wording for the same rule.
+
+---
+
+### T-5694 · AI-wired · Released hold matches its condition
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a hold released, read the release note and the card's new state.
+
+Expected: The release matches the stated condition -- the panel keeps its promises.
+
+---
+
+### T-5695 · AI-wired · Vetoed state reads in words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a vetoed card's state line aloud.
+
+Expected: 'Vetoed' plus the reason -- plain words.
+
+---
+
+### T-5696 · AI-wired · Veto reason has no rule slugs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read three veto reasons aloud.
+
+Expected: Named rules in words -- no VETO_001 style codes.
+
+---
+
+### T-5697 · AI-wired · Held state reads in words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a held card's state line aloud.
+
+Expected: 'Held' plus why -- plain words.
+
+---
+
+### T-5698 · AI-wired · No jargon in veto detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand a vetoed card and read the detail.
+
+Expected: Human sentences -- no engine vocabulary.
+
+---
+
+### T-5699 · AI-wired · Release condition reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a held card's release condition aloud.
+
+Expected: A plain sentence about what would release it.
+
+---
+
+### T-5700 · AI-wired · Veto list heading reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the vetoed view's heading.
+
+Expected: Plain words -- not 'quarantine'.
+
+---

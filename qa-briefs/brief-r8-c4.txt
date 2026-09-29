@@ -1,0 +1,607 @@
+QA BRIEF — LANE 8 REMAINDER c4 (T-1551–T-1600)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+ALREADY DONE: T-1401–T-1550 (chunks 1–3; ISS-172–179). State cases T-1528/T-1529 and T-1580–T-1600 → WINDOW SWEEP A. Run the read-only cases in T-1551–T-1600 now.
+
+### T-1551 · Strategies · DataUnavailable behaviour explained
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the contract text.
+
+Expected: It explains a strategy that cannot get data should raise DataUnavailable, and the page shows that as "awaiting market data".
+
+---
+
+### T-1552 · Strategies · Only the two GATEIO symbols are listed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the allowed-symbols text.
+
+Expected: Only GATEIO:BTCUSDT.P and GATEIO:ETHUSDT.P are listed as tradeable symbols.
+
+---
+
+### T-1553 · Strategies · Per-strategy alert cap explained
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the alert-cap text.
+
+Expected: It states at most 3 alerts per strategy per check are delivered.
+
+---
+
+### T-1554 · Strategies · Staleness drop explained
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the staleness text.
+
+Expected: It states signals on data older than 120 seconds are dropped.
+
+---
+
+### T-1555 · Strategies · Add form states new strategies start OFF
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the enablement text.
+
+Expected: It states new strategies start disabled and must be enabled explicitly.
+
+---
+
+### T-1556 · Strategies · Telegram approval flow explained
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the approval text.
+
+Expected: It explains queued signals send a Telegram approval card and unanswered cards expire in 10 min.
+
+---
+
+### T-1557 · Strategies · Approval card format shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the approval example.
+
+Expected: The example shows the card format with the YES confirm-id PIN line.
+
+---
+
+### T-1558 · Strategies · List refreshes every minute
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open the /strategies page. 2. Read the refresh text.
+
+Expected: It states the strategy list refreshes every minute.
+
+---
+
+### T-1559 · Strategies · Add form shows inline errors, not popups
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Submit the form with an invalid id. 3. Cancel.
+
+Expected: Errors appear inline next to the offending field, not in a popup.
+
+---
+
+### T-1560 · Strategies · Invalid field gets focus on submit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Submit the form with an invalid id. 3. Cancel.
+
+Expected: Focus moves to the first invalid field.
+
+---
+
+### T-1561 · Strategies · Form keeps typed values after a failed submit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Type a name, an invalid id, then submit. 3. Cancel.
+
+Expected: The typed name is kept — only the bad field is flagged.
+
+---
+
+### T-1562 · Strategies · Cancel on the add form discards nothing saved
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Fill the form, then press Cancel.
+
+Expected: No strategy is added and the list is unchanged.
+
+---
+
+### T-1563 · Strategies · Add form keyboard flow works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Tab through the add form.
+
+Expected: Every field and button is reachable by keyboard in a sensible order.
+
+---
+
+### T-1564 · Strategies · Strategy id field maxlength stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the id field.
+
+Expected: A maxlength or length guidance is visible so the tester does not guess.
+
+---
+
+### T-1565 · Strategies · Very long id is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Paste a 200-character id. 3. Try to submit, then cancel.
+
+Expected: The form refuses an over-long id.
+
+---
+
+### T-1566 · Strategies · Id with leading dash is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Type "-mom". 3. Try to submit, then cancel.
+
+Expected: The form refuses an id starting with a dash.
+
+---
+
+### T-1567 · Strategies · Id with trailing dash is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Type "mom-". 3. Try to submit, then cancel.
+
+Expected: The form refuses an id ending with a dash.
+
+---
+
+### T-1568 · Strategies · Name with only spaces is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Type spaces into the name field. 3. Try to submit, then cancel.
+
+Expected: A whitespace-only name is refused like an empty one.
+
+---
+
+### T-1569 · Strategies · Symbol case is normalized or refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Type "gateio:btcusdt.p" in lowercase. 3. Try to submit, then cancel.
+
+Expected: The form either normalizes the case or refuses it — it never silently accepts a broken symbol.
+
+---
+
+### T-1570 · Strategies · Contract text is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the whole contract block.
+
+Expected: Every rule is in plain words a non-developer can follow.
+
+---
+
+### T-1571 · Strategies · Add region labelled for assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Check the add-strategy region.
+
+Expected: The region carries its name for assistive tech.
+
+---
+
+### T-1572 · Strategies · Form works with JavaScript-only validation off path
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Submit an empty form. 3. Cancel.
+
+Expected: The page refuses the empty submit even if client checks were bypassed — validation is server-side.
+
+---
+
+### T-1573 · Strategies · Successful add shows the new row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the list-update text.
+
+Expected: The text states a successfully added strategy appears in the list below.
+
+---
+
+### T-1574 · Strategies · New strategy row shows OFF state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the enablement text once more.
+
+Expected: It repeats that the new row shows OFF until the tester enables it.
+
+---
+
+### T-1575 · Strategies · Strategy name maxlength stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Read the strategy name field.
+
+Expected: A maxlength or length guidance is visible for the name, matching the id field's guidance.
+
+---
+
+### T-1576 · Strategies · Every strategy row has an enable control
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Read the strategy list.
+
+Expected: Each row shows its own enable/disable control.
+
+---
+
+### T-1577 · Strategies · Enabled row shows its ON state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Read an enabled strategy's row.
+
+Expected: The row states plainly that the strategy is enabled.
+
+---
+
+### T-1578 · Strategies · Disabled row shows its OFF state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Read a disabled strategy's row.
+
+Expected: The row states plainly that the strategy is disabled.
+
+---
+
+### T-1579 · Strategies · Disabling asks for confirmation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Toggle an enabled strategy off. 3. Read the confirm step, then cancel.
+
+Expected: A confirm step names the strategy; cancelling leaves it enabled.
+
+---
+
+### T-1580 · Strategies · Enabling takes effect visibly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Enable a disabled strategy. 3. Re-read its row.
+
+Expected: The row flips to the enabled state without a reload.
+
+---
+
+### T-1581 · Strategies · Disabling takes effect visibly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Disable an enabled strategy. 3. Re-read its row.
+
+Expected: The row flips to the disabled state without a reload.
+
+---
+
+### T-1582 · Strategies · Disabled strategy emits no signals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Disable a strategy. 3. Run "Check now" and watch the Deliveries table.
+
+Expected: No new deliveries name the disabled strategy.
+
+---
+
+### T-1583 · Strategies · Enable control keyboard accessible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Tab to a strategy's enable control and press Space.
+
+Expected: The toggle flips from the keyboard.
+
+---
+
+### T-1584 · Strategies · Toggle state announced as text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Toggle a strategy via keyboard.
+
+Expected: The new state is announced in words, not color alone.
+
+---
+
+### T-1585 · Strategies · Bulk state survives reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Change two strategies' states. 3. Reload the page.
+
+Expected: Both rows keep their new states after the reload.
+
+---
+
+### T-1586 · Strategies · Enable control never deletes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Read the enable control's label.
+
+Expected: Its label is about enabling/disabling only — deletion is a separate control.
+
+---
+
+### T-1587 · Strategies · Rapid toggling settles on the last state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Toggle one strategy on, off, on quickly. 3. Reload.
+
+Expected: The row shows the last state after reload — no stuck in-between.
+
+---
+
+### T-1588 · Strategies · Toggle while a check runs is safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Click "Check now", then toggle a strategy mid-check. 3. Read its row.
+
+Expected: The toggle applies cleanly and the row shows the intended state.
+
+---
+
+### T-1589 · Strategies · All-off state is stated plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open the /strategies page. 2. Disable every strategy. 3. Read the list region.
+
+Expected: The page states plainly that no strategy is enabled — it never looks broken.
+
+---
+
+### T-1590 · Strategies · Enable/disable audit-noted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Toggle a strategy. 3. Check the audit log download on the cockpit.
+
+Expected: The toggle is recorded in the audit log.
+
+---
+
+### T-1591 · Strategies · Check now runs within the timeout
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. Click "Check now" and time it.
+
+Expected: The check completes inside the stated timeout.
+
+---
+
+### T-1592 · Strategies · Check now updates the last-check time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. Note the last-check time. 3. Click "Check now".
+
+Expected: The last-check time advances to the manual check.
+
+---
+
+### T-1593 · Strategies · Check now shows progress
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. Click "Check now" and watch the runner region.
+
+Expected: A running indicator shows while the check is in flight.
+
+---
+
+### T-1594 · Strategies · Check now failure is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. Click "Check now" during a feed outage. 3. Read the runner region.
+
+Expected: The failure is stated in plain words, not a stack trace.
+
+---
+
+### T-1595 · Strategies · Check now does not duplicate alerts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. Click "Check now" twice, waiting between clicks. 3. Read the Deliveries table.
+
+Expected: No duplicate alert rows appear from the two checks.
+
+---
+
+### T-1596 · Strategies · Check now respects the per-strategy cap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. Click "Check now". 3. Count deliveries per strategy.
+
+Expected: No strategy delivers more than 3 alerts from one check.
+
+---
+
+### T-1597 · Strategies · Check now respects disabled strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+
+Steps: 1. Open the /strategies page. 2. Disable a strategy, then click "Check now".
+
+Expected: The disabled strategy emits nothing in this check.
+
+---
+
+### T-1598 · Strategies · Check now during halt emits nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. With a halt active, click "Check now". 3. Read the Deliveries table.
+
+Expected: No new deliveries appear while halted.
+
+---
+
+### T-1599 · Strategies · Check now during blackout vetoes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. With a blackout active, click "Check now". 3. Read the failed-message queue on the cockpit.
+
+Expected: Vetoed signals land in the failed-message queue with the blackout reason.
+
+---
+
+### T-1600 · Strategies · Check now result announced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-36
+
+Steps: 1. Open the /strategies page. 2. Click "Check now" via keyboard. 3. Wait for completion.
+
+Expected: The completion is announced as text.
+
+---

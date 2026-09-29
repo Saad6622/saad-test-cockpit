@@ -1,0 +1,1216 @@
+QA BRIEF — BULK LANE B2 chunk 12/45 (T-5101–T-5200)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-5101 · Cockpit · send-test-message control acknowledges immediately
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Click a send-test-message control and watch.
+
+Expected: A visible acknowledgment at once -- the tester never wonders whether the click landed.
+
+---
+
+### T-5102 · Cockpit · send-test-message stale data labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Find the oldest data on the send-test-message.
+
+Expected: Stale content is labeled stale -- never presented as fresh.
+
+---
+
+### T-5103 · Cockpit · send-test-message no blame language
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Read the send-test-message failure and empty copy.
+
+Expected: Problems are stated as facts -- never the tester's fault, never alarmist.
+
+---
+
+### T-5104 · Cockpit · send-test-message double-submit guarded
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. If the send-test-message has an action control, double-click it fast.
+
+Expected: One action only -- the control guards against accidental doubles.
+
+---
+
+### T-5105 · Cockpit · message history values formatted consistently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-60
+
+Steps: 1. Open /notifications. 2. Read all numbers on the message history.
+
+Expected: Money, percents, and counts share one consistent format -- no mixed decimals or bare figures.
+
+---
+
+### T-5106 · Cockpit · message history partial data labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-60
+
+Steps: 1. Open /notifications. 2. If the message history shows partial data, read its caveat.
+
+Expected: Partial coverage is labeled -- never silently presented as complete.
+
+---
+
+### T-5107 · Cockpit · message history no blame language
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-60
+
+Steps: 1. Open /notifications. 2. Read the message history failure and empty copy.
+
+Expected: Problems are stated as facts -- never the tester's fault, never alarmist.
+
+---
+
+### T-5108 · Cockpit · push section shows no placeholder text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-61
+
+Steps: 1. Open /notifications. 2. Scan the push section for filler text.
+
+Expected: No lorem ipsum, no 'undefined', no 'null', no TODO text -- every string is real copy.
+
+---
+
+### T-5109 · Cockpit · push section stale data labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-61
+
+Steps: 1. Open /notifications. 2. Find the oldest data on the push section.
+
+Expected: Stale content is labeled stale -- never presented as fresh.
+
+---
+
+### T-5110 · Cockpit · push section no blame language
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-61
+
+Steps: 1. Open /notifications. 2. Read the push section failure and empty copy.
+
+Expected: Problems are stated as facts -- never the tester's fault, never alarmist.
+
+---
+
+### T-5111 · Cockpit · open-push-settings link shows no placeholder text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-62
+
+Steps: 1. Open /notifications. 2. Scan the open-push-settings link for filler text.
+
+Expected: No lorem ipsum, no 'undefined', no 'null', no TODO text -- every string is real copy.
+
+---
+
+### T-5112 · Cockpit · open-push-settings link control acknowledges immediately
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-62
+
+Steps: 1. Open /notifications. 2. Click a open-push-settings link control and watch.
+
+Expected: A visible acknowledgment at once -- the tester never wonders whether the click landed.
+
+---
+
+### T-5113 · Cockpit · open-push-settings link no blame language
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-62
+
+Steps: 1. Open /notifications. 2. Read the open-push-settings link failure and empty copy.
+
+Expected: Problems are stated as facts -- never the tester's fault, never alarmist.
+
+---
+
+### T-5114 · Cockpit · settings: risk-caps shows no placeholder text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-63
+
+Steps: 1. Open /settings. 2. Scan the settings: risk-caps for filler text.
+
+Expected: No lorem ipsum, no 'undefined', no 'null', no TODO text -- every string is real copy.
+
+---
+
+### T-5115 · Cockpit · settings: risk-caps control acknowledges immediately
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-63
+
+Steps: 1. Open /settings. 2. Click a settings: risk-caps control and watch.
+
+Expected: A visible acknowledgment at once -- the tester never wonders whether the click landed.
+
+---
+
+### T-5116 · Cockpit · settings: risk-caps stale data labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-63
+
+Steps: 1. Open /settings. 2. Find the oldest data on the settings: risk-caps.
+
+Expected: Stale content is labeled stale -- never presented as fresh.
+
+---
+
+### T-5117 · Cockpit · settings: risk-caps labels agree across views
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-63
+
+Steps: 1. Open /settings. 2. Read a settings: risk-caps symbol or name. 3. Find it in the related view.
+
+Expected: The same spelling and format everywhere -- never two names for one thing.
+
+---
+
+### T-5118 · Cockpit · settings: risk-caps units labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-63
+
+Steps: 1. Open /settings. 2. Read every number on the settings: risk-caps.
+
+Expected: Every number carries its unit ($, %, ms) -- never a bare figure the tester must guess.
+
+---
+
+### T-5119 · Cockpit · settings: risk-caps long text handled politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-63
+
+Steps: 1. Open /settings. 2. If the settings: risk-caps has a text input, paste a very long string.
+
+Expected: It truncates or refuses politely with the limit stated -- never breaks the layout.
+
+---
+
+### T-5120 · Cockpit · settings: risk-caps confirm dialog honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-63
+
+Steps: 1. Open /settings. 2. If the settings: risk-caps shows a confirm dialog, read every word.
+
+Expected: It states exactly what will happen -- no surprises after confirming.
+
+---
+
+## Section W2 · API key entry — UI only (24 cases: T-5121–T-5144)
+
+The AI API key is entered through the UI only: a masked key-entry field in the TEST cockpit's AI panel. It is never typed into config files, pasted into terminals, or set through environment variables, and it never appears on screen. The tester enters a key value in the TEST cockpit UI only, never screenshots or shares it, and every case below is executable by a human in the browser.
+
+### T-5121 · AI · Key-entry field renders masked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the API key entry field.
+
+Expected: A labeled key field renders as a masked input -- typed characters show as dots, and no value is ever visible, not even partially.
+
+---
+
+### T-5122 · AI · Saved-key indicator shows no key material
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. With a key already saved, read the saved-state indicator.
+
+Expected: It reads as a plain state such as "Key saved" -- never the first or last characters of the key, never a length hint.
+
+---
+
+### T-5123 · AI · No reveal affordance exposes the stored key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Inspect every control next to the key field.
+
+Expected: Nothing on screen can display the stored key value -- no eye icon that reveals it, no tooltip carrying it.
+
+---
+
+### T-5124 · AI · Key field layout holds on a narrow phone screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/) at phone width. 2. Scroll to the AI panel. 3. Read the key field, its label, and the save and test buttons.
+
+Expected: Nothing overlaps or truncates -- label, field, and buttons each keep their own space.
+
+---
+
+### T-5125 · AI · Key survives a page refresh, still masked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. In the AI panel, save a key value. 3. Reload the page and scroll back to the AI panel.
+
+Expected: The saved state persists and the field still shows dots only -- the key is not lost and not exposed by the reload.
+
+---
+
+### T-5126 · AI · Connection state re-verifies after refresh without re-entry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. With a key saved, read the gateway state line. 3. Reload the page, scroll to the AI panel, and read the state line again.
+
+Expected: The state re-verifies on load -- Connected or Not connected renders fresh without asking for the key again.
+
+---
+
+### T-5127 · AI · Typing into the field shows dots only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click into the key field and type a test value.
+
+Expected: Every character appears as a dot -- at no point is a typed character readable on screen.
+
+---
+
+### T-5128 · AI · Saving shows a plain-words confirmation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Enter a key value in the key field and click Save.
+
+Expected: A plain-words confirmation such as "Key saved" appears, and the field clears -- the confirmation never includes the key value.
+
+---
+
+### T-5129 · AI · Connection test reports state without revealing the key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. With a key saved, click the connection-test control.
+
+Expected: It reports "Connected" or "Not connected" in plain words -- the result never contains the key or any part of it.
+
+---
+
+### T-5130 · AI · Test control is never silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the connection-test control and watch for 10 seconds.
+
+Expected: A checking state appears, then a fresh result -- the button always answers.
+
+---
+
+### T-5131 · AI · Clearing the field and saving removes the key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Clear the key field, save, and confirm the removal.
+
+Expected: A plain-words confirmation states the key was removed, and the gateway state returns to Not connected.
+
+---
+
+### T-5132 · AI · Wrong key fails in calm plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Save a wrong key value and run the connection test.
+
+Expected: A calm plain-words error explains the key was rejected -- no stack trace, no raw provider error, no machine codes.
+
+---
+
+### T-5133 · AI · Empty submit shows a validation message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Leave the key field empty and click Save.
+
+Expected: A validation message asks for a key first -- nothing is saved and no error is thrown.
+
+---
+
+### T-5134 · AI · No-key state reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel with no key saved. 3. Read the whole key-entry block.
+
+Expected: It states plainly that no key is set and what to do -- never alarm language, never blame.
+
+---
+
+### T-5135 · AI · Gateway state agrees with the key-entry saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the key-entry saved indicator and the gateway state line together.
+
+Expected: The two agree -- "Key saved" pairs with a Connected or a named failure, never with a contradictory state.
+
+---
+
+### T-5136 · AI · Predictions follow the key state honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare the predictions area against the key state, with and without a key saved.
+
+Expected: Predictions render when connected; with no key the panel says so honestly instead of showing stale predictions.
+
+---
+
+### T-5137 · AI · Whitespace-only input is refused politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Enter only spaces in the key field and click Save.
+
+Expected: A polite message refuses the blank value -- nothing is saved, layout unbroken.
+
+---
+
+### T-5138 · AI · Garbage short string is refused in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Enter a short nonsense string, save, and run the connection test.
+
+Expected: The test reports the key is invalid in plain words -- the value is never accepted silently.
+
+---
+
+### T-5139 · AI · Very long input is handled politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Paste a very long string into the key field and click Save.
+
+Expected: It truncates or refuses politely with the limit stated -- the layout never breaks and no error is thrown.
+
+---
+
+### T-5140 · AI · Key appears nowhere in the alerts and logs panels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. With a key saved, open the Alerts section and the receipt timeline. 3. Scan every line of text.
+
+Expected: No key material anywhere -- no full value, no fragments, no masked hints that leak characters.
+
+---
+
+### T-5141 · AI · Key appears nowhere in disclosures, tooltips, or errors
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. With a key saved, expand every AI-panel disclosure and hover every tooltip. 3. Trigger a wrong-key error and read it fully.
+
+Expected: Disclosures, tooltips, and error text never echo the key or any part of it.
+
+---
+
+### T-5142 · AI · Save confirmation never includes the key value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Save a key value and read the confirmation character for character.
+
+Expected: The confirmation carries no key value and no fragment of one -- state words only.
+
+---
+
+### T-5143 · AI · Re-entering a key replaces the old one only after confirmation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel with a key already saved. 3. Enter a different key value and click Save.
+
+Expected: An explicit confirmation names the replacement before it happens -- the old key is never swapped silently.
+
+---
+
+### T-5144 · AI · No control sends the key anywhere but the gateway
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-98
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read every control and label around the key field.
+
+Expected: No share, export, or copy control exists for the key -- the UI presents no destination for it other than the gateway connection itself.
+
+---
+---
+
+## Section X · Fix-wave regression (400 cases: T-5145–T-5544)
+
+Regression re-tests for the nine issues fixed by the separate fix wave: Telegram preview-button feedback plus the new 'Open Telegram chat' link; freshness lines on the journal KPIs in the cockpit and on /journal; reliable /history balances with a 'Data as of' timestamp; truthful refresh-button behavior on /strategies; the envelope validator accepting risk_pct; visible values on the DAILY and SYMBOL cap bars; side labels on every replay fill; consistent technical-details disclosures with no raw '(HTTP 500)'; and real theme controls in the Interface settings group. Each fix is re-tested for visibility, live behavior, interaction, honest failure states, cross-panel consistency, boundaries, plain words, and guardrails. Where a fix has not landed, the case records the miss honestly -- a missing fix is itself the finding.
+
+### T-5145 · Fix-wave · Preview button labels its real consequence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Find the send-test-message button in the Telegram section. 3. Read its label and helper copy.
+
+Expected: The button names what happens -- a real message goes to the saved chat -- before anything is pressed.
+
+---
+
+### T-5146 · Fix-wave · Preview button renders beside the connect fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Read the Telegram connect area top to bottom.
+
+Expected: The preview control sits with the Bot Secret and Chat ID fields, labeled and reachable without scrolling past it.
+
+---
+
+### T-5147 · Fix-wave · Feedback line renders under the preview button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press the preview button once (tester-authorized). 3. Look directly under the button.
+
+Expected: A feedback line appears in the same region -- success or a plain-words reason -- never nothing.
+
+---
+
+### T-5148 · Fix-wave · Success feedback names the chat it reached
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press the preview button with a working setup. 3. Read the feedback line.
+
+Expected: It confirms delivery and names the destination chat -- the tester can tell where the message went.
+
+---
+
+### T-5149 · Fix-wave · Failure feedback names the missing piece
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Clear the Bot Secret field (do not save). 3. Press the preview button and read the feedback.
+
+Expected: The feedback names exactly what is missing -- e.g. the Bot Secret -- instead of a bare failure.
+
+---
+
+### T-5150 · Fix-wave · Pressing preview runs a visible send attempt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press the preview button and watch for 10 seconds.
+
+Expected: A sending state appears first, then a result -- the press is never a silent no-op.
+
+---
+
+### T-5151 · Fix-wave · Preview attempt shows a sending state first
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press the preview button. 3. Watch the button region during the attempt.
+
+Expected: An in-progress indicator (spinner or 'Sending...') shows while the attempt runs.
+
+---
+
+### T-5152 · Fix-wave · Second preview press re-runs cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press the preview button twice in a row, waiting for each result.
+
+Expected: Each press produces its own feedback line; the second result replaces the first without duplication.
+
+---
+
+### T-5153 · Fix-wave · Preview button stays usable after a failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Cause a preview failure (blank the secret, do not save). 3. Restore the field and press preview again.
+
+Expected: The button works again after the failure -- one failure does not wedge the control.
+
+---
+
+### T-5154 · Fix-wave · Preview result can be re-run to confirm
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press preview, read the result, then press it once more.
+
+Expected: Re-running is allowed and each run reports honestly; nothing about the control suggests one-shot use.
+
+---
+
+### T-5155 · Fix-wave · No Bot Secret: preview fails in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. With the Bot Secret field empty (do not save), press preview.
+
+Expected: A calm line explains the Bot Secret is missing and points at the field -- no silent button.
+
+---
+
+### T-5156 · Fix-wave · No Chat ID: preview fails in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. With the Chat ID field empty (do not save), press preview.
+
+Expected: A calm line explains the Chat ID is missing and how to get one via @userinfobot.
+
+---
+
+### T-5157 · Fix-wave · Wrong secret: preview names the problem, not a code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. If a wrong secret is currently saved, press preview and read the feedback.
+
+Expected: It says the secret was rejected in plain words -- never a raw 401 or API error blob.
+
+---
+
+### T-5158 · Fix-wave · Preview never pretends success on failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. With an unworkable setup, press preview twice.
+
+Expected: Both attempts report failure; at no point does a success line appear for a message that never sent.
+
+---
+
+### T-5159 · Fix-wave · Preview result never leaves a stale note behind
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press preview and read the feedback line under the button. 3. Press preview again and read the line once more.
+
+Expected: The second result REPLACES the first -- exactly one feedback line is ever visible, never stacked or stale. (History: the original "break the setup without saving" step cannot fail on a configured setup -- clearing the local re-enter box is a deliberate no-op against the saved secret -- so the case now tests the underlying rule directly: no stale result text lingers.)
+
+---
+
+### T-5160 · Fix-wave · Preview error has no raw Telegram API JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Cause a preview failure and read the feedback character for character.
+
+Expected: No raw JSON, no ok:false blobs, no method names -- words a trader can act on.
+
+---
+
+### T-5161 · Fix-wave · Preview error has no stack trace
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Cause a preview failure and read the whole feedback block.
+
+Expected: No tracebacks, no file paths, no 'undefined' -- a short human sentence.
+
+---
+
+### T-5162 · Fix-wave · Preview success reads in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Run a successful preview and read the confirmation.
+
+Expected: Plain confirmation of delivery -- no technical payload echoed back.
+
+---
+
+### T-5163 · Fix-wave · Preview failure tells what to do next
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Cause a preview failure and read to the end of the feedback.
+
+Expected: It ends with a next step -- which field to fix or where to look -- not a dead end.
+
+---
+
+### T-5164 · Fix-wave · Preview is the only send the tester may press
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Survey every Telegram control for what the tester is allowed to touch.
+
+Expected: Only the preview button sends anything; Save and toggle changes stay out of the tester's hands.
+
+---
+
+### T-5165 · Fix-wave · Preview sends only to the saved Chat ID
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Read the preview helper copy and the Chat ID field.
+
+Expected: The copy makes clear the message goes to the saved chat only -- no broadcast, no other destination.
+
+---
+
+### T-5166 · Fix-wave · Real alert toggles stay untouched by preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Note the four alert toggle states. 3. Run a preview. 4. Re-read the toggles.
+
+Expected: Previewing changes no toggle and arms no real alert path.
+
+---
+
+### T-5167 · Fix-wave · Empty Bot Secret: preview refuses politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Delete the Bot Secret field contents (do not save). 3. Press preview.
+
+Expected: A polite refusal names the empty field -- the press does not hang or crash.
+
+---
+
+### T-5168 · Fix-wave · Whitespace-only secret: preview refuses politely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Fill the Bot Secret field with spaces only (do not save). 3. Press preview.
+
+Expected: Treated as empty: a plain-words refusal, not an attempted send.
+
+---
+
+### T-5169 · Fix-wave · Malformed Chat ID: preview names the problem
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Type letters into the Chat ID field (do not save). 3. Press preview.
+
+Expected: The feedback names the Chat ID as the problem -- never a silent failure.
+
+---
+
+### T-5170 · Fix-wave · Feedback appears while the attempt is live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press preview and keep watching without touching anything.
+
+Expected: The feedback line updates from sending to result on its own -- the tester never needs to reload.
+
+---
+
+### T-5171 · Fix-wave · Feedback timestamp matches the attempt time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Press preview and read any time shown with the result.
+
+Expected: The time shown is the attempt's time, not an old cached stamp.
+
+---
+
+### T-5172 · Fix-wave · Repeated failures keep reporting live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. With a broken setup, press preview three times with pauses.
+
+Expected: Each attempt reports freshly -- failures are live results, not one frozen message.
+
+---
+
+### T-5173 · Fix-wave · Preview feedback matches the message-history entry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Run a preview. 3. Open the message history panel and find the preview entry.
+
+Expected: The history entry agrees with the feedback -- sent here means recorded there.
+
+---
+
+### T-5174 · Fix-wave · Failed preview matches a history failure note
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Run a failing preview. 3. Check the message history.
+
+Expected: The history shows the failure with the same reason -- no silent drop between the two.
+
+---
+
+### T-5175 · Fix-wave · Open Telegram chat link renders when chat connected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. With Telegram connected, read the Telegram section.
+
+Expected: An 'Open Telegram chat' link is visible -- labeled exactly, not buried.
+
+---
+
+### T-5176 · Fix-wave · Link label names Telegram exactly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Read the chat link text character for character.
+
+Expected: It says Telegram plainly -- no cryptic label, no bare URL shown as text.
+
+---
+
+### T-5177 · Fix-wave · Link sits near the connect fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Scan the Telegram section layout.
+
+Expected: The link sits with the connect fields and delivery state -- the tester does not hunt for it.
+
+---
+
+### T-5178 · Fix-wave · No chat connected: link absent or clearly labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. With no chat connected, read the whole Telegram section.
+
+Expected: Either no link renders, or it reads as unavailable -- never a link that leads nowhere.
+
+---
+
+### T-5179 · Fix-wave · Clicking the link opens the Telegram chat
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. With Telegram connected, click the 'Open Telegram chat' link.
+
+Expected: The user's Telegram chat opens -- the right chat, not a generic Telegram page.
+
+---
+
+### T-5180 · Fix-wave · Link opens outside the cockpit, cockpit state kept
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Click the chat link, then return to the cockpit tab.
+
+Expected: The cockpit page is undisturbed -- no reload, no lost form state.
+
+---
+
+### T-5181 · Fix-wave · Link is keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Tab through the Telegram section to the chat link.
+
+Expected: The link receives focus visibly and activates with Enter.
+
+---
+
+### T-5182 · Fix-wave · Link has no dead click
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Click the chat link and watch for 5 seconds.
+
+Expected: Something opens every time -- the click is never swallowed silently.
+
+---
+
+### T-5183 · Fix-wave · Link hidden while delivery pill reads not set up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. With the delivery pill reading 'Not set up yet', look for the chat link.
+
+Expected: No working-looking link is offered for a chat that is not connected.
+
+---
+
+### T-5184 · Fix-wave · Link never points at a wrong chat
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Compare the Chat ID field with the chat the link opens.
+
+Expected: The opened chat matches the saved Chat ID -- the link cannot drift to another chat.
+
+---
+
+### T-5185 · Fix-wave · Broken link target fails in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. If the link target ever fails, read what the browser shows.
+
+Expected: A plain explanation, not a raw error page -- and the cockpit itself stays healthy.
+
+---
+
+### T-5186 · Fix-wave · Link label has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Read the chat link and any text around it.
+
+Expected: Everyday words only -- no deep-link, t.me, or protocol jargon on screen.
+
+---
+
+### T-5187 · Fix-wave · Link helper copy reads in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-99
+
+Steps: 1. Open /notifications. 2. Read any helper text under the chat link.
+
+Expected: It says what the link does in one plain sentence.
+
+---
+
+### T-5188 · Fix-wave · Bot Secret field keeps its masked hint
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. Read the Bot Secret field.
+
+Expected: Masked hint only -- the saved secret value is never visible, before or after the fix.
+
+---
+
+### T-5189 · Fix-wave · Chat ID field keeps its helper copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. Read the Chat ID field and its helper text.
+
+Expected: The @userinfobot steps still read beside the field.
+
+---
+
+### T-5190 · Fix-wave · Missing secret still reads Not set up yet
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. With no Bot Secret saved, read the delivery state.
+
+Expected: It reads 'Not set up yet' -- the fix did not cover up the unset state.
+
+---
+
+### T-5191 · Fix-wave · Connect fields never show a secret value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. Inspect the Bot Secret and webhook secret fields with a setup saved.
+
+Expected: Dots or blank only -- no value leaks through the fix.
+
+---
+
+### T-5192 · Fix-wave · BotFather steps still read in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-56
+
+Steps: 1. Open /notifications. 2. Read the 'How to get it' helper copy fully.
+
+Expected: The @BotFather steps read as plain instructions -- the fix touched feedback, not this copy, and it still holds.
+
+---
+
+### T-5193 · Fix-wave · Pill turns green only after a real preview arrives
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-57
+
+Steps: 1. Open /notifications. 2. With the pill not green, run a preview. 3. Watch the pill.
+
+Expected: The pill flips to green only when a real message actually arrives -- pressing alone is not enough.
+
+---
+
+### T-5194 · Fix-wave · Pill timestamp matches the preview time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-57
+
+Steps: 1. Open /notifications. 2. After a green pill, read its time and compare with the preview feedback time.
+
+Expected: Both times agree -- the pill reflects the latest real delivery.
+
+---
+
+### T-5195 · Fix-wave · Freshness line renders under the cockpit KPIs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the journal KPI block. 3. Read under the KPI numbers.
+
+Expected: A freshness line renders with the KPIs -- e.g. 'Data as of ...' -- not missing, not floating elsewhere.
+
+---
+
+### T-5196 · Fix-wave · Freshness line names the data time, not a code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness line character for character.
+
+Expected: It names a time in words -- never a raw epoch, never an internal id.
+
+---
+
+### T-5197 · Fix-wave · Freshness line sits with the KPI block on resize
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Resize the browser narrow, then wide, watching the KPI block.
+
+Expected: The line stays attached to the KPI block at every width -- no orphan line, no overlap.
+
+---
+
+### T-5198 · Fix-wave · Line reads the same at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Load the cockpit at phone width and scroll to the KPI block.
+
+Expected: The freshness line is fully readable -- no truncation, no horizontal scroll to find it.
+
+---
+
+### T-5199 · Fix-wave · Line advances after new fills arrive
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Note the freshness time. 2. Wait for a new fill or run a panel refresh. 3. Re-read the line.
+
+Expected: The time moves forward when newer data lands -- it tracks reality, not a painted stamp.
+
+---
+
+### T-5200 · Fix-wave · Line ticks without a page reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness line, wait two minutes without reloading, read it again.
+
+Expected: The line stays current on its own -- the tester never needs a manual reload to trust it.
+
+---

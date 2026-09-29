@@ -1,0 +1,1257 @@
+QA BRIEF — BULK LANE B3 chunk 23/45 (T-6201–T-6300)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-6201 · Functionality sweep · Settings group "AI profile" Open button expands the group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /settings. 2. Click "Open" on the "AI profile" group. 3. Read the revealed controls.
+
+Expected: The AI profile group expands showing its real controls with current values.
+
+---
+
+### T-6202 · Functionality sweep · "Confirm PIN" group editor opens with real current settings (no passkey feature exists)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /settings. 2. In the groups table click "Open" on the "Confirm PIN" row. 3. Read the current-settings summary without changing anything.
+
+Expected: The confirms-pin editor opens showing real current values (Cooldown between changes: 1 minute; Operator PIN: Hidden; Code lifetime: 10 minutes) plus the three protected-change steps (Get a one-time approval code / Approve the code / Change the settings and apply). No passkey/webauthn/biometric feature exists anywhere in the served UI — the phantom "Open passkeys" link is gone.
+
+---
+
+### T-6203 · Functionality sweep · Confirm-PIN protected-change steps are labeled honestly (read-only, no execution)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /settings. 2. Open the "Confirm PIN" group. 3. Read the Step 1/2/3 headings and button labels. Do NOT press "Get code".
+
+Expected: Step 1 reads "Get a one-time approval code" with a "Get code" button; Step 2 reads "Approve the code" with an "Approve code" button; Step 3 reads "Change the settings and apply" with an "Apply changes" button; "Roll back to previous version" is also present. Nothing is executed — no code is minted, no state changes. No "Open PIN" link exists on /keys.
+
+---
+
+### T-6204 · Functionality sweep · Operator "Sign in" starts the sign-in flow
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval. 2. Only then: click "Sign in" on /keys.
+
+Expected: NOT EXECUTED until approved.
+
+---
+
+### T-6205 · Functionality sweep · Operator "Register" starts the registration flow
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval. 2. Only then: click "Register" on /keys.
+
+Expected: NOT EXECUTED until approved.
+
+---
+
+### T-6206 · Functionality sweep · "Show the token list" reveals the operator tokens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. Click "Show the token list". 3. Read what appears.
+
+Expected: The token list reveals, or an honest sign-in prompt appears if locked — never a dead click.
+
+---
+
+### T-6207 · Functionality sweep · "Add exchange" adds a credential row without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. Click "Add exchange". 3. Read the new row. 4. Reload without saving.
+
+Expected: A new editable row appears; after reload without saving, no phantom row persists.
+
+---
+
+### T-6208 · Functionality sweep · "Save all keys" persists every exchange credential
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval — this persists secrets on the TEST server. 2. Only then: click "Save all keys".
+
+Expected: NOT EXECUTED until approved. When run: the keys persist and a plain-words confirmation appears.
+
+---
+
+### T-6209 · Functionality sweep · Exchange combobox switches the row between BINANCE and GATEIO
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. On the first exchange row, open the Exchange combobox and pick BINANCE.
+
+Expected: The row switches venue; nothing saves until "Save all keys".
+
+---
+
+### T-6210 · Functionality sweep · Account name textbox accepts a label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. Type a label into the first row's "Account name" box.
+
+Expected: The label is accepted; nothing saves until "Save all keys".
+
+---
+
+### T-6211 · Functionality sweep · API Key textbox accepts a key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. Type a dummy value into the first row's "API Key" box. 3. Do NOT save.
+
+Expected: The value is accepted; nothing is sent or saved.
+
+---
+
+### T-6212 · Functionality sweep · Exchange Secret box accepts a secret without revealing it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. Type a dummy value into "Exchange Secret — re-enter to change". 3. Do NOT save.
+
+Expected: The secret masks as typed; nothing is sent or saved.
+
+---
+
+### T-6213 · Functionality sweep · "Edit this row" checkbox toggles row editing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. Uncheck "Edit this row" on the first row. 3. Try typing in the row. 4. Re-check it.
+
+Expected: Unchecked, the row locks; re-checked, it edits again.
+
+---
+
+### T-6214 · Functionality sweep · "Test connection" tests the row's credentials against the exchange
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /keys. 2. On the first exchange row, click "Test connection". 3. Read the result.
+
+Expected: A real connection test runs against the exchange and reports success or the exact failure in plain words.
+
+---
+
+### T-6215 · Functionality sweep · "Delete row" removes the exchange row after confirmation
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval — this deletes a credential row. 2. Only then: click "Delete row" and complete the confirm flow.
+
+Expected: NOT EXECUTED until approved. When run: the row is removed only after an explicit confirm step.
+
+---
+
+### T-6216 · Functionality sweep · "Reload the list" re-fetches the backtest runs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Click "Reload the list". 3. Read the runs list.
+
+Expected: The list reloads showing real runs or an honest empty state.
+
+---
+
+### T-6217 · Functionality sweep · Winners-table column sorting reorders rows (no filter button exists)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. In a family winners table click the "Net after costs" column header. 3. Click the same header again.
+
+Expected: The first click sorts ascending and the header's aria-sort updates; the second click reverses to descending. No "Backtest filters" button exists anywhere on the page — column sorting is the only ordering control.
+
+---
+
+### T-6218 · Functionality sweep · Family list shows the real tested families with honest sweep counts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Read the strategy-family rows.
+
+Expected: Four families listed with real labels — Mean reversion, Trend following, Momentum, Breakout — each showing its universe "EURUSD, XAUUSD · 15m, 1h" and "10,368 of 10,368 sweep variants tested". No run form or strategy combobox exists.
+
+---
+
+### T-6219 · Functionality sweep · Family rows name exactly what each sweep tested
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Read each family's subtitle and universe line.
+
+Expected: Each family names exactly what it tested (e.g. Mean reversion: "Band-fade mean reversion — buys when price dips, sells when it bounces back.", universe "EURUSD, XAUUSD · 15m, 1h"). No symbol input exists.
+
+---
+
+### T-6220 · Functionality sweep · Winners-table columns are the real metric lanes with honest empty states
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Read the winners-table column headers for Momentum and Breakout, then for Mean reversion and Trend following.
+
+Expected: Headers read "Winner", "Net after costs", "Later check" — sortable with aria-sort. Momentum (70 winners) and Breakout (224 winners) show real winner rows; Mean reversion and Trend following show the honest empty strip "No validated winners for this family yet." No interval combobox exists.
+
+---
+
+### T-6221 · Functionality sweep · "Still validating" files stay separate from validated winners
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Scroll below a family winners table and read the in-progress section.
+
+Expected: Files still being validated appear under their own "Still validating (N)" heading below the table — never mixed into the winners table with blank "Net after costs" cells. If nothing is pending, the section is absent. No start-date input exists.
+
+---
+
+### T-6222 · Functionality sweep · Sweep progress lines report real tested counts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Read each family's sweep progress line.
+
+Expected: Each family shows a real progress line such as "10,368 of 10,368 sweep variants tested", matching the served /v1/insights/backtests data — never a fabricated number. No end-date input exists.
+
+---
+
+### T-6223 · Functionality sweep · Winner rows show real validated winners with net-after-costs figures
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Read the winner rows in the Momentum or Breakout table.
+
+Expected: Each row names a real validated winner (e.g. "Mom1714 Range Exp Xauusd 15M Pullback Confirm Slimplow Tp4R Long Lb3 Imp1P5 Atr14") with a real net figure (e.g. "net profit after costs: $8,862.26 · walk-forward: 19 of 29 out-of-sample windows green"). No placeholder rows, no balance preset combobox.
+
+---
+
+### T-6224 · Functionality sweep · Reloading /backtests reloads the same real report
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests and wait for the family data to load. 2. Reload the page and wait again.
+
+Expected: "Loading backtests…" resolves to the same real family data after reload — the report is a live read of /v1/insights/backtests, not a stale snapshot. No balance input exists.
+
+---
+
+### T-6225 · Functionality sweep · Duplicate winner files collapse to one honest row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. In a winners table with duplicate files (dup_count above 1), read the collapsed row and the footnote below the table.
+
+Expected: Duplicate winner files collapse into ONE row with a count (the files stay on disk); a footnote below the table explains the collapse. If no family has duplicates, no footnote renders — also honest. No leverage input exists.
+
+---
+
+### T-6226 · Functionality sweep · N/A — no "Run backtest" control exists; /backtests is read-only by design
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Scan the whole page for any "Run a new backtest" form, run button, or strategy/symbol/interval inputs. 3. Confirm the OpenAPI route table has no backtest-run endpoint.
+
+Expected: N/A — no such control exists. /backtests is an honest read-only report by explicit design decision (kept by design in the earlier grading wave); the only backtest endpoint is GET /v1/insights/backtests. This case leaves the approval queue permanently — there is nothing to approve.
+
+---
+
+### T-6227 · Functionality sweep · "What these results cover" explainer is present and accurate
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /backtests. 2. Read the "What these results cover." explainer.
+
+Expected: The explainer states the sweeps tested FX and gold markets only (not crypto), that the cockpit's strategies trade crypto (BTC/ETH) with rules validated on FX and gold, and that these results do not prove how the strategies will do on crypto. No separate help control exists — the explainer serves that role.
+
+---
+
+### T-6228 · Functionality sweep · Bot Secret box accepts typing without saving or disconnecting
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Type a dummy value into "Bot Secret — re-enter to change". 3. Do NOT save or disconnect. 4. Reload.
+
+Expected: Typing works, nothing is sent, and reload shows the box blank with the saved-secret indicator unchanged.
+
+---
+
+### T-6229 · Functionality sweep · "Disconnect saved secret" deletes the saved bot secret
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval — this deletes the live bot secret. 2. Only then: click "Disconnect saved secret" and complete the confirm flow.
+
+Expected: NOT EXECUTED until approved. When run: the secret is removed only after an explicit confirm step.
+
+---
+
+### T-6230 · Functionality sweep · Webhook secret "Copy" copies the one-time secret
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Click "Copy" next to the webhook secret. 3. Paste elsewhere.
+
+Expected: The clipboard holds the exact webhook secret.
+
+---
+
+### T-6231 · Functionality sweep · Chat ID box accepts typing without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Type a dummy value into "Chat ID — re-enter to change". 3. Do NOT save. 4. Reload.
+
+Expected: Typing works, nothing is sent, and reload shows the real saved value intact.
+
+---
+
+### T-6232 · Functionality sweep · Alert topic checkbox "Tell me when a trade starts" toggles without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Toggle the "Tell me when a trade starts" checkbox. 3. Do NOT press "Save these settings". 4. Reload.
+
+Expected: The checkbox toggles; reload restores the saved state since nothing was saved.
+
+---
+
+### T-6233 · Functionality sweep · Alert topic checkbox "Tell me when a trade finishes" toggles without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Toggle the "Tell me when a trade finishes" checkbox. 3. Do NOT press "Save these settings". 4. Reload.
+
+Expected: The checkbox toggles; reload restores the saved state since nothing was saved.
+
+---
+
+### T-6234 · Functionality sweep · Alert topic checkbox "Tell me when a safety rule blocks an order" toggles without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Toggle the "Tell me when a safety rule blocks an order" checkbox. 3. Do NOT press "Save these settings". 4. Reload.
+
+Expected: The checkbox toggles; reload restores the saved state since nothing was saved.
+
+---
+
+### T-6235 · Functionality sweep · Alert topic checkbox "Tell me when Halt trading is used" toggles without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Toggle the "Tell me when Halt trading is used" checkbox. 3. Do NOT press "Save these settings". 4. Reload.
+
+Expected: The checkbox toggles; reload restores the saved state since nothing was saved.
+
+---
+
+### T-6236 · Functionality sweep · "Save these settings" persists the alert topics then restores them
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Note the current topic states. 3. Toggle one topic and click "Save these settings". 4. Reload and verify it stuck. 5. Toggle it back, save again, verify restore.
+
+Expected: The topics persist across reload, and the original configuration is restored afterwards.
+
+---
+
+### T-6237 · Functionality sweep · "Send a real preview message" delivers a real Telegram message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Click "Send a real preview message" (authorized test send). 3. Read the feedback. 4. Confirm the message landed in the bot chat.
+
+Expected: Feedback names the destination chat; the message arrives in Telegram; history logs it Delivered.
+
+---
+
+### T-6238 · Functionality sweep · "Open Telegram chat" link opens the bot chat
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Click "Open Telegram chat".
+
+Expected: A new tab opens on the real bot chat; the cockpit tab is undisturbed.
+
+---
+
+### T-6239 · Functionality sweep · "Open push settings" link jumps to the push settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /notifications. 2. Click "Open push settings". 3. Read where it lands.
+
+Expected: Lands on the push notification settings with real content.
+
+---
+
+### T-6240 · Functionality sweep · "Load into ticket" loads an MCP draft into the SmartTrade ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. Open /. 2. If a draft exists in "Choose an MCP draft ticket", select it and click "Load into ticket". 3. Read the ticket fields.
+
+Expected: With no drafts the button stays honestly disabled; with a draft, the ticket fills with the draft's real values and nothing fires.
+
+---
+
+## Section AA · Preview-honesty + config-guard regression (8 cases: T-6241–T-6248)
+
+Regression coverage for ISS-040 (preview feedback/history mismatch — the page declared "Could not send" for a message that was actually delivered; fixed with tri-state ok True/False/"uncertain" + reconcilePreview()) and ISS-037 (a fix wave blanked the real Telegram config). Every case below would have caught its issue. Written 2026-09-27 ~02:25 PDT.
+
+### T-6241 · ISS-040 regression · preview banner text agrees with the Message history row status
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AA-REG
+
+Steps: 1. Open /notifications. 2. Read the newest Message history row (time + status). 3. Click "Send a real preview message" once (authorized test send). 4. After it settles, read the top banner AND the feedback line under the button AND the newest history row.
+
+Expected: All three agree — a "Delivered" history row pairs with "Preview sent — check your Telegram (chat ending …3314)."; a genuinely failed send pairs with plain-words failure copy. The banner NEVER contradicts the history row.
+
+---
+
+### T-6242 · ISS-040 regression · pressing preview twice leaves exactly one feedback line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AA-REG
+
+Steps: 1. Open /notifications. 2. Click "Send a real preview message". 3. Wait for it to settle. 4. Click it again. 5. Count the feedback lines under the button.
+
+Expected: Exactly ONE feedback line under the button — the second press REPLACES the first, never stacks. (The top-of-page banner is a separate location, not a stacked line.)
+
+---
+
+### T-6243 · ISS-040/ISS-038 regression · success copy names the destination chat
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AA-REG
+
+Steps: 1. Open /notifications. 2. Click "Send a real preview message". 3. Read the feedback line verbatim after it settles.
+
+Expected: The success text names the destination — "Preview sent — check your Telegram (chat ending …3314)." A bare "check your Telegram" with no destination is a FAIL.
+
+---
+
+### T-6244 · ISS-040 regression · status badge agrees with the latest history row after a preview press
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AA-REG
+
+Steps: 1. Open /notifications. 2. Click "Send a real preview message". 3. After it settles, read the status badge near "Message alerts (Telegram)" and the newest history row.
+
+Expected: After a delivered preview the badge reads "Connected — alerts will reach your Telegram". Badge and history row never disagree about the last attempt.
+
+---
+
+### T-6245 · ISS-040 regression · the uncertain-path wording exists in the served page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AA-REG
+
+Steps: 1. Open /notifications. 2. View page source (Ctrl+U). 3. Search for "couldn't be confirmed" and "uncertain".
+
+Expected: The honest uncertain-path wording is present — e.g. "Preview status unclear — the message may have reached your Telegram" / "Last preview couldn't be confirmed". A transport loss must NEVER be declarable as a hard "Could not send" failure.
+
+---
+
+### T-6246 · ISS-040 regression · receiving end agrees with "Delivered"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AA-REG
+
+Steps: 1. Open /notifications and click "Send a real preview message" (authorized test send). 2. Note the exact time the history row records as "Delivered". 3. Open the Telegram Web session (read-only — never send, never click commands) and open the SaadAi bot chat. 4. Check for the preview message at that time.
+
+Expected: The message "Saad trading engine: Telegram is connected. Event notifications (trades, fills, guards, kill) will arrive here when enabled." is in the chat at the recorded time. "Delivered" on the page with nothing in the chat is a FAIL.
+
+---
+
+### T-6247 · ISS-037 regression · guard: preview still names the real chat after every future fix wave
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AA-REG
+
+Steps: 1. After ANY future fix wave that touches telegram files, open /notifications. 2. Click "Send a real preview message". 3. Read the feedback line.
+
+Expected: It still reads "chat ending …3314". If a wave ever blanks or replaces the real Telegram config again, this case catches it before the wave is called done.
+
+---
+
+### T-6248 · ISS-037/ISS-028 regression · no placeholder chat id anywhere on /notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AA-REG
+
+Steps: 1. Open /notifications. 2. Read the whole page: banner, under-button line, badge, every Message history row. 3. View page source and search for "CHAT-9".
+
+Expected: No placeholder text anywhere — no "CHAT-9", no "your-chat-id", no empty destination. Every chat reference is the real masked "…3314".
+
+---
+
+## Section AB · Dual AI providers — Meta direct + OpenRouter settings surface (24 cases: T-6253–T-6276)
+
+Expansion coverage for the brand-new dual-AI-provider settings surface built 2026-09-27 ~05:05–05:19 PDT (Saad-ordered feature wave): Meta direct + OpenRouter panels under /settings, real minimal test probes against the live provider endpoints, UI-only key paste, masked responses (••••+last4), metadata-only audit. Every case below locks in the wave's exact strings and behaviors before Saad pastes any real key. Written 2026-09-27 ~05:20 PDT.
+
+### T-6249 · Functionality sweep · Risk-panel drill control runs the halt/blackout drill
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval. 2. Only then: find the drill control in the risk panel (backend: POST /v1/ui/drills/run — confirm the exact on-screen label during this UI pass). 3. Run the drill. 4. Verify the drill executes and reports honestly.
+
+Expected: NOT EXECUTED until approved. When run: the drill must execute end-to-end and report its result in plain words; a drill that claims success without running is a FAIL finding.
+
+---
+
+### T-6250 · Functionality sweep · Risk-panel blackout control forces a blackout
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval. 2. Only then: find the blackout-force control in the risk panel (backend: POST /v1/ui/blackout/force — confirm the exact on-screen label during this UI pass). 3. Force the blackout. 4. Verify trading is blocked for the blackout window.
+
+Expected: NOT EXECUTED until approved. When run: the blackout must actually block trading; the control must reflect the true blackout state afterwards.
+
+---
+
+### T-6251 · Functionality sweep · Risk-panel blackout control clears a blackout
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval. 2. Only then: with a blackout active, find the blackout-clear control (backend: POST /v1/ui/blackout/clear — confirm the exact on-screen label during this UI pass). 3. Clear the blackout. 4. Verify trading resumes.
+
+Expected: NOT EXECUTED until approved. When run: clearing must actually lift the blackout; the control must reflect the true state afterwards.
+
+---
+
+### T-6252 · Functionality sweep · Command-palette reconcile command runs the exchange reconciliation
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: Z-SWEEP
+
+Steps: 1. WAIT for Saad's explicit approval. 2. Only then: open the command palette, run the reconcile command (backend: POST /v1/admin/reconcile-now — confirm the exact palette label during this UI pass). 3. Verify the reconciliation runs and reports matches/mismatches honestly.
+
+Expected: NOT EXECUTED until approved. When run: the reconcile must execute against the real exchange and report honestly; it must never claim success without running.
+
+---
+
+### Sweep coordinator — functionality sweep phase 1 (Section Z backend gate + 4 fix waves + drafts/halt deep dives) — completed 2026-09-27 ~02:37 PDT — CLOSED
+
+Batches and their issues (from the coordinator's final report):
+- B0 Section Z generation: no issues (240 cases T-6001–T-6240, verified).
+- B1 Backend gate: 5 /history DEAD controls → ISS-055; 5 phantom inventory groups → plan corrections (no product bugs; ISS-050 marked RESOLVED with the evidence); kill-scope copy overstatement → ISS-056; receipts.json fills suspicion → ISS-057 (NOT-A-BUG); draft path → ISS-049 backend verdict.
+- B2 Wave 1 (/history): 5/5 FIXED, independently PASS, latency PASS.
+- B3 Wave 2 (14 plan cases): 5/5 inventory phantoms → PLAN-CORRECTED, independently PASS. T-6226 ("Run backtest") permanently N/A — removed from the approval queue (no such control exists).
+- B4 Wave 4 (kill-scope text): 8/8 strings FIXED, independently PASS. Endpoint unchanged (intentional).
+- B5 Micro-A (receipts.json fills): NOT-A-BUG, independently CONFIRMED.
+- B6 Wave 3 (drafts): PATH-VERIFIED (draft drf-c7d4bde1f878, 21s flag window, payload preserved in qa-sweep-z/wave3/ for re-creation).
+- B7 Plan extension: T-6249–T-6252 added, ID collision with Section AA repaired, sequence re-verified exact (1..6252, zero gaps/dupes — independently re-verified by the parent).
+
+Gate verdict: zero issues open from this sweep. Zero BLOCKED verdicts. 8123 (live engine) never touched by any agent — confirmed.
+
+Open observations (not blockers): /healthz reports ok:false (stale market-data feeds, engine alive); TEST server crashed twice tonight, keepalive recovered it; draft store is in-memory only (restarts wipe drafts — future work if Saad wants persistence).
+
+Approval authority GRANTED by Saad (48 cases previously parked as NEEDS-SAAD-APPROVAL — dangerous/state-changing — now execute under his authority when reached; exclusions: real money, credentials in his hands): T-6077–T-6079 (halt ×3), T-6080/T-6081 (fire), T-6082/T-6204/T-6205 (sign-in/register), T-6106–T-6120 (15 enable toggles), T-6136–T-6150 (15 deletes), T-6157 (add strategy), T-6165 (save note), T-6182 (sealed-group save), T-6208 (save keys), T-6215 (delete row), T-6229 (disconnect secret), T-6249–T-6252 (drill, blackout ×2, reconcile).
+
+*End of plan.*
+
+
+## Section AE · Regression: ISS-077 (rollback confirmation write-then-wipe) + ISS-074/075/076 follow-up hardening (30 cases: T-6303–T-6332)
+
+Regression coverage for ISS-077 (the settingsRollback handler writes its "Rolled back group …" confirmation into #settings-result and then erases it with its own frag.innerHTML re-render — the exact write-then-wipe pattern ISS-076 fixed on the save path; OPEN at plan-writing time, so these cases define the behavior the fix must produce), plus follow-up hardening for ISS-074/075/076 beyond Section AD (browser back button, tab-close, Stay/Leave choice, cross-route theme hold, version-increment agreement, mobile width). Every case below would have caught its issue. Written 2026-09-27 ~06:25 PDT. (Appended after the appendices; the ID sequence continues unbroken from T-6302.)
+
+### T-6253 · AI provider surface renders on /settings with both panels present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Scroll through the whole page and read every section heading.
+
+Expected: An AI provider section renders containing TWO panels — a Meta direct panel and an OpenRouter panel. Both panels are visible with no broken layout, no missing controls, no blank boxes.
+
+---
+
+### T-6254 · Meta direct panel · fixed base URL reads exactly https://api.meta.ai/v1
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read the Meta direct panel's base URL field verbatim.
+
+Expected: The base URL is FIXED and reads exactly "https://api.meta.ai/v1" — not editable, not a placeholder, not a different host or path.
+
+---
+
+### T-6255 · Meta direct panel · fixed model name reads exactly muse-spark-1.3
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read the Meta direct panel's model field verbatim.
+
+Expected: The model name is FIXED and reads exactly "muse-spark-1.3" — not editable, no version drift, no other model name.
+
+---
+
+### T-6256 · Meta direct panel · pricing line reads exactly "$0.10 / $0.20 per 1M input/output tokens (Contributor tier)"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read the Meta direct panel's pricing line verbatim, character for character.
+
+Expected: The pricing line reads exactly "$0.10 / $0.20 per 1M input/output tokens (Contributor tier)". A different price, a missing tier label, or a paraphrased line is a FAIL.
+
+---
+
+### T-6257 · Meta direct panel · Contributor disclosure reads exactly "Contributor tier: prompts and outputs may be used to improve Meta's products."
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read the Meta direct panel's Contributor disclosure verbatim, character for character.
+
+Expected: The disclosure reads exactly "Contributor tier: prompts and outputs may be used to improve Meta's products." The data-use warning must never be missing, softened, or reworded — Saad chose this tier after being told about the training-data trade-off.
+
+---
+
+### T-6258 · OpenRouter panel · fixed base URL reads exactly https://openrouter.ai/api/v1
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read the OpenRouter panel's base URL field verbatim.
+
+Expected: The base URL is FIXED and reads exactly "https://openrouter.ai/api/v1" — not editable, not a placeholder, not a different host or path.
+
+---
+
+### T-6259 · OpenRouter panel · the model dropdown contains EXACTLY 2 options, no more
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Open the OpenRouter model dropdown. 3. Count the options.
+
+Expected: EXACTLY 2 options and nothing else — no extra models, no empty option, no "Select…" placeholder masquerading as an option. Any third option is a FAIL.
+
+---
+
+### T-6260 · OpenRouter panel · option 1 reads meta/muse-spark-1.3 with $1.25/$4.25 pricing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Open the OpenRouter model dropdown. 3. Read option 1 verbatim.
+
+Expected: Option 1 names "meta/muse-spark-1.3" with pricing "$1.25" input / "$4.25" output per 1M tokens. A wrong model id or wrong price is a FAIL.
+
+---
+
+### T-6261 · OpenRouter panel · option 2 reads meta/muse-spark-1.3-contributor with $0.10/$0.20 pricing and the Contributor disclosure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Open the OpenRouter model dropdown. 3. Read option 2 verbatim.
+
+Expected: Option 2 names "meta/muse-spark-1.3-contributor" with pricing "$0.10" input / "$0.20" output per 1M tokens AND carries the Contributor data-use disclosure. The cheaper tier must never be offered without its data-use warning.
+
+---
+
+### T-6262 · OpenRouter panel · 18+ hint reads exactly "OpenRouter rejects all calls until 18+ is confirmed in your OpenRouter account settings."
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read the OpenRouter panel's age-confirmation hint verbatim, character for character.
+
+Expected: The hint reads exactly "OpenRouter rejects all calls until 18+ is confirmed in your OpenRouter account settings." This warning must never be missing — without it Saad would chase a broken connection that is actually an account gate.
+
+---
+
+### T-6263 · both key fields are password-type (masked while typing)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Click into the Meta direct key field and type a few characters. 3. Click into the OpenRouter key field and type a few characters. 4. Read both fields.
+
+Expected: Both fields are password-type — typed characters render as dots/stars, never as readable text. Neither field echoes a real-looking key in the clear. (Type test characters only; do not paste a real key in QA.)
+
+---
+
+### T-6264 · provider selection persists across a full page reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Select one provider (Meta direct or OpenRouter) and save. 3. Reload the page fully. 4. Read which provider is selected.
+
+Expected: The same provider is still selected after reload — the choice persists. A revert to a default or an unselected state is a FAIL.
+
+---
+
+### T-6265 · OpenRouter model choice persists across a full page reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Choose OpenRouter, pick the OTHER dropdown option than the current one, save. 3. Reload the page fully. 4. Open the dropdown and read the selected option.
+
+Expected: The chosen option (meta/muse-spark-1.3 or meta/muse-spark-1.3-contributor) is still selected after reload. A revert is a FAIL.
+
+---
+
+### T-6266 · Test connection with an empty key slot returns an honest no-key error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings with both key slots empty (clean slate). 2. Click "Test connection" on the Meta direct panel. 3. Read the result. 4. Click "Test connection" on the OpenRouter panel. 5. Read the result.
+
+Expected: Both return an honest plain-words no-key error (e.g. "no key saved" wording) — NEVER a success, NEVER a provider 401, NEVER a traceback. The empty state must be distinguishable from a wrong-key failure.
+
+---
+
+### T-6267 · Test connection with a wrong key returns a plain-words 401 error, no raw JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Paste a deliberately wrong key into the Meta direct key field and save. 3. Click "Test connection". 4. Read the result verbatim. 5. Repeat on the OpenRouter panel with a wrong key.
+
+Expected: Both panels show a plain-words authentication failure naming a wrong/invalid key — no raw JSON body, no "invalid_api_key" engine string, no traceback. A fake success or a raw provider blob is a FAIL.
+
+---
+
+### T-6268 · a saved key is shown as ••••+last4, never the raw key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Paste a wrong/test key into the Meta direct key field and save. 3. Reload the page. 4. Read what the key field shows.
+
+Expected: The field shows the masked form (•••• + last 4 characters) — the raw key is never rendered anywhere on the page. (Use only a wrong/test key in QA — Saad's real key goes through this UI only by him.)
+
+---
+
+### T-6269 · saving a key writes an audit-log entry that is metadata-only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Save a test key on one provider. 3. Read the audit-log surface (wherever the page exposes recent audit entries) for the new entry.
+
+Expected: An entry exists naming the event (key saved, which provider, when) — and it carries NO key material: no raw key, no full key, no fragment longer than the last 4. A metadata-only entry is the pass bar.
+
+---
+
+### T-6270 · clean-slate state: both slots empty renders honestly as empty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings on the clean slate (both key slots empty — the shipped state before Saad pastes anything). 2. Read both panels fully.
+
+Expected: Both panels read honestly as "no key saved" — no fake masked value, no leftover •••• from QA probes, no implication a key exists. The shipped state must be a genuine empty slate.
+
+---
+
+### T-6271 · key entry is UI-only: no other route for entering keys is presented
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read both AI provider panels fully — labels, hints, help text.
+
+Expected: Keys enter ONLY through the panel's own paste field. No hint suggests chat, a file, an env var, or any other route. Per the standing boundary, key values never belong in chat — the UI copy must not invite any bypass.
+
+---
+
+### T-6272 · Test connection is a REAL probe: a wrong key provokes the provider's genuine 401
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Save a deliberately wrong key on the Meta direct panel and click "Test connection". 3. Save a deliberately wrong key on the OpenRouter panel and click "Test connection". 4. Read both results.
+
+Expected: Both failures are the provider's genuine 401-style refusal (wrong key named in plain words) — a stubbed "ok" or a canned error with no provider contact would be a FAIL. The wave's backend gate proved the Bearer token truly reaches the provider; this case locks the live behavior.
+
+---
+
+### T-6273 · flipping the provider selector does not disturb Jev (still TypeSafe advisory, zero UI surface)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Flip the provider selector Meta direct → OpenRouter → Meta direct, saving each time. 3. Search the whole /settings page (and /settings AI section) for any Jev surface — panels, toggles, key fields.
+
+Expected: Jev stays exactly as the wave found it — TypeSafe advisory, mock-by-default, ZERO UI surface. No Jev panel appears, no Jev key field, no Jev toggle. The new AI-provider surface must not resurrect or disturb the untouched Jev wiring.
+
+---
+
+### T-6274 · zero banned words anywhere on the AI provider surface
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Read every word of both AI provider panels: headings, URLs, model names, pricing lines, disclosures, hints, buttons, feedback lines. 3. View page source and search for the banned words.
+
+Expected: Zero occurrences of the two banned words (case-insensitive) anywhere on the surface — in visible text, URLs, quotes, or attributes. One occurrence is a FAIL.
+
+---
+
+### T-6275 · Test connection gives a working-state signal while the real probe is in flight
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. With a test key saved, click "Test connection". 3. Watch the panel between the click and the result.
+
+Expected: The panel shows a working state (e.g. "Testing…" / disabled button / spinner) while the probe runs — the press is never silent and never double-fireable. The result line then replaces the working state exactly once.
+
+---
+
+### T-6276 · a failed Test connection never clears or exposes the saved key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AB-REG
+
+Steps: 1. Open /settings. 2. Save a test key on the Meta direct panel. 3. Click "Test connection" and let it fail (wrong key). 4. Read the key field. 5. Repeat on the OpenRouter panel.
+
+Expected: After a failed probe the saved slot keeps its masked ••••+last4 value — the failure neither wipes the slot nor exposes the raw key in the error path. A cleared slot or a leaked key is a FAIL.
+
+---
+
+## Section AC · Regression: ISS-071/072/073 (preview triple-notice, SWR H4 500, preview receipts) (8 cases: T-6277–T-6284)
+
+Regression coverage for ISS-071 (three identical "Telegram is connected" bot notices at 02:05/02:10/02:14 AM — closed NOT-A-BUG: three deliberate manual "Send preview" presses, spacing coincidental; the code contract is "each tap is its own row"), ISS-072 (SWR H4 signal refused by the engine with HTTP 500 — investigation OPEN; the ISS-069 "Strategy errors" tile now surfaces it), and ISS-073 (preview/test sends log "Delivered" with EMPTY telegram receipt fields — fix ticket OPEN; the preview path must carry the same receipt capture as the kill/halt path). Every case below would have caught its issue. Written 2026-09-27 ~05:20 PDT.
+
+### T-6277 · ISS-071 regression · 3 spaced preview presses produce 3 history rows with 1:1 timestamp match, no send without a tap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AC-REG
+
+Steps: 1. Open /notifications and note the Message history count. 2. Click "Send a real preview message" once (authorized test send), wait for it to settle, note its exact timestamp. 3. Wait ~2 minutes, press again, note the timestamp. 4. Wait ~2 minutes, press a third time, note the timestamp. 5. Read the 3 newest history rows.
+
+Expected: Exactly 3 new history rows — one per press, each row's timestamp matching its press time 1:1. NO extra row appears without a press (no retry loop, no heartbeat re-send). Fewer than 3 rows or any phantom row is a FAIL. (ISS-071 closed NOT-A-BUG because the three notices were three deliberate presses; this case locks that contract in.)
+
+---
+
+### T-6278 · ISS-071 regression · a failed press in between is logged as its own row too
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AC-REG
+
+Steps: 1. Open /notifications. 2. Click "Send a real preview message" (authorized test send) and note the row. 3. Trigger a genuinely failed attempt (e.g. press while the connection is briefly down, or use a misconfigured state) and note the row. 4. Click "Send a real preview message" again (authorized) and note the row.
+
+Expected: Every attempt — success AND failure — is its own history row ("each tap is its own row", ISS-071 evidence). A failed press that vanishes from history is a FAIL; failures must be logged with their plain-words reason, never hidden.
+
+---
+
+### T-6279 · ISS-072/ISS-069 regression · the Strategy-errors tile surfaces the live SWR H4 500 as 1/warn
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AC-REG
+
+Steps: 1. Open / and read the "Strategy errors" Overview tile verbatim. 2. Open /strategies and count the error-state cards.
+
+Expected: While the SWR H4 500 refusal is live, the tile reads "1" with the warn tone and the /strategies error-card count is exactly 1 (SWR H4) — tile and page agree. A tile reading "0" against a live error card (the original ISS-069 bug) is a FAIL.
+
+---
+
+### T-6280 · ISS-072 regression · the SWR H4 500's error card gives a plain-words next step, no raw engine string
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AC-REG
+
+Steps: 1. Open /strategies. 2. Expand the SWR H4 card's "Technical details" disclosure. 3. Read "What happened:", "What this means:", "What to do next:" verbatim.
+
+Expected: All three parts are plain words; "What to do next" ends in a real action (e.g. press "Check now" to retry sooner). No raw engine string ("Internal Server Error", "(HTTP 500)", JSON, traceback) reaches the card — the earlier plain-words wave must hold on this card too.
+
+---
+
+### T-6281 · ISS-073 regression · a preview history row carries the same telegram receipt fields as kill/halt rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AC-REG
+
+Steps: 1. Open /notifications. 2. Click "Send a real preview message" (authorized test send). 3. Wait for it to settle. 4. Read the newest Message history row — its recorded receipt detail (telegram_message_id, telegram_chat_id, telegram_chat_type, telegram_bot), wherever the UI exposes it.
+
+Expected: The preview row carries all four receipt fields populated (a real Telegram message id, the real destination chat, the chat type, the sending bot) — exactly like the 1666/1667 kill rows. All four EMPTY (the ISS-073 defect: "Delivered" asserted without proof) is a FAIL.
+
+---
+
+### T-6282 · ISS-073 regression · status "delivered" appears ONLY alongside a populated receipt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AC-REG
+
+Steps: 1. Open /notifications. 2. Click "Send a real preview message" (authorized test send). 3. After it settles, read the newest history row's status AND its receipt fields.
+
+Expected: A row reading "delivered" ALWAYS pairs with populated receipt fields. "Delivered" with empty receipt fields — the exact ISS-073 state — is a FAIL. Delivery must be receipt-backed, never asserted.
+
+---
+
+### T-6283 · ISS-073 regression · guard: preview rows keep their receipt fields after every future fix wave
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AC-REG
+
+Steps: 1. After ANY future fix wave that touches telegram or notification files, open /notifications. 2. Click "Send a real preview message" (authorized test send). 3. Read the newest history row's receipt fields.
+
+Expected: All four receipt fields are populated. If a wave ever regresses the preview path back to empty-receipt "Delivered", this case catches it before the wave is called done.
+
+---
+
+### T-6284 · ISS-072 regression · cleared-state: with no error cards, tile and page both agree on 0
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AC-REG
+
+Steps: 1. When no strategy is in an error state (e.g. after the SWR H4 500 clears or is resolved), open / and read the "Strategy errors" tile. 2. Open /strategies and count error-state cards.
+
+Expected: Tile reads "0" with the calm tone and /strategies shows 0 error cards — they agree in the cleared state too. (ISS-069 wave-2's 11/11 + 7/7 cleared-state matrices proved this; this case locks the behavior for the live surface.)
+
+---
+
+## Section AD · Regression: ISS-074/075/076 (interface settings — theme repaint, unsaved-change warning, save feedback) (18 cases: T-6285–T-6302)
+
+Regression coverage for ISS-074 (saved Light theme never repaints the page — "THEME light" stored but the app stayed dark, even after reload; the stored value was proven good so the apply-on-load / live-repaint wiring is missing), ISS-075 (navigating away with an unsaved theme change discards it silently — no unsaved-change warning), and ISS-076 (saving interface settings shows no "Saved" feedback across ~10 successful saves — the save applies silently). Every case below would have caught its issue. Written 2026-09-27 ~05:59 PDT.
+
+### T-6285 · ISS-074 regression · saving Light repaints the page live, no reload needed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Open /settings and expand the Interface group. 2. Select the Light theme (do not change anything else). 3. Press "Save interface settings". 4. Look at the page immediately — do NOT reload.
+
+Expected: The page visibly repaints to the light theme within a moment of saving — backgrounds light, text readable against them. A page that stays fully dark after the save (the ISS-074 defect) is a FAIL.
+
+---
+
+### T-6286 · ISS-074 regression · apply-on-load: after reload the saved Light theme still paints
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. With Light saved from the previous case, reload /settings (browser reload). 2. Look at the painted theme. 3. Read the "Current settings" panel verbatim.
+
+Expected: The page loads in the light theme (stored theme applied on load), and the panel reads "THEME light". Stored "THEME light" with a dark-painted page — the T-5542 half of ISS-074 — is a FAIL.
+
+---
+
+### T-6287 · ISS-074 regression · stored theme holds across routes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. With Light saved, navigate to / (dashboard). 2. Navigate to /strategies. 3. Navigate back to /settings. 4. Read the "Current settings" panel and note the painted theme on each page.
+
+Expected: Every page paints in the light theme; the panel still reads "THEME light" after the round trip. Any route that falls back to dark while the store says light (T-5543's territory — proven good before the wave, keep it good) is a FAIL.
+
+---
+
+### T-6288 · ISS-074 regression · saving Dark back repaints live too, both directions work
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. On /settings (Interface group), select Dark. 2. Press "Save interface settings". 3. Look at the page immediately — no reload. 4. Reload the page and look again.
+
+Expected: The page repaints to the dark theme immediately on save AND loads dark after reload — the repaint works in both directions, not just dark→light. Leave the cockpit on Dark (Saad's standing state) after this case.
+
+---
+
+### T-6289 · ISS-074 regression · anti-drift: stored value and rendered theme always agree
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Save Light, then immediately compare the "Current settings" panel's THEME value against the painted theme. 2. Save Dark, then compare again.
+
+Expected: Panel and paint agree after EVERY save — "THEME light" ⇔ light-painted page, "THEME dark" ⇔ dark-painted page, both times. Any mismatch in either direction (stored says one thing, paint shows another) is a FAIL — this is the invariant ISS-074 violated.
+
+---
+
+### T-6290 · ISS-074 regression · guard: theme repaint survives future settings waves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. After ANY future fix wave that touches settings or theme files, open /settings, expand Interface. 2. Save Light → confirm live repaint + "THEME light" in the panel. 3. Save Dark → confirm live repaint + "THEME dark". 4. Reload → confirm dark paint.
+
+Expected: Both directions repaint live and hold across reload after the wave. If a wave ever breaks the wiring again, this case catches it before the wave is called done. Leave Dark saved.
+
+---
+
+### T-6291 · ISS-075 regression · unsaved theme change triggers an unsaved-change warning on navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Open /settings, expand the Interface group. 2. Select Light — do NOT press save. 3. Click the Settings nav link (or any sidebar nav link to another page). 4. Watch what appears.
+
+Expected: An unsaved-change warning appears in plain words (something like "you have unsaved changes" — exact wording recorded verbatim) BEFORE the navigation completes. Silently discarding the selection with no warning — the T-5510 defect — is a FAIL.
+
+---
+
+### T-6292 · ISS-075 regression · warning's stay option keeps the unsaved selection
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Repeat the previous case's setup: select Light, no save, click a nav link. 2. When the unsaved-change warning appears, choose the stay/cancel option (do NOT discard).
+
+Expected: Navigation is cancelled and the Interface group still shows Light selected, unsaved — the selection survived. Losing the selection despite choosing to stay is a FAIL.
+
+---
+
+### T-6293 · ISS-075 regression · warning's discard option only discards after the user chooses it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Select Light, no save, click a nav link. 2. When the warning appears, choose the leave/discard option. 3. Note what happens to the selection and the destination page.
+
+Expected: The change IS discarded this time — but only because the user explicitly chose discard after being warned. The warning appeared (record exact text), the choice was honored, and the destination page loads clean. Silent discard with no warning at any point is a FAIL.
+
+---
+
+### T-6294 · ISS-075 regression · no-change baseline: no warning when nothing is unsaved
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Open /settings, expand Interface, change NOTHING. 2. Click a nav link to another page.
+
+Expected: Navigation happens immediately with NO unsaved-change warning. A warning when nothing changed would be a false positive — record it as a FAIL (the warning must track a real unsaved delta, not fire on every navigation).
+
+---
+
+### T-6295 · ISS-075 regression · warning tracks the unsaved delta, not saved state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Save Light (so the stored theme is Light and the form matches it). 2. Click a nav link — note whether a warning appears. 3. Go back, select Dark, do NOT save. 4. Click a nav link — note whether a warning appears.
+
+Expected: Step 2 shows NO warning (form matches saved state); step 4 shows the warning (form differs from saved state). Then restore: go back and save Dark so the cockpit ends on Dark. A warning in step 2 or no warning in step 4 is a FAIL.
+
+---
+
+### T-6296 · ISS-075 regression · guard: unsaved-change warning survives future settings waves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. After ANY future fix wave that touches settings files, open /settings, expand Interface. 2. Select a theme different from the saved one, do not save, click a nav link. 3. Record what appears.
+
+Expected: The unsaved-change warning still appears and the stay/discard choice still works. If a wave ever silences the warning again, this case catches it before the wave is called done. Restore the saved theme afterwards.
+
+---
+
+### T-6297 · ISS-076 regression · saving interface settings shows plain-words "Saved" feedback
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Open /settings, expand the Interface group. 2. Select Light. 3. Press "Save interface settings". 4. Look at the save control's surroundings immediately.
+
+Expected: Plain-words save feedback appears (e.g. "Saved" — record the exact text verbatim) right after the press. The T-5531 defect — save applies silently with zero confirmation — is a FAIL. Restore Dark afterwards.
+
+---
+
+### T-6298 · ISS-076 regression · the "Saved" feedback appears on every save, not just the first
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. On /settings (Interface group), perform 5 consecutive saves: alternate Light → save, Dark → save, Light → save, Dark → save, Dark → save. 2. Watch for the save feedback after each press.
+
+Expected: The "Saved" feedback appears after EVERY press — all 5. A feedback that shows once then goes silent on repeat saves (the "across ~10 successful saves, no save feedback ever appeared" pattern from T-5531) is a FAIL. End on Dark.
+
+---
+
+### T-6299 · ISS-076 regression · feedback sits next to the save control, visible without scrolling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AD-REG
+
+Steps: 1. On /settings, expand the Interface group without scrolling away from the "Save interface settings" button. 2. Press save. 3. Without scrolling, read what appeared.
+
+Expected: The "Saved" feedback is button-adjacent (under/next to the button, like the notifications feedback-line pattern) and visible without scrolling the panel. Feedback that appears only after scrolling, or at the top of the page away from the control, is a FAIL.
+
+---
+
+### T-6300 · ISS-076 regression · "Saved" feedback and panel version bump agree on the same save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. On /settings (Interface group), read the "Current settings" panel's version number. 2. Change the theme and press "Save interface settings". 3. Read the version number again and check the feedback.
+
+Expected: On the SAME save, the "Saved" feedback appears AND the panel version increments by one. Feedback-without-version-bump (UI lying about a save) or version-bump-without-feedback (ISS-076) is a FAIL — the two must agree.
+
+---

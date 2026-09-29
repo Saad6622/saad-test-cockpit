@@ -1,0 +1,1262 @@
+QA BRIEF — BULK LANE B5 chunk 33/45 (T-7201–T-7300)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-7201 · Error/empty states wave-5 · the envelope validator names EVERY missing field — multi-field rejection enumerates, not just the first (ISS-029 lineage)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CJ-PRO
+
+Steps: 1. Open the envelope validator on /. 2. Paste an envelope missing TWO required fields at once (e.g. secret AND strategy_id — never a real secret) and press the check control. 3. Copy the rejection verdict verbatim, word for word, including every "Fix:" line. 4. Repeat with three missing fields.
+
+Expected: The plain-words rejection names ALL missing fields, each with its own "Fix:" line in the ISS-029 plain-words style ("… is missing — …") — never a rejection that stops after the first missing field, and never raw pydantic phrasing leaking through for the second or third field. A fix that names only the first missing field sends Saad in circles (fix one, re-press, fix the next); that is a FAIL. (ISS-029 proved the single-field plain-words contract; this proves the enumeration contract. ISS-061's honest-failure copy must hold here too — silence is a FAIL.)
+
+---
+
+### T-7202 · Error/empty states wave-5 · a single failed /home panel gets its own Retry — never a page-wide scare or a silent dead section
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CJ-PRO
+
+Steps: 1. On /home during a natural partial failure (one panel shows a load error while its siblings render fine — e.g. the funding rail stuck or a section LOAD FAILED, the class the 2026-09-27 re-verification found real on /), copy the failing panel's state verbatim. 2. Verify the sibling panels read unaffected. 3. Look for a Retry control attached to the failing panel itself — press it and read the outcome verbatim.
+
+Expected: The failure is contained to its panel with plain-words copy, and the panel offers its own Retry (or an honest statement that retry isn't available with the reason) — the page never promotes one panel's failure to a page-wide scare banner that names nobody, and a dead panel is never left with no recovery path. A sibling panel smeared by one panel's failure, or a failed panel with no Retry and no honest explanation, is a FAIL. (BO T-7010 proved per-strategy containment on /strategies; this proves per-panel containment on /home. Full-outage behavior belongs to BP; this case is the partial-failure class only — if no partial failure is in progress, record that plainly and PASS.)
+
+---
+
+### T-7203 · Error/empty states wave-5 · the Telegram outbox with zero queued messages is an honest empty state — never a blank panel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CJ-PRO
+
+Steps: 1. Open /notifications and find the outbox / queued-messages surface (the drain machinery behind the 17 flagged outbox-draining test failures, read live — never touched). 2. In the state where zero messages are queued, copy the region verbatim. 3. Cross-read the budget line (BO T-7014's "$0.00 of $1.00" territory) and the Message history count for agreement with "nothing queued".
+
+Expected: The outbox states plainly in words that no messages are queued (or shows an honest zero count) — never a blank panel that reads as a failed load, and its "nothing queued" agrees with the visible budget line and history count (no contradiction like a $0.00 spend beside a "3 queued" claim, or vice versa). A wordless blank outbox, or a disagreement between the outbox state and the budget/history figures, is a FAIL.
+
+---
+
+### T-7204 · Error/empty states wave-5 · a veto row with a missing rejection reason says so — never a blank reason cell that reads as broken data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CJ-PRO
+
+Steps: 1. On /history (or the /strategies feed), open the vetoed/rejected signal rows — the rows carrying the T5-STALE-style veto classes. 2. Read several rows' rejection/veto reason cells verbatim. 3. Find any row whose reason field is empty, "unknown", or missing — if one exists, copy that row verbatim.
+
+Expected: Every veto row carries its reason in plain words; a row with no recorded reason says so honestly ("no reason recorded", "reason unknown — …" or equivalent) — never a blank reason cell that reads as corrupted data, and never a row where the reason column silently vanishes. A blank reason cell on a veto row is a FAIL. (BO T-7009 proved the empty-feed class renders honestly; this proves the per-row missing-reason class does too. If no reason-less row exists today, the case passes on the all-named rows — record that plainly.)
+
+
+## Section CK · Proactive: tunnel-outage UI wave-4 — states that survive the gap and the honesty of the return (10 cases: T-7205–T-7214)
+
+Fourth-cycle rotation for tunnel-outage UI honesty (wave-1, Section BH, T-6925–T-6936: dead-tunnel copy, per-page handlers, bookmark survival, redirect rebuild, engine-vs-tunnel blame, STALE age naming, preview honesty, countdown re-anchor, server-needing controls, freshness freeze, reconnect messaging, backtests refusal; wave-2, Section BP, T-7019–T-7030: mid-flight deaths, typed-draft survival, settings-save refusal, test-connection blame, halt-confirm on a dead tunnel, pre-rotation preview reconciliation, double rotations, tunnel-up/server-down distinction, alerts-feed honesty, receipt timeline, validator failure message, shell survival, redirect copy; wave-3, Section CA, T-7125–T-7132: Copilot in outage, preview straddling recovery, post-recovery "Data as of", toggle visual-state contract, auto-refresh failure marking, bounded Retry copy, cross-page cause agreement, cached AI draft readability). This wave covers the seams those left: a halt armed BEFORE the outage surviving the gap, countdowns never going negative through it, state-changing presses that land mid-outage (SmartTrade Load, journal Save) failing honestly with selections/text intact, the failure line tracking the CURRENT rotation across back-to-back ones, the funding rail and "last poll" rows re-anchoring without backfilling continuity, deep routes opened during the outage, outage-window exports, and staggered-tab recovery agreement. Zero overlap with BH/BP/CA/AH verified case-by-case against their titles. Written 2026-09-27 ~16:59 PDT.
+
+Boundary for the whole section: NATURAL rotations only — never kill tunnels, never run keepalive commands, never manufacture an outage; state-changing presses during an outage are the test and are expected to fail honestly; no halt/fire/kill presses land DURING an outage here (T-7022's halt-confirm class is already covered); AI asks during an outage are expected to fail — that failure IS the pass condition. T-7205 arms a halt BEFORE the outage under the standing approval authority and disarms it after recovery — safe state restored, never left armed.
+
+---
+
+### T-7205 · Tunnel-outage wave-4 · a halt armed before a rotation survives the outage render and agrees with the engine after recovery — no phantom resume
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CK-TUN
+
+Steps: 1. On a healthy tunnel, arm the halt through the live UI (under the standing approval authority) and copy the halted state indicator verbatim. 2. When a natural rotation hits, keep the page open; copy how the halted indicator and the failure render coexist. 3. After recovery, reload and read the halt state; press resume to restore the safe state and copy the result verbatim.
+
+Expected: The outage's failure render never swallows or contradicts the armed halt — the page shows both the halted state AND the connection failure honestly, never one pretending the other away. After recovery the halt state matches the engine (halted until the resume press, running after it) — no phantom resume during the outage, no stuck "halted" label after the resume press landed. (T-7022 covered pressing halt-confirm ON a dead tunnel; this is the pre-armed-halt survival contract. ISS-043 lineage.)
+
+---
+
+### T-7206 · Tunnel-outage wave-4 · countdown timers never go negative or jump backward through a rotation — they freeze honestly and re-anchor
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CK-TUN
+
+Steps: 1. On /strategies, copy the strategy "next run in" countdown values. 2. During a natural rotation window, copy the same values again. 3. After recovery, copy them a third time and watch one full refresh cycle.
+
+Expected: During the outage the countdowns freeze (or name the outage) — they never tick through the gap and they never render a negative or backward-jumped value ("in -3 min", "next run in 04:59" suddenly reading "00:12"). After recovery they re-anchor to real values — the timer's claim and the actual schedule agree. A countdown that fabricates continuity through the outage, or reads backwards, is a FAIL. (T-6932 proved the check-now re-anchor; this proves the no-negative/no-backward contract on every countdown.)
+
+---
+
+### T-7207 · Tunnel-outage wave-4 · a SmartTrade Load pressed during an outage refuses honestly and the draft selection survives recovery intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CK-TUN
+
+Steps: 1. When a draft exists, select it in the SmartTrade drafts combobox and copy the selected value. 2. During a natural rotation window, press Load and copy the outcome verbatim. 3. After the tunnel recovers, reload and read the combobox selection.
+
+Expected: The Load press fails in plain words naming the connection — no phantom draft loaded, no stuck spinner, no silent no-op. After recovery the combobox still holds the same selected draft (the selection was never cleared by the failed press), and a fresh Load then works. A draft that silently loads mid-outage, or a selection wiped by the failure, is a FAIL. (ISS-049 proved the draft path's backend honesty on a healthy tunnel; this proves its outage honesty.)
+
+---
+
+### T-7208 · Tunnel-outage wave-4 · a journal Save pressed during a rotation fails in plain words — the typed text is preserved verbatim, never claimed as saved
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CK-TUN
+
+Steps: 1. Type a distinct multi-sentence note in the journal form but do not save it yet. 2. During a natural rotation window, press Save and copy the outcome verbatim, word for word. 3. After recovery, copy the textarea content and compare it to what was typed.
+
+Expected: The Save press fails in plain words naming the connection — the UI never claims the note was saved, and the textarea still holds every typed character verbatim. The note is saveable again after recovery. A "saved" claim for an unsaved note, or lost text, is a FAIL — lost words are the unforgivable outcome. (BP T-7019 proved the draft survives the failure RENDER; this proves the SAVE ACTION fails honestly.)
+
+---
+
+### T-7209 · Tunnel-outage wave-4 · across back-to-back rotations the failure line tracks the CURRENT rotation — never a stale first-outage wording
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CK-TUN
+
+Steps: 1. During a natural double rotation (two rotations back to back, like the 02:44:46 PDT class), copy the failure line verbatim at the start of the first outage. 2. Copy it again during the second outage. 3. Compare the two.
+
+Expected: The failure copy names the current condition — if the second rotation supersedes the first, the line reflects the new one (or a single honest ongoing line) — never a first-outage wording frozen in place that contradicts what's actually happening. The page may show one continuous honest state, but it must never show stale cause text. (BP T-7024 proved double rotations keep a single honest state; this proves the cause LINE updates on supersession.)
+
+---
+
+### T-7210 · Tunnel-outage wave-4 · the funding rail re-anchors honestly after recovery — no eternal "Loading funding…" mid-outage, no faked continuity after
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CK-TUN
+
+Steps: 1. On /, copy the funding rail's state and values. 2. During a natural rotation window, copy the rail's state verbatim. 3. After recovery, copy it again and read its source/as-of labeling.
+
+Expected: Mid-outage the rail fails with named copy (never an eternal "Loading funding…" spinner that reads as a hang, never values presented as live that aren't). After recovery it shows fresh values with honest as-of labeling — it never presents post-recovery figures as continuous through the outage window. A stuck eternal loader, or gap-bridging continuity, is a FAIL. (The 2026-09-27 re-verification proved the rail loads fine on a healthy tunnel; this proves its outage and post-recovery honesty.)
+
+---
+
+### T-7211 · Tunnel-outage wave-4 · "last poll" rows freeze honestly during an outage and name the first post-recovery poll as a resumption — never a backfilled timeline
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CK-TUN
+
+Steps: 1. Copy the Schedules "last poll" rows (the honest "last poll never" class included) before a natural rotation. 2. During the outage, copy them again. 3. After recovery, watch the first successful poll and copy the rows' new wording.
+
+Expected: During the outage the rows freeze at their true last values — no poll pretends to have run mid-outage. After recovery the first poll is visibly a resumption (its timestamp jumps to post-recovery) — the row never backfills invented poll times across the gap to look continuous. (T-6934 proved freshness labels freeze; this proves the resumption is named, not faked, on the schedule rows.)
+
+---
+
+### T-7212 · Tunnel-outage wave-4 · a deep-link route opened during an outage refuses honestly — the same URL resolves to the intended target after recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CK-TUN
+
+Steps: 1. During a natural rotation window, navigate directly (typed URL or fresh tab) to a deep route — a receipt detail URL or a settings-group anchor. 2. Copy the outcome verbatim. 3. After the tunnel recovers, load the same URL again and copy the result.
+
+Expected: Mid-outage the deep route fails with the honest connection copy — never a 404 blaming the route as nonexistent, never a blank page, never the URL silently rewritten away. After recovery the identical URL resolves to the intended target (receipt detail, settings group). A route blamed as broken when the tunnel was the fault, or a URL that rots across recovery, is a FAIL. (BJ T-6956 proved a receipt deep link survives reload on a healthy tunnel; this proves the deep route's outage honesty and URL durability.)
+
+---
+
+### T-7213 · Tunnel-outage wave-4 · a history export pressed during an outage refuses honestly — no phantom file presented as a report; post-recovery exports name the gap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CK-TUN
+
+Steps: 1. During a natural rotation window, press a /history CSV/JSONL export control and copy the outcome verbatim. 2. Note whether any file downloads. 3. After recovery, run the same export and inspect its rows around the outage window.
+
+Expected: Mid-outage the export refuses in plain words — no phantom download, and never an empty or partial file presented as the full report. After recovery the export contains the real rows (including any server-side events that happened during the gap, with honest timestamps) — never rows backdated to hide the outage. (T-7198 proved the zero-row export contract; this proves the outage-window export contract.)
+
+---
+
+### T-7214 · Tunnel-outage wave-4 · staggered tabs agree after recovery — the outage-window tab and the post-recovery tab never contradict on cause or state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CK-TUN
+
+Steps: 1. During a natural rotation window, keep tab A on the honest failure render. 2. After the tunnel recovers, open tab B fresh to the same page and copy its live state. 3. Reload tab A and copy its state; compare the two tabs' cause copy and data state.
+
+Expected: Before tab A's reload, the two tabs honestly differ (failure vs live — expected, never forced to match mid-gap). After tab A's reload, both tabs agree — same cause wording for the past outage, same data state, same timestamps. Tab A never stays stuck on the stale failure render after reloading, and the tabs never contradict each other on what happened. (T-7131 proved cross-page cause agreement in one tab set; this proves staggered-tab agreement across recovery.)
+
+
+## Section CL · Proactive: AI-provider paths wave-3 — the seams the first two waves didn't touch (10 cases: T-7215–T-7224)
+
+Third-cycle rotation for AI-provider honesty (wave-1, Section BI, T-6937–T-6948: OpenRouter 18+ age-gate naming, provider-outage blame vs invalidating a good key, provider-switch metadata-only audit row, non-selected-slot save isolation, idle-slot Test isolation, chat-history attribution across a switch, dual-source verdicts + Jev mock tag, scheduled-scan death honesty, active-key removal warning + restore, "unreachable" vs "disabled" copy split, in-flight indicator tied to the real call, failure-banner dismissal honesty; wave-2, Section BQ, T-7031–T-7040: panel price vs billed-row spend agreement, mid-flight provider flip answerer naming, Test probe vs live verdict race, cost-row provider stickiness across a switch, failed-probe repeatability, two-tab save-vs-Test race, Jev mock tag surviving a real-provider outage, panel "last checked" vs /home health-line agreement, empty-slot Test naming, no-stale-provider window after a switch). This wave covers the seams those left: provider-side rate-limit (429) copy distinct from 401/unreachable, billing-exhaustion copy distinct from connection blame, template-fallback tagging when the provider fails WITH a valid key saved, the cost counter's exactly-once increment against the sealed profile caps, overwrite-confirm on the occupied idle slot (cancel path — nothing mutates), scheduled-scan rows naming the post-switch provider, brain-page "last consult" agreeing with the latest cost-counter row, a Test probe pressed while a copilot ask is in flight, the key-removal flow closing the loop on the verdict area (warning → no-key notice → restore), and the provider panel's "last checked" never advancing through a tunnel rotation. Zero overlap with BI/BQ/AB/BX/BZ/J verified title-by-title against their case lists. Written 2026-09-27 ~17:21 PDT.
+
+Boundary for the whole section: natural provider failures and natural rotations only — never manufacture outages, never craft 429s; the rate-limit and billing cases pass through the control copies (AB T-6267's 401 wording, BI T-6940's unreachable wording) when the event never occurs, and the case is recorded N-A with the event's absence stated, never failed on the missing event; T-7223 removes Saad's real active AI key under the standing approval authority and RESTORES + re-tests it at the end — the key is never left removed; no halt/fire/kill presses anywhere in this section.
+
+---
+
+### T-7215 · AI-provider paths wave-3 · a provider-side rate limit (429) is named as throttling in plain words — never the 401 copy, never the unreachable copy, never a silent placeholder answer
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. On a healthy provider, read the current Test-connection failure copies as controls: the empty-slot no-key copy, the wrong-key 401 copy (AB T-6267), and the provider-unreachable copy (BI T-6940). 2. During this batch, if any provider call — Test probe, copilot ask, or verdict refresh — returns a rate-limit (429 / too-many-requests class) response, copy the on-screen wording verbatim. 3. Watch the in-flight indicator's state through the refusal. 4. If no 429 occurs during the batch, verify instead that no 401/429/unreachable confusion exists in any rendered failure line and record N-A with the absence stated.
+
+Expected: A rate limit reads as throttling in plain words — names the provider, tells Saad to wait and retry, and never borrows the "wrong key" 401 wording (AB T-6267) or the "couldn't reach" unreachable wording (BI T-6940). The in-flight indicator clears (no stuck spinner, no staged progress). Never a silent placeholder answer presented as if the provider answered. (AB T-6272 proved a wrong key provokes the provider's genuine 401; this locks the third failure class — throttling — to its own copy.)
+
+---
+
+### T-7216 · AI-provider paths wave-3 · provider billing/credit exhaustion is named as billing in plain words — never connection blame, never a template answer laundered as provider-served
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. Same controls as T-7215 (401 copy, unreachable copy). 2. If any provider call fails in the billing class (insufficient credit / quota exhausted), copy the on-screen wording verbatim. 3. Check whether any template/stub answer is served in place of the refused call, and if so, how it is tagged. 4. If the class never occurs, record N-A with the absence stated — the case is not a failure on a missing event.
+
+Expected: Billing exhaustion names billing — "out of credit" / "quota exhausted" class wording, never "couldn't reach the provider", never the 401 wording. If a template/stub answer fills the gap it carries the template tag verbatim (ISS-100 lineage) — a billing refusal never launders a template answer as provider-served. (T-1228 covered billing jargon on the healthy spend indicator; this covers the refusal state.)
+
+---
+
+### T-7217 · AI-provider paths wave-3 · a provider call that fails WITH a valid key saved: any fallback answer carries the template tag — never labeled as the provider's model
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. With a valid key saved and the provider active, watch the AI verdict/stance area and the copilot during this batch's natural traffic. 2. If a provider-side failure occurs (5xx / outage class — not 401, not throttling), copy the answer area's model line and any fallback wording verbatim. 3. Compare the model line against the panel's fixed model name (AB T-6255 / T-6259 controls). 4. If no such failure occurs, record N-A with the absence stated.
+
+Expected: The failed call is either shown as failed in plain words, or a template answer is served WITH the template tag verbatim — the model line never reads the provider's fixed model name while the content came from the template. ISS-100 lineage: Section BX (T-7099–T-7104) locked the keyless-flip variant; this locks the same contract for the key-present-failure variant. (A 401 is excluded — AB T-6267 owns that copy.)
+
+---
+
+### T-7218 · AI-provider paths wave-3 · the cost counter agrees with the sealed AI profile and increments exactly once per served answer — caps name their reset behavior
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. On the brain page, read the sealed AI profile caps verbatim (MAX PER DAY, MAX PER HOUR, COOLDOWN) and the current cost/spend figure. 2. Ask the copilot exactly one question; copy the answer and re-read the cost figure. 3. If the ask is refused by a cap instead, copy the refusal verbatim and verify the cost figure did not grow. 4. If the cap is never hit, document the cap-line wording as the gate for a future refusal.
+
+Expected: The cost figure grows by exactly the one ask's cost — never double-counted across a retry, never incremented on a refused ask. The profile's cap line names the reset behavior in plain words (per-day / per-hour window), so a future refusal has a predictable time. (One copilot ask is the unit of spend here; BQ T-7031 proved panel price vs billed-row agreement — this proves the counter's exactly-once semantics.)
+
+---
+
+### T-7219 · AI-provider paths wave-3 · saving a key into the occupied IDLE slot asks a plain-words overwrite confirm — the cancel path leaves everything intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. Read the idle (non-active) provider slot's saved-key indicator verbatim (masked value, e.g. ••••last-4). 2. Type a dummy value into that slot's key field and press Save. 3. Copy the overwrite confirm verbatim. 4. Press Cancel. 5. Re-read the slot's saved-key indicator and run Test connection on the idle slot.
+
+Expected: The confirm names the overwrite in plain words — which slot, that a key is already saved there, what will replace it — never a silent overwrite. The Cancel path restores the pre-press state exactly: the old masked key stands, the idle-slot Test result matches the pre-press result, and nothing in the active slot moved. (AB T-6268 covered the masked display; BI T-6941 covered slot isolation on save. The confirm's accept branch is never pressed here — per the native-dialog rule it stays unverified and is recorded honestly, not assumed.)
+
+---
+
+### T-7220 · AI-provider paths wave-3 · after a provider switch, the next scheduled-scan verdict rows name the NEW provider — no zombie rows on the old one
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. Flip the provider selector to the other provider and copy the switch audit row verbatim (BI T-6939 control). 2. Wait for the next natural scheduled scan; copy its verdict row's provider line verbatim. 3. Read the scan history around the switch point. 4. Flip back to the original provider when done.
+
+Expected: Rows before the switch audit row name the old provider; rows after it name the new provider. No row timestamped after the switch attributes itself to the old provider (zombie rows are a FAIL), and no historical row is silently re-attributed to the new provider (BQ T-7034's stickiness rule, extended from cost rows to scan rows). The audit row sits exactly at the boundary. (BI's scan-death case covered the failure path; this covers the healthy switch path.)
+
+---
+
+### T-7221 · AI-provider paths wave-3 · the brain page's "last consult" line agrees with the latest cost-counter row — timestamp, provider, model, and cost
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CL-AI
+
+Steps: 1. On the brain page, copy the "last consult" line verbatim (timestamp, provider, model, cost — whichever fields render). 2. Read the cost counter's latest row verbatim. 3. Compare every rendered field.
+
+Expected: Every rendered field matches exactly — same timestamp, same provider name, same model line, same cost. A consult the brain page names but the counter misses (or vice versa), or a provider/model mismatch between the two surfaces, is a FAIL. (BQ T-7038 proved panel-level timestamp agreement with the /home health line; this proves per-consult row-level agreement between the two AI surfaces.)
+
+---
+
+### T-7222 · AI-provider paths wave-3 · a Test connection pressed while a copilot ask is in flight: the ask resolves on its own, the probe reports on its own — no silent drop, no second spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. Send a copilot question and, while its answer is still in flight, press Test connection on the AI provider panel. 2. Copy both in-flight states as they render. 3. Record the final outcome of each (ask answer + probe verdict).
+
+Expected: The two in-flight operations stay separate — the copilot ask streams/resolves on its own, the Test probe reports its own verdict, exactly one in-flight indicator per operation (no second spinner for one operation), and the ask is never silently dropped by the probe. A probe that cancels or swallows the ask without saying so is a FAIL. (BQ T-7033 proved a probe doesn't cancel a rendered live verdict; this proves a probe doesn't disturb an in-flight ask.)
+
+---
+
+### T-7223 · AI-provider paths wave-3 · the key-removal flow closes the loop on the verdict area: warning → no-key notice → restore, with the real key re-tested at the end
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. Under the standing approval authority, remove the ACTIVE provider's key; copy the removal warning verbatim (BI T-6944 control). 2. Immediately press AI stance refresh and copy the verdict area's leading line verbatim. 3. Restore the key (paste the real value transiently, save), press Test connection, and copy the result. 4. Press AI stance refresh again and confirm the no-key notice is gone.
+
+Expected: The removal warning names the consequence in plain words (BI T-6944 contract). Post-removal, the verdict area LEADS with the no-key notice (BX lineage) — never a fresh-styled verdict from a provider that has no key. The case ends with the real key saved, Test passing, and the no-key notice cleared — the key is never left removed. (BI tested the warning; BX tested the notice after a provider FLIP; this tests the notice after an actual key REMOVAL.)
+
+---
+
+### T-7224 · AI-provider paths wave-3 · the provider panel's "last checked" never advances through a natural tunnel rotation — it re-anchors honestly after recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CL-AI
+
+Steps: 1. On a healthy tunnel, copy the provider panel's "last checked" timestamp. 2. During a natural rotation window, watch the panel's "last checked" and any Test/probe affordance — note whether it moves. 3. After recovery, copy "last checked" again and compare with the /home AI health line (BQ T-7038 control).
+
+Expected: Mid-outage "last checked" never advances — no probe is faked during the gap, and the panel never claims freshness it doesn't have. After recovery it re-anchors with an honest post-recovery timestamp; it never backfills the outage window as if a check happened then. (BQ T-7038 proved healthy-tunnel agreement; this proves outage honesty for the same line.)
+
+## Section CM · Proactive: cross-page persistence wave-6 — the seams waves 1–5 didn't touch (10 cases: T-7225–T-7234)
+
+Sixth-cycle rotation for cross-page honesty (wave-1, Section AM, T-6529–T-6538: default-view first-paint on all 9 pages, halt indicator agreement under approval authority, Telegram pill vs sidebar footer, strategy enable state across reload, journal note round-trip, half-edited settings group switch, message history round-trip, runner countdown honesty after reload, /history filter staleness, AI provider edit-box staleness; wave-3, Section BJ, T-6949–T-6958: back-button live lists, backtest form values, exchange-name agreement, journal export currency, collapse state, two-tab staleness, deep-link receipts, pagination index, drafts agreement, countdown agreement; wave-4, Section BR, T-7041–T-7050: start-card preview state across navigation, half-typed journal drafts, risk-cap bar cross-surface agreement, funding-rail agreement, KPI freshness-line agreement, copy-trading statement verbatim agreement, alert "new" marker agreement, SmartTrade arm-state agreement without reload, journal calendar month persistence, expanded-receipt honesty across navigation; wave-5, Section CD, T-7145–T-7152: copilot draft record from RECENT PINE DRAFTS vs SmartTrade MCP drafts, key-check timestamp /settings vs /keys, in-flight draft honesty across navigation, strategy enable /strategies vs /home runner tile, Telegram pill /notifications vs header pill, halt indicator / vs /settings risk region, /history "Data as of" no-rewind, SmartTrade draft /home → /trading combobox). This wave covers the seams they left: the header Telegram pill agreeing with the latest notification-history delivery row after reload (ISS-040/064 lineage), the Strategy-errors overview tile agreeing with the /strategies error-card count (ISS-069 lineage), schedule "last poll" rows agreeing with the /home schedule line, masked-key last-4 agreement between /keys and /settings, journal-derived overview tiles agreeing with /journal, a loaded SmartTrade ticket surviving navigation, the empty drafts combobox staying honest across reload (ISS-049 lineage), a half-typed copilot ask surviving navigation honestly, the "Open Telegram chat" link target agreeing between /notifications and the sidebar footer, and the /backtests empty saved-results state staying honest across navigation. Zero overlap with AM/BJ/BR/CD verified title-by-title against their case lists. Written 2026-09-27 ~17:39 PDT.
+
+Boundary for the whole section: navigation and reload only — no halt/fire/kill/approve/deny presses anywhere in this section; the SmartTrade Load in T-7230 prefills the ticket and stops there (never arm, never fire); no key saves, removals, overwrites, or Test-connection presses; no outages manufactured — all outage-adjacent reads are natural windows only, recorded N-A when the event is absent.
+
+---
+
+### T-7225 · Cross-page persistence wave-6 · the header Telegram pill agrees with the latest notification-history delivery row after reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CM-XP
+
+Steps: 1. On /notifications, copy the latest preview/test history row's delivery status ("Delivered"/"failed") and timestamp verbatim. 2. Read the cockpit header Telegram pill verbatim. 3. Reload the page; re-read both. 4. Navigate to /home and back; re-read both.
+
+Expected: The pill always reflects the latest history row — "Connected — alerts will reach your Telegram" only when the latest row reads Delivered; after a failed row the pill's warning state must agree. Never "Connected" in the pill while the latest history row says failed, never a warning pill while the latest row says Delivered. (ISS-040/064 lineage: CD T-7149 locked pill-vs-pill agreement; this locks pill-vs-recorded-truth agreement.)
+
+---
+
+### T-7226 · Cross-page persistence wave-6 · the Strategy-errors overview tile agrees with the /strategies error-card count after a navigation round-trip
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CM-XP
+
+Steps: 1. On the overview, copy the "Strategy errors" tile's count and tone verbatim (ISS-069). 2. Navigate to /strategies and count the strategy cards currently showing an error/disclosure state. 3. Navigate back to the overview and re-read the tile.
+
+Expected: The tile count equals the /strategies error-card count — one truth across pages. A tile that lags (shows yesterday's count) or disagrees with the cards after navigation is a FAIL. (ISS-069's backend gate proved the tile tracks current state; this proves it across navigation.)
+
+---
+
+### T-7227 · Cross-page persistence wave-6 · the schedule "last poll" rows on /settings agree with the /home schedule line after navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CM-XP
+
+Steps: 1. On /settings schedules, copy the four "last poll" rows verbatim. 2. Navigate to /home, find the schedule/health line and copy it verbatim. 3. Navigate back to /settings and re-read the rows.
+
+Expected: The rows and the /home line name the same poll state — "last poll never" rows must not become timestamped elsewhere and vice versa; wording stays neutral and identical in meaning on both pages. (CK T-7211 covered freeze honesty through outages; this is the routine-navigation contract.)
+
+---
+
+### T-7228 · Cross-page persistence wave-6 · the masked key last-4 agrees between /keys and the /settings masked display after navigation — never a full key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CM-XP
+
+Steps: 1. On /keys, copy one exchange row's masked key indicator (e.g. ••••NNNN) verbatim. 2. Navigate to /settings, find the same slot's masked display and copy it verbatim. 3. Navigate back to /keys and re-read. 4. Scan both pages for any unmasked full secret.
+
+Expected: Both surfaces show the same last-4 mask — one identity for the slot. No full key, token, or secret is readable on either page at any point. (AB T-6268 covered masked display per surface; this locks cross-surface agreement.)
+
+---
+
+### T-7229 · Cross-page persistence wave-6 · the journal-derived overview tiles agree with /journal after a navigation round-trip and a reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CM-XP
+
+Steps: 1. On /journal, copy the closed-trades count and net P&L line verbatim. 2. Navigate to the overview, find the same tiles (CLOSED TRADES / NET P&L) and copy them verbatim. 3. Reload the overview and re-read the tiles.
+
+Expected: The overview tiles equal the /journal figures — to the cent — after navigation and reload. A tile showing a stale count or a differently-signed P&L than /journal is a FAIL. (AM covered the note round-trip; this is the derived-tile agreement.)
+
+---
+
+### T-7230 · Cross-page persistence wave-6 · a SmartTrade ticket loaded from a draft keeps its content across a navigation round-trip — never cleared, never swapped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CM-XP
+
+Steps: 1. On /trading, select one draft in the SmartTrade drafts combobox and press Load to prefill the ticket (never arm, never fire); copy the ticket's prefilled fields verbatim. 2. Navigate to /settings and back to /trading. 3. Re-read the ticket fields verbatim.
+
+Expected: The ticket still shows the same draft's content — the load survives navigation. Cleared fields, a swapped-in different draft, or a ticket that claims loaded while showing defaults is a FAIL. (ISS-049 / CD T-7152 covered combobox→Load; this covers the loaded ticket's persistence.)
+
+---
+
+### T-7231 · Cross-page persistence wave-6 · the empty SmartTrade drafts combobox stays honest across reload — "No drafts" plus a disabled Load, never a phantom draft
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CM-XP
+
+Steps: 1. With the drafts store empty, read the /trading SmartTrade drafts combobox verbatim ("No drafts") and confirm Load is disabled. 2. Reload the page. 3. Navigate away and back. 4. Re-read the combobox and the Load button state.
+
+Expected: "No drafts" and a disabled Load on every read — no phantom draft appears, Load never enables on an empty combobox. (The empty-path twin of CD T-7152; ISS-049 lineage.)
+
+---
+
+### T-7232 · Cross-page persistence wave-6 · a half-typed copilot ask survives a navigation round-trip honestly — kept verbatim or cleared with notice, never silently replaced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CM-XP
+
+Steps: 1. Type a distinctive half-question into the copilot box (do not send). 2. Navigate to /settings and back. 3. Read the copilot box content verbatim. 4. Repeat with a page reload instead of navigation.
+
+Expected: The text is either preserved verbatim or cleared with an explicit notice — never silently replaced by a different draft, a template answer, or a stale earlier ask. (BR covered half-typed journal drafts; CD covered in-flight submitted drafts; this is the unsubmitted copilot ask.)
+
+---
+
+### T-7233 · Cross-page persistence wave-6 · the "Open Telegram chat" link target agrees between /notifications and the sidebar footer after navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CM-XP
+
+Steps: 1. On /notifications, copy the "Open Telegram chat" link's destination verbatim (the bot chat URL). 2. Navigate to /home, find the same link in the sidebar footer and copy its destination. 3. Navigate back and re-verify.
+
+Expected: Both links open the same bot chat (SaadAi / @Saad_6622bot) — identical destination after navigation. A footer link pointing anywhere else, or a dead href, is a FAIL. (AM covered pill-vs-footer status; this is the link-target agreement.)
+
+---
+
+### T-7234 · Cross-page persistence wave-6 · the /backtests empty saved-results state stays honest across navigation — no phantom run appears
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CM-XP
+
+Steps: 1. On /backtests with no saved runs, copy the saved-results empty wording verbatim and note the lone "Backtest filters" button. 2. Navigate to /history and back. 3. Reload /backtests. 4. Re-read the empty wording and confirm no saved run row appeared.
+
+Expected: The empty wording is identical on every read — no phantom saved run materializes from navigation or reload, and the empty state never borrows wording from a populated state. (The persistence twin of the empty-state wording waves.)
+
+
+---
+
+## Section CN · Proactive: mobile-viewport wording wave-4 — the surfaces AL/BA/BU/CF didn't touch (10 cases: T-7235–T-7244)
+
+Proactive gardener block, 2026-09-27 ~18:01 PDT. Mobile-viewport-wording wave-4 — the surfaces AL (T-6519–T-6528, copy terms), BA (T-6794–T-6818, AI surfaces at 390px), BU (T-7069–T-7078, general cockpit surfaces: preview success lines, validator verdicts, STALE lines, KPI tiles, cap bars, start card + drill hints, strategy rows, dead-page card, journal form, receipt rows), and CF (T-7159–T-7166, the surfaces waves 1–3 didn't touch: /keys exchange rows, /settings group content, /notifications message-history rows, push section, SmartTrade drafts combobox, engine-state pills, strategy disclosure cards, /history filters + exports) did not touch: /home nav cards, the Telegram preview failure line + send button, /journal calendar + leaderboard, the /backtests run form + lone filters button, the /trading risk region, the /home funding rail, the preview "Sending…" in-flight state, expanded receipt detail, the /strategies refresh control + countdown, toast/confirmation lines. Zero overlap with AL/BA/BU/CF verified title-by-title. Honest-gap rule (as BU/CF): where phone width cannot be simulated in automation, record BLOCKED — the cases stand ready for a phone run.
+
+### T-7235 · Mobile-viewport wording wave-4 · /home nav cards wrap cleanly at phone width — names, descriptions, destinations tappable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. On /home at phone width, read each nav card end to end (name, description, destination). 2. Read the sidebar entries.
+
+Expected: Every card's name, description, and destination wrap in readable order — a card whose description collides with the next card's name, or whose name truncates so the destination is unguessable, is a FAIL. No navigation pressed during this check (read-only).
+
+---
+
+### T-7236 · Mobile-viewport wording wave-4 · the Telegram preview failure line + send button stay fully legible at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. On /notifications at phone width, read the preview send button's full label ("Send a real preview message") and the button-adjacent feedback line region. 2. If a failure state is visible from a natural window, read the failure line verbatim to its last word.
+
+Expected: The button keeps its full label and the failure line — where visible — renders as a complete sentence (cause + remedy), never a clipped fragment that hides the remedy. A failure line that loses its next step on wrap is a FAIL. (BU covered the preview success line; this is the failure line.) No preview is pressed during this check (read-only).
+
+---
+
+### T-7237 · Mobile-viewport wording wave-4 · /journal calendar + leaderboard wrap readably at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. On /journal at phone width, read the calendar month grid and the leaderboard rows end to end. 2. Read the selected-month highlight and any day cells carrying notes.
+
+Expected: The calendar grid stays aligned with its month label, the selected month stays visibly marked, and leaderboard rows keep their rank, name, and figure paired — a leaderboard row that drops its figure at narrow width is a FAIL. (BU covered the journal form + CSV/JSONL buttons; this is the calendar + leaderboard.)
+
+---
+
+### T-7238 · Mobile-viewport wording wave-4 · the /backtests run form + lone "Backtest filters" button stay fully labeled at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. On /backtests at phone width, read the run-new-backtest form: every field label and the Run control's full label. 2. Read the lone "Backtest filters" button end to end.
+
+Expected: Every field label sits above its input and the Run control and filters button render with complete labels — a filter button or Run control clipped so its action is unguessable is a FAIL. Nothing launched during this check (read-only).
+
+---
+
+### T-7239 · Mobile-viewport wording wave-4 · the /trading risk region stays paired and tappable at phone width — halt/resume buttons never collide
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. On /trading at phone width, read the risk region end to end: each halt/resume control's label and its adjacent status text. 2. Check the halt buttons for separation.
+
+Expected: Every control keeps its label attached to its button, the halt buttons never overlap or collide, and the status text wraps as a complete sentence. A halt button whose label detaches or hides behind a sibling control at narrow width is a FAIL. Nothing halted or resumed during this check (read-only). (AL covered the halt modal's copy; BU covered cap-bar value pairing — this is the risk region's controls themselves.)
+
+---
+
+### T-7240 · Mobile-viewport wording wave-4 · the /home funding rail line wraps readably at phone width — rate, source, loading state intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. On /home at phone width, read the funding rail line end to end (rate figure, source attribution). 2. If the rail is loading, read the loading line verbatim.
+
+Expected: The rate figure stays attached to its source attribution and the loading line — where present — reads as a complete sentence, never a wordless spinner. A rate figure clipped so the percentage is unreadable is a FAIL.
+
+---
+
+### T-7241 · Mobile-viewport wording wave-4 · the preview "Sending…" in-flight state stays attached at phone width — exactly one indicator
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CN-MV
+
+Steps: 1. On /notifications at phone width, press "Send a real preview message" (authorized test action under the standing approval — a real test send to the connected chat) and read the in-flight state verbatim. 2. Confirm the state clears when the outcome renders.
+
+Expected: The in-flight state (spinner + "Sending…" wording) renders attached to the preview button region — exactly one indicator, fully worded — and clears when the outcome lands. A second detached "Sending…" ghost elsewhere on the page at narrow width is a FAIL. (ISS-040/T-5151 lineage: the phone-width rendering of the state those cases gate.)
+
+---
+
+### T-7242 · Mobile-viewport wording wave-4 · expanded /history receipt detail wraps as readable rows at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CN-MV
+
+Steps: 1. On /history at phone width, expand one receipt row and read the detail end to end (venue, side, time, FILLED state, fills, fees, strategy attribution). 2. Read each fill row to its last word.
+
+Expected: Every fill keeps its price, time, and side together, fees and the total wrap as readable figures, and the strategy attribution never clips to an unidentifiable stub — an expanded pane whose fill rows lose their side labels at narrow width is a FAIL. (BU covered the collapsed rows; this is the expanded detail.)
+
+---
+
+### T-7243 · Mobile-viewport wording wave-4 · the /strategies refresh control + check-now countdown stay fully labeled at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. On /strategies at phone width, read the "Refresh the list now" button's full label and its plain-words hint end to end. 2. Read the check-now countdown line to its last word.
+
+Expected: The button keeps its full label, the hint renders as a complete sentence, and the countdown line wraps with its figure intact — a countdown that loses its number on wrap is a FAIL. The button is not pressed during this check (read-only). (BU covered the strategy-row controls; this is the list-level refresh.)
+
+---
+
+### T-7244 · Mobile-viewport wording wave-4 · toast/confirmation lines wrap as full sentences at phone width — never overlapping content
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CN-MV
+
+Steps: 1. At phone width, re-read any confirmation line rendered during this wave (or the most recent "Saved interface settings" line) verbatim end to end. 2. Check it against the content it overlays or sits beside.
+
+Expected: Every confirmation line renders as a complete sentence with its version/figure intact and never overlaps or hides adjacent content. A toast that clips its version number or sits on top of a control at narrow width is a FAIL.
+
+
+## Section CO · Regression: ISS-106 — AI DRAFT dump exposed internal validator plumbing (6 cases: T-7245–T-7250)
+
+Regression gardener block, 2026-09-27 ~18:43 PDT. ISS-106: the Copilot panel's AI DRAFT dump showed internal validator fields verbatim in the draft text Saad reads ("INJECTION_SUSPECT no", "confidence_source: default", "forged fields rejected=none") — scanner jargon and model-plumbing field names, not plain words. Fixed 2026-09-27 ~18:25 PDT (ai/draft_parser.py rationale in plain words; app/main.py copilot dump uses plain-words lane labels, confidence_source hidden, 0.5 annotated as parser default; stale test repaired + ISS-106 regression assertions added) — both gates PASS. Zero overlap with T-6724 (notification-stream guard — different page: /notifications stream vs Copilot panel), T-7051/T-7058/T-7059 (draft in-flight + secrets — different seams: no overlap with field-name rendering), T-7139/T-7144 (ISS-104 "Drafting…" line — different seam), T-7145 (draft-record cross-page — different page/seam), verified title-by-title.
+
+### T-7245 · ISS-106 regression · the Copilot "Draft ticket" dump shows zero internal field names — no INJECTION_SUSPECT, no confidence_source, no "forged fields rejected"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: CO-106
+
+Steps: 1. Open the Copilot panel and press "Draft ticket" with a plain-words draft description. 2. When the dump renders, read it end to end.
+
+Expected: No string matching INJECTION_SUSPECT / confidence_source / "forged fields rejected" (or any other validator field name) appears anywhere in the panel — the dump reads as plain words only. Any validator jargon visible in the draft text is a FAIL. (T-7058 covers secret leakage; this is field-name leakage.)
+
+---
+
+### T-7246 · ISS-106 regression · an injection-test draft dump renders the plain-words security lane — "SECURITY SCAN — quarantined — draft text only, zero orders"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: CO-106
+
+Steps: 1. Submit a draft request carrying the known injection-test payload. 2. Read the resulting draft dump verbatim end to end.
+
+Expected: The security lane renders the plain-words quarantine copy — "SECURITY SCAN — quarantined — draft text only, zero orders" — with zero internal scan field names. A dump that shows the verdict as validator keys or scanner jargon is a FAIL.
+
+---
+
+### T-7247 · ISS-106 regression · the dump opens with "Draft from your words: …" — plain-words attribution for a normal request
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CO-106
+
+Steps: 1. Press "Draft ticket" with a normal plain-words description. 2. Read the top of the dump.
+
+Expected: The first line reads "Draft from your words: …" followed by the paraphrase — no internal keys before, after, or between the draft text. A dump that opens on a parser lane label is a FAIL.
+
+---
+
+### T-7248 · ISS-106 regression · the confidence figure is annotated as a parser default — "confidence: 0.0 (parser default — not measured)"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CO-106
+
+Steps: 1. In the "Draft ticket" dump, read the confidence line verbatim.
+
+Expected: Confidence renders with the exact plain-words annotation — "confidence: 0.0 (parser default — not measured)". A bare "confidence: 0.0" that implies a measured score is a FAIL.
+
+---
+
+### T-7249 · ISS-106 regression · an unknown future parser key renders a plain-words fallback — no raw key leak (verifier hardening fold-in)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: CO-106
+
+Steps: 1. Trigger a draft carrying a parser key outside the known label set. 2. Read that lane's rendered label verbatim. (If the hardening fold-in from the ISS-107–110 wave has not landed yet, record BLOCKED against this case — the case stands ready.)
+
+Expected: The lane renders a plain-words fallback label ("Unknown validation check — shown in plain words"), never the raw key string. A raw key in the dump is a FAIL.
+
+---
+
+### T-7250 · ISS-106 regression · the plain-words dump survives a page reload — no flash of internal fields on re-render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CO-106
+
+Steps: 1. With a "Draft ticket" dump on screen, reload the page. 2. Re-read the dump verbatim end to end.
+
+Expected: The identical plain-words dump renders — no momentary render of internal field names before the labels settle. A flash of validator jargon on reload is a FAIL. (T-7144 covered the opacity-hiding class on the "Drafting…" line; this is the dump's own re-render path.)
+
+---
+
+## Section CP · Regression: ISS-107 — Telegram secret-token auth / forged-token-drop / DLQ (6 cases: T-7251–T-7256)
+
+Regression gardener block, 2026-09-27 ~18:43 PDT. ISS-107: pre-existing test failure test_gap_confirms_forged_token_dropped_warns_and_dlq (Telegram secret-token auth / forged-token-drop / DLQ behavior) — confirmed failing on the pristine tree 2026-09-27 ~18:20 PDT, unresolved whether the test is stale or the product path regressed. Fix wave dispatched to investigate. These 6 cases lock the UI contract around the feature so the wave's outcome (test drift vs real defect) is judged against it: no existing DLQ or forged-token UI tests exist — all six angles are novel. If the wave proves the underlying product path does not exist (pure test drift), the affected cases are rewritten to gate the new path, never deleted.
+
+### T-7251 · ISS-107 regression · a forged-token webhook attempt surfaces in /notifications history as a plain-words warning row — never raw token material
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: CP-107
+
+Steps: 1. On /notifications, inspect the message-history rows during a natural window in which a forged-token attempt was dropped. 2. Read the warning row verbatim end to end.
+
+Expected: The row reads as a warning in plain words ("Rejected a message whose secret didn't match — nothing was acted on"). No secret, token, or signature material is visible anywhere in the row. Raw token material is a FAIL. (T-1003–T-1014 cover the webhook secret's own masking; this is the drop-event's history rendering.)
+
+---
+
+### T-7252 · ISS-107 regression · the forged-token warning row names Saad's next step — rotate the secret — with no raw signature strings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CP-107
+
+Steps: 1. Read the forged-token-drop warning row to its last word.
+
+Expected: The row names the next step in plain words (re-rotate / re-save the Telegram secret) with zero raw signature strings. A warning that identifies the attack but leaves Saad with no remedy is a FAIL.
+
+---
+
+### T-7253 · ISS-107 regression · a dropped forged token leaves a DLQ row with topic, age, and status in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CP-107
+
+Steps: 1. Open the DLQ view and read the forged-token row end to end.
+
+Expected: The row carries a named topic, an age in words ("3 min ago"), and a status in words ("dropped", not "quarantined indefinitely"). A row whose status is ambiguous or raw is a FAIL.
+
+---
+
+### T-7254 · ISS-107 regression · forged attempts never flip the Telegram "Connected" pill — connection state stays honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: CP-107
+
+Steps: 1. While forged attempts are arriving, read the Telegram connection pill. 2. Read the last real preview outcome.
+
+Expected: The pill holds its true state — a forged attempt against the webhook is not a failure of the connected bot, so the pill never falsely flips to disconnected. A pill that turns red on forged traffic is a FAIL.
+
+---
+
+### T-7255 · ISS-107 regression · the forged-token warning row is never silently pruned — age stated, counts agree
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: CP-107
+
+Steps: 1. Read the forged-token warning row and the history header counts. 2. Re-read after a reload.
+
+Expected: The row persists with its age stated, and the header counts agree with the rows shown — the warning is not silently dropped. (T-6730 covers AI-alert pruning; this is the forged-token warning's retention.)
+
+---
+
+### T-7256 · ISS-107 regression · acceptance: forged-token-drop → DLQ → warning history agree end to end, zero leaks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CP-107
+
+Steps: 1. Cross-read the three surfaces: the /notifications warning row, the DLQ row, and the Telegram pill. 2. Search all three for token/signature material.
+
+Expected: All three agree on what happened (one drop, one warning, connection unaffected) and zero token material appears on any surface. Any disagreement or leak is a FAIL.
+
+---
+
+## Section CQ · Regression: ISS-108 — DLQ discard flow 401 vs 422 (6 cases: T-7257–T-7262)
+
+Regression gardener block, 2026-09-27 ~18:43 PDT. ISS-108: pre-existing test failure test_dlq_discard_flow (expects HTTP 401, gets 422) — confirmed failing on the pristine tree 2026-09-27 ~18:20 PDT, unresolved whether the contract changed intentionally or the handler regressed. Fix wave dispatched to investigate. These 6 cases lock the UI contract around DLQ discard: status codes never reach the user, only honest outcomes. No existing DLQ UI tests exist — all six angles are novel. If the wave proves the discard path changed intentionally (422 contract), the affected expectations hold as-is; if it regressed, they gate the fix.
+
+### T-7257 · ISS-108 regression · the DLQ discard control carries a plain-words consequence hint — no raw status codes on the button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: CQ-108
+
+Steps: 1. Open the DLQ view and read the discard control and its hint end to end.
+
+Expected: The hint names what discard does ("removes this quarantined message permanently") with no raw status codes ("401"/"422") anywhere on the button or its hint. A code leaking onto the button is a FAIL.
+
+---
+
+### T-7258 · ISS-108 regression · discarding a DLQ row removes exactly that row — the count agrees, nothing else moves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CQ-108
+
+Steps: 1. Discard one DLQ row (authorized test action under the standing approval). 2. Re-read the list and the counts.
+
+Expected: The row is gone, the count decrements by exactly one, and every sibling row is untouched. A count that doesn't match the rows shown is a FAIL.
+
+---
+
+### T-7259 · ISS-108 regression · a failed discard refuses honestly — plain-words failure, the row untouched, no phantom success
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: CQ-108
+
+Steps: 1. Attempt a discard during a natural degraded window (never manufactured). 2. Read the outcome verbatim and re-read the list.
+
+Expected: The failure reads as calm plain words, the row is still present, and no success banner was shown. A phantom "discarded" that didn't take effect is a FAIL.
+
+---
+
+### T-7260 · ISS-108 regression · the empty DLQ reads honestly — "no quarantined messages", never a blank table
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CQ-108
+
+Steps: 1. Open the DLQ view with zero rows (after T-7258's discard or on a naturally empty queue). 2. Read the empty state verbatim.
+
+Expected: A complete-sentence empty state ("no quarantined messages") — never a bare header row over nothing, which reads as a broken load. (T-6974 covers /history empty states; this is the DLQ's own.)
+
+---
+
+### T-7261 · ISS-108 regression · DLQ row ages render as words — never raw epoch timestamps
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CQ-108
+
+Steps: 1. Read every DLQ row's age to its last word.
+
+Expected: Ages read as words ("3 min ago", "just now"). A raw epoch integer on any row is a FAIL. (T-5272/T-5580 cover timestamp-wording elsewhere; this is the DLQ rows' own.)
+
+---
+
+### T-7262 · ISS-108 regression · discarding under one topic filter never touches rows of another topic
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CQ-108
+
+Steps: 1. Filter the DLQ to one topic, discard one row (authorized). 2. Clear the filter and re-read the full list.
+
+Expected: Only the discarded row is gone; every other topic's rows are intact. A discard that bleeds across topics is a FAIL.
+
+---
+
+## Section CR · Regression: ISS-109 — kill/disarm/test-fire form bodies (6 cases: T-7263–T-7268)
+
+Regression gardener block, 2026-09-27 ~18:43 PDT. ISS-109: pre-existing test failure test_kill_disarm_testfire_form_bodies — confirmed failing on the pristine tree 2026-09-27 ~18:20 PDT; kill-path tests are safety-critical, so this needs root-cause, not a shrug. Fix wave dispatched to investigate. These 6 cases lock the UI contract around the form-body POST rendering: no existing test-fire / stacked-confirm / form-body UI cases exist — all six angles are novel. (T-2541–T-2548 cover the halt-drill hint/confirm copy lineage; these gate the form-body rendering of that same contract, not the copy itself.)
+
+### T-7263 · ISS-109 regression · the halt confirm's exact text is unchanged after the form-body fix — consequence named, choice explicit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CR-109
+
+Steps: 1. Open the halt confirm (no halt pressed — cancel path only). 2. Read it verbatim end to end.
+
+Expected: The text matches the ISS-043 lineage copy exactly — consequence named, explicit choice offered — the form-body change altered nothing visible. (T-2546 covers the copy contract; this locks it against the form-body regression.)
+
+---
+
+### T-7264 · ISS-109 regression · the disarm/resume control renders its consequence hint — "trading resumes" named on the form body
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CR-109
+
+Steps: 1. While a halt is armed (authorized test state under the standing approval), read the disarm/resume control and its hint.
+
+Expected: The hint names the consequence — trading resumes — attached to the control, rendered from the form body. A control without its consequence hint is a FAIL.
+
+---
+
+### T-7265 · ISS-109 regression · a Telegram test-fire POST renders its verdict in the same panel — no silent 200 with no render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CR-109
+
+Steps: 1. Press the Telegram test-fire / preview send control (authorized — a real test send to the connected chat). 2. Read the panel it rendered into.
+
+Expected: A verdict line appears in the same panel — success or failure — proving the form body rendered. A press that returns nothing visible is a FAIL. (T-5147–T-5156 lineage covers the feedback wording; this gates the form-body render itself.)
+
+---
+
+### T-7266 · ISS-109 regression · kill/disarm/test-fire forms render complete after a page reload — no label-less buttons
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CR-109
+
+Steps: 1. Reload the page. 2. Read each kill/disarm/test-fire control with its label and hint.
+
+Expected: Every control keeps its label and consequence hint after reload. A label-less button on a safety-critical form is a FAIL.
+
+---
+
+### T-7267 · ISS-109 regression · open-then-cancel twice leaves exactly one halt modal — no stacked confirms
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CR-109
+
+Steps: 1. Open the halt confirm, cancel, open it again, cancel. 2. Count the modals in the DOM/rendered page.
+
+Expected: Exactly one modal exists at a time — the second open replaces the first, never stacks. Stacked confirms are a FAIL.
+
+---
+
+### T-7268 · ISS-109 regression · a failed form POST renders the calm failure copy in the panel — never a raw error page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: CR-109
+
+Steps: 1. Trigger a form POST that fails in a natural degraded window (never manufactured). 2. Read what the panel shows.
+
+Expected: Calm plain-words failure copy renders in the panel — never a raw error page or status code. (T-7059 covers the draft-ticket render path; this is the kill/disarm/test-fire forms' own.)
+
+---
+
+## Section CS · Regression: ISS-110 — settings mint / group fragment (6 cases: T-7269–T-7274)
+
+Regression gardener block, 2026-09-27 ~18:43 PDT. ISS-110: pre-existing test failure test_settings_mint_and_group_fragment — confirmed failing on the pristine tree 2026-09-27 ~18:20 PDT, unresolved whether test drift or settings regression. Fix wave dispatched to investigate. These 6 cases lock the UI contract around group-fragment rendering: no existing group-fragment-consistency UI tests exist — all six angles are novel. (T-5492/T-5521 cover the probe-key absence on the Interface group — different seam: those gate leftover probe text; these gate fragment completeness/consistency.)
+
+### T-7269 · ISS-110 regression · every settings group panel renders fully — controls never appear without labels (no half-minted fragment)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: CS-110
+
+Steps: 1. Walk all 19 settings groups (read-only). 2. Read each group's controls with their labels.
+
+Expected: Every control renders with its label — a control rendered without its label (a half-minted fragment) is a FAIL. (BK covered group-chrome behaviors; this is the fragment's own completeness.)
+
+---
+
+### T-7270 · ISS-110 regression · saving one group re-renders only that group's panel — other groups' values untouched
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CS-110
+
+Steps: 1. Edit and save one non-critical group. 2. Re-read two other groups (read-only).
+
+Expected: The saved group shows the new value; both other groups show their values unchanged. A save that re-mints another group's fragment with lost edits is a FAIL. (BF/BN covered rollback; this is the save-path's fragment blast radius.)
+
+---
+
+### T-7271 · ISS-110 regression · a group opened via ?group= deep link renders identically to the same group opened via the nav click — fragment consistency
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CS-110
+
+Steps: 1. Open one group via the group nav and read its panel verbatim. 2. Open the same group via ?group= and read it verbatim. 3. Compare.
+
+Expected: Both renders are identical — same controls, same values, same hints. A deep-link render that misses controls the nav render shows is a FAIL. (BK covered ?group= fallback behaviors; this is fragment identity across the two paths.)
+
+---
+
+### T-7272 · ISS-110 regression · a slow save shows the in-flight state inside the group panel — never a silently stale full-page render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: CS-110
+
+Steps: 1. Save a group during a naturally slow window (never manufactured). 2. Watch the panel during the save and read it after.
+
+Expected: The in-flight state renders inside the saving group's panel, and the panel re-renders with the saved values on completion. A page that shows stale values with no in-flight indication is a FAIL.
+
+---
+
+### T-7273 · ISS-110 regression · after save, the group's summary line and its panel agree — no fragment/stale split
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CS-110
+
+Steps: 1. Save a group. 2. Read the group's summary line and its panel. 3. Reload and read both again.
+
+Expected: The summary line and the panel agree before and after reload — no fragment/stale split where the summary claims the save and the panel shows the old value.
+
+---
+
+### T-7274 · ISS-110 regression · the sealed AI-profile group never shows an editable fragment — read-only rendering holds after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CS-110
+
+Steps: 1. Open the sealed AI-profile group. 2. Attempt no edit (read-only). 3. Reload and re-read.
+
+Expected: The group renders Sealed/Closed read-only with no enabled inputs — before and after reload. An editable fragment on a sealed group is a FAIL.
+
+---
+
+## Section CT · Proactive: settings groups wave-6 — the seams waves 1–5 + the CS fragment regression didn't touch (10 cases: T-7275–T-7284)
+
+Proactive gardener block, 2026-09-27 ~18:58 PDT. Settings-groups wave-6 — the seams M (T-1681–T-1870, per-group mechanical sweep: open/close/heading/badge/values/disclosure/edit/rollback/a11y per group), AO (T-6549–T-6558, group behaviors: AI field validation, cross-field honesty, sealed-group explanations, collapsed-on-reload, masked secrets, no-change save), BK (T-6959–T-6968, navigation: unknown ?group= fallback, unsaved dialogs on ?group= jumps, reset blast radius, group search, keyboard nav, disabled-control explanations, scroll position inside a long group, nav/panel parity), BW (T-7089–T-7098, the group contract: failed-save placement, Saved feedback survival, description/contents agreement, verbatim re-render, save atomicity, secret masking, retry values, dirty isolation, group order stability, live-service last-check), CG (T-7167–T-7174, multi-group integrity: unsaved edits meet other groups' actions — saves, resets, collapses, searches, failures, reverse-order saves), and the CS ISS-110 regression (T-7269–T-7274, fragment minting: full panels, save blast radius, deep-link parity, in-flight state, summary/panel agreement, sealed fragment) did not touch: the Escape path (T-7275), filtered-search + arrow-key navigation (T-7276), select-only dirty marking (T-7277), reset colliding with unsaved edits (T-7278), the AI provider-switch unsaved trigger (T-7279), Saved-line group attribution and exactly-once versioning (T-7280), version-counter honesty on failed saves (T-7281), the all-statement panel (T-7282), cross-tab conflicts (T-7283), nav→panel scrolling (T-7284). Zero overlap with M/AO/BK/BW/CG/CS verified programmatically title-by-title against all 7274 existing cases (normalized title, area prefix ignored; title+expected similarity gates per the dedupe registry). Zero new ISS entries above the watermark (registry max ISS-122) — pure proactive extension per the standing growth order.
+
+### T-7275 · Settings groups wave-6 · Escape closes an open group panel and returns focus to the nav item
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Open any non-critical group via its nav entry. 2. Press Escape. 3. Note which panel is visible and where keyboard focus lands.
+
+Expected: The open panel closes (group collapsed or panel cleared), and focus returns to the group's nav item — the operator can re-open with Enter without hunting. A panel that stays open on Escape, or closes but drops focus to the page body, is a FAIL. (BK covered arrows/Enter in the nav; this is the Escape path.)
+
+---
+
+### T-7276 · Settings groups wave-6 · with a group-search filter active, arrow-key navigation moves only through visible groups
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Type a filter in the group search that leaves at least two groups visible. 2. Arrow down through the nav from the first visible item. 3. Count every focus stop.
+
+Expected: Arrows move through the visible groups only — a focus stop on a hidden (filtered-out) group, or focus falling off the nav into the page body, is a FAIL. (T-6964 covered filtering; T-6965 covered nav keyboard; this is the combination.)
+
+---
+
+### T-7277 · Settings groups wave-6 · editing only a dropdown marks the group dirty — the nav dirty count names it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. In a group with a dropdown/select control, change ONLY the dropdown — no typing. 2. Read the group's dirty indicator and the nav dirty count. 3. Restore the original value.
+
+Expected: The group is marked dirty and the nav dirty count names exactly this group. A select change that leaves the group clean — the edit lost silently if the operator navigates away — is a FAIL. (CG covered typed edits; this is select-only edits.)
+
+---
+
+### T-7278 · Settings groups wave-6 · reset-to-defaults on a group with unsaved edits — the confirm names the discard, cancel keeps the typed values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Type unsaved edits in a non-critical group. 2. Press the group's reset-to-defaults. 3. Read the confirm dialog verbatim, then take the cancel path. 4. Read the group's fields.
+
+Expected: The confirm dialog names that the typed-but-unsaved edits will also be discarded — not just the saved values. Canceling leaves the typed values exactly as typed. A dialog silent about the unsaved edits, or a cancel that wipes them, is a FAIL. (T-6962/6963 covered the clean-state reset; this is the dirty-state collision. Accept path untested — native-dialog acceptance is unverifiable by the task automation.)
+
+---
+
+### T-7279 · Settings groups wave-6 · switching AI providers with unsaved edits fires the unsaved dialog naming the AI group — cancel keeps edits and the provider choice
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Type unsaved edits in the AI group. 2. Switch the provider selector (Meta ↔ OpenRouter) without saving. 3. Read the dialog if one fires, then take the cancel path. 4. Read the group's fields and the provider selector.
+
+Expected: The unsaved-change dialog fires and names the AI group — never a silent discard, never a silent save. Canceling restores the typed edits AND the pre-switch provider selection. A provider switch that quietly adopts the new provider's panel and drops the edits is a FAIL. (T-6960/6961 covered the ?group= jump trigger; this is the in-group provider-switch trigger. Accept path untested — native-dialog acceptance is unverifiable by the task automation.)
+
+---
+
+### T-7280 · Settings groups wave-6 · the Saved line names the group that saved and the version counter moves by exactly one
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Note the current saved-version line verbatim. 2. Save one group with a visible change. 3. Read the confirmation line verbatim.
+
+Expected: The confirmation names the group that was saved and the version is exactly one above the pre-save version. A line that names the wrong group, or a version that jumps by 2 on a single save, is a FAIL. (ISS-076 proved the feedback exists; this is attribution plus exactly-once versioning.)
+
+---
+
+### T-7281 · Settings groups wave-6 · a failed save never bumps the version counter — the line after failure still reads the pre-failure version
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Note the saved-version line. 2. Trigger a save failure in a non-critical group with an invalid value (plain-words rejection path, T-6549 lineage — never a manufactured outage). 3. Read the version line.
+
+Expected: The version line still reads the pre-failure version — the failed attempt leaves no phantom version. A counter that advances on a failure is a FAIL: the version line is the recency proof, and a lie here poisons every later read. (BW covered failed-save feedback placement; this is the counter's honesty.)
+
+---
+
+### T-7282 · Settings groups wave-6 · the read-only statement group renders its statement with zero controls — no Save button for nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CT-SG
+
+Steps: 1. Open the Copy trading group (the read-only statement group). 2. Read the panel end to end. 3. Reload and read again.
+
+Expected: The statement renders in plain words with zero inputs, zero Save/Reset controls, and no empty fieldset — the panel says what it is, not what it could be. A Save button that would do nothing, or a blank control shell around the statement, is a FAIL. (T-6966 covered disabled controls explaining why; this is the all-statement panel.)
+
+---
+
+### T-7283 · Settings groups wave-6 · two tabs editing the same group — the last save wins and the re-read is truthful
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Open /settings in two tabs on the same non-critical group. 2. Save value A in tab 1, then save a different value B in tab 2. 3. Reload both tabs and read the group's value and the version line in each.
+
+Expected: Both tabs agree on the last-saved value (value B), and the version moved exactly once more than before the second save — no tab claims its own value survived, no silent merge presented as two truths. A tab that still shows value A after reload, or a version jump of 2 from two saves that claims one, is a FAIL. (Waves 1–5 covered single-tab integrity; this is the cross-tab conflict.)
+
+---
+
+### T-7284 · Settings groups wave-6 · opening a group far down the nav scrolls its panel into view — the operator never hunts for the opened panel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CT-SG
+
+Steps: 1. Scroll the settings page to the top. 2. Click a group nav entry near the bottom of the list. 3. Without touching the scroll, read what the viewport shows.
+
+Expected: The opened group's panel scrolls into view — the operator never has to hunt for where the panel appeared. A panel that opens below the fold with no scroll and no marker is a FAIL. (T-6967 covered scroll position inside a long group; this is nav→panel scrolling.)
+
+---
+
+## Section CU · Proactive: notification/history paths wave-6 — the seams waves 1–5 didn't touch (10 cases: T-7285–T-7294)
+
+Proactive gardener block, 2026-09-27 ~19:20 PDT. Notification/history paths wave-6 — the seams AG (T-6393–T-6432, surface + receipt honesty: newest-first, previews 1:1, failed rows, receipt fields, reload/restart survival, toggles, connect cycle, previews), AP (T-6559–T-6568, wave-2 behaviors: newest-first reload, failed never self-upgrades, uncertain states, tunnel-drop rows, rapid presses 1:1, excerpt honesty, pill agreement, no-send honesty, scroll honesty, halt/resume receiving-end), BL (T-6969–T-6978, wave-3: status/topic filters, /home summary agreement, chat-link target, vetoed-signal rows, auto-refresh mid-scroll, push budget, disconnect cycle, halt-reason rows, timestamps survive rotation), BY (T-7105–T-7114, wave-4: veto bursts 1:1, push+Telegram content parity, export fidelity, topic labels, uncertain end states, pill agreement after rotation, timestamps survive restart, bot-command rows, zero-match filter copy, summary never leads), and CH (T-7175–T-7184, wave-5: excerpt→full-message honesty, full-message agreement, row identity across restart, preview vs alert counting, liveness claim honesty, retry path, history cap honesty, combined filters, absolute times, per-row channel naming) did not touch: destination-chat (last-4) agreement on each row against the connected chat — the ISS-064 split-brain row-level guard (T-7285), filtered export scope honesty (T-7286), the auto-refresh tick landing mid-preview-press (T-7287), halted-engine signal rows — no vanishing signals (T-7288), topic-filter option-list completeness (T-7289), clear-history confirm + honest empty state (T-7290), row-detail pinning across filter changes (T-7291), per-channel status on mixed-channel notifications (T-7292), midnight-boundary age honesty (T-7293), Send-preview button re-enabling after a failure (T-7294). Zero overlap with AG/AP/BL/BY/CH verified programmatically title-by-title against all 7284 existing cases (normalized title, area prefix ignored; title+expected similarity gates per the dedupe registry). Zero new ISS entries above the watermark (registry max ISS-123) — pure proactive extension per the standing growth order.
+
+### T-7285 · Notification history wave-6 · a row's destination chat (last-4) agrees with the connected chat — no split-brain rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. Read the connected chat's last-4 from the Telegram pill or status line on /notifications. 2. Press "Send a real preview message" and wait for its history row. 3. Read the row's destination-chat marker.
+
+Expected: The row names the same chat (last-4 matches the connected chat). A row that landed in a different chat, or a row with no destination marker at all, is a FAIL. (ISS-064 proved the split-brain; this is the row-level guard.)
+
+---
+
+### T-7286 · Notification history wave-6 · an export taken with a topic filter applied scopes the export to the filter — and says so
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. Apply a topic filter (e.g. preview) on the notification history. 2. Export the history. 3. Read the export's rows and any scope label.
+
+Expected: The export contains only the filtered family AND names the filter in a header or scope line — OR exports everything and states that it is unfiltered. A silent mix of filtered and unfiltered rows, or an unscoped export under an active filter, is a FAIL. (T-7107 covered the unfiltered export.)
+
+---
+
+### T-7287 · Notification history wave-6 · an auto-refresh tick landing mid-preview-press never eats the in-flight state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. Press "Send a real preview message". 2. Watch the feedback line and the history list while an auto-refresh tick lands mid-press. 3. Read the outcome line and the new row.
+
+Expected: The feedback reaches its honest outcome and exactly one row lands. A tick that swallows the feedback into silence, or that produces two rows for one press, is a FAIL. (T-6974 covered auto-refresh mid-scroll; this is the in-flight press race.)
+
+---
+
+### T-7288 · Notification history wave-6 · signals arriving while the engine is halted land as honest halted-veto rows — none vanish
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. Under approval authority, halt the engine through the UI. 2. Observe signal alerts arriving during the halt. 3. Read the notification history, then resume (halt OFF) to restore safe state.
+
+Expected: Each halted signal appears as its own history row with a halted/veto marker. A signal with no row anywhere — no trace that it arrived — is a FAIL. (Approval authority covers the halt/resume; safe state restored after the pass.)
+
+---
+
+### T-7289 · Notification history wave-6 · the topic-filter option list covers every topic family that has rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CU-NH
+
+Steps: 1. Read the history rows and note every distinct topic family present (preview, alert, halt, resume, veto, system, bot-command, forged-token-drop — whatever exists). 2. Open the topic filter. 3. Read the option list.
+
+Expected: Every topic family with at least one row is selectable in the filter. A topic that exists in the rows but cannot be chosen in the filter is a FAIL. (T-7113 covered the zero-match filter; this is option-list completeness.)
+
+---
+
+### T-7290 · Notification history wave-6 · clearing the history (if offered) confirms first and the empty state stays honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. If a clear/empty-history control exists, click it and read the confirm verbatim. 2. Confirm. 3. Read the history page's empty state and the /home notification summary.
+
+Expected: The confirm names what will be cleared; after clearing, the empty state is honest (no ghost rows, no crash page) and the /home summary shows no stale "last outcome" from before the clear. If no clear control exists, N-A. (T-6405 lineage.)
+
+---
+
+### T-7291 · Notification history wave-6 · expanding a row then changing the filter keeps the detail pinned to the right row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. Expand one row to its full detail on /notifications. 2. Apply a topic filter that still includes that row. 3. Read which row's detail is now open.
+
+Expected: The same row's detail stays open — or the UI honestly closes the detail when the filter changes. The detail never reattaches to a different row that slid into its position. (T-6420/T-7175 lineage.)
+
+---
+
+### T-7292 · Notifications wave-6 · a mixed-channel notification shows each channel's outcome separately — one Delivered never hides a failed channel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. Trigger a notification routed to both Telegram and push (if push is configured; otherwise N-A for the push leg). 2. Read the resulting row(s) verbatim. 3. If one channel fails naturally, read the row again.
+
+Expected: Each channel carries its own status. A single combined "Delivered" that masks a failed channel is a FAIL. (T-7106 covered content agreement across channels; this is status granularity.)
+
+---
+
+### T-7293 · Notification history wave-6 · row ages stay honest across the midnight boundary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CU-NH
+
+Steps: 1. Find a row sent late in the evening and read its age line. 2. Read the same row after midnight (or compare its age line against its absolute timestamp). 3. Check both directions of disagreement.
+
+Expected: A row sent hours earlier never claims "just now" after midnight; the absolute timestamp is the authority and any relative age agrees with it. A day-boundary rewind ("just now" for a yesterday message) is a FAIL. (T-7183 lineage.)
+
+---
+
+### T-7294 · Notifications wave-6 · the Send-preview button re-enables after a failed press — never stuck disabled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CU-NH
+
+Steps: 1. Trigger a preview failure through a natural path (e.g. a press during a tunnel drop, or a press the server honestly refuses — never a manufactured outage). 2. Read the button state after the failure feedback lands. 3. When healthy again, press once more and read the outcome.
+
+Expected: After the failure the button is usable again and the next press fires. A button stuck disabled after one failure, or a second press that never fires, is a FAIL. (T-5151/T-6416 lineage.)
+
+---
+## Section CV · Proactive: rollback flows wave-5 — the seams AE/BF/BN/CI didn't touch (10 cases: T-7295–T-7304)
+
+Proactive extension pass 2026-09-27 ~19:40 PDT (fifth rollback-flows cycle, per the standing growth order; registry max ISS-123, watermark last_iss_seen 123 — no new ISS entries, pure proactive). Seams AE (ISS-077 regression), BF (wave-2), BN (wave-3), and CI (wave-4) did not touch: whitespace fidelity, save-then-dirty anchoring, confirmation replacement, post-rollback re-dirty honesty, human-readable group naming, post-rollback interactivity, file-picker clearing, cross-group save-in-flight serialization, plain-words labeling of the control itself, multi-select set restoration.
+
+### T-7295 · Rollback wave-5 · textbox whitespace survives rollback verbatim — no trimming
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CV-RB
+
+Steps: 1. Open /settings, expand a group with a free-text field, and save a value that has leading and trailing spaces (e.g. " note "). 2. Reload, confirm the saved value reads back verbatim. 3. Change the field to something else without saving. 4. Roll the group back.
+
+Expected: The field restores the saved text byte-for-byte including the surrounding spaces. A rollback that trims the spaces (or collapses the value to its trimmed form) is a FAIL — the saved value is the authority, not a cleaned-up version of it. (BN proved numeric formatting restores; this is the whitespace seam.)
+
+---
+
+### T-7296 · Rollback wave-5 · save-then-dirty rollback restores the just-saved values, not the older ones
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CV-RB
+
+Steps: 1. Open /settings, expand a group, change a field from A to B, and press Save (B persists, confirmed). 2. Change the same field from B to C without saving. 3. Roll the group back. 4. Read the field verbatim.
+
+Expected: The field reads B — the value from the last save. Restoring the pre-save value A (a stale snapshot) is a FAIL. (The rollback anchor is always the most recent save, never an older checkpoint.)
+
+---
+
+### T-7297 · Rollback wave-5 · the stale Save confirmation is replaced by the rollback confirmation — no stacking
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CV-RB
+
+Steps: 1. Open /settings, expand a group, make an edit and press Save so the "Saved" confirmation is visible in the result area. 2. Make a new edit without saving. 3. Roll the group back. 4. Read the result area.
+
+Expected: Exactly one confirmation is visible — the rollback confirmation, referring to this rollback. The stale "Saved" line is replaced, not left standing above or below the new one. Two confirmations side by side (implying two current outcomes) is a FAIL. (T-5151/T-6310 lineage: one in-flight outcome, never stacked.)
+
+---
+
+### T-7298 · Rollback wave-5 · a fresh edit after rollback re-dirties honestly — indicators wake up again
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CV-RB
+
+Steps: 1. Open /settings, expand a group, edit a field, and note which dirty/unsaved indicator the group shows. 2. Roll the group back and confirm the indicator clears (BF's clearing behavior). 3. Edit the same field again with a single keystroke. 4. Read the group's indicator state.
+
+Expected: The indicator behaves exactly as it did on the first edit — present on dirty, absent on clean. An indicator that stays dead after the rollback (the group can no longer signal unsaved work) or one that never cleared in step 2 is a FAIL. (BF proved clearing; this is the re-arm seam.)
+
+---
+
+### T-7299 · Rollback wave-5 · the rollback confirmation names the human-readable group, never the internal key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: CV-RB
+
+Steps: 1. Open /settings, expand a group whose nav label contains a space or a parenthetical (e.g. "Risk caps" or "Copy trading Read-only"). 2. Make an edit and roll the group back. 3. Read the rollback confirmation verbatim. 4. Repeat on a second group with a different label.
+
+Expected: The confirmation uses the label Saad sees in the nav — "Rolled back group Risk caps" style. An internal key or slug ("risk_caps", "risk-caps", "copyTrading") leaking into the user-facing sentence is a FAIL — plain words, never plumbing.
+
+---
+
+### T-7300 · Rollback wave-5 · every control stays interactive after rollback — no half-rendered panel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: CV-RB
+
+Steps: 1. Open /settings, expand a group with several controls (text, select, toggle). 2. Make edits and roll the group back. 3. After the re-render settles, click each control in the group: type one character in text fields, open each dropdown, toggle each switch. 4. Reload the page and repeat the click-through.
+
+Expected: Every control responds normally right after rollback and after reload — nothing permanently greyed, nothing swallowing clicks, no control that only wakes up after a full reload. A panel left half-rendered by its own re-render is a FAIL. (ISS-076/077 lineage: the re-render must leave a working panel, not just visible text.)
+
+---

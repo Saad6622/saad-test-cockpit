@@ -1,0 +1,1514 @@
+QA BRIEF — BULK LANE B6 chunk 44/45 (T-8301–T-8400)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-8301 · start-form money · scientific notation is refused — the ISS-305 "1e3" twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-305
+
+Steps: 1. Open /trading. 2. Type "1e3" into "Maximum per-trade amount ($)", move focus out, and read the field state verbatim. 3. Clear the field afterward. Never press Start.
+
+Expected: refused with a visible message ("enter a plain number" or equivalent); never silently parsed as 1000. (ISS-305 inverted: "1e3" was accepted as 1000.)
+
+---
+
+### T-8302 · start-form money · accessible values match the visible rounded numbers — the ISS-306 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: A11Y-TREE
+
+Feature: HF-306
+
+Steps: 1. Open /trading. 2. Type 50.01 into "Maximum per-trade amount ($)" and read the field's accessible value from the accessibility tree. 3. Clear the field afterward.
+
+Expected: the accessible value is "50.01" — the rounded human number, identical to the visible text. "50.0099983215332" in the tree is a FAIL. (ISS-306 inverted: T-127/T-129/T-131/T-133 FAILed on floating-point artifacts; this passes only when the tree carries the rounded value. Nearest lineage: ISS-308's confirm-screen tree gap is the same class one screen later.)
+
+---
+
+### T-8303 · start-form money · out-of-range max-per-trade is refused politely with the limit stated — the ISS-299 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-299
+
+Steps: 1. Open /trading. 2. Type 999 into "Maximum per-trade amount ($)", move focus out, and read the field state and adjacent text verbatim. 3. Restore the field to 25 afterward (as the original lane did).
+
+Expected: a visible refusal names the limit ("must be between 5 and 50" or equivalent), or the field clamps and says so. An invisible [invalid] flag with no message is a FAIL. (ISS-299 inverted: T-3671 FAILed on the silent flag; this passes only with the stated limit. Lineage: HF's ISS-303 seam is the same money-input family seen from lane-1 — this is the lane-19 twin.)
+
+## Section HG · Regression: ISS-307/308/309/318 — confirm-screen honesty (8 cases: T-8304–T-8311)
+
+Regression coverage for ISS-307 (OPEN — the "Ready to start?" confirm screen shows "Runs for 2 hours" but never mentions Bitcoin/BTC — the trader confirms without seeing the asset; the start card says "Auto-sessions: Bitcoin (BTC) only", but the confirmation step, the last look before commitment, omits it, lane-1 T-146), ISS-308 (OPEN — the confirm screen's amounts — "Maximum per-trade amount ($) $45" / "Halt everything at total loss ($) $30" — are right-aligned visual text missing from the accessibility tree; the AX shows labels with no values, T-144/T-145), ISS-309 (OPEN — position 30 with stop-loss 40 (stop-loss > position) opened the confirm screen with no message explaining any required relationship between the two money numbers, T-174), ISS-318 (OPEN — the confirm screen pushes no browser-history entry — pressing Back leaves /trading entirely and lands on the previously viewed page instead of returning to the start form, T-153). All surfaced 2026-09-29 ~06:03 UTC in the lane-1 UI run (chunk-3 retry, T-144–T-174 family). Written against the EXPECTED FIXED state: the confirm screen is the last checkpoint — it names the asset, exposes every amount to assistive tech, states any money-relationship rule, and respects the Back button. Title sweep: the nearest family is the original confirm-screen block (T-144–T-153, T-174); ISS-318's T-153 is the Back-behavior ancestor. These pin the inversion contracts those findings implied. Safety: valid values only (25/20, or 30/40 for the relationship case); "Start trading" is pressed only to OPEN the confirm screen — the final confirm is NEVER pressed; every case ends with Cancel/close or Back, leaving no session.
+
+---
+
+### T-8304 · confirm screen · the confirm screen states the session trades Bitcoin/BTC — the ISS-307 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HG-307
+
+Steps: 1. Open /trading, enter 25 / 20 (valid values). 2. Click "Start trading" and read the "Ready to start?" screen verbatim. 3. Press Cancel — the session is never confirmed.
+
+Expected: the screen names the asset ("Bitcoin"/"BTC"). No asset named on the final checkpoint is a FAIL. (ISS-307 inverted: T-146 FAILed the omission; this passes only when the last look before commitment says WHAT will trade.)
+
+---
+
+### T-8305 · confirm screen · the confirm asset line agrees with the start card's "Bitcoin (BTC) only" claim — the ISS-307 cross-surface twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HG-307
+
+Steps: 1. Open /trading and read the start card's asset claim verbatim ("Auto-sessions: Bitcoin (BTC) only" per the finding). 2. Enter valid values, open the confirm screen, read its asset line. 3. Press Cancel.
+
+Expected: both name the same asset — the start card's claim and the confirm screen's line agree. The confirm naming a different asset (or none) is a FAIL. (Cross-surface agreement twin of T-8304.)
+
+---
+
+### T-8306 · confirm screen · confirm amounts are present in the accessibility tree — the ISS-308 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: A11Y-TREE
+
+Feature: HG-308
+
+Steps: 1. Open /trading, enter 45 / 30. 2. Click "Start trading" and inspect the accessibility tree for the two amount rows. 3. Press Cancel.
+
+Expected: both amounts are real text nodes in the tree WITH their values ("$45" / "$30" or whatever was typed) — not labels with no values. Right-aligned visual text absent from the tree is a FAIL. (ISS-308 inverted: T-144/T-145 FAILed the missing values; this passes only when a screen-reader user can verify the numbers they are about to confirm. Lineage: HF T-8302 pinned the same class on the start form — this is the confirm-screen twin.)
+
+---
+
+### T-8307 · confirm screen · tree values match the typed values exactly — the ISS-308 value-agreement twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: A11Y-TREE
+
+Feature: HG-308
+
+Steps: 1. Open /trading, type 45 / 30. 2. Open the confirm screen and compare three readings: the typed values, the visual amounts, and the accessibility-tree values. 3. Press Cancel.
+
+Expected: all three agree exactly. Any drift between typed, visual, and tree is a FAIL — on the highest-stakes screen in the flow, three versions of the truth are unacceptable.
+
+---
+
+### T-8308 · confirm screen · stop-loss larger than max position gets a relationship message — the ISS-309 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HG-309
+
+Steps: 1. Open /trading. 2. Set max-per-trade 30 and stop-loss 40 (stop-loss > position, the finding's values). 3. Click "Start trading", read the confirm screen verbatim. 4. Press Cancel.
+
+Expected: a message explains the required relationship between the two money numbers (e.g. stop-loss must be ≥ position, or no relationship is required — either way a decision is recorded in visible words). A silent confirm is a FAIL. (ISS-309 inverted: T-174 FAILed the silence; this passes only when the relationship rule — or its deliberate absence — is stated. The fix team's decision is what gets pinned, not the tester's guess.)
+
+---
+
+### T-8309 · confirm screen · equal position and stop-loss states the boundary rule — the ISS-309 boundary twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HG-309
+
+Steps: 1. Open /trading. 2. Set both values to 25 (the boundary). 3. Open the confirm screen, read it verbatim. 4. Press Cancel.
+
+Expected: the relationship rule from T-8308 is stated visibly here too, and the boundary case is not silently special — whatever the rule says about 30/40, the 25/25 reading is consistent with it. An unstated boundary exception is a FAIL.
+
+---
+
+### T-8310 · confirm screen · browser Back from the confirm screen returns to the start form — the ISS-318 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HG-318
+
+Steps: 1. Open /trading, enter valid values. 2. Click "Start trading" to open the confirm screen. 3. Press the browser Back button.
+
+Expected: lands back on the /trading start form with the typed values intact — NEVER exits /trading. Back leaving /trading for the previously viewed page is a FAIL. (ISS-318 inverted: T-153 FAILed the exit; this passes only when the confirm screen owns a history entry and Back returns to the form.)
+
+---
+
+### T-8311 · confirm screen · browser Forward reopens the confirm screen with values intact — the ISS-318 round-trip twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HG-318
+
+Steps: 1. From T-8310's post-Back state (start form with values intact), press the browser Forward button. 2. Read the resulting screen verbatim. 3. Press Cancel.
+
+Expected: the "Ready to start?" screen reopens showing the same values. Lost values or a dead Forward is a FAIL. (Completes the history-entry contract T-8310 pins — Back AND Forward both behave.)
+
+## Section HH · Regression: ISS-310/311/312 — leftover/stale-record honesty (6 cases: T-8312–T-8317)
+
+Regression coverage for ISS-310 (OPEN — the "Leftover record — not a live holding" / "Open leg in the session log" card from Sep 23, 2026 never clears — it blocks the "no session has ever been run" precondition and confuses the idle state; the session status text "Session quiet -- open leg is log-only" is unexplained jargon with a double hyphen, T-164), ISS-311 (OPEN — the leftover record shows "Sep 23, 2026 10:35 local" — but 10:35 UTC is 03:35 PDT; the desk clock converts timezones correctly, so this card's conversion is genuinely wrong, T-164), ISS-312 (OPEN — the halt modal reads "This stops trading session this page started, immediately." (missing "the"); a sibling lane saw "This stops every trading session this page started, immediately." — the copy varies between renders, T-176). All surfaced 2026-09-29 ~06:03 UTC in the lane-1 UI run. Written against the EXPECTED FIXED state: stale records clear or archive out of the idle view, "local" means the viewer's local time converted correctly, and the emergency-stop copy is one grammatical stable sentence. Title sweep: the nearest family is the stale-position-ghost lineage (ISS-271 T-2609, ISS-285, and ISS-288's quiet-state wording already regressed in HE T-8288–T-8293 — this is the leftover-record twin one surface over); ISS-312 belongs to the ISS-043 halt-modal family (T-6521 drill-confirm copy, HC T-8276–T-8281 halt-modal contract). Safety: read-only throughout; the halt modal is opened but the halt is never armed.
+
+---
+
+### T-8312 · leftover record · the stale leftover record clears or archives out of the idle view — the ISS-310 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HH-310
+
+Steps: 1. Open /trading through the live browser. 2. Read the holding/leftover card area verbatim.
+
+Expected: no six-day-old "Leftover record — not a live holding" occupies the idle card — once acknowledged/stale it is cleared, or archived to a history surface out of the idle view. The ghost leg still blocking the idle state is a FAIL. (ISS-310 inverted: T-164 FAILed the never-clearing ghost; this passes only when the idle view is clean. Lineage: GX T-8242–T-8247 pinned the ISS-271 stale-position ghost — this is the leftover-record twin.)
+
+---
+
+### T-8313 · leftover record · the quiet-state copy is plain words with no unexplained jargon — the ISS-310 copy twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HH-310
+
+Steps: 1. Open /trading. 2. Read the session status line verbatim.
+
+Expected: plain words (e.g. "Session quiet — no open position"). "Open leg is log-only" appearing unexplained is a FAIL. (Lineage: HE T-8288–T-8293 pinned ISS-288's quiet-state wording; this is the ISS-310 leftover-tied twin — the same quiet state, the other jargon string.)
+
+---
+
+### T-8314 · leftover record · the record timestamp converts "local" correctly — the ISS-311 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HH-311
+
+Steps: 1. Open /trading. 2. Read the leftover/holding record timestamp and the desk clock on the same load; convert the record's instant to the viewer's timezone by hand.
+
+Expected: the record's "local" time equals the true instant rendered in the viewer's local timezone, agreeing with the desk clock's conversion (the ISS proves the desk clock converts correctly — it is the reference). A "local" label on what is really UTC relabeled is a FAIL. (ISS-311 inverted: T-164 FAILed "Sep 23, 2026 10:35 local" for a 10:35 UTC instant; this passes only when local means local.)
+
+---
+
+### T-8315 · leftover record · every timestamp on the holding card names its zone — the ISS-311 labeling twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HH-311
+
+Steps: 1. Open /trading. 2. Read every time string on the holding/leftover card verbatim.
+
+Expected: each carries its zone ("local", "UTC", etc.) — no bare times. A bare "10:35" with no zone is a FAIL. (The ISS-271/285 ghost-leg family never pinned zone labeling on this card; T-8314 pins the conversion, this pins the labeling.)
+
+---
+
+### T-8316 · leftover record · the halt modal copy is grammatical and stable across renders — the ISS-312 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HH-312
+
+Steps: 1. Open /trading. 2. Open the halt modal, quote its first sentence verbatim. 3. Close via Cancel (the halt is NEVER armed). 4. Reopen, quote again.
+
+Expected: one grammatical sentence ("This stops the trading session this page started, immediately." or the fix team's canonical line), IDENTICAL on both renders. A missing article ("stops trading session") or render-to-render drift ("every trading session" vs "trading session") is a FAIL. (ISS-312 inverted: T-176 FAILed the broken, shifting copy; this passes only when the emergency-stop copy is one stable grammatical sentence. Lineage: HC T-8276–T-8281 pinned the halt-modal contract — this is the copy-identity twin.)
+
+---
+
+### T-8317 · leftover record · the halt modal copy matches across every opener — the ISS-312 multi-opener twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HH-312
+
+Steps: 1. Open the halt modal from each opener in turn — header, sidebar, risk-control region — quoting the sentence each time and Canceling each time (never armed).
+
+Expected: all three show the identical canonical sentence. Any opener rendering a different variant is a FAIL. (Lineage: ISS-043's three-opener family — the modal contract was pinned in HC; this pins the copy identity across openers.)
+
+---
+
+## Section HI · Regression: ISS-292/293/294/295/297 — add-slot form + Telegram chat-id validation (10 cases: T-8318–T-8327)
+
+Regression coverage for ISS-292 (OPEN — the Add slot form's "Alternate account" field is a checkbox, not the text field the cases expect ("type 'sub1' in Alternate account" cannot be performed; the lane checked the box instead); the Slots list and Edit form show no alternate-account value anywhere (checkbox [checked], no value shown) — the checked state is recorded but invisible, T-402/T-435), ISS-293 (OPEN — Add slot offers only the "Add slot" save button — no Cancel, no close (X); the Edit slot form DOES have Cancel; T-443/T-444/T-446/T-447 BLOCKED, T-445 N-A), ISS-294 (OPEN — selecting "Gate.io" in the Exchange dropdown auto-suggests the slot name "gateio_testnet" — non-live wording Saad banned from the live-ready UI, nudging the operator toward naming a live slot as if it were a test one), ISS-295 (OPEN — an empty Label was accepted ("Slot gate_t433 added."); the Slots list shows the slot name as display name; the save ran OUTSIDE the brief's state window — the brief's list was incomplete, a process note for brief authors), ISS-297 (OPEN — typing "-123456" into the Chat ID field and clicking Save produced NO validation error — "Saved. Your Telegram settings are stored."; after reload the status degraded from "Connected — alerts will reach your Telegram" (green) to "Ready — press Send preview to confirm delivery", and the saved Chat ID (previously masked) was overwritten with the invalid value — INCIDENT: this corrupted the TEST cockpit's real Telegram config (chat 8376203314) during a routine test; lane 3 restored it via the UI ~05:50 UTC; twin symptom T-469: clicking "Save these settings" with an EMPTY secret field also reports "Saved. Your Telegram settings are stored." — a success message on a no-op save). All surfaced 2026-09-29 ~05:28–05:47 UTC in the lane-3 UI runs (T-401–T-500 families). Written against the EXPECTED FIXED state: the form's controls match their labels, every form has a safe exit, suggested names carry no non-live wording, invalid chat IDs are refused before any save and never overwrite the stored value, and a no-op save never claims "Saved". Title sweep: the nearest family is the original add-slot block (T-401–T-450) and the Telegram X block (T-5145–T-5194 — T-5148/T-5159 chat-identity naming); T-469 is the empty-secret twin folded into the ISS-297 seam. Safety: typing-only on the forms — "Add slot" and "Save these settings" are never pressed with untested values; the chat-id cases never commit an invalid value, and the no-op case never presses Save on an emptied secret — the TEST Telegram config is never disturbed again.
+
+---
+
+### T-8318 · add-slot · the "Alternate account" control matches its label — the ISS-292 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HI-292
+
+Steps: 1. Open the Add slot form through the live browser. 2. Read the "Alternate account" control's type and label verbatim. 3. Close the form without saving.
+
+Expected: the control is what the label promises — if it is a checkbox, the label says so (e.g. "Alternate account (on/off)"); a checkbox wearing a text-field label is a FAIL. (ISS-292 inverted: T-402/T-435 FAILed the plan-vs-UI mismatch; this passes when either the control or the case matches, and the fix team's decision is recorded in visible words on the form.)
+
+---
+
+### T-8319 · add-slot · the saved alternate-account value is visible after save — the ISS-292 visibility twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HI-292
+
+Steps: 1. Read the Slots list rows verbatim. 2. Open the Edit form for an existing slot and read the alternate-account control's state. (Read-only: no slot is created or edited.)
+
+Expected: the alternate-account state (on/off or the value) is SHOWN in both the list and the Edit form. A checked-but-invisible state is a FAIL — the operator cannot verify what was recorded. (ISS-292 inverted on the visibility half.)
+
+---
+
+### T-8320 · add-slot · Add slot has Cancel and a close (X) matching the Edit form — the ISS-293 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HI-293
+
+Steps: 1. Open the Add slot form and inventory its exit controls verbatim. 2. Open the Edit slot form and compare.
+
+Expected: Add slot offers Cancel AND a close control like the Edit form does. A save-only form is a FAIL — a form that collects exchange keys with no safe exit forces the operator toward the destructive path. (ISS-293 inverted: T-443/T-444/T-446/T-447 were BLOCKED on the missing control; this passes only when the safe exit exists.)
+
+---
+
+### T-8321 · add-slot · Cancel discards the unsaved form with no side effects — the ISS-293 behavior twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HI-293
+
+Steps: 1. Open the Add slot form. 2. Type a Label ("cancel-probe"). 3. Press Cancel. 4. Verify the form is gone and no "cancel-probe" row appears in the Slots list.
+
+Expected: a clean exit — zero new rows, zero side effects. (The previously BLOCKED T-443–T-447 become executable only when this passes; "Add slot" itself is never pressed in this case.)
+
+---
+
+### T-8322 · add-slot · the exchange-dropdown slot-name suggestion carries no non-live wording — the ISS-294 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HI-294
+
+Steps: 1. Open the Add slot form. 2. Select "Gate.io" in the Exchange dropdown. 3. Read the suggested slot name verbatim. 4. Close the form without saving.
+
+Expected: a neutral suggestion — no wording implying a non-live environment. (ISS-294 inverted: the finding's "gateio_testnet" nudge is a FAIL. The case names the seam, not the banned words — they are never written into the plan.)
+
+---
+
+### T-8323 · add-slot · the suggestion updates honestly per exchange — the ISS-294 per-exchange twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HI-294
+
+Steps: 1. Open the Add slot form. 2. Switch the Exchange dropdown between the available exchanges, reading the suggested slot name after each switch. 3. Close without saving.
+
+Expected: each suggestion names its own exchange neutrally. A stale suggestion (still naming the previous exchange) or a mismatched one is a FAIL.
+
+---
+
+### T-8324 · add-slot · the empty-Label policy is stated or enforced — the ISS-295 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HI-295
+
+Steps: 1. Open the Add slot form. 2. Clear the Label field and read the field's required-marker and any adjacent policy text verbatim. 3. Close without saving — "Add slot" is NEVER pressed with the label empty.
+
+Expected: either the form refuses the empty label with a visible message, or the policy is stated adjacent to the field ("optional — the slot name is used as the display name"). Silent acceptance with no stated policy is a FAIL. (ISS-295 inverted: T-433 FAILed the unstated acceptance; this passes only when the decision is deliberate and visible. The brief-window process note lives with the brief authors, not in this case.)
+
+---
+
+### T-8325 · add-slot · an invalid chat ID is refused before any save — the ISS-297 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HI-297
+
+Steps: 1. Open /notifications and record the current masked chat id (the ••••NNNN form). 2. Type "-123456" into the Chat ID field, move focus out, and read the validation state verbatim — WITHOUT pressing Save. 3. Clear the field, leaving the stored value untouched.
+
+Expected: a visible "chat ID is invalid" message appears on typing/blur, BEFORE any save is possible. No inline refusal is a FAIL. (ISS-297 inverted: T-476 FAILed when the invalid value overwrote the real config and degraded the status; this passes only when refusal happens pre-save. The Save button is never pressed with the invalid value in the field — the TEST config is never disturbed.)
+
+---
+
+### T-8326 · add-slot · the stored chat id survives the invalid-typing probe unchanged — the ISS-297 never-overwrite twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HI-297
+
+Steps: 1. After T-8325's probe (invalid value typed, cleared, never saved), reload /notifications. 2. Read the masked chat id and the Telegram status verbatim.
+
+Expected: the stored chat id is still the original masked value and the status still reads "Connected — alerts will reach your Telegram" (green). Any overwrite or status degradation from a never-saved probe is a FAIL — an invalid value must NEVER reach the stored config. (The ISS-297 incident corrupted the real chat 8376203314 through exactly this path; the twin proves the path is closed.)
+
+---
+
+### T-8327 · add-slot · a no-op secret save never claims "Saved" — the T-469 twin inside ISS-297
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HI-297
+
+Steps: 1. Open /notifications and read the secret field's current state (masked/present). 2. Clear the secret field. 3. WITHOUT pressing Save, read the Save control's enabled state and any inline text ("nothing to save", "no secret entered", etc.). 4. Leave the page without saving — the stored secret is never disturbed.
+
+Expected: the UI shows that nothing will change — Save disabled, or inline text stating no secret was entered. The contract under test is that the no-op path CANNOT claim success. (Lineage: T-469's observed "Saved. Your Telegram settings are stored." on an empty-secret save; ISS-297 folds the twin into this seam. The button is never pressed with the field emptied, so this case is read-only by construction.)
+
+## Section HJ · Regression: ISS-296/298/313/314 — status-block/label consistency (8 cases: T-8328–T-8335)
+
+Regression coverage for ISS-296 (OPEN — the /trading runner status block shows only "Last check" ("6m ago — 15 strategies evaluated · a new check starts 5 min after the previous one finishes · last cycle took 13 min · checking now (started 1m ago)"), "Next check" ("Starts 5 min after this check finishes"), "Signals sent" ("25") — no field names the runner, though the case describes four fields ("Runner / Last check / Next check / Signals sent", expected: "Runner names the runner"), lane-14 T-2733/T-2735), ISS-298 (OPEN — the /trading status pill reads "Trading engine / reachable" while the / cockpit's equivalent section reads "ENGINE STATE / Trading" — two different names for the same thing on two pages of the same cockpit, lane-19 T-3665), ISS-313 (OPEN — the sign-in status block shows "No sign-in needed" on some loads and "Signed out" + Operator token field + Sign in button on others), ISS-314 (OPEN — the Strategies "Runner" row shows "Runner / On" on some loads and is absent entirely on others; sibling lane 14 filed ISS-296 for the /trading twin). All surfaced 2026-09-29 ~05:45–06:03 UTC (lanes 14/19/1). Written against the EXPECTED FIXED state: every status block names its subject the same way on every page and renders the same fields on every load. Title sweep: the nearest family is the cross-surface naming lineage (CX T-7321 receipt↔replay agreement, BJ countdown agreement, the dead-text decisions naming contracts) and the lane-14 runner-strip block (T-2701–T-2750). Safety: read-only; reloads only.
+
+---
+
+### T-8328 · status blocks · the runner status block names the runner — the ISS-296 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HJ-296
+
+Steps: 1. Open /trading through the live browser. 2. Read the runner status block verbatim — every field label and value.
+
+Expected: a "Runner" field names the runner (name, id, or instance). Three fields with no runner identity is a FAIL — when two runners disagree or one stalls, the operator has no way to tell them apart from this block. (ISS-296 inverted: T-2733/T-2735 FAILed the missing field; if the fix team rules the runner genuinely has no name worth showing, this passes only when that decision is recorded in visible words next to the block.)
+
+---
+
+### T-8329 · status blocks · the runner block fields survive reload — the ISS-296 stability twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HJ-296
+
+Steps: 1. Open /trading and read the runner status block. 2. Reload twice, re-reading the block each time.
+
+Expected: identical fields on all three reads. Flickering fields between loads is a FAIL. (ISS-314's flicker is the Strategies-side twin — this is the /trading-side contract.)
+
+---
+
+### T-8330 · status blocks · the engine state has one name on /trading and / — the ISS-298 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HJ-298
+
+Steps: 1. Open /trading and read the status pill verbatim ("Trading engine / reachable" per the finding). 2. Open / and read the equivalent section verbatim ("ENGINE STATE / Trading" per the finding). 3. Compare on the same tunnel.
+
+Expected: ONE name everywhere — the same component label on both pages. Two names for one engine state is a FAIL. (ISS-298 inverted: T-3665 FAILed the two-name split; this passes only when an operator cross-checking pages never has to guess.)
+
+---
+
+### T-8331 · status blocks · the chosen engine-state name is used in every other surface — the ISS-298 sweep twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HJ-298
+
+Steps: 1. Take the canonical engine-state name from T-8330. 2. Read the status areas of /settings, /strategies, and /history for the engine-state label.
+
+Expected: the canonical name only — no third variant anywhere. (Guards the fix against a two-page rename that leaves a third label behind.)
+
+---
+
+### T-8332 · status blocks · the sign-in status block is stable across loads — the ISS-313 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HJ-313
+
+Steps: 1. Load the sign-in surface (the / cockpit block per the finding). 2. Quote the sign-in status block verbatim. 3. Reload twice, quoting each time.
+
+Expected: one stable state per actual auth condition — the same text on all three loads. "No sign-in needed" alternating with "Signed out" + token field + Sign in button is a FAIL. (ISS-313 inverted: the finding's loads disagreed; this passes only when the operator can tell whether the cockpit is signed in.)
+
+---
+
+### T-8333 · status blocks · the sign-in block matches the actual auth condition — the ISS-313 truth twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HJ-313
+
+Steps: 1. Read the sign-in status block's claim verbatim. 2. Test the claim against the controls: if it says "No sign-in needed", verify no sign-in prompt blocks any control; if "Signed out", verify the Sign in path is the one presented.
+
+Expected: the claim is true. A block claiming "No sign-in needed" while controls demand sign-in (or vice versa) is a FAIL. (T-8332 pins stability; this pins truth.)
+
+---
+
+### T-8334 · status blocks · the Strategies "Runner" row renders on every load — the ISS-314 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HJ-314
+
+Steps: 1. Open /strategies and check for the "Runner" status row. 2. Reload twice, checking each time.
+
+Expected: the row is present on all three loads ("Runner / On" or the canonical row). Absent on any load is a FAIL. (ISS-314 inverted: the finding's row flickered in and out; this passes only when the supervision surface is reliable. Sibling: ISS-296's /trading twin is HJ T-8328/T-8329.)
+
+---
+
+### T-8335 · status blocks · the Strategies Runner row agrees with the /trading runner block — the ISS-296/314 agreement twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HJ-314
+
+Steps: 1. On a single load, read the Runner row on /strategies. 2. Read the runner status block on /trading. 3. Compare runner identity and on/off state.
+
+Expected: the two agree — same runner named, same on/off state. Disagreement is a FAIL. (Lineage: CX T-7321 proved receipt↔replay side agreement; this is the runner-identity agreement twin — two pages, one runner, one truth.)
+
+---
+
+## Section HK · Regression: ISS-289/290/302/317 — signal/alert-queue honesty (8 cases: T-8336–T-8343)
+
+Regression coverage for ISS-289 (OPEN — the refused-signal "What to do next" reads: "This signal is stale — the strategy's checks since then haven't re-sent it, so no retry is pending. A new signal will only come from a fresh setup. If signals keep failing, note the time (2d ago) and tell the agent team." The case expects: the signal stays eligible and retries automatically, "Check now" retries sooner, and the HTTP code is given — none of that is present. The card's own line agrees with the disclosure ("This signal is stale — it will not be retried."), so the UI is internally consistent — but the DESIGN contract says auto-retry with "Check now" and the HTTP code. Either the design or the implementation is wrong, lane-13 T-2498), ISS-290 (OPEN — the failed-message-queue Discard fires on a single click with no confirmation — "Discarded 1 row(s) for keystrategy-mr1205-1790586000000-long." The Cancel step the case expected is impossible; the row is gone. INCIDENT: following the case's verbatim steps, the lane inadvertently discarded a real queue row — the queue went from 2 rows to 1 (remaining: "blackout-veto" / "strategy-mom2064-1790463600000-long"); the row cannot be restored via the UI. It was a blackout-veto failed message — test data, no money, no orders. No other state was touched, lane-14 T-2658/T-2659), ISS-302 (OPEN — Notifications message history shows "Signal alr-0afc427fe806 (ENTRY BINANCE:BTCUSDT.P): vetoed T5-STALE". Tradeable symbols on this cockpit are "GATEIO:BTCUSDT.P or GATEIO:ETHUSDT.P" (per the Add-strategy contract) — a BINANCE:BTCUSDT.P signal should never reach the engine at all. The veto caught it (T5-STALE), so no trade resulted — but a non-tradeable symbol entering the pipeline means ingress is not enforcing the symbol allowlist, or a stale test signal is leaking into the live history), ISS-317 (OPEN — ORB Tokyo Breakout shows "Last signal: short GATEIO:BTCUSDT.P, sent 3d ago — it was sent for approval, but the 10-minute window has passed, so it can no longer execute." — an expired, unexecutable signal still occupies the card). All surfaced 2026-09-29 ~05:30–06:03 UTC (lanes 13/14/19/1). Written against the EXPECTED FIXED state: refused signals say one true thing about retry, destructive queue actions ask first, non-allowlist symbols never enter the pipeline, and expired signals are archived out of the live view. Title sweep: the nearest family is the disclosure-honesty lineage (the ISS-058/060 plain-words copy waves, T-2498's disclosure cards) and the venue-allowlist contract (the Add-strategy contract naming GATEIO symbols — ISS-302 is its first leak). Safety: read-only throughout EXCEPT T-8339, which is explicitly STATE-CHANGING and runs only inside the exclusive state window against a sacrificial test row.
+
+---
+
+### T-8336 · signal queue · the refused-signal "What to do next" matches the design's retry contract — the ISS-289 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HK-289
+
+Steps: 1. Open a refused-signal disclosure through the live browser. 2. Read the "What to do next" line verbatim.
+
+Expected: the copy states the DECIDED contract — whether the signal auto-retries, whether "Check now" retries sooner, and the HTTP code — and it matches the design doc. "Will not be retried" while the design says auto-retry (or vice versa) is a FAIL. (ISS-289 inverted: T-2498 FAILed the UI-vs-design split; this passes only when the disagreement is gone — either side may change, but the UI and the design must agree, recorded, not accidental.)
+
+---
+
+### T-8337 · signal queue · the retry contract is identical on every refused-signal card — the ISS-289 consistency twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HK-289
+
+Steps: 1. Read the "What to do next" line on three different refused-signal disclosures/cards verbatim.
+
+Expected: the same retry contract on all three. Card-by-card drift (one card promising auto-retry, another denying it) is a FAIL. (Guards the ISS-289 fix against per-card copy drift.)
+
+---
+
+### T-8338 · signal queue · Discard announces its confirmation contract before any click — the ISS-290 read-only twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HK-290
+
+Steps: 1. Open the failed-message queue through the live browser. 2. Focus/hover the Discard control and read its label, title attribute, and any hint text — WITHOUT clicking it.
+
+Expected: the control announces that it asks for confirmation (a label or hint naming the confirm step). A bare "Discard" with no confirmation signal is a FAIL. (The click-path proof is T-8339; this is the read-only affordance contract.)
+
+---
+
+### T-8339 · signal queue · Discard opens a confirm naming the row; Cancel leaves the queue untouched — the ISS-290 inversion [STATE-CHANGING]
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HK-290
+
+Steps: 1. STATE-CHANGING — run ONLY inside the exclusive state window. 2. Confirm the queue holds ≥2 rows and identify a test/blackout-veto row as the sacrificial row — if fewer than 2 rows exist, record N-A with the reason and STOP. 3. Click Discard on the sacrificial row ONLY. 4. Read what appears. 5. Press Cancel/Escape. 6. Re-read the queue row count.
+
+Expected: a confirm dialog appears NAMING the row and its reason BEFORE any deletion; Cancel closes it and both rows remain. Immediate deletion with no dialog is a FAIL (the ISS-290 symptom — the lane's verbatim steps already proved the hazard is real). NEVER click Discard outside the exclusive window; NEVER on a non-test row. (ISS-290 inverted: T-2658/T-2659 FAILed the single-click fire; this passes only when the destructive action asks first. Failed messages are the audit trail of what the engine refused and why — deleting them silently destroys evidence.)
+
+---
+
+### T-8340 · signal queue · no non-allowlist symbol appears in message history — the ISS-302 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HK-302
+
+Steps: 1. Open /notifications message history through the live browser. 2. Scan the recent signal/veto rows and read each row's symbol verbatim.
+
+Expected: every symbol is in the cockpit's allowlist (GATEIO:BTCUSDT.P / GATEIO:ETHUSDT.P per the Add-strategy contract). Any BINANCE:-prefixed (or other non-allowlist) symbol is a FAIL. (ISS-302 inverted: the BINANCE:BTCUSDT.P row reached the veto pipeline; this passes only when ingress refuses non-allowlist symbols — or the stale record is identified and purged — and the veto pipeline never sees them.)
+
+---
+
+### T-8341 · signal queue · the symbol allowlist is stated where signals are listed — the ISS-302 disclosure twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HK-302
+
+Steps: 1. Read the signals/alerts surface (message history header, Add-strategy contract area) verbatim for the tradeable-symbols statement.
+
+Expected: the surface states which symbols are tradeable, so a cross-venue row would be recognizable as wrong. No stated allowlist is a FAIL — the boundary the UI claims must be visible where signals are listed.
+
+---
+
+### T-8342 · signal queue · expired signals are archived, not shown as current state — the ISS-317 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HK-317
+
+Steps: 1. Open the ORB Tokyo Breakout strategy card through the live browser. 2. Read its "Last signal" line verbatim.
+
+Expected: the 3-day-old expired short is marked archived/cleared (or the card shows "no live signal") — NEVER presented as the strategy's current "Last signal". An expired, unexecutable signal occupying the card is a FAIL. (ISS-317 inverted: the finding's "sent 3d ago … can no longer execute" sat in the live view; this passes only when dead signals are archived out of it.)
+
+---
+
+### T-8343 · signal queue · every "Last signal" line carries its executability window — the ISS-317 window-label twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HK-317
+
+Steps: 1. Read the "Last signal" lines on three strategy cards verbatim.
+
+Expected: each line states its window state (live / expired-archived) — expiry is visible WITHOUT opening the card. A bare "sent 3d ago" with no window verdict is a FAIL. (The ORB Tokyo card is the proven instance; this is the per-card contract that prevents the next one.)
+
+## Section HL · Regression: ISS-315/316 — brain-page honesty (6 cases: T-8344–T-8349)
+
+Regression coverage for ISS-315 (OPEN — the Brain page shows "No AI verdict yet — the last recorded stance has no model, no entry/stop/target/size, and no confiden…" alongside a populated "Recent brain verdicts" list of 10 signals), ISS-316 (OPEN — the Brain page states "AI scanning paused until sign-off." while the strategy runner shows "On" and is checking — an unexplained subsystem split). Both surfaced 2026-09-29 ~06:03 UTC in the lane-1 UI run. Written against the EXPECTED FIXED state: the stance line and the verdicts list agree, and any paused banner names exactly what is paused and what sign-off means. Title sweep: the nearest family is the AI-area lineage (AF/AQ/AR/AS verdict families, BQ timestamps, CL/CW/DE/DM provider waves — DM pinned the whole-brain degradation contract; ISS-284's "paused scanner + 100%-confidence ENTRY stance" contradiction is the open sibling seam). Safety: read-only throughout.
+
+---
+
+### T-8344 · brain page · the stance line and the Recent verdicts list agree — the ISS-315 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HL-315
+
+Steps: 1. Open /brain through the live browser. 2. Read the stance line verbatim and count the "Recent brain verdicts" rows.
+
+Expected: with verdicts listed, the stance line names the latest verdict (model, stance, confidence) — NEVER "No AI verdict yet". "No verdict" alongside a populated list is a FAIL. (ISS-315 inverted: the finding's page claimed no verdict exists while listing ten; this passes only when the operator can tell whether the brain is working.)
+
+---
+
+### T-8345 · brain page · the stance line is never truncated mid-word — the ISS-315 copy twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HL-315
+
+Steps: 1. Open /brain. 2. Read the stance line's full text end to end.
+
+Expected: complete sentence(s) — never cut off mid-word ("no confiden…" per the finding). Whether the truncation lived in the product or the lane's capture, the fixed state shows the whole line. A mid-word cut is a FAIL.
+
+---
+
+### T-8346 · brain page · the stance↔verdicts agreement survives reload — the ISS-315 stability twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HL-315
+
+Steps: 1. Open /brain and check the stance↔verdicts agreement. 2. Reload twice, re-checking each time.
+
+Expected: agreement on all three loads. (A contradiction that flickers in and out across loads is the same untrustworthy page wearing a different mask.)
+
+---
+
+### T-8347 · brain page · the paused-scanning banner names what is paused and what sign-off means — the ISS-316 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HL-316
+
+Steps: 1. Open /brain. 2. Read the "AI scanning paused until sign-off." banner verbatim.
+
+Expected: either the banner is GONE (scanning is not paused) or it explains itself — WHAT is paused, WHAT "sign-off" requires, and WHO gives it. A bare unexplained banner while the strategy runner shows "On" is a FAIL. (ISS-316 inverted: the finding's operator could not know what the pause covers; this passes only when the banner is accurate or self-explaining.)
+
+---
+
+### T-8348 · brain page · the banner state agrees with the runner state — the ISS-316 agreement twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HL-316
+
+Steps: 1. On a single load, read the /brain paused banner (present/absent) and the strategy runner state ("On"/checking) verbatim.
+
+Expected: the two agree — a paused banner appears ONLY when scanning is actually paused; a running runner with an active scanner shows no paused banner. Contradiction is a FAIL. (Lineage: ISS-284's "paused scanner + 100%-confidence ENTRY stance" is the open sibling contradiction — same class, AI-panel surface.)
+
+---
+
+### T-8349 · brain page · the banner agrees with the /settings AI-profile scanning controls — the ISS-316 settings twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HL-316
+
+Steps: 1. Read the /brain banner state. 2. Open /settings and read the AI profile group's scanning controls (ENABLED/scan state) verbatim. 3. Compare.
+
+Expected: settings and banner tell the same story about whether AI scanning runs. A banner claiming "paused" while settings show scanning enabled (or vice versa) is a FAIL. (Lineage: the DM ISS-127 family pinned settings-side AI honesty; this is the brain-page twin — the contract crosses the page boundary.)
+
+---
+
+## Section HM · Regression: ISS-301/319 — strategy-surface copy (5 cases: T-8350–T-8354)
+
+Regression coverage for ISS-301 (OPEN — strategy descriptions contain unexplained jargon — "FVG at least 0.25xATR(14)", "Bollinger 30/1.5 mean-reversion, touch trigger", "Donchian trend filter 10/200, breakout entries", "liquidity-sweep-close entries, 0.75-ATR stop, 3R target", "MSS confirmation", "sweep of prior day high/low" / "PDH/PDL". Some terms ARE defined inline ("fair-value-gap sweep: wick in, close back out") but the above are not, lane-19 T-3697), ISS-319 (OPEN — the Strategies heading reads "Your uploaded strategies. Enabled ones are checked on closed bars, and every signal they emit goes through the engine's full guard pipeline — risk caps, halt control, blackout — exactly like a webhook alert." — not the test plan's expected string; either the product copy changed (plan needs updating) or the product regressed (copy needs restoring) — the fix team determines which, lane-1 T-181). Both surfaced 2026-09-29 ~05:55–06:03 UTC. Written against the EXPECTED FIXED state: every jargon term on the strategy cards is defined inline or linked, and product copy and plan expectation agree on the heading. Title sweep: the nearest family is the plain-words copy mandate (the ISS-058/060 copy waves, the dead-text decisions ledger) — undefined jargon is the dead-text cousin of raw engine strings; ISS-319's nearest neighbor is T-181 itself, the only prior case pinning that heading string. Safety: read-only throughout.
+
+---
+
+### T-8350 · strategy copy · the named jargon terms are defined inline or linked — the ISS-301 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HM-301
+
+Steps: 1. Open /strategies through the live browser. 2. Find the cards carrying "FVG at least 0.25xATR(14)", "Bollinger 30/1.5 mean-reversion, touch trigger", and "Donchian trend filter 10/200, breakout entries". 3. Read each card's description verbatim.
+
+Expected: every term is defined inline (the "fair-value-gap sweep: wick in, close back out" pattern the product already uses) or links to a definition. Any undefined term is a FAIL. (ISS-301 inverted: T-3697 FAILed the undefined jargon; this passes only when the cockpit is operable without a quant dictionary.)
+
+---
+
+### T-8351 · strategy copy · the remaining ISS terms are defined — the ISS-301 sweep twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HM-301
+
+Steps: 1. Open /strategies. 2. Find the cards carrying "liquidity-sweep-close entries, 0.75-ATR stop, 3R target", "MSS confirmation", and "sweep of prior day high/low" / "PDH/PDL". 3. Read each description verbatim.
+
+Expected: all defined inline or linked — same contract as T-8350. (The ISS names six term families; T-8350 covers three, this covers three — together the full finding set.)
+
+---
+
+### T-8352 · strategy copy · no new undefined jargon appears on any card — the ISS-301 regression-guard twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HM-301
+
+Steps: 1. Open /strategies. 2. Scan all 15 strategy cards for acronyms, ratios, or indicator shorthands with no adjacent definition.
+
+Expected: zero undefined terms beyond the fixed set — no jargon re-enters via new uploads or edits. (Guards the ISS-301 fix against regression; the plan grows, and so does the strategy list.)
+
+---
+
+### T-8353 · strategy copy · the Strategies heading matches the canonical string — the ISS-319 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HM-319
+
+Steps: 1. Open /strategies. 2. Read the Strategies heading verbatim.
+
+Expected: the heading matches the fix team's canonical ruling — product copy and plan expectation AGREE, whichever side moved. The lane-observed string and the plan's expected string differing with no ruling recorded is a FAIL. (ISS-319 inverted: T-181 FAILed the drift; this passes only when the fix team's ruling has landed and both sides match it. The case pins the ruling, not a guess about which side was right.)
+
+---
+
+### T-8354 · strategy copy · the heading's guard-pipeline claim is verifiable from the page — the ISS-319 claim twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HM-319
+
+Steps: 1. Open /strategies. 2. Read the heading's claim verbatim ("every signal they emit goes through the engine's full guard pipeline — risk caps, halt control, blackout — exactly like a webhook alert"). 3. Look for the page evidence the claim implies (a "How signals flow" reference, a per-signal guard-trail link, or equivalent).
+
+Expected: the claim is verifiable from the page — the evidence it implies is present and reachable. A bare marketing claim with nothing behind it is a FAIL. (Lineage: the dead-text decisions ledger — claims must be wired, not decorative; the zero-ignore rule treats an unverifiable claim as a finding, not as copy.)
+
+---
+
+## Section HN · Regression: ISS-291/300 — live-session region + halt-indicator agreement (6 cases: T-8355–T-8360)
+
+Regression coverage for ISS-300 (OPEN — the /trading page shows only status pills, the holding card ("Open leg in the session log"), the start card ("Start trading"), and the emergency stop card — no "live session card" region exists; the session is quiet ("Session quiet -- open leg is log-only"); if the design intends a live-session region that appears when a session runs, its absence in the quiet state may be correct — but the case expected it, so either the region is missing or the case expectation is wrong; the fix team determines which, lane-19 T-3684), ISS-291 (OPEN — found 2026-09-29 ~05:40 UTC on the pre-rotation tunnel: the header badge read "HALTED · NEW ENTRIES BLOCKED" and the sidebar read "Halted" — while the Risk control panel on the same page read "Trading — entries allowed", "Halt is off — trading is running. Nothing to resume.", with the "Halt trading" button shown; one screen said halted, another said trading; post-rotation tunnels were consistent — the fix team determines whether this was stale-tunnel state or a real race). Both surfaced 2026-09-29 ~05:40–05:55 UTC (lanes 3/19). Written against the EXPECTED FIXED state: the live-session region exists with an honest empty state when quiet, and every halt indicator on the page agrees at all times — on a stale tunnel they show stale/unknown, never contradict each other. Title sweep: ISS-300's nearest family is the /trading card inventory (the T-3601–T-3700 chunk-2 block); ISS-291 is the ISS-043 three-halt-button lineage (T-6077–T-6079, HC T-8276–T-8281 halt-modal contract) crossed with the ISS-059/060 tunnel-outage copy family ("Lost connection to the test server — the tunnel may have rotated"). Safety: read-only; the halt modal is opened but never armed, and no session is started.
+
+---
+
+### T-8355 · live-session · a live-session card region renders with an honest empty state — the ISS-300 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HN-300
+
+Steps: 1. Open /trading through the live browser in the quiet state. 2. Inventory the card regions verbatim (status pills, holding card, start card, emergency stop card, and any live-session region).
+
+Expected: a live-session region EXISTS — populated while a session runs, honest empty state ("No live session — nothing is trading right now" or equivalent) while quiet. No region at all is a FAIL unless the fix team's corrected case expectation is visible on the page. (ISS-300 inverted: T-3684 FAILed the missing region; the ISS leaves the region-vs-case decision to the fix team — this passes only when the region or the corrected expectation is on the page.)
+
+---
+
+### T-8356 · live-session · the empty state names what the region will show when live — the ISS-300 empty-state twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HN-300
+
+Steps: 1. Open /trading in the quiet state. 2. Read the live-session region's empty-state text verbatim.
+
+Expected: it says WHAT appears here during a session (positions, P&L, elapsed time) — not a bare "nothing". An empty state that teaches nothing about the region's purpose is a FAIL.
+
+---
+
+### T-8357 · live-session · the holding card and the live-session region never double-claim the same leg — the ISS-300/310 boundary twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HN-300
+
+Steps: 1. Open /trading. 2. Compare the holding card ("Open leg in the session log") against the live-session region's content.
+
+Expected: one authoritative home per leg — the log-only leftover never appears as a live session. A leg claimed by both regions (or a ghost leg promoted to "live") is a FAIL. (Lineage: HH ISS-310's leftover record — this is the boundary contract between the holding card and the new region.)
+
+---
+
+### T-8358 · live-session · all halt indicators agree on one load — the ISS-291 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: CROSS-SURFACE
+
+Feature: HN-291
+
+Steps: 1. Open / (or /trading — the finding's page) on a healthy tunnel through the live browser. 2. At the same moment, read verbatim: the header badge, the sidebar halt indicator, and the Risk control panel's halt state.
+
+Expected: all three agree — all halted or all trading. "HALTED · NEW ENTRIES BLOCKED" in the header while the Risk panel reads "Trading — entries allowed" is a FAIL. (ISS-291 inverted: lane-3's pre-rotation load FAILed the agreement; this passes only when one truth shows everywhere. Lineage: ISS-043's three-halt-button family — HC proved the modal contract; this is the cross-indicator agreement contract.)
+
+---
+
+### T-8359 · live-session · on a stale tunnel the indicators show stale/unknown instead of contradicting — the ISS-291 stale-tunnel twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-HONESTY
+
+Feature: HN-291
+
+Steps: 1. If a tunnel rotation occurs during the run, re-read all three indicators (header badge, sidebar, Risk panel) on the STALE tunnel before reloading.
+
+Expected: every indicator carries the stale/outage rendering ("Lost connection to the test server…" family per ISS-060) — NONE keeps claiming a live halt/trading state. Contradiction on the stale tunnel is a FAIL. (If no rotation occurs during the run, record N-A with the reason — the twin is opportunistic, never forced. Lineage: ISS-059 proved tunnel-rotation ghosts; the fix team's stale-vs-race ruling decides which mechanism this guards.)
+
+---
+
+### T-8360 · live-session · the indicator agreement survives reload — the ISS-291 stability twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: BEHAVIOR-CHECK
+
+Feature: HN-291
+
+Steps: 1. Open the page and verify all three halt indicators agree. 2. Reload twice, re-reading all three each time.
+
+Expected: agreement on all three loads. (The ISS-291 finding was a single pre-rotation load; this pins the contract across loads — a flickering agreement is no agreement.)
+
+
+## Section HO · Proactive: notification/history paths wave-13 — the seams X/AG/AP/BL/BY/CH/CU/DA/DI/EZ/FV/GC/GI didn't touch (10 cases: T-8361–T-8370)
+
+Gardener block, 2026-09-28 ~23:38 PDT. Proactive wave-13 for the notification/history area — thirteenth cycle after X (batch-1 telegram cases, T-5145–T-5194) / AG (T-6393–T-6432) / AP (T-6559–T-6568) / BL (T-6969–T-6978) / BY (T-7105–T-7114) / CH (T-7175–T-7184) / CU (T-7285–T-7294) / DA (T-7348–T-7357) / DI (T-7428–T-7437) / EZ (T-7852–T-7861) / FV (T-7984–T-7993) / GC (T-8054–T-8063) / GI (T-8114–T-8123). Zero new ISS above the watermark (registry max ISS-319 = watermark) — pure proactive extension per the standing growth order. The ten seams below are the ones the twelve earlier waves didn't pin: the preview control naming its halt-independence, the Clear-history button on an empty history, cross-tab topic-toggle ripple, /keys Test-connection visibility in /notifications history, preview-vs-Test row origin distinguishability, the "Open Telegram chat" link target updating after a chat change with no reload, veto-reason string identity across a /notifications→/history round-trip, vetoed rows never claiming Delivered, export-after-clear honesty, and topic-toggle double-press exactly-once save. SAFETY: T-8363's and T-8370's toggles are returned to their original positions immediately after each case; T-8366 restores the original chat id immediately (no preview sent); T-8369's clear+export runs on the TEST setup only and is recorded as a state change; T-8367's veto-row case is recorded N-A with the absence stated if no vetoed rows are reachable naturally — never forced; nothing else here changes state.
+
+### T-8361 · notification/history paths wave-13 · the preview control names that previews are connection tests — unaffected by halt — the halt-independence copy twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HO-1
+
+Steps: 1. Open /notifications and read the "Send a real preview message" control and its hint line verbatim. 2. Check whether the copy states that a preview tests the connection and sends even while trading is halted.
+
+Expected: the control's copy names that a preview is a connection test and that it sends regardless of halt state — a reader halted mid-drill never has to guess whether pressing it fires a trade or gets blocked. No claim anywhere that previews stop while halted. (Twin of T-2245's SmartTrade halt blocking: that pinned halt blocks the SmartTrade ticket preview; the /notifications connection-preview's halt-independence was never pinned. SAFETY: read-only — no preview is sent in this case.)
+
+---
+
+### T-8362 · notification/history paths wave-13 · the Clear-history button with an empty history never opens a confirm — the empty-button twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HO-2
+
+Steps: 1. Filter Message history to a topic with zero rows. 2. Read the Clear-history control's state; press it if it is pressable.
+
+Expected: with zero rows the control is disabled or reads "nothing to clear" — it never opens a confirm dialog over an empty list. (Twin of T-1034's confirm contract and the DO/FC empty-state family: the confirm path was pinned; the empty-state button contract was never pinned. SAFETY: TEST setup only; nothing is cleared in this case.)
+
+---
+
+### T-8363 · notification/history paths wave-13 · a topic toggle flipped in a second tab shows honestly in this tab — the cross-tab ripple twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HO-3
+
+Steps: 1. Open /notifications in two tabs and read one topic toggle's position in both. 2. Flip the toggle in tab A; read tab B without reloading. 3. Flip the toggle back to its original position in tab A.
+
+Expected: tab B shows the flipped position live — or, if the surface requires a reload, it never silently claims the old position is current after a poll lands. A poll that refreshes rows while leaving the toggle stale with no signal is a FAIL. (Twin of CX's cross-page honesty and T-7959/T-8104's cross-tab settings contracts: the notification-toggle surface was never pinned. SAFETY: the toggle is returned to its original position immediately after; nothing else changes state.)
+
+---
+
+### T-8364 · notification/history paths wave-13 · a /keys Test-connection press lands in /notifications history without a manual reload — the fresh-send visibility twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HO-4
+
+Steps: 1. On /keys, press Test connection on one exchange row and let it resolve fully. 2. Open /notifications Message history with no manual reload of that page and look for the new Test row.
+
+Expected: the new Test row is already listed — the history surface reflects the fresh send on navigation, never requiring a manual reload to admit the event happened. If Test-connection presses log no history rows on this surface, record N-A with that reason — never failed on the missing row. (Twin of FV T-7988's set agreement: FV pinned the two pages share the same event set; the navigation-freshness twin was never pinned.)
+
+---
+
+### T-8365 · notification/history paths wave-13 · a /notifications preview row and a /keys Test row name their origin distinctly — the send-surface distinguishability twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HO-5
+
+Steps: 1. With both a recent /notifications preview row and a recent /keys Test-connection row in Message history, open each detail and read its kind/topic/origin line verbatim.
+
+Expected: the two rows name their origin distinctly ("preview" from /notifications vs "test connection" from /keys) — a reader never has to guess which surface fired which row. If the two surfaces log rows under one identical kind, record N-A with that reason rather than failing a missing control. (Twin of T-7108's family-label spot-check: families were pinned; the two-send-surface distinguishability was never pinned.)
+
+---
+
+### T-8366 · notification/history paths wave-13 · the "Open Telegram chat" link target updates after a chat-id change with no reload — the live-target twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HO-6
+
+Steps: 1. Read the "Open Telegram chat" link target (last-4) on /notifications. 2. In Telegram settings, save a DIFFERENT chat id — record the original value first. 3. Read the link target again without reloading the page. 4. Restore the original chat id.
+
+Expected: the link target names the new chat's last-4 immediately — no reload needed for the link to agree with settings. (Twin of T-6972's at-rest agreement and T-7233's cross-page agreement: the no-reload update twin was never pinned. SAFETY: original chat id restored immediately; no preview is sent in this case.)
+
+---
+
+### T-8367 · notification/history paths wave-13 · a veto row's reason string survives a /notifications → /history round-trip byte-identical — the reason-string twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HO-7
+
+Steps: 1. Open a vetoed-signal row on /notifications and read its veto-reason line verbatim. 2. Follow the row's link to the /history rejection log and read the same event's reason verbatim. 3. Navigate back and re-read the /notifications row.
+
+Expected: all three readings are byte-identical — the reason string never rephrases, truncates, or drifts across the round-trip. (Twin of GI T-8122's veto-family agreement and FV T-7989's reason naming: the family agreement was pinned; the per-row string-identity twin was never pinned. If no vetoed rows are reachable naturally, record N-A with the absence stated — never forced.)
+
+---
+
+### T-8368 · notification/history paths wave-13 · vetoed-signal rows never claim a Delivered alert — the fail-closed visibility twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HO-8
+
+Steps: 1. In Message history, find rows for vetoed signals (the nightly fail-closed veto traffic). 2. Read each row's status and delivery claim verbatim.
+
+Expected: no vetoed-signal row reads Delivered with a message id — vetoed signals are fail-closed, and the history shows them as blocked/vetoed, never as sent alerts. A Delivered claim on a vetoed signal is a FAIL. (Twin of FV T-7989's veto-reason naming and T-7108's family labels: the reason and the family were pinned; the never-claims-Delivered contract was never pinned.)
+
+---
+
+### T-8369 · notification/history paths wave-13 · an export taken after a clear names the empty scope honestly — the export-after-clear twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HO-9
+
+Steps: 1. On the TEST setup only, filter Message history to one topic and clear that topic's rows (GI T-8116). 2. Export with the same filter active. 3. Open the exported file and read its row set and scope line.
+
+Expected: the file carries zero rows for the cleared scope with the scope named — never the pre-clear rows, never a crash, never a silently-empty file with no scope line. (Twin of GI T-8116's scope-execution and DI's export masking: clearing and exporting were each pinned; the export-after-clear twin was never pinned. SAFETY: TEST setup only; the clear and export are recorded as state changes.)
+
+---
+
+### T-8370 · notification/history paths wave-13 · a topic toggle double-press saves exactly once and ends in the pressed state — the double-press twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HO-10
+
+Steps: 1. Record one topic toggle's current position on /notifications. 2. Double-press it quickly and let the save settle fully. 3. Read the toggle position and the save line; then return the toggle to its original position.
+
+Expected: exactly one save, the toggle ends in the pressed position, the save line names the toggle — never two stacked saves, never a stuck "Saving…" line, never a flipped render with an unflipped backend. (Twin of CZ T-7338's settings-surface double-press and FV T-7990's single-press persistence: the notification-surface double-press twin was never pinned. SAFETY: the toggle is restored to its original position; nothing else changes state.)
+
+## Section HP · Regression ISS-320/321/322 — add-strategy form failure-mode honesty (9 cases: T-8371–T-8379)
+
+Gardener regression block, 2026-09-29 ~00:05 PDT. Regression coverage for ISS-320 (refusal message renders ABOVE the "Add a strategy" region, not inside the form), ISS-321 (check timed out once "Request timed out (20s)" then passed instantly on retry — possibly tunnel fallout), ISS-322 (form goes silently dead when the backend is unresponsive — 6 clicks, no response, no loading state). The seams below are the ones the lane runs didn't pin: per-refusal-kind adjacency, the timeout copy's cause-naming and retry affordance, retry-after-timeout running a fresh check (not a cached verdict), timeout straddling a natural tunnel rotation naming the connection, the in-flight loading state, the backend-unresponsive submit error, and the retry-after-recovery exactly-once contract. SAFETY: upload-form cases use only INVALID files that get refused (wrong extension, empty, syntax error) — never a valid strategy file that would install anything.
+
+---
+
+### T-8371 · iss-320/321/322 regression · the wrong-extension refusal renders adjacent to the file input — the per-kind adjacency twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HP-1
+
+Steps: 1. On /strategies, attach a non-.py file (e.g. a .txt) to the add-strategy file input and press Add strategy. 2. Read the refusal text and note exactly where on the page it renders relative to the file input and the "Add a strategy" region.
+
+Expected: the refusal "Only .py files can be added." (or equivalent) renders inside or immediately adjacent to the "Add a strategy" region — next to the file input — never a screen away above the region. (Twin of ISS-320's finding case T-194: T-194 proved the copy is correct but stranded above the form; the adjacency pin for the wrong-extension kind was never pinned. T-7089 proved inside-the-group refusal for settings saves — the add-strategy form twin is new. SAFETY: wrong-extension file only — refused, installs nothing.)
+
+---
+
+### T-8372 · iss-320/321/322 regression · the empty-file refusal renders adjacent to the file input — the second-kind adjacency twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HP-2
+
+Steps: 1. On /strategies, attach an empty .py file to the add-strategy file input and press Add strategy. 2. Read the refusal text and note exactly where it renders relative to the file input.
+
+Expected: the "Empty file." refusal renders inside or immediately adjacent to the "Add a strategy" region — the trader looking at the form sees the reason without scrolling. (Twin of T-8371's wrong-extension adjacency: the empty-file kind is a per-kind family case per the keep-list — different refusal, different test. SAFETY: empty .py only — refused, installs nothing.)
+
+---
+
+### T-8373 · iss-320/321/322 regression · the syntax-error refusal names the error AND renders adjacent to the form — the placement+content twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HP-3
+
+Steps: 1. On /strategies, attach a .py file with a syntax error (e.g. a missing colon) and press Add strategy. 2. Read the refusal text verbatim and note where it renders relative to the form.
+
+Expected: the refusal both names the error (e.g. "Strategy has a syntax error: expected ':' … line 2") AND renders adjacent to the form — the placement and content contracts hold together, never one without the other. (Twin of T-8371/T-8372's adjacency pins: those covered copy that was already adjacent-agnostic; the syntax-error kind carries the longest, most-missed message — its placement+content twin was never pinned. SAFETY: syntax-broken .py only — refused, installs nothing.)
+
+---
+
+### T-8374 · iss-320/321/322 regression · a check timeout names the likely cause or offers a retry affordance — never a dead end
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HP-4
+
+Steps: 1. Submit a file that takes long to check (or observe any natural check timeout, e.g. the "Request timed out (20s)" state). 2. Read the timeout line verbatim and look for a named cause and a retry affordance.
+
+Expected: the timeout copy either names the likely cause (server busy, tunnel dropout) or carries a working retry affordance — a dead-end line with no cause and no way forward is a FAIL. (Twin of ISS-321's finding case T-196: T-196 proved the timeout happens and retry passes; the fixed contract — honest copy naming the cause or a retry path — was never pinned. If no timeout is reachable naturally this run, record N-A with the absence stated — never forced.)
+
+---
+
+### T-8375 · iss-320/321/322 regression · retry after a timeout re-runs the check honestly — never a cached verdict
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HP-5
+
+Steps: 1. After a natural check timeout on an invalid file, press the retry affordance (or resubmit). 2. Observe whether the check visibly runs again (loading state, timing) before the refusal lands. 3. Read the post-retry verdict verbatim.
+
+Expected: the retry re-runs the check and then delivers the honest verdict (e.g. "Empty file.") — never an instantly-appearing cached refusal that skips the check. (Twin of T-8374's timeout copy: T-8374 pinned the copy contract; the fresh-check-after-timeout contract was never pinned. SAFETY: invalid files only. If no timeout is reachable naturally this run, record N-A with the absence stated — never forced.)
+
+---
+
+### T-8376 · iss-320/321/322 regression · a timeout straddling a natural tunnel rotation names the connection — the tunnel-blame twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HP-6
+
+Steps: 1. If a natural tunnel rotation occurs during an add-strategy check, read the form's status line immediately after. 2. Note whether the copy blames the connection/tunnel or the check itself.
+
+Expected: the copy names the connection ("tunnel", "connection") as the likely cause — never a generic server-blaming line when the edge is what died. (Twin of ISS-060's dead-tunnel 503 honesty and T-7386's Retry-path agreement: those pinned GET/retry paths; the in-flight-check rotation copy was never pinned. If no rotation straddles a check this run, record N-A with the absence stated — never forced.)
+
+---
+
+### T-8377 · iss-320/321/322 regression · an in-flight check shows a loading state — the in-flight visibility twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HP-7
+
+Steps: 1. On /strategies, attach an invalid .py file and press Add strategy while watching the form. 2. Note whether any loading/in-flight state appears between the press and the refusal.
+
+Expected: while the check runs, the form shows a visible loading state (spinner, "Checking…", disabled button) — the press is never met with silence. (Twin of ISS-322's finding case T-2737: T-2737 proved the silence on an unresponsive backend; the fixed contract — an in-flight state on every press — was never pinned. SAFETY: invalid file only — refused, installs nothing.)
+
+---
+
+### T-8378 · iss-320/321/322 regression · a backend-unresponsive submit produces an error naming the likely cause — never silence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HP-8
+
+Steps: 1. During a natural backend-unresponsive window (runner stuck, tunnel rotating), submit an invalid file on the add-strategy form. 2. Read whatever the form shows after the submit.
+
+Expected: the form shows an error naming the likely cause (backend unreachable, connection lost) — never the ISS-322 silence of 6 clicks with no response. (Twin of T-8377's in-flight state: T-8377 pinned the happy-path in-flight line; the unresponsive-backend error contract was never pinned. SAFETY: invalid file only. If the backend is healthy all run, record N-A with the absence stated — never forced.)
+
+---
+
+### T-8379 · iss-320/321/322 regression · the unresponsive-backend error carries a retry affordance, and a retry after recovery processes exactly once
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HP-9
+
+Steps: 1. From T-8378's error state, read the retry affordance and press it only after the backend recovers (healthy tunnel, runner unstuck). 2. Observe the form through the retry and count the refusal lines.
+
+Expected: the retry processes the file exactly once — one check, one refusal — never a double-check or stacked duplicate lines from the earlier dead clicks. (Twin of T-8378's error contract and T-7380's exactly-one-row-per-press: T-7380 pinned double-press row-count for previews; the form-retry-after-dead-clicks exactly-once twin was never pinned. SAFETY: invalid file only. If the recovery condition is not reachable naturally, record N-A with the absence stated — never forced.)
+
+
+## Section HQ · Regression ISS-323 — delete confirm names its target (4 cases: T-8380–T-8383)
+
+Gardener regression block, 2026-09-29 ~00:05 PDT. Regression coverage for ISS-323 (found 2026-09-29 ~06:48 UTC, lane 14 T-2758 — the armed delete confirm reads only "Press again to delete" and never names the strategy). The seams below are the ones the DW ISS-133 regression (T-7538–T-7543) and the lane run didn't pin: the Escape-disarm contract (the lane did it — now pinned), armed-naming surviving an auto-refresh tick between arm and press (no target swap), two armed deletes on different strategies never cross-naming (per-target families per the keep-list), and the post-delete list honesty plus ghost-confirm absence. SAFETY: arm, read, disarm with Escape — NEVER press delete twice; no actual deletion is committed in any case.
+
+---
+
+### T-8380 · iss-323 regression · Escape disarms the armed delete with zero deletion — the disarm-contract twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: HQ-1
+
+Steps: 1. Arm Delete on a strategy row (single press). 2. Press Escape. 3. Verify the row is still present, enabled, and un-armed; re-arm and read the text once more.
+
+Expected: Escape fully disarms — the row is untouched, no armed state lingers, and a fresh arming shows the same named confirm. (Twin of DW T-7540's disarm-residue pin: T-7540 proved Cancel leaves no residue; the lane's own Escape disarm — which T-2758 used but never pinned as a contract — was never pinned. SAFETY: arm+read+Escape only; no deletion.)
+
+---
+
+### T-8381 · iss-323 regression · the armed confirm's naming survives an auto-refresh tick between arm and press — the target-swap twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HQ-2
+
+Steps: 1. Arm Delete on a strategy row and read the armed id. 2. Wait for at least one auto-refresh tick without pressing anything. 3. Read the armed confirm text again and compare the named id.
+
+Expected: the armed confirm still names the SAME strategy id after the tick — never a swapped, blanked, or stale id from the re-render. (Twin of DW T-7542's stale-id pin: T-7542 pinned sequential A→B arming; the mid-arm auto-refresh re-render twin was never pinned. SAFETY: arm+read+Escape only; no deletion.)
+
+---
+
+### T-8382 · iss-323 regression · two armed deletes on different strategies never cross-name — the per-target family twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HQ-3
+
+Steps: 1. Arm Delete on strategy row A and read its armed id; leave it armed. 2. Arm Delete on a DIFFERENT row B (single press each, both armed simultaneously). 3. Read both armed confirms verbatim and disarm both with Escape.
+
+Expected: each armed confirm names its OWN row's id — row A's armed step never names row B and vice versa. (Twin of DW T-7539's similarly-named-rows pin: T-7539 proved full-id naming on one armed row; per the keep-list, per-target families are N-of-M — the simultaneously-armed cross-naming seam was never pinned. SAFETY: arm+read+Escape only; no deletion.)
+
+---
+
+### T-8383 · iss-323 regression · the armed delete confirm names the strategy on a disabled (Off) strategy row — the off-state twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HQ-4
+
+Steps: 1. On /strategies, find a strategy row in the Off/disabled state (do not toggle it). 2. Click its Delete control once to arm the confirm (do NOT press again). 3. Read the armed confirm text verbatim and disarm with Escape.
+
+Expected: the armed confirm names the exact disabled strategy id — the Off state never blanks or swaps the naming. (Twin of DW T-7538–T-7543's armed-naming pins: the whole DW block armed enabled rows; the disabled-row naming twin was never pinned. If no disabled row exists naturally, record N-A with the absence stated — never toggle a strategy to manufacture one. SAFETY: arm+read+Escape only; no deletion, no toggles.)
+
+
+## Section HR · Regression ISS-324 — deliveries-table strategy attribution (5 cases: T-8384–T-8388)
+
+Gardener regression block, 2026-09-29 ~00:05 PDT. Regression coverage for ISS-324 (found 2026-09-29 ~06:48 UTC, lane 14 T-2762 — the Deliveries table shows only ALERT/STATUS columns, e.g. "alr-e640d4e7ed9a" / "drained-vetoed"; a signal chip's count cannot be matched to that strategy's rows). The seams below pin the fixed contract: per-row strategy naming, chip-count↔delivery-rows agreement (the per-strategy agreement ISS-324 is about), attribution on vetoed/drained rows, new-row placement without reload, and the strategy-scoped empty state. SAFETY: read-mostly; no state changes.
+
+---
+
+### T-8384 · iss-324 regression · each delivery row names its strategy — the attribution pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HR-1
+
+Steps: 1. Open the Deliveries table on /. 2. Read several rows (alert id, status) and note which strategy each row attributes itself to.
+
+Expected: every row names its strategy — alert id ↔ strategy agreement readable row by row. ISS-324's exact failure (ALERT/STATUS columns with no strategy) is a FAIL. (Twin of ISS-324's finding case T-2762: T-2762 proved the attribution is missing; the fixed contract — per-row naming — was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8385 · iss-324 regression · a strategy's signal-chip count matches that strategy's delivery rows — the agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HR-2
+
+Steps: 1. Pick a strategy with a signal chip (e.g. "6 signals sent" for SMC-272). 2. In the Deliveries table, count that strategy's rows. 3. Compare the chip count with the row count.
+
+Expected: the chip count and the strategy's delivery rows agree — the per-strategy agreement ISS-324 demands is verifiable on screen. (Twin of EI T-7636's chip↔/home-strip agreement: T-7636 proved chips agree across surfaces; the chip↔deliveries-table attribution agreement — the exact audit ISS-324 wants — was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8386 · iss-324 regression · vetoed/drained delivery rows carry strategy attribution too — the fail-closed attribution twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HR-3
+
+Steps: 1. In the Deliveries table, find rows with vetoed/drained statuses (e.g. "drained-vetoed"). 2. Read each such row's strategy attribution.
+
+Expected: vetoed/drained rows name their strategy just like delivered rows — fail-closed traffic is auditable, never anonymous. (Twin of T-8384's attribution pin: T-8384 proved rows carry names; the vetoed-row variant — where the ISS-324 example itself ("drained-vetoed") lives — was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8387 · iss-324 regression · a new delivery row appears under the right strategy without reload — the fresh-row twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HR-4
+
+Steps: 1. Watch the Deliveries table across a natural signal-delivery cycle (or a new alert appearing). 2. When a fresh row lands, read its strategy attribution without reloading the page.
+
+Expected: the new row names its strategy on arrival — attribution is present live, never requiring a reload to appear. (Twin of T-8384's at-rest attribution: T-8384 pinned rows already listed; the fresh-arrival twin was never pinned. If no new delivery arrives naturally this run, record N-A with the absence stated — never forced. SAFETY: read-only.)
+
+---
+
+### T-8388 · iss-324 regression · the empty state names the strategy — the scoped-empty twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HR-5
+
+Steps: 1. Find or filter to a strategy with zero deliveries (per-strategy view or filter). 2. Read the empty-state line verbatim.
+
+Expected: the empty state names the strategy ("no deliveries for <strategy>") — never a bare "No deliveries" that leaves the scope unstated. (Twin of EI T-7635's zero-signal "Watching …" line: T-7635 pinned the chip never masquerading at zero; the deliveries empty-state strategy-scoping twin was never pinned. SAFETY: read-only.)
+
+
+## Section HS · Regression ISS-325/326 — sweep-result and winner-save honesty (8 cases: T-8389–T-8396)
+
+Gardener regression block, 2026-09-29 ~00:05 PDT. Regression coverage for ISS-325 (found 2026-09-29 ~06:48 UTC, lane 14 T-2778 — winner rows show "Winner / Net after costs / Later-data check", e.g. "Mom1714 Range Exp Xauusd 15M…" / "$8,862.26" / "19 of 29 test periods passed"; return, drawdown, trades not shown) and ISS-326 (found 2026-09-29 ~06:48 UTC, lane 14 T-2782/T-2783 — "Winners are saved automatically when the run finishes" but winner rows name no saved location). The seams below pin the fixed contracts: return/drawdown/trades on every winner row, net-after-costs arithmetic agreement, single-trade fluke naming, later-data-check agreement, per-winner saved-location naming, named-location reachability from the UI, no auto-saved claim on a failed save, and save-location persistence across reload. SAFETY: read-mostly; no state changes.
+
+---
+
+### T-8389 · iss-325/326 regression · each winner row shows return, drawdown, and trades — the full-metrics twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-1
+
+Steps: 1. Open the sweep results page and read several winner rows end to end. 2. For each, note the return, drawdown, and trades figures alongside "Winner / Net after costs / Later-data check".
+
+Expected: every winner row shows return, drawdown, AND trades — ISS-325's exact failure (Net after costs with no return/drawdown/trades) is a FAIL. (Twin of ISS-325's finding case T-2778: T-2778 proved the metrics are missing; the fixed contract — full metrics per row — was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8390 · iss-325/326 regression · "Net after costs" agrees with return-minus-costs arithmetic — the arithmetic twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-2
+
+Steps: 1. On a winner row showing return, drawdown, trades, and "Net after costs", read all four figures. 2. Check the arithmetic: net ≈ return minus the stated costs.
+
+Expected: "Net after costs" agrees with return-minus-costs — a figure that cannot be reconciled from the shown numbers is a FAIL. (Twin of T-8389's metrics pin: T-8389 pinned the figures are present; the cross-figure arithmetic agreement twin was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8391 · iss-325/326 regression · a single-trade winner names its trade count — the one-trade-fluke twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-3
+
+Steps: 1. Find a winner row with a very small trade count (a one-trade or few-trade winner). 2. Read the row and note whether the trade count is visible next to the net figure.
+
+Expected: the trade count is shown right there on the row — a big net figure never presents without its trade count beside it. (Twin of T-8389's metrics pin: T-8389 pinned the general contract; the one-trade-fluke visibility hazard — ISS-325's "whether the winner is real or a one-trade fluke" — was never pinned. If no small-count winner is reachable naturally, record N-A with the absence stated — never forced. SAFETY: read-only.)
+
+---
+
+### T-8392 · iss-325/326 regression · the "Later-data check N of M test periods passed" line agrees with the shown trade set — the check-agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-4
+
+Steps: 1. On a winner row, read the "Later-data check N of M test periods passed" line. 2. Open the row's trade detail (if the row exposes it) and verify the periods/trades behind the claim.
+
+Expected: the N-of-M line agrees with the shown trade set — the check claim is auditable from the row's own data, never a free-floating slogan. (Twin of T-8390's arithmetic twin: T-8390 pinned net-vs-return agreement; the later-data-check↔trade-set agreement was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8393 · iss-325/326 regression · each winner names where it was saved — the findable-where-named twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-5
+
+Steps: 1. Open the sweep results page and read several winner rows. 2. For each, note the saved location it names.
+
+Expected: every winner names where it was saved — ISS-326's exact failure ("Winners are saved automatically" with no findable location) is a FAIL. (Twin of ISS-326's finding cases T-2782/T-2783: T-2782/T-2783 proved no location is named; the fixed contract — per-winner saved-location naming — was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8394 · iss-325/326 regression · the named save location is reachable from the UI — the not-decorative twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-6
+
+Steps: 1. Read a winner row's named save location. 2. Follow it from the UI (link, path, navigation) and confirm it lands on the actual saved winner.
+
+Expected: the named location is reachable — the naming is not decorative; a location that cannot be followed to the saved winner is a FAIL. (Twin of T-8393's naming pin: T-8393 pinned the name is shown; the reachability-from-the-UI twin was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8395 · iss-325/326 regression · a winner whose save failed is never claimed as auto-saved — the failed-save honesty twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-7
+
+Steps: 1. If any winner row shows a save-failure state (error, missing location), read its row and the page's auto-save claim together. 2. Check whether the page still claims that winner was auto-saved.
+
+Expected: a failed save is never presented under the "Winners are saved automatically" claim — the failure is named, never absorbed by the blanket claim. (Twin of T-8394's reachability twin: T-8394 pinned reachable naming; the failed-save never-claims-saved contract was never pinned. If no failed save is reachable naturally, record N-A with the absence stated — never forced. SAFETY: read-only.)
+
+---
+
+### T-8396 · iss-325/326 regression · the save-location attribution survives reload — the persistence twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HS-8
+
+Steps: 1. Read a winner row's save-location attribution. 2. Reload the page and read the same row again. 3. Compare.
+
+Expected: the save-location attribution is identical after reload — never dropped, never re-pointed by the re-render. (Twin of T-8393's naming pin: T-8393 pinned the name on first load; the reload-persistence twin was never pinned. SAFETY: read-only.)
+
+
+## Section HT · Regression ISS-327/328 — money-view cross-page honesty and venue naming (8 cases: T-8397–T-8404)
+
+Gardener regression block, 2026-09-29 ~00:05 PDT. Regression coverage for ISS-327 (found 2026-09-29 ~06:48 UTC, lane 14 T-2797 — /history shows "USDT balance: $999.80 (available $999.80)", "No open positions on the exchange.", "Data as of Sep 28, 2026 23:48 local", but /trading shows no money view to match against) and ISS-328 (found 2026-09-29 ~06:48 UTC, lane 14 T-2798 — "USDT balance: $999.80 (available $999.80)" names the asset but no venue). The seams below pin the fixed contracts: the /trading money view, /trading↔/history balance agreement at the same timestamp, positions-view agreement, the "Data as of" timestamp on the money view, venue+asset naming on every balance row, venue agreement with /keys exchange rows, venue naming across a natural tunnel rotation, and available-vs-total agreement per venue row. SAFETY: read-mostly; no state changes.
+
+---
+
+### T-8397 · iss-327/328 regression · /trading shows a balance/positions view — the money-view twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HT-1
+
+Steps: 1. Open /trading and scan the page for a balance and open-positions view. 2. Read what it shows verbatim.
+
+Expected: /trading shows a balance/positions view — ISS-327's exact failure (the page where money is risked showing no money) is a FAIL. (Twin of ISS-327's finding case T-2797: T-2797 proved /trading has no money view; the fixed contract — the view exists — was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8398 · iss-327/328 regression · /trading balance agrees with /history's "USDT balance" figure at the same timestamp — the cross-page agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HT-2
+
+Steps: 1. Read the balance figure on /trading and note its "Data as of" timestamp. 2. Open /history and read its "USDT balance" figure and its "Data as of" timestamp. 3. Compare the figures at matching timestamps.
+
+Expected: at the same timestamp the two figures agree to the cent — a mismatch across pages is a FAIL. (Twin of CX's cross-page honesty and the older /history-vs-/trading balance agreement case: those pinned agreement before the /trading money view existed; the post-fix two-money-views agreement twin was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8399 · iss-327/328 regression · /history's "No open positions" agrees with /trading's positions view — the positions-agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HT-3
+
+Steps: 1. Read /history's positions line ("No open positions on the exchange." or a position list). 2. Read /trading's positions view. 3. Compare.
+
+Expected: the two views agree — if /history says no open positions, /trading shows none too; a position list on one side must appear on the other. (Twin of T-8398's balance agreement: T-8398 pinned the money figures; the positions-view agreement twin was never pinned. SAFETY: read-only.)
+
+---
+
+### T-8400 · iss-327/328 regression · the /trading money view carries a "Data as of" timestamp — the freshness twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: HT-4
+
+Steps: 1. Open /trading's money view. 2. Read its "Data as of" (or equivalent) timestamp verbatim.
+
+Expected: the money view carries a "Data as of" timestamp — a balance with no freshness line cannot be trusted. (Twin of T-5272's /history "Data as of" wording: T-5272 pinned the timestamp on /history; the /trading money view's freshness line was never pinned. SAFETY: read-only.)
+
+---

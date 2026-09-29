@@ -1,0 +1,1207 @@
+QA BRIEF — BULK LANE B1 chunk 5/45 (T-4401–T-4500)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-4401 · Nav · desk clock layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-02
+
+Steps: 1. Open /. 2. Note the desk clock layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4402 · Nav · desk clock reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-02
+
+Steps: 1. Open /. 2. Make a change that affects the desk clock (if one is available). 3. Watch the desk clock.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4403 · Nav · desk clock tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-02
+
+Steps: 1. Open /. 2. If the desk clock offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4404 · Nav · halt button + halt modal layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-03
+
+Steps: 1. Open /. 2. Note the halt button + halt modal layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4405 · Nav · halt button + halt modal expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open /. 2. If the halt button + halt modal offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4406 · Nav · halt button + halt modal failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-03
+
+Steps: 1. Open /. 2. If the halt button + halt modal is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4407 · Nav · halt button + halt modal helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-03
+
+Steps: 1. Open /. 2. Read the halt button + halt modal helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4408 · Nav · halt button + halt modal gate cannot be skipped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-03
+
+Steps: 1. Open /. 2. Look for any way past the halt button + halt modal safety gate.
+
+Expected: None exists -- the tester verifies the absence and does not try to work around it.
+
+---
+
+### T-4409 · Nav · alerts panel layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Open /. 2. Note the alerts panel layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4410 · Nav · alerts panel reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-04
+
+Steps: 1. Open /. 2. Make a change that affects the alerts panel (if one is available). 3. Watch the alerts panel.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4411 · Nav · alerts panel expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-04
+
+Steps: 1. Open /. 2. If the alerts panel offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4412 · Nav · alerts panel failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-04
+
+Steps: 1. Open /. 2. If the alerts panel is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4413 · Nav · alerts panel totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Open /. 2. Add the alerts panel line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+### T-4414 · Nav · alerts panel helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-04
+
+Steps: 1. Open /. 2. Read the alerts panel helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4415 · Nav · alerts panel gate cannot be skipped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-04
+
+Steps: 1. Open /. 2. Look for any way past the alerts panel safety gate.
+
+Expected: None exists -- the tester verifies the absence and does not try to work around it.
+
+---
+
+### T-4416 · Nav · pine snippet empty panel shape renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-05
+
+Steps: 1. Open /. 2. Look at the pine snippet frame and spacing.
+
+Expected: The panel frame, headings, and spacing render consistently even before its data arrives.
+
+---
+
+### T-4417 · Nav · pine snippet dismiss or close works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-05
+
+Steps: 1. Open /. 2. If the pine snippet offers a dismiss or close, click it.
+
+Expected: It closes cleanly -- nothing breaks, nothing lingers.
+
+---
+
+### T-4418 · Nav · pine snippet error states what to do
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-05
+
+Steps: 1. Open /. 2. If the pine snippet shows an error, read its last line.
+
+Expected: A next step is stated -- the tester is never left guessing.
+
+---
+
+### T-4419 · Nav · pine snippet tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-05
+
+Steps: 1. Open /. 2. If the pine snippet offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4420 · Strategies · envelope validator layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open /. 2. Note the envelope validator layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4421 · Strategies · envelope validator expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open /. 2. If the envelope validator offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4422 · Strategies · envelope validator failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open /. 2. If the envelope validator is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4423 · Strategies · envelope validator helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open /. 2. Read the envelope validator helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4424 · Strategies · envelope validator boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open /. 2. If the envelope validator has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-4425 · Strategies · command palette layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-07
+
+Steps: 1. Open /. 2. Note the command palette layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4426 · Strategies · command palette expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-07
+
+Steps: 1. Open /. 2. If the command palette offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4427 · Strategies · command palette failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-07
+
+Steps: 1. Open /. 2. If the command palette is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4428 · Strategies · command palette tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-07
+
+Steps: 1. Open /. 2. If the command palette offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4429 · Strategies · command palette numeric edge handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-07
+
+Steps: 1. Open /. 2. If the command palette takes a number, enter zero and a negative.
+
+Expected: Each is accepted or refused with a plain-words reason -- never a silent wrong value.
+
+---
+
+### T-4430 · Strategies · smarttrade ticket layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+
+Steps: 1. Open /. 2. Note the smarttrade ticket layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4431 · Strategies · smarttrade ticket expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+
+Steps: 1. Open /. 2. If the smarttrade ticket offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4432 · Strategies · smarttrade ticket failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-08
+
+Steps: 1. Open /. 2. If the smarttrade ticket is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4433 · Strategies · smarttrade ticket totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+
+Steps: 1. Open /. 2. Add the smarttrade ticket line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+### T-4434 · Strategies · smarttrade ticket helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-08
+
+Steps: 1. Open /. 2. Read the smarttrade ticket helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4435 · Strategies · smarttrade ticket boundary value accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+
+Steps: 1. Open /. 2. If the smarttrade ticket has a limited input, enter exactly the maximum.
+
+Expected: The boundary value is accepted -- the limit is enforced at the boundary, not before it.
+
+---
+
+### T-4436 · Strategies · smarttrade ticket gate cannot be skipped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open /. 2. Look for any way past the smarttrade ticket safety gate.
+
+Expected: None exists -- the tester verifies the absence and does not try to work around it.
+
+---
+
+### T-4437 · Strategies · journal KPIs (cockpit) layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-09
+
+Steps: 1. Open /. 2. Note the journal KPIs (cockpit) layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4438 · Strategies · journal KPIs (cockpit) reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-09
+
+Steps: 1. Open /. 2. Make a change that affects the journal KPIs (cockpit) (if one is available). 3. Watch the journal KPIs (cockpit).
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4439 · Strategies · journal KPIs (cockpit) failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-09
+
+Steps: 1. Open /. 2. If the journal KPIs (cockpit) is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4440 · Strategies · journal KPIs (cockpit) agrees with its summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-09
+
+Steps: 1. Open /. 2. Read the journal KPIs (cockpit) detail rows and its summary line.
+
+Expected: The summary describes the rows -- never a summary that contradicts its own detail.
+
+---
+
+### T-4441 · Strategies · journal KPIs (cockpit) helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-09
+
+Steps: 1. Open /. 2. Read the journal KPIs (cockpit) helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4442 · Backtest · risk panel layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open /. 2. Note the risk panel layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4443 · Backtest · risk panel reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open /. 2. Make a change that affects the risk panel (if one is available). 3. Watch the risk panel.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4444 · Backtest · risk panel expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open /. 2. If the risk panel offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4445 · Backtest · risk panel failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open /. 2. If the risk panel is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4446 · Backtest · risk panel totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open /. 2. Add the risk panel line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+### T-4447 · Backtest · risk panel helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open /. 2. Read the risk panel helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4448 · Cockpit · funding rail layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+
+Steps: 1. Open /. 2. Note the funding rail layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4449 · Cockpit · funding rail reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-11
+
+Steps: 1. Open /. 2. Make a change that affects the funding rail (if one is available). 3. Watch the funding rail.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4450 · Cockpit · funding rail failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-11
+
+Steps: 1. Open /. 2. If the funding rail is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4451 · Cockpit · funding rail agrees with its summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-11
+
+Steps: 1. Open /. 2. Read the funding rail detail rows and its summary line.
+
+Expected: The summary describes the rows -- never a summary that contradicts its own detail.
+
+---
+
+### T-4452 · Cockpit · funding rail helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-11
+
+Steps: 1. Open /. 2. Read the funding rail helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4453 · AI · AI panel layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open /. 2. Note the AI panel layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4454 · AI · AI panel reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open /. 2. Make a change that affects the AI panel (if one is available). 3. Watch the AI panel.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4455 · AI · AI panel expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open /. 2. If the AI panel offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4456 · AI · AI panel failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open /. 2. If the AI panel is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4457 · AI · AI panel totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open /. 2. Add the AI panel line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+### T-4458 · AI · AI panel helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open /. 2. Read the AI panel helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4459 · News · overview panel layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Open /. 2. Note the overview panel layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4460 · News · overview panel reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-13
+
+Steps: 1. Open /. 2. Make a change that affects the overview panel (if one is available). 3. Watch the overview panel.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4461 · News · overview panel failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-13
+
+Steps: 1. Open /. 2. If the overview panel is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4462 · News · overview panel totals add up
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Open /. 2. Add the overview panel line items by hand. 3. Compare with its total.
+
+Expected: The arithmetic reconciles -- the total equals the sum of its parts.
+
+---
+
+### T-4463 · News · overview panel helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-13
+
+Steps: 1. Open /. 2. Read the overview panel helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4464 · Webhook · positions & orders layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-14
+
+Steps: 1. Open /. 2. Note the positions & orders layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4465 · Webhook · positions & orders reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-14
+
+Steps: 1. Open /. 2. Make a change that affects the positions & orders (if one is available). 3. Watch the positions & orders.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4466 · Webhook · positions & orders failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-14
+
+Steps: 1. Open /. 2. If the positions & orders is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4467 · Webhook · positions & orders tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-14
+
+Steps: 1. Open /. 2. If the positions & orders offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4468 · Webhook · receipt timeline layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-15
+
+Steps: 1. Open /. 2. Note the receipt timeline layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4469 · Webhook · receipt timeline reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-15
+
+Steps: 1. Open /. 2. Make a change that affects the receipt timeline (if one is available). 3. Watch the receipt timeline.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4470 · Webhook · receipt timeline failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-15
+
+Steps: 1. Open /. 2. If the receipt timeline is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4471 · Webhook · receipt timeline agrees with its summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-15
+
+Steps: 1. Open /. 2. Read the receipt timeline detail rows and its summary line.
+
+Expected: The summary describes the rows -- never a summary that contradicts its own detail.
+
+---
+
+### T-4472 · Webhook · receipt timeline tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-15
+
+Steps: 1. Open /. 2. If the receipt timeline offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4473 · Session · settings compact layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-16
+
+Steps: 1. Open /. 2. Note the settings compact layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4474 · Session · settings compact failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-16
+
+Steps: 1. Open /. 2. If the settings compact is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4475 · Session · settings compact agrees with its summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-16
+
+Steps: 1. Open /. 2. Read the settings compact detail rows and its summary line.
+
+Expected: The summary describes the rows -- never a summary that contradicts its own detail.
+
+---
+
+### T-4476 · Session · settings compact tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-16
+
+Steps: 1. Open /. 2. If the settings compact offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4477 · Session · replay booth layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open /. 2. Note the replay booth layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4478 · Session · replay booth expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open /. 2. If the replay booth offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4479 · Session · replay booth failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open /. 2. If the replay booth is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4480 · Session · replay booth tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open /. 2. If the replay booth offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4481 · Session · refresh panels empty panel shape renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-18
+
+Steps: 1. Open /. 2. Look at the refresh panels frame and spacing.
+
+Expected: The panel frame, headings, and spacing render consistently even before its data arrives.
+
+---
+
+### T-4482 · Session · refresh panels dismiss or close works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-18
+
+Steps: 1. Open /. 2. If the refresh panels offers a dismiss or close, click it.
+
+Expected: It closes cleanly -- nothing breaks, nothing lingers.
+
+---
+
+### T-4483 · Session · refresh panels error states what to do
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-18
+
+Steps: 1. Open /. 2. If the refresh panels shows an error, read its last line.
+
+Expected: A next step is stated -- the tester is never left guessing.
+
+---
+
+### T-4484 · Session · refresh panels tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-18
+
+Steps: 1. Open /. 2. If the refresh panels offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4485 · Session · status footer empty panel shape renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-19
+
+Steps: 1. Open /. 2. Look at the status footer frame and spacing.
+
+Expected: The panel frame, headings, and spacing render consistently even before its data arrives.
+
+---
+
+### T-4486 · Session · status footer error states what to do
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-19
+
+Steps: 1. Open /. 2. If the status footer shows an error, read its last line.
+
+Expected: A next step is stated -- the tester is never left guessing.
+
+---
+
+### T-4487 · Session · status footer tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-19
+
+Steps: 1. Open /. 2. If the status footer offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4488 · Session · news filter layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+
+Steps: 1. Open /. 2. Note the news filter layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4489 · Session · news filter reflects a fresh change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-20
+
+Steps: 1. Open /. 2. Make a change that affects the news filter (if one is available). 3. Watch the news filter.
+
+Expected: The change appears visibly -- the panel never sits stale beside fresh state.
+
+---
+
+### T-4490 · Session · news filter expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+
+Steps: 1. Open /. 2. If the news filter offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4491 · Session · news filter failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-20
+
+Steps: 1. Open /. 2. If the news filter is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4492 · Session · news filter helper text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-20
+
+Steps: 1. Open /. 2. Read the news filter helper and hint text.
+
+Expected: Helpers explain in words a trader understands -- never restating the label.
+
+---
+
+### T-4493 · History · home card: Trading layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-21
+
+Steps: 1. Open /home. 2. Note the home card: Trading layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4494 · History · home card: Trading expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-21
+
+Steps: 1. Open /home. 2. If the home card: Trading offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4495 · History · home card: Trading failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-21
+
+Steps: 1. Open /home. 2. If the home card: Trading is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---
+
+### T-4496 · History · home card: Trading agrees with its summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-21
+
+Steps: 1. Open /home. 2. Read the home card: Trading detail rows and its summary line.
+
+Expected: The summary describes the rows -- never a summary that contradicts its own detail.
+
+---
+
+### T-4497 · History · home card: Trading tooltips plain if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-21
+
+Steps: 1. Open /home. 2. If the home card: Trading offers tooltips, hover each.
+
+Expected: Tooltips add real explanation in plain words -- never jargon on top of jargon.
+
+---
+
+### T-4498 · History · home card: Strategies layout stable on reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-22
+
+Steps: 1. Open /home. 2. Note the home card: Strategies layout. 3. Reload the page.
+
+Expected: The layout is identical after reload -- nothing shifts, disappears, or reorders.
+
+---
+
+### T-4499 · History · home card: Strategies expand and collapse works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-22
+
+Steps: 1. Open /home. 2. If the home card: Strategies offers an expander, click it. 3. Click again.
+
+Expected: Detail opens and closes -- the toggle never sticks.
+
+---
+
+### T-4500 · History · home card: Strategies failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-22
+
+Steps: 1. Open /home. 2. If the home card: Strategies is failing now, read its message fully.
+
+Expected: Calm plain words naming the problem and the next step -- no alarm, no blame.
+
+---

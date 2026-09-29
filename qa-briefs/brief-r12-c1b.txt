@@ -1,0 +1,1210 @@
+QA BRIEF — LANE 12 REMAINDER c1b (T-2235–T-2334)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+ALREADY DONE: read-only T-2201–T-2234 (ISS-219: T-2213 funding rail shows no rate direction). Do not re-run.
+State cases in this chunk (T-2235, T-2236, T-2240, T-2241, T-2246, T-2247, T-2249, T-2251, T-2252, T-2253, T-2254, T-2260, T-2261, T-2262, T-2263, T-2264, T-2286, T-2312, T-2314) → WINDOW SWEEP B.
+
+### T-2235 · Market · Manual check inside window vetoes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. During the news window, click "Check now". 2. Read the failed queue.
+
+Expected: Manual-check signals are vetoed like scheduled ones.
+
+---
+
+### T-2236 · Market · Halt during signals stops new alerts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. During live hours with signals flowing, open the halt modal and confirm the halt. 2. Wait through two checks. 3. Read the alerts table.
+
+Expected: No new alert rows appear after the halt.
+
+---
+
+### T-2237 · Market · Halt state shown on the cockpit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a halt active, read the risk-control region.
+
+Expected: The halt state is stated plainly — trading is halted.
+
+---
+
+### T-2238 · Market · Sidebar halt button reflects the halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a halt active, read the sidebar halt button.
+
+Expected: The button shows the halted state instead of offering another halt.
+
+---
+
+### T-2239 · Market · Resume control appears after halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a halt active, read the risk-control region.
+
+Expected: A resume control is shown next to the halt state.
+
+---
+
+### T-2240 · Market · Resume restores signal flow
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a halt active, resume. 2. Wait for the next check. 3. Read the alerts table.
+
+Expected: Signals flow again after resume.
+
+---
+
+### T-2241 · Market · Halt during a check is clean
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Click "Check now", then halt mid-check. 2. Read the runner region.
+
+Expected: The check ends cleanly — no half-written alert rows.
+
+---
+
+### T-2242 · Market · Halt audit-noted with timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a halt, download the audit log. 2. Find the halt.
+
+Expected: The halt is recorded with its timestamp.
+
+---
+
+### T-2243 · Market · Resume audit-noted with timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a resume, download the audit log. 2. Find the resume.
+
+Expected: The resume is recorded with its timestamp.
+
+---
+
+### T-2244 · Market · Halt blocks Telegram cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a halt active, wait through checks. 2. Watch the Telegram chat.
+
+Expected: No approval cards arrive while halted.
+
+---
+
+### T-2245 · Market · Halt blocks the SmartTrade preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. With a halt active, arm the SmartTrade ticket. 2. Read the preview button.
+
+Expected: The preview explains halts block firing — the button stays safe.
+
+---
+
+### T-2246 · Market · Halt announced to assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With assistive tech on, confirm a halt.
+
+Expected: The halted state is announced in plain words.
+
+---
+
+### T-2247 · Market · Resume announced to assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With assistive tech on, resume from a halt.
+
+Expected: The resumed state is announced.
+
+---
+
+### T-2248 · Market · Halt survives a reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. With a halt active, reload the page. 2. Read the risk-control region.
+
+Expected: The halt is still active after reload — reload never silently resumes.
+
+---
+
+### T-2249 · Market · Double-halt is a no-op
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a halt active, open the halt modal again and confirm.
+
+Expected: The second halt changes nothing — the state stays halted, no error.
+
+---
+
+### T-2250 · Market · Halt modal cancel during live signals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-13
+
+Steps: 1. During live signals, open the halt modal and press Cancel. 2. Read the alerts table.
+
+Expected: Signals keep flowing — Cancel never halts.
+
+---
+
+### T-2251 · Market · Queued signals held at halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Halt while approval cards are pending. 2. Watch the Telegram chat.
+
+Expected: Pending cards are held — nothing fires during the halt.
+
+---
+
+### T-2252 · Market · Halt reason recorded
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Confirm a halt with a reason. 2. Download the audit log. 3. Find the halt.
+
+Expected: The recorded halt carries the reason given.
+
+---
+
+### T-2253 · Market · Halt while blackout active is coherent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a blackout active, confirm a halt. 2. Read the risk-control region.
+
+Expected: One clear state shows both — the page never contradicts itself.
+
+---
+
+### T-2254 · Market · Resume with blackout still vetoes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Halt during a blackout, then resume while the blackout is still active. 2. Wait for a signal.
+
+Expected: Signals are still vetoed by the blackout — resume does not clear blackouts.
+
+---
+
+### T-2255 · Market · Halt button keyboard flow safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Tab to the sidebar halt button and press Enter, then Esc.
+
+Expected: The modal opens and Esc closes it with trading still running.
+
+---
+
+### T-2256 · Market · Resume control visible after a halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With a halt active, read the risk-control region.
+
+Expected: The resume path is visible next to the halt state — the tester sees how to resume.
+
+---
+
+### T-2257 · Market · Approval card arrives for a queued signal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. During live hours with Telegram connected, wait for a signal that queues. 2. Watch the Telegram chat.
+
+Expected: An approval card arrives naming the symbol, side and size.
+
+---
+
+### T-2258 · Market · Card shows the confirm id
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a live approval card. 2. Find the confirm id.
+
+Expected: The card shows a confirm id the tester must echo.
+
+---
+
+### T-2259 · Market · Card states the 10-minute expiry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a live approval card.
+
+Expected: The card states it expires in 10 minutes.
+
+---
+
+### T-2260 · Market · YES reply with PIN fires the order
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Reply "YES <confirm-id> PIN <pin>" to a live card within 10 minutes. 2. Watch the receipt timeline.
+
+Expected: A receipt appears for the fired order.
+
+---
+
+### T-2261 · Market · Wrong PIN rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Reply "YES <confirm-id> PIN <wrong-pin>" to a live card. 2. Watch the chat.
+
+Expected: The engine rejects the wrong PIN in plain words — nothing fires.
+
+---
+
+### T-2262 · Market · Wrong confirm id rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Reply "YES <wrong-id> PIN <pin>" to a live card. 2. Watch the chat.
+
+Expected: The engine rejects the unknown id — nothing fires.
+
+---
+
+### T-2263 · Market · Late reply after expiry rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Let a card expire (10 min). 2. Reply "YES <confirm-id> PIN <pin>". 3. Watch the chat.
+
+Expected: The engine reports the card expired — nothing fires.
+
+---
+
+### T-2264 · Market · NO reply cancels the queued signal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Reply "NO <confirm-id>" to a live card. 2. Watch the chat and the alerts table.
+
+Expected: The engine confirms the cancellation and the signal never fires.
+
+---
+
+### T-2265 · Market · Unanswered card expires quietly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Let a card sit for 10 minutes with no reply. 2. Watch the chat and the alerts table.
+
+Expected: The card expires with no order and the expiry is noted.
+
+---
+
+### T-2266 · Market · Expired card never fires late
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a card expires, wait through more checks. 2. Watch the receipt timeline.
+
+Expected: No receipt ever appears for the expired card.
+
+---
+
+### T-2267 · Market · Card for a vetoed signal never arrives
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a veto, watch the Telegram chat.
+
+Expected: No card arrives — vetoes stop before the human step.
+
+---
+
+### T-2268 · Market · Two cards carry different confirm ids
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Let two signals queue. 2. Compare their cards.
+
+Expected: Each card carries its own confirm id — ids never collide.
+
+---
+
+### T-2269 · Market · Replying to the wrong card id fails safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-13
+
+Steps: 1. With two cards pending, reply with card A's id to card B's thread. 2. Watch the chat.
+
+Expected: The engine rejects the mismatch — nothing fires.
+
+---
+
+### T-2270 · Market · Card shows the signal summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. During live hours with Telegram connected, read an approval card.
+
+Expected: The card summarizes the symbol, side and size of the queued signal.
+
+---
+
+### T-2271 · Market · Fired order receipt matches the card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Approve a card. 2. Read the receipt. 3. Compare with the card.
+
+Expected: Symbol, side and size on the receipt match the approved card exactly.
+
+---
+
+### T-2272 · Market · Card names the queuing strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. During live hours with Telegram connected, read an approval card. 2. Find the strategy name.
+
+Expected: The card names which strategy queued the signal.
+
+---
+
+### T-2273 · Market · Journal NET P&L moves with fills
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-82
+
+Steps: 1. During a live session with fills, read the Journal NET P&L twice an hour apart.
+
+Expected: The value moves as fills land.
+
+---
+
+### T-2274 · Market · Journal GROSS P&L shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Read the Journal region during a live session.
+
+Expected: GROSS P&L is shown next to NET P&L.
+
+---
+
+### T-2275 · Market · Journal FEES shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Read the Journal region during a live session.
+
+Expected: FEES are shown as their own term.
+
+---
+
+### T-2276 · Market · Expectancy per-trade net shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the EXPECTANCY terms.
+
+Expected: Per-trade net expectancy is shown in plain words.
+
+---
+
+### T-2277 · Market · Expectancy per-trade gross shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the EXPECTANCY terms.
+
+Expected: Per-trade gross expectancy is shown.
+
+---
+
+### T-2278 · Market · Win rate shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Journal KPIs.
+
+Expected: Win rate is shown as a plain percentage.
+
+---
+
+### T-2279 · Market · Trade count shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Journal KPIs.
+
+Expected: The number of trades is shown.
+
+---
+
+### T-2280 · Market · Best and worst trade shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Journal KPIs.
+
+Expected: Best and worst trade are shown with their values.
+
+---
+
+### T-2281 · Market · KPIs update without reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Watch the Journal region as fills land.
+
+Expected: KPIs update on their own — no reload needed.
+
+---
+
+### T-2282 · Market · KPIs match the receipt timeline
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Add up the receipts' P&L. 2. Compare with NET P&L.
+
+Expected: The journal's NET P&L matches the receipts' sum.
+
+---
+
+### T-2283 · Market · Fees match the venue fee note
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Journal FEES. 2. Read the Gate.io fee note on the ticket.
+
+Expected: Fees are consistent with the 0.020%/0.050% fee note.
+
+---
+
+### T-2284 · Market · Losing session shows negative NET honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. During a losing session, read NET P&L.
+
+Expected: The value is negative and shown plainly — losses are never hidden.
+
+---
+
+### T-2285 · Market · Zero-trade session states itself
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. With no trades yet, read the Journal region.
+
+Expected: The journal states plainly there are no trades yet — it never shows fake zeros as results.
+
+---
+
+### T-2286 · Market · Journal note attaches to a session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Save a journal note tagged with the session. 2. Re-read the notes list.
+
+Expected: The note is listed with its tag and timestamp.
+
+---
+
+### T-2287 · Market · Calendar CSV reflects the session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a live session, download the trading calendar CSV. 2. Open it.
+
+Expected: The session's day carries its P&L in the CSV.
+
+---
+
+### T-2288 · Market · Tax CSV reflects the session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a live session, download the tax report CSV. 2. Open it.
+
+Expected: The session's fills appear as tax rows.
+
+---
+
+### T-2289 · Market · Audit log records the fills
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a live session, download the audit log. 2. Search the fills.
+
+Expected: Every fill is recorded with its details.
+
+---
+
+### T-2290 · Market · KPIs readable by assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-13
+
+Steps: 1. Check the Journal KPIs with assistive tech.
+
+Expected: Every KPI is announced as labelled text.
+
+---
+
+### T-2291 · Market · KPI definitions shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read each KPI term.
+
+Expected: Each KPI carries a short definition of what it measures.
+
+---
+
+### T-2292 · Market · Expectancy definition shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the EXPECTANCY terms in the Journal region.
+
+Expected: Each expectancy term carries a short definition of what it measures.
+
+---
+
+### T-2293 · Market · Journal names its trading day
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Read the Journal region. 2. Find the session date.
+
+Expected: The journal names which trading day its KPIs cover.
+
+---
+
+### T-2294 · Market · Pine script builds the envelope JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Open the full cockpit page (/). 2. Read the Pine alert script excerpt.
+
+Expected: The excerpt builds the envelope JSON dynamically from the bar's values.
+
+---
+
+### T-2295 · Market · Pine script includes the secret placeholder
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-13
+
+Steps: 1. Read the Pine script excerpt.
+
+Expected: The script carries the secret field the validator's secret rule checks.
+
+---
+
+### T-2296 · Market · Pine script includes mode live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Pine script excerpt.
+
+Expected: The script sets mode to "live".
+
+---
+
+### T-2297 · Market · Pine script includes the symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Pine script excerpt.
+
+Expected: The script sets the traded symbol.
+
+---
+
+### T-2298 · Market · Pine script includes the timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Pine script excerpt.
+
+Expected: The script stamps the bar's time for the 120s freshness rule.
+
+---
+
+### T-2299 · Market · Pine script includes idempotencyKey
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Pine script excerpt.
+
+Expected: The script generates a unique idempotencyKey per alert.
+
+---
+
+### T-2300 · Market · Pine script includes seq
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the Pine script excerpt.
+
+Expected: The script numbers alerts with an increasing seq.
+
+---
+
+### T-2301 · Market · Copy button copies the full script
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Click "Copy Pine alert script to clipboard". 2. Paste into a text editor.
+
+Expected: The full script pastes cleanly with its version line intact.
+
+---
+
+### T-2302 · Market · Pasted script validates in the envelope box
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Copy the Pine script's sample JSON output. 2. Paste it into the envelope validator. 3. Click Validate.
+
+Expected: The sample envelope passes every ingress rule.
+
+---
+
+### T-2303 · Market · Webhook secret matches the validator secret
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Read the webhook secret region on /notifications. 2. Read the validator's secret rule.
+
+Expected: Both name the same sealed WEBHOOK_SECRET — the script, the webhook and the validator agree.
+
+---
+
+### T-2304 · Market · Delivered webhook alert appears in Deliveries
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire the TradingView webhook. 2. Read the Deliveries table.
+
+Expected: The alert appears with its id and machine status.
+
+---
+
+### T-2305 · Market · Delivered alert appears in the alerts table
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire the TradingView webhook. 2. Read the ALERTS & LOGS table.
+
+Expected: The alert appears as a row with its status.
+
+---
+
+### T-2306 · Market · Bad-secret webhook rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire the webhook with a wrong secret. 2. Read the Deliveries table.
+
+Expected: No delivery row appears — the bad secret is refused at ingress.
+
+---
+
+### T-2307 · Market · Stale webhook alert dropped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-04
+
+Steps: 1. Fire the webhook with a timestamp older than 120s. 2. Read the tables.
+
+Expected: No alert row appears — the stale envelope is dropped.
+
+---
+
+### T-2308 · Market · Replayed webhook dedupes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Fire the same webhook envelope twice. 2. Read the Deliveries table.
+
+Expected: One delivery row appears — the replay dedupes to the first fire.
+
+---
+
+### T-2309 · Market · Out-of-order seq rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire two envelopes with a non-increasing seq. 2. Read the Deliveries table.
+
+Expected: The out-of-order envelope is refused.
+
+---
+
+### T-2310 · Market · Unknown symbol webhook rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire the webhook with a non-tradeable symbol. 2. Read the tables.
+
+Expected: No alert row appears — the symbol rule holds at ingress.
+
+---
+
+### T-2311 · Market · Non-live mode webhook rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire the webhook with mode set wrong. 2. Read the tables.
+
+Expected: No alert row appears — the mode rule holds at ingress.
+
+---
+
+### T-2312 · Market · Webhook alert flows through guards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire a valid webhook during live hours. 2. Follow the alert through the guards.
+
+Expected: The alert passes caps, blackout, funding and news checks like any other signal.
+
+---
+
+### T-2313 · Market · Deliveries row shows received time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Read the Deliveries table. 2. Find the received-time column.
+
+Expected: Every delivery row shows when the alert arrived.
+
+---
+
+### T-2314 · Market · Webhook alert names its source
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire the TradingView webhook. 2. Expand the alert detail. 3. Look for the source.
+
+Expected: The alert detail names TradingView as the signal source.
+
+---
+
+### T-2315 · Market · Receipt shows the true venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a fill, read the receipt timeline. 2. Read the venue on the receipt.
+
+Expected: The venue reads "gateio" — the venue the engine actually used.
+
+---
+
+### T-2316 · Market · Receipt venue matches the keys slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Read a receipt's venue. 2. Open /keys and read the slot's exchange.
+
+Expected: Both name the same venue.
+
+---
+
+### T-2317 · Market · No receipt claims a venue not in use
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read every receipt on the timeline.
+
+Expected: No receipt names a venue the engine did not use.
+
+---
+
+### T-2318 · Market · Receipt shows the order mode
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt. 2. Find the mode field.
+
+Expected: The receipt states the order mode plainly.
+
+---
+
+### T-2319 · Market · Receipt shows fill price and size
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt.
+
+Expected: Fill price and size are shown with units.
+
+---
+
+### T-2320 · Market · Receipt shows fees paid
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt.
+
+Expected: The fee paid on the fill is shown.
+
+---
+
+### T-2321 · Market · Receipt timestamp shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt.
+
+Expected: The fill timestamp is shown.
+
+---
+
+### T-2322 · Market · Receipts ordered newest-first
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the receipt timeline.
+
+Expected: Receipts run newest-first so the latest fill is on top.
+
+---
+
+### T-2323 · Market · Receipt timeline survives reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Note the receipts. 2. Reload. 3. Re-read the timeline.
+
+Expected: The same receipts appear in the same order.
+
+---
+
+### T-2324 · Market · Receipt count shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the receipt timeline heading.
+
+Expected: The count of receipts is shown.
+
+---
+
+### T-2325 · Market · Empty receipts state plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. With no fills yet, read the receipt timeline region.
+
+Expected: The region states plainly there are no receipts yet.
+
+---
+
+### T-2326 · Market · Receipt text selectable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Drag-select a receipt's details.
+
+Expected: The text selects cleanly for copying into a report.
+
+---
+
+### T-2327 · Market · Receipts readable by assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-13
+
+Steps: 1. Check the receipt timeline with assistive tech.
+
+Expected: Each receipt is announced with its key details.
+
+---
+
+### T-2328 · Market · Receipt matches the Telegram card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Approve a card, then read the resulting receipt. 2. Compare.
+
+Expected: Venue, symbol, side and size match the approved card.
+
+---
+
+### T-2329 · Market · Receipt matches the journal fill
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Read a receipt. 2. Find the fill in the journal/history. 3. Compare.
+
+Expected: Price, size and time agree between receipt and journal.
+
+---
+
+### T-2330 · Market · History trade row references its receipt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Open /history. 2. Read a closed-trade row. 3. Find the matching receipt on the cockpit.
+
+Expected: The trade row carries enough detail (time, symbol, size) to match its receipt.
+
+---
+
+## Section Q · Mobile 390px (110 cases: T-2331–T-2440)
+
+### T-2331 · Mobile · Route / loads at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open / at 390px width. 2. Wait for the page to settle.
+
+Expected: The page loads fully with no sideways scrolling.
+
+---
+
+### T-2332 · Mobile · Route / sidebar collapses to menu
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open / at 390px width. 2. Look at the sidebar.
+
+Expected: The sidebar collapses to a menu control.
+
+---
+
+### T-2333 · Mobile · Route / menu reaches every page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open / at 390px width. 2. Open the menu.
+
+Expected: Every one of the ten Pages links is in the menu.
+
+---
+
+### T-2334 · Mobile · Route / text readable without zoom
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. Open / at 390px width. 2. Read the body text.
+
+Expected: Body text is readable at the default size — no pinch-zoom needed.
+
+---

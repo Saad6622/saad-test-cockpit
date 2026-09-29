@@ -1,0 +1,1207 @@
+QA BRIEF — BULK LANE B2 chunk 14/45 (T-5301–T-5400)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-5301 · Fix-wave · List matches the runner evaluated count
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh, count the strategy cards, read the runner's evaluated count.
+
+Expected: The card count matches the runner's count -- the reload is complete.
+
+---
+
+### T-5302 · Fix-wave · Signal chips unchanged by a pure reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Note the chips, click refresh with no new activity, re-read the chips.
+
+Expected: Chips unchanged -- a reload that promises no new checks invents no signals.
+
+---
+
+### T-5303 · Fix-wave · Runner strip and list agree after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh, then compare the runner strip totals with the list.
+
+Expected: Strip and list tell the same story.
+
+---
+
+### T-5304 · Fix-wave · Toggle states survive refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Set a strategy off, click refresh, read its card.
+
+Expected: Still off -- refresh does not flip toggles.
+
+---
+
+### T-5305 · Fix-wave · Result banner agrees with the list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh, read the banner count, count the cards.
+
+Expected: The banner's numbers match the visible list.
+
+---
+
+### T-5306 · Fix-wave · Refresh with no strategies installed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. If the list is empty, click refresh.
+
+Expected: Handled gracefully -- an honest empty state, no error.
+
+---
+
+### T-5307 · Fix-wave · Refresh while offline fails gracefully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. If the tunnel drops, click refresh.
+
+Expected: A calm failure, not a hang -- and the old list is labeled stale.
+
+---
+
+### T-5308 · Fix-wave · Refresh spam is absorbed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh ten times as fast as possible.
+
+Expected: The page stays healthy -- clicks are absorbed, nothing double-fires.
+
+---
+
+### T-5309 · Fix-wave · Refresh during halt stays safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. With Halt trading on, click refresh.
+
+Expected: The list reloads; halt state is untouched -- refresh never un-halts.
+
+---
+
+### T-5310 · Fix-wave · Hint has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the refresh hint aloud.
+
+Expected: Everyday words -- no 'poll', 'cycle', or 'runner internals' on screen.
+
+---
+
+### T-5311 · Fix-wave · Result banner has no raw errors
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh and read the banner character for character.
+
+Expected: No codes, no JSON -- human words.
+
+---
+
+### T-5312 · Fix-wave · Failure reason reads as a sentence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. If a refresh fails, read the reason.
+
+Expected: One plain sentence a trader understands.
+
+---
+
+### T-5313 · Fix-wave · Button label is a verb phrase
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the button label.
+
+Expected: 'Refresh the list now' -- an action, not a noun or a code.
+
+---
+
+### T-5314 · Fix-wave · Countdown label reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the 'Next check' countdown text.
+
+Expected: Plain words with a time -- no raw seconds-since-epoch.
+
+---
+
+### T-5315 · Fix-wave · Validator renders with its contract disclosure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Read the validator block.
+
+Expected: Textbox, Validate button, and the contract disclosure all render -- the contract lists risk_pct.
+
+---
+
+### T-5316 · Fix-wave · Contract disclosure lists risk_pct
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Open the contract disclosure and read the field list.
+
+Expected: risk_pct is listed as an accepted field -- the UI's own contract includes it.
+
+---
+
+### T-5317 · Fix-wave · Valid verdict renders for a conformant envelope
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a contract-conformant envelope including risk_pct and press Validate.
+
+Expected: A clear valid verdict renders -- the fix is visible.
+
+---
+
+### T-5318 · Fix-wave · Verdict area renders before any validation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Read the verdict area before pressing Validate.
+
+Expected: It reads as awaiting input -- not a stale old verdict.
+
+---
+
+### T-5319 · Fix-wave · Validator holds at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Load at phone width and read the validator block.
+
+Expected: Textbox, button, and verdict all readable -- nothing truncated.
+
+---
+
+### T-5320 · Fix-wave · risk_pct documented with its meaning
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Read what the contract says about risk_pct.
+
+Expected: Its meaning is explained in plain words -- a tester knows what the field does.
+
+---
+
+### T-5321 · Fix-wave · Conformant envelope with risk_pct validates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct and press Validate.
+
+Expected: Valid -- the schema no longer rejects risk_pct as an extra input.
+
+---
+
+### T-5322 · Fix-wave · Conformant envelope without risk_pct still validates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope without risk_pct and press Validate.
+
+Expected: Still valid -- the field is accepted, not required.
+
+---
+
+### T-5323 · Fix-wave · Validate re-runs cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Validate the same envelope twice.
+
+Expected: Same verdict both times -- deterministic, no flip-flopping.
+
+---
+
+### T-5324 · Fix-wave · Editing the envelope re-validates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Validate, change one character, validate again.
+
+Expected: The verdict updates to match the new text.
+
+---
+
+### T-5325 · Fix-wave · Validate is keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Tab to the Validate button and press Enter with an envelope pasted.
+
+Expected: Validates from the keyboard exactly like a click.
+
+---
+
+### T-5326 · Fix-wave · Clear then validate reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Clear the textbox and press Validate.
+
+Expected: An honest empty-input message -- not a stale verdict.
+
+---
+
+### T-5327 · Fix-wave · Copy contract then validate works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Copy the documented contract example and validate it.
+
+Expected: The documented example validates -- docs and validator agree.
+
+---
+
+### T-5328 · Fix-wave · Validate never goes silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Press Validate with various inputs and watch the verdict area.
+
+Expected: Every press produces a verdict or a failure message -- never nothing.
+
+---
+
+### T-5329 · Fix-wave · Bad envelope still fails with reasons
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a malformed envelope and press Validate.
+
+Expected: Invalid verdict with plain-words reasons -- the fix did not make everything pass.
+
+---
+
+### T-5330 · Fix-wave · Missing required field named
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste an envelope missing a required field and press Validate.
+
+Expected: The verdict names the missing field.
+
+---
+
+### T-5331 · Fix-wave · Validator failure never silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. If validation itself errors, read the verdict area.
+
+Expected: A failure message shows -- the button never swallows the press.
+
+---
+
+### T-5332 · Fix-wave · risk_pct accepted but nonsense value refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct as text and press Validate.
+
+Expected: Refused with a reason -- accepting the field is not accepting garbage.
+
+---
+
+### T-5333 · Fix-wave · Old 'Extra inputs are not permitted' gone for risk_pct
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct and press Validate.
+
+Expected: No 'Extra inputs are not permitted' for risk_pct -- that rejection is gone.
+
+---
+
+### T-5334 · Fix-wave · Unknown fields still rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste an envelope with a made-up field and press Validate.
+
+Expected: The made-up field is rejected -- the schema is fixed, not removed.
+
+---
+
+### T-5335 · Fix-wave · Empty textbox reads as empty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Press Validate with the textbox empty.
+
+Expected: An empty-input message -- not a confusing invalid verdict.
+
+---
+
+### T-5336 · Fix-wave · risk_pct error names the field in words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste an envelope with a bad risk_pct and press Validate.
+
+Expected: The reason names risk_pct in words -- no schema jargon.
+
+---
+
+### T-5337 · Fix-wave · No raw schema dump on failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Cause a validation failure and read the verdict fully.
+
+Expected: No raw schema JSON, no 'Extra inputs are not permitted' -- human reasons.
+
+---
+
+### T-5338 · Fix-wave · Valid verdict reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Validate a conformant envelope and read the verdict.
+
+Expected: 'Valid' in plain words -- no codes.
+
+---
+
+### T-5339 · Fix-wave · Contract disclosure has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Read the contract disclosure fully.
+
+Expected: Field names with plain explanations -- a trader can write an envelope from it.
+
+---
+
+### T-5340 · Fix-wave · Failure tells what to fix
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Cause a validation failure and read to the end.
+
+Expected: It says which field to fix and how -- not just what broke.
+
+---
+
+### T-5341 · Fix-wave · No stack trace ever
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Cause several validation failures and read each verdict.
+
+Expected: No tracebacks, no 'undefined' -- ever.
+
+---
+
+### T-5342 · Fix-wave · risk_pct zero accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct 0 and press Validate.
+
+Expected: Valid -- zero is a real boundary value, not an error.
+
+---
+
+### T-5343 · Fix-wave · risk_pct 100 accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct 100 and press Validate.
+
+Expected: Valid -- the top boundary passes.
+
+---
+
+### T-5344 · Fix-wave · risk_pct negative refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct -1 and press Validate.
+
+Expected: Refused with a plain-words reason.
+
+---
+
+### T-5345 · Fix-wave · risk_pct over 100 refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct 101 and press Validate.
+
+Expected: Refused with a plain-words reason.
+
+---
+
+### T-5346 · Fix-wave · risk_pct as text refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste a conformant envelope with risk_pct 'high' and press Validate.
+
+Expected: Refused -- text is not a number, said plainly.
+
+---
+
+### T-5347 · Fix-wave · Huge envelope handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Paste an envelope padded to 4000 characters and press Validate.
+
+Expected: A verdict or a calm too-long message -- no hang.
+
+---
+
+### T-5348 · Fix-wave · Whitespace-only input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Fill the textbox with spaces and press Validate.
+
+Expected: An empty-input message -- not a crash.
+
+---
+
+### T-5349 · Fix-wave · Non-JSON input refused plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Type plain English into the textbox and press Validate.
+
+Expected: A plain-words 'not valid JSON' style refusal.
+
+---
+
+### T-5350 · Fix-wave · Accepted fields match the contract list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Validate envelopes using each documented field one by one.
+
+Expected: Every documented field validates -- the schema and the contract list agree.
+
+---
+
+### T-5351 · Fix-wave · Contract example validates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Copy the contract's own example envelope and validate it.
+
+Expected: Valid -- the documentation's example passes its own validator.
+
+---
+
+### T-5352 · Fix-wave · Pine snippet contract agrees
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Read the pine snippet's contract fields. 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Read the validator's contract list.
+
+Expected: Both list the same fields including risk_pct -- one contract everywhere.
+
+---
+
+### T-5353 · Fix-wave · Verdict matches the documented rules
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Test three envelopes against the documented rules and validate each.
+
+Expected: Every verdict matches what the documentation predicts.
+
+---
+
+### T-5354 · Fix-wave · risk_pct round-trips through validation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-06
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the envelope validator. 3. Validate an envelope with risk_pct 2.5, then read the verdict's echo of the fields.
+
+Expected: The value survives validation unchanged -- 2.5 in, 2.5 understood.
+
+---
+
+### T-5355 · Fix-wave · DAILY cap bar shows its value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Find the DAILY cap bar.
+
+Expected: A visible value with units -- not a bare label, not a naked bar.
+
+---
+
+### T-5356 · Fix-wave · SYMBOL cap bar shows its value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Find the SYMBOL cap bar.
+
+Expected: A visible value with units -- the fix is visible.
+
+---
+
+### T-5357 · Fix-wave · Every cap bar shows a value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read each cap bar: per-trade, heat, daily, cluster, symbol.
+
+Expected: Every bar carries its value -- no label-only bars remain.
+
+---
+
+### T-5358 · Fix-wave · Values labeled with units
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read each cap-bar value character for character.
+
+Expected: Units attached -- percent or dollars, never a naked number.
+
+---
+
+### T-5359 · Fix-wave · Cap bars hold at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Load at phone width and read the cap bars.
+
+Expected: Values readable -- nothing truncated off the bars.
+
+---
+
+### T-5360 · Fix-wave · Bar fill matches its value
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Compare each bar's fill length with its printed value.
+
+Expected: The visual fill agrees with the number -- the bar is not decorative.
+
+---
+
+### T-5361 · Fix-wave · Blackout line still renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the blackout line under the cap bars.
+
+Expected: Present and readable -- the fix did not disturb it.
+
+---
+
+### T-5362 · Fix-wave · Run check control renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Find the Run check control in the risk panel.
+
+Expected: Labeled and ready -- the panel's action is visible.
+
+---
+
+### T-5363 · Fix-wave · Cap values update after Run check
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Note the cap values. 2. Press Run check. 3. Re-read the values.
+
+Expected: Values refresh to the check's results -- live, not painted once.
+
+---
+
+### T-5364 · Fix-wave · Values tick as the day progresses
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Note the DAILY value, wait for trading activity, re-read.
+
+Expected: The value moves with reality.
+
+---
+
+### T-5365 · Fix-wave · Run check renders a verdict, never silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Press Run check and watch for 10 seconds.
+
+Expected: A verdict appears -- the button is never a silent no-op.
+
+---
+
+### T-5366 · Fix-wave · Halt banner state live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the halt banner state in the risk panel.
+
+Expected: It reflects the true halt state right now.
+
+---
+
+### T-5367 · Fix-wave · Values survive a panel refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Run the cockpit panel refresh and re-read the cap bars.
+
+Expected: Values re-render -- refresh never blanks them.
+
+---
+
+### T-5368 · Fix-wave · Cap values live after reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Reload the page and read the cap bars.
+
+Expected: Values present on first paint -- not filled in only after waiting.
+
+---
+
+### T-5369 · Fix-wave · Run check verdict timestamp fresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Press Run check and read any time on the verdict.
+
+Expected: The time is now -- not a stale stamp.
+
+---
+
+### T-5370 · Fix-wave · Run check clickable and responsive
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Press Run check.
+
+Expected: It responds -- working state, then verdict.
+
+---
+
+### T-5371 · Fix-wave · Cap bars have no dead hover
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Hover each cap bar.
+
+Expected: If a tooltip exists it shows the value; nothing pretends interactivity it lacks.
+
+---
+
+### T-5372 · Fix-wave · Run check keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Tab to Run check and press Enter.
+
+Expected: Activates exactly like a click.
+
+---
+
+### T-5373 · Fix-wave · Repeated Run checks work
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Press Run check three times with pauses.
+
+Expected: Each run verdicts cleanly -- the control never wedges.
+
+---
+
+### T-5374 · Fix-wave · Values selectable for reading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Try selecting a cap-bar value with the mouse.
+
+Expected: Selectable text -- a trader can copy the number if needed.
+
+---
+
+### T-5375 · Fix-wave · Halt banner not clickable by tester
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the halt banner.
+
+Expected: It is a state display -- the tester is not offered a halt toggle here.
+
+---
+
+### T-5376 · Fix-wave · Uncomputed caps read honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. If a cap has no value yet, read its bar.
+
+Expected: An honest 'not computed' style note -- never a zero that implies a limit.
+
+---
+
+### T-5377 · Fix-wave · Failed Run check reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. If Run check fails, read the verdict area.
+
+Expected: A calm reason -- not a silent button, not a raw error.
+
+---
+
+### T-5378 · Fix-wave · Stale values labeled stale
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. If the feed is down, read the cap bars.
+
+Expected: Old values labeled as old -- never presented as current.
+
+---
+
+### T-5379 · Fix-wave · Zero cap reads as zero
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. If a cap value is zero, read its bar.
+
+Expected: It reads 0 with units -- an explicit zero, not a missing value.
+
+---
+
+### T-5380 · Fix-wave · Halt banner honest when halted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. With Halt trading on, read the risk panel banner.
+
+Expected: It says halted plainly -- the panel never hides the halt state.
+
+---
+
+### T-5381 · Fix-wave · Verdict never stuck mid-run
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Press Run check and watch for 30 seconds.
+
+Expected: It resolves to a verdict -- never a permanent 'checking'.
+
+---
+
+### T-5382 · Fix-wave · Cap bars honest with no trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. With no run active, read the cap bars.
+
+Expected: Values or honest empty notes -- never invented activity.
+
+---
+
+### T-5383 · Fix-wave · Cap values match settings values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the cap values. 2. Open /settings and read the risk-caps group.
+
+Expected: The numbers match -- panel and settings share one truth.
+
+---
+
+### T-5384 · Fix-wave · DAILY value matches its definition
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the DAILY bar value and the panel's definition of the daily cap.
+
+Expected: The value fits the definition -- label and number agree.
+
+---
+
+### T-5385 · Fix-wave · SYMBOL value matches its definition
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the SYMBOL bar value and the panel's definition of the symbol cap.
+
+Expected: The value fits the definition.
+
+---
+
+### T-5386 · Fix-wave · Run check verdict agrees with the bars
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Press Run check, read the verdict, compare with the cap bars.
+
+Expected: Verdict and bars agree -- the check and the display share data.
+
+---
+
+### T-5387 · Fix-wave · Heat bar consistent with positions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the heat bar. 2. Read the positions panel.
+
+Expected: The heat reading is consistent with the open positions shown.
+
+---
+
+### T-5388 · Fix-wave · Values consistent across reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the cap values, reload, read them again.
+
+Expected: Same values -- reload does not invent drift.
+
+---
+
+### T-5389 · Fix-wave · Bar fills proportional to values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Compare two bars' fills with their printed values.
+
+Expected: Fills are proportional -- a bigger value is a longer bar.
+
+---
+
+### T-5390 · Fix-wave · Cap labels have no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read every cap-bar label aloud.
+
+Expected: Everyday words -- no engine-internal names.
+
+---
+
+### T-5391 · Fix-wave · Verdict reads in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Press Run check and read the verdict.
+
+Expected: Human sentences -- no raw guard output.
+
+---
+
+### T-5392 · Fix-wave · No raw numbers without units
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the whole risk panel.
+
+Expected: Every number carries units or a label.
+
+---
+
+### T-5393 · Fix-wave · Failure reason has no codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. If Run check fails, read the reason.
+
+Expected: No HTTP codes, no rule slugs -- words.
+
+---
+
+### T-5394 · Fix-wave · Halt banner reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the risk panel. 3. Read the halt banner text.
+
+Expected: Plain words about what halt means right now.
+
+---
+
+### T-5395 · Fix-wave · Every fill row shows a side label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If fills exist, read each row in the fills lane.
+
+Expected: Every row carries a side label -- LONG/SHORT or Buy/Sell -- no unlabeled rows.
+
+---
+
+### T-5396 · Fix-wave · Third fill carries a side label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If at least three fills exist, read the third row.
+
+Expected: The third fill -- the one that lost its label -- now shows its side.
+
+---
+
+### T-5397 · Fix-wave · Side label sits with its row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read the fills lane layout.
+
+Expected: Each label sits beside its own row's price -- labels never drift to the wrong row.
+
+---
+
+### T-5398 · Fix-wave · Side labels use consistent words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read all side labels in the lane.
+
+Expected: One vocabulary throughout -- not LONG on one row and Buy on another.
+
+---
+
+### T-5399 · Fix-wave · Side label readable at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Load at phone width and read the fills lane.
+
+Expected: Labels fully visible -- no truncation hiding the side.
+
+---
+
+### T-5400 · Fix-wave · Fill prices still show 2 decimals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read each fill price in the lane.
+
+Expected: Two decimals everywhere -- the label fix did not disturb pricing.
+
+---

@@ -1,0 +1,1027 @@
+QA BRIEF — BULK LANE B4 chunk 28/45 (T-6701–T-6800)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-6701 · AI profile · unsealing works end to end — the path offered is real
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. Run only if the profile is sealed and offers an unseal path; otherwise record N-A. 2. Follow the offered path exactly; copy each step's feedback verbatim. 3. Confirm the profile is editable afterward; re-seal if the UI offers it.
+
+Expected: The offered path genuinely unseals — no dead button, no step that leads nowhere, no unseal that claims success while the profile stays locked. A decorative unseal path is a FAIL.
+
+### T-6702 · AI profile · editing the profile mid-pending-verdict: the pending verdict keeps its context or re-runs honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. Trigger a fresh verdict; while it shows "waiting", edit and save one profile field. 2. When the verdict lands, check its attribution/context note. 3. Restore the profile field.
+
+Expected: Exactly one honest outcome — the verdict notes it used the pre-edit profile, or it re-runs under the new one and says so. A verdict silently mixing old and new profile context is a FAIL. (If no verdict can be caught mid-flight, record N-A.)
+
+### T-6703 · AI profile · the profile states which model it applies to — no model-agnostic ambiguity
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Open the AI profile; look for the model (or provider) the profile binds to, copied verbatim. 2. Switch models on /settings, save, and re-read the profile's binding. 3. Restore the contributor model.
+
+Expected: The profile names its model binding explicitly, and the binding follows (or honestly doesn't follow) a model switch — the tester always knows which brain the profile shapes. An unbound profile is a FAIL.
+
+### T-6704 · AI profile · profile changes take effect when stated — "immediate" means the next verdict
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. Note a verdict's reasoning style. 2. Edit the profile's style/posture field to something distinctive; save; copy the "takes effect" note verbatim. 3. Trigger a new verdict; compare its reasoning style. 4. Restore the profile.
+
+Expected: The UI's stated timing holds — if it says immediate, the next verdict reflects the change; if it says "next session", that is honored and stated. A change that claims immediacy but never lands is a FAIL.
+
+### T-6705 · AI profile · profile change writes an audit row — the change is traceable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. Open the audit/history view; note the newest entry's time. 2. Edit and save one profile field. 3. Re-open the audit view; find the profile-change entry and copy it verbatim. 4. Restore the field.
+
+Expected: A profile-change row exists with what changed and when — never a silent profile edit with no trace. A missing audit row is a FAIL. (If no audit view exists, record N-A with the absence noted.)
+
+### T-6706 · AI profile · profile at phone width: every field reachable, save button never off-screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Open the AI profile at phone width (390px). 2. Scroll every field; confirm each label + input is visible and tappable. 3. Confirm the save control is reachable without horizontal scrolling.
+
+Expected: The whole form works at phone width — no field hidden, no save button stranded off-screen. Any phone-width breakage is a FAIL.
+
+### T-6707 · AI profile · empty profile fields show honest defaults — never blank mystery inputs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Open the AI profile; for each field, note whether an empty value shows a placeholder, a stated default, or nothing. 2. Save with a field cleared (if allowed); reload and re-read it.
+
+Expected: Empty is never mysterious — a placeholder or a stated default explains what empty means, and a cleared-then-saved field reloads as the stated default, not a blank that behaves unpredictably. A mystery blank is a FAIL.
+
+### T-6708 · AI profile · profile vs AI budget: the profile's appetite never exceeds MAX PER DAY silently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Copy the profile's verbosity/frequency settings verbatim. 2. Copy the AI group's MAX PER DAY/HOUR verbatim. 3. Judge: could the profile's normal operation blow the budget? Does the UI warn?
+
+Expected: If the profile's appetite could exceed the budget, the UI says so in plain words — never a profile that silently burns the daily budget by noon. An unwarned over-appetite is a FAIL.
+
+### T-6709 · AI profile · the profile's instructions preview shows what the brain is told — no black box
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Open the AI profile; look for a preview of the instructions/persona sent to the model (system prompt summary, "the AI is told:" — whatever exists). 2. Copy it verbatim. 3. If nothing exists, record N-A with the absence noted.
+
+Expected: The tester can see what the brain is instructed — the profile is not a black box. (N-A is acceptable here; the case documents the gap rather than failing on it — mark the absence as a finding for the plan's growth.)
+
+### T-6710 · AI profile · per-strategy profile overrides are honored — the override visibly wins
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. If the profile offers per-strategy overrides, set one strategy's posture distinctly different; save. 2. Read a verdict on that strategy's signal and one on another strategy's signal; compare posture. 3. Remove the override. 4. If no overrides exist, record N-A.
+
+Expected: The overridden strategy's verdicts reflect the override, others don't — the override visibly wins where it applies. A decorative override is a FAIL.
+
+### T-6711 · AI profile · a destructive profile action (clear/delete) is double-guarded — no one-click wipe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. If the profile offers clear/delete, start the flow but CANCEL at the confirmation step; verify nothing changed. 2. If no destructive action exists, record N-A.
+
+Expected: The destructive path demands explicit confirmation in plain words — and cancelling leaves everything intact. A one-click wipe is a FAIL. (Never complete the destructive action.)
+
+### T-6712 · AI profile · profile name/identifier appears on every verdict attribution — the profile is traceable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Copy the profile's name/identifier verbatim. 2. Find three recent verdicts; copy each one's full attribution. 3. Check the profile name appears in each.
+
+Expected: Every verdict attribution names the profile (or the model+profile pair) — the tester can always tell which profile shaped a verdict. A profile-less attribution is a FAIL.
+
+### T-6713 · AI profile · sealed profile is fully readable — sealing hides editing, not information
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Run only if the profile is sealed; otherwise record N-A. 2. Read every field's value in the sealed state. 3. Attempt an edit; copy the refusal verbatim.
+
+Expected: Sealing locks editing but never hides the values — the tester can still read the full profile, and the edit refusal explains the seal. A seal that hides information is a FAIL.
+
+### T-6714 · AI profile · profile export/copy produces the real profile — the copy matches the screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. If the profile offers export or "copy profile", use it. 2. Compare the exported/copied content against the on-screen field inventory from T-6694. 3. If no export exists, record N-A.
+
+Expected: The export matches the screen field-for-field — never a stale or partial copy. A mismatched export is a FAIL.
+
+### T-6715 · AI profile · concurrent profile edits don't clobber — last save wins honestly, or conflict stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. Open the AI profile in two browser tabs. 2. In tab 1 change field A and save. 3. In tab 2 (stale view) change field B and save. 4. Reload both; inventory all fields.
+
+Expected: Exactly one honest outcome — both changes survive (field-level merge), or the second save warns about the conflict in plain words. A silent clobber of tab 1's change is a FAIL. (Restore originals before the case ends.)
+
+### T-6716 · AI profile · profile change notification names the change — the alert says what moved
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. Change one profile field and save. 2. Check /notifications → Message history for a profile-change alert. 3. Copy it verbatim; restore the field. 4. If no alert exists, record N-A.
+
+Expected: The alert names the changed field (and old → new, if shown) — never a bare "profile updated" that hides what moved. A content-free alert is a FAIL.
+
+### T-6717 · AI profile · the profile's language is plain words throughout — no raw config keys on screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AW-PRO
+
+Steps: 1. Read the entire AI profile section top to bottom. 2. Flag any raw config keys (snake_case tokens, JSON fragments, enum names) shown to the tester.
+
+Expected: Plain-words labels everywhere — the profile reads like settings for a trader, not a config dump. Any raw key on screen is a FAIL.
+
+### T-6718 · AI profile · acceptance: full profile cycle — inventory, edit, validate, seal story, behavior spot-check, restore
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AW-PRO
+
+Steps: 1. Inventory the profile (per T-6694). 2. Edit one field with a valid value; verify persistence across reload. 3. Attempt one invalid value; verify honest refusal. 4. Read the seal story (or note unsealed). 5. Spot-check one verdict's reasoning against the profile's posture. 6. Restore the edited field.
+
+Expected: The whole cycle is clean — edits stick, invalid input refused, seal explained, behavior matches posture, originals restored. Any broken link is a FAIL.
+
+## Section AX · AI as a brain: AI + notifications — every AI event announced, attributed, traceable (25 cases: T-6719–T-6743)
+
+Saad's order 2026-09-27 ("add hundreds of cases"): detailed testing of "using AI as a brain in the trading app", from every angle, UI-only. Section AR proved AI-driven notifications carry attribution; AS proved notification↔verdict traceability. This section owns the whole AI-notification surface — every AI event that should announce itself (verdicts, scans, errors, budget, profile/model changes), the toggles that govern them, and the receiving-end truth. Each case runs through the live UI: /notifications plus the AI surface that fires the event. Written 2026-09-27 ~08:35 PDT.
+
+### T-6719 · AI notifications · a fresh AI verdict fires a notification — one verdict, one alert, attributed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Note the newest /notifications → Message history row's timestamp. 2. Trigger a fresh AI verdict (new signal or re-ask). 3. After it lands, check for a new history row; copy it verbatim.
+
+Expected: Exactly one new row for the verdict, carrying AI attribution and the verdict's timestamp — never zero rows, never two rows for one verdict. A missing or duplicated alert is a FAIL. (If verdicts don't notify by design, record N-A with the design note quoted.)
+
+### T-6720 · AI notifications · a completed scan fires a completion alert — findings counted honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Run an AI market scan. 2. When it completes, check /notifications for a scan alert; copy it verbatim. 3. Compare its finding count against the scan results.
+
+Expected: The alert states the scan completed with the true finding count — never an inflated count, never silence after a findings-bearing scan. A lying or missing alert is a FAIL. (If scans don't notify by design, record N-A.)
+
+### T-6721 · AI notifications · an AI failure fires an honest failure alert — the brain's outage is announced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Flip the provider to keyless Meta direct; ask the AI a question (it will fail). 2. Check /notifications for a failure alert; copy it verbatim. 3. Flip back to OpenRouter and confirm recovery.
+
+Expected: The failure is announced in plain words ("AI request failed — …" style) — the brain's outage is never silent in the notification stream. A silent failure is a FAIL. (If failures don't notify by design, record N-A.)
+
+### T-6722 · AI notifications · AI/guard disagreement fires a conflict alert — the conflict is never quiet
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Find a signal where AI and guard disagreed (per T-6589). 2. Check /notifications for a conflict/disagreement alert about it; copy verbatim. 3. If no disagreement exists this session, record N-A.
+
+Expected: The disagreement is announced — the tester is told the brain and the guard parted ways. A quiet conflict is a FAIL. (If disagreements don't notify by design, record N-A.)
+
+### T-6723 · AI notifications · receiving-end check: an AI verdict alert actually arrives in the bot chat
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Trigger a fresh AI verdict that notifies (per T-6719). 2. Confirm the history row says Delivered with receipt detail. 3. Read-only check of Saad's Telegram bot chat (session signed in 2026-09-19): confirm the verdict alert arrived with the exact wording.
+
+Expected: History and receiving end agree — the Delivered row matches a real message in the chat with identical text. A Delivered row with no message is a FAIL. (Read-only: never send from his account.)
+
+### T-6724 · AI notifications · AI alert wording is plain words — no codes, no raw model output in the message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. In /notifications → Message history, copy three AI-driven rows verbatim in full. 2. Flag any codes, raw JSON, model plumbing, or untranslated tokens.
+
+Expected: All three read as plain-words trader messages — the notification stream never leaks model internals. Any leaked artifact is a FAIL.
+
+### T-6725 · AI notifications · no duplicate AI alerts — one event, one row, even under rapid events
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Trigger two AI verdicts ~10 seconds apart. 2. Count the new history rows; copy both verbatim. 3. Check for duplicates (same verdict notified twice).
+
+Expected: Exactly two rows, one per verdict — never a duplicated alert for a single event. A duplicate is a FAIL.
+
+### T-6726 · AI notifications · an AI alert's timestamp matches its event — no re-timed notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Pick three AI-driven history rows; copy each row's timestamp. 2. Open each row's source event (verdict, scan, profile change); copy the event time. 3. Compare.
+
+Expected: All three match — the notification is never re-timed to the delivery moment or rounded beyond recognition. A re-timed alert is a FAIL.
+
+### T-6727 · AI notifications · the AI-notification toggle is real — off means silent, on means announced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Find the AI-notifications toggle (wherever it lives); note its state. 2. Turn it OFF; trigger an AI verdict; check for a new history row. 3. Turn it ON; trigger another verdict; check again.
+
+Expected: OFF = no AI alert rows; ON = alerts resume — the toggle genuinely governs AI notifications. A toggle that changes nothing is a FAIL. (If no toggle exists, record N-A with the absence noted.)
+
+### T-6728 · AI notifications · per-type AI toggles are honored — verdicts off, errors still announce
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. If per-type toggles exist (verdicts / scans / errors), turn verdict alerts OFF, leave error alerts ON. 2. Trigger a verdict (expect silence) and an AI failure (expect an alert). 3. Restore all toggles ON. 4. If no per-type toggles exist, record N-A.
+
+Expected: Each toggle governs exactly its type — verdicts silent, errors announced. Cross-type leakage is a FAIL.
+
+### T-6729 · AI notifications · "AI budget exhausted" fires a warning alert — the tester is told before the silence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Run only if the AI budget is currently exhausted; otherwise record N-A — do NOT burn budget. 2. Check /notifications for a budget-exhaustion warning; copy verbatim.
+
+Expected: The exhaustion is announced in plain words — the tester learns why the brain went quiet from the notification stream, not by guessing. A silent exhaustion is a FAIL.
+
+### T-6730 · AI notifications · AI alerts survive in history — no silent pruning without a stated policy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Scroll to the oldest AI-driven history rows; note the oldest timestamp. 2. Look for a stated retention policy ("alerts kept N days"). 3. Reload; confirm the old rows persist.
+
+Expected: Old AI alerts persist — or a plain-words retention policy states the cutoff. Silent pruning is a FAIL.
+
+### T-6731 · AI notifications · the Telegram pill agrees with the last AI alert — no pill/history contradiction
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Trigger an AI verdict that notifies; note the newest history row's status. 2. Copy the Telegram status pill verbatim. 3. Force an AI failure (keyless flip); re-read the pill. 4. Restore the provider.
+
+Expected: The pill always tells the same story as the newest AI alert — never "Connected" while the last AI alert failed, never "failed" while alerts deliver. A contradiction is a FAIL.
+
+### T-6732 · AI notifications · a model switch fires a "brain changed" alert — the tester knows who answers now
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Note the newest history row's timestamp. 2. Switch the AI model on /settings and save. 3. Check for a new history row about the change; copy verbatim. 4. Restore the contributor model.
+
+Expected: The switch is announced with the old → new model named — the tester is never left wondering which brain answers. (If model changes don't notify by design, record N-A with the design note quoted — the absence is a finding, not a failure.)
+
+### T-6733 · AI notifications · an AI suggestion alert is visually distinct from an AI verdict alert
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Find one AI-suggestion history row and one AI-verdict history row. 2. Copy both verbatim; compare their presentation (labels, icons, wording).
+
+Expected: The two types are visually distinguishable — a suggestion never masquerades as a verdict or vice versa. Indistinguishable types are a FAIL. (If one type never notifies, record N-A.)
+
+### T-6734 · AI notifications · AI alerts during halt still deliver — informational alerts aren't blocked by halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (resume after halt). Exclusions: real money, credentials in his hands.
+
+Steps: 1. Turn halt ON; confirm halt is active. 2. Trigger an AI verdict; check for its history row. 3. Turn halt OFF; confirm trading resumes.
+
+Expected: The informational alert still fires under halt — halt blocks entries, not information. A halted notification stream is a FAIL. Halt must be OFF when the case ends.
+
+### T-6735 · AI notifications · the AI alert excerpt is meaningful — the preview carries the verdict, not filler
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Copy three AI-driven history rows' excerpts/previews verbatim. 2. Judge: does each excerpt carry the verdict/finding, or generic filler?
+
+Expected: Every excerpt states the AI's conclusion ("verdict: skip — …" style) — never "AI notification" filler that forces opening the row to learn anything. Filler excerpts are a FAIL.
+
+### T-6736 · AI notifications · quiet-hours respect AI alerts honestly — stated policy, no silent drops
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. If the app offers quiet hours / do-not-disturb for notifications, read its policy verbatim — do AI alerts obey it? 2. If no quiet-hours feature exists, record N-A.
+
+Expected: The policy states plainly whether AI alerts are held, delayed, or delivered during quiet hours — never silent drops with no policy. An unstated drop is a FAIL.
+
+### T-6737 · AI notifications · an AI alert deep-links to its event — the link lands on the verdict, scan, or change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Pick three AI-driven history rows (verdict, scan, profile/model change). 2. Follow each row's link/reference. 3. Note the landing page per row.
+
+Expected: Each link lands on its event — the verdict, the scan results, the changed setting. A dead link or a wrong landing is a FAIL. (Extends T-6616: this covers all AI event types, not just verdicts.)
+
+### T-6738 · AI notifications · failed AI alerts are honest in history — "couldn't deliver", never fake Delivered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. In /notifications → Message history, find any AI-driven row with a failed status. 2. Copy its status + reason verbatim. 3. If none exists, record N-A.
+
+Expected: Failed AI alerts say so plainly with the reason — the history never upgrades a failed AI alert to Delivered. A fake Delivered is a FAIL.
+
+### T-6739 · AI notifications · AI alerts at phone width: attribution and excerpt stay readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Open /notifications → Message history at phone width (390px). 2. Read three AI-driven rows fully — attribution, excerpt, timestamp, status.
+
+Expected: Everything readable at phone width — no attribution clipped away, no excerpt overlapping the status. Any phone-width breakage is a FAIL.
+
+### T-6740 · AI notifications · a test AI alert path exists and works — or its absence is stated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Look for a "send test AI alert" / "test AI notifications" control. 2. If it exists, press it once; verify the test alert arrives in history (and receiving end if Delivered). 3. If none exists, record N-A with the absence noted.
+
+Expected: The test path works end to end — or the UI states plainly there is no test path. A dead test control is a FAIL.
+
+### T-6741 · AI notifications · AI alert volume under a signal burst: every verdict announced, none coalesced away
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. During a burst of signals (or trigger several re-asks in succession), count the verdicts produced. 2. Count the AI alert rows in history for the same window. 3. If no burst occurs, record N-A.
+
+Expected: One alert per verdict — bursts never coalesce alerts away silently. A missing alert in a burst is a FAIL.
+
+### T-6742 · AI notifications · the notification settings page documents AI alert types — the tester knows what's announced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AX-PRO
+
+Steps: 1. Open /notifications settings (or wherever notification types are configured). 2. Copy every mention of AI-driven alert types verbatim. 3. Compare against the alert types actually observed in history.
+
+Expected: The settings document every AI alert type the app can fire — no surprise alert type that was never disclosed. An undocumented type is a FAIL.
+
+### T-6743 · AI notifications · acceptance: full AI notification cycle — verdict → alert → history → receiving end, all agreeing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AX-PRO
+
+Steps: 1. Trigger one fresh AI verdict. 2. Verify: the verdict shows with attribution; one history row appears with AI attribution and the verdict's timestamp; the Telegram pill agrees; the message arrives in the bot chat with identical wording (read-only check). 3. Follow the history row's link back to the verdict.
+
+Expected: The full cycle agrees everywhere — verdict, alert, history, pill, receiving end, and the link back. Any broken link in the chain is a FAIL. (Read-only on the receiving end: never send from his account.)
+
+## Section AY · AI as a brain: failure injection — every way the brain can break, honestly handled (25 cases: T-6744–T-6768)
+
+Saad's order 2026-09-27 ("add hundreds of cases"): detailed testing of "using AI as a brain in the trading app", from every angle, UI-only. Section AS covered the natural failure modes (keyless, 401, outage, budget). This section INJECTS failures deliberately through the UI — bad keys that pass format checks, failures mid-scan and mid-verdict, cascading breakage, recovery — and demands each one be handled honestly with zero phantom output. Nothing here touches the backend; every failure is induced through the UI's own controls. Written 2026-09-27 ~08:35 PDT.
+
+### T-6744 · AI failure · a well-formed-but-wrong key saved through the UI: Test 401s, AI surfaces report auth failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Open /settings → AI providers; copy the current indicator. 2. Type a well-formed-but-wrong key (right prefix/length shape, wrong secret) and press save. 3. If the save is refused (per T-6582), record N-A with the refusal quoted — the injection is impossible by design. 4. If the save sticks, run Test (expect 401), then ask the AI a question; copy both outcomes verbatim. 5. Restore the working key by re-entering it through the UI and verify Test green.
+
+Expected: If the bad key sticks, every AI surface reports the auth failure in plain words — never a cached "working" answer. The working key must be restored before the case ends; leaving a bad key behind is a FAIL.
+
+### T-6745 · AI failure · failure mid-verdict: the signal shows "verdict unavailable", the guard still decides alone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip the provider to keyless Meta direct. 2. Trigger a fresh verdict on a signal; watch it fail. 3. Copy the verdict area and the guard decision verbatim. 4. Flip back to OpenRouter; confirm recovery.
+
+Expected: The verdict area says plainly the AI couldn't answer, while the guard decision stands on its own — the signal is never left with neither input. A signal showing neither verdict nor guard decision is a FAIL.
+
+### T-6746 · AI failure · failure mid-scan: the scan fails honestly, partial results labeled partial
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Start an AI scan; mid-run, flip the provider to keyless Meta direct. 2. Copy the scan's outcome verbatim. 3. Flip back to OpenRouter; confirm the next scan runs clean.
+
+Expected: The scan reports the failure in plain words; anything shown is labeled partial — never a failed scan presented as complete. A fake-complete scan is a FAIL. (If no scan surface exists, record N-A.)
+
+### T-6747 · AI failure · cascading failure: one key death degrades every surface within a single page walk
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip the provider to keyless Meta direct. 2. Walk every AI surface in one pass — chat, signals verdicts, analysis view, AI profile, scan, badges — copying each one's state verbatim. 3. Flip back to OpenRouter; confirm recovery.
+
+Expected: Every surface degrades honestly — no surface left claiming the brain is healthy while the key is dead. One healthy-pretending surface is a FAIL.
+
+### T-6748 · AI failure · recovery without reload: fixing the key revives surfaces in place
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip to keyless Meta direct; confirm a degraded surface. 2. Flip back to OpenRouter WITHOUT reloading the page. 3. Ask the AI a question on the same page; note whether it answers.
+
+Expected: Exactly one honest behavior — the surface recovers in place, or it says plainly that a reload is needed. A surface stuck degraded forever with no guidance is a FAIL.
+
+### T-6749 · AI failure · failure copy is identical across surfaces — one outage, one wording
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip to keyless Meta direct. 2. Copy the failure wording on the chat surface, the signals verdict area, and the analysis view verbatim. 3. Flip back to OpenRouter.
+
+Expected: All three use the same plain-words failure copy — the tester isn't told three different stories about one outage. Drifting failure copy is a FAIL.
+
+### T-6750 · AI failure · failures are timestamped honestly — "failed at HH:MM", not a timeless error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AY-PRO
+
+Steps: 1. Cause an AI failure (keyless flip); note the clock time. 2. Copy the failure presentation verbatim on two surfaces. 3. Flip back to OpenRouter.
+
+Expected: Each failure carries its time — the tester can tell when the brain broke. A timeless error with no timestamp is a FAIL.
+
+### T-6751 · AI failure · a failed call never corrupts chat history — old answers intact, in order
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Ask two questions successfully; copy the last line of each answer. 2. Flip to keyless Meta direct; ask a third question (it fails). 3. Re-read the first two answers verbatim, in order. 4. Flip back to OpenRouter.
+
+Expected: The two good answers are intact and in order — the failed third call leaves an honest failure note without disturbing history. Corrupted or reordered history is a FAIL.
+
+### T-6752 · AI failure · a failed call never wipes the saved key slot — the key survives its own failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Copy the saved-key indicator. 2. Run a Test that fails (or ask a question during a real outage); copy the failure. 3. Re-read the indicator; reload and re-read it again.
+
+Expected: The indicator is untouched — a failed call never clears, blanks, or alters the saved key. An auto-wiped slot is a FAIL.
+
+### T-6753 · AI failure · failure during a model switch: the switch completes or rolls back honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip to keyless Meta direct (AI failing). 2. Attempt a model switch on /settings and save; copy the feedback verbatim. 3. Reload; read the selected model. 4. Flip back to OpenRouter; restore the contributor model.
+
+Expected: Exactly one honest outcome — the switch is stored for later, refused plainly until the provider works, or applied cleanly. A switch that claims success but didn't stick is a FAIL.
+
+### T-6754 · AI failure · rate-limit wording is honest — "too many requests, try in Xs", never a generic error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AY-PRO
+
+Steps: 1. Run only if a rate-limit (429) is actually hit this session (rapid questions/scans); otherwise record N-A — do NOT hammer the provider to force it. 2. Copy the rate-limit message verbatim.
+
+Expected: The message names the limit in plain words with a retry time — never a bare 429, never a hang. A cryptic rate-limit is a FAIL.
+
+### T-6755 · AI failure · two concurrent AI failures: two honest notes, never merged confusion
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip to keyless Meta direct. 2. Ask a chat question AND trigger a verdict at the same time. 3. Copy both failure presentations verbatim. 4. Flip back to OpenRouter.
+
+Expected: Two separate honest failures — never one failure note shown in both places as if one call failed twice, never the two errors merged into nonsense. Merged confusion is a FAIL.
+
+### T-6756 · AI failure · a failed AI notification is honest in history — the alert that couldn't send says so
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AY-PRO
+
+Steps: 1. In /notifications → Message history, find an AI-driven row whose send failed. 2. Copy its status + reason verbatim. 3. If none exists, record N-A.
+
+Expected: The failed send is labeled failed with its reason — the history never shows Delivered for an alert that never left. A fake Delivered is a FAIL.
+
+### T-6757 · AI failure · failure while halt is active: halt state untouched by the AI failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (resume after halt). Exclusions: real money, credentials in his hands.
+
+Steps: 1. Turn halt ON; confirm halt is active. 2. Flip the provider to keyless Meta direct; cause an AI failure. 3. Verify halt is still ON and entries still blocked. 4. Flip back to OpenRouter; turn halt OFF.
+
+Expected: The AI failure never disturbs the halt — halt stays on, entries stay blocked, and the failure doesn't silently resume trading. Any halt disturbance is a FAIL. Halt must be OFF when the case ends.
+
+### T-6758 · AI failure · failures are logged as failures in the audit — never as successes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Open the audit view; note the newest entry's time. 2. Flip to keyless Meta direct; cause an AI failure. 3. Re-open the audit view; find the failure entry and copy it verbatim. 4. Flip back to OpenRouter.
+
+Expected: The audit shows the failure as a failure — never a success row for a call that never completed. A success-logged failure is a FAIL. (If no audit view exists, record N-A.)
+
+### T-6759 · AI failure · a failure never triggers a phantom "budget exhausted" — failure and budget are distinct
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Note the AI usage counter (if one exists). 2. Flip to keyless Meta direct; cause three AI failures. 3. Re-read the counter and check for any "budget exhausted" copy. 4. Flip back to OpenRouter.
+
+Expected: The counter is unchanged by failures and no budget-exhausted copy appears — a failed call consumes no budget and is never mislabeled as exhaustion. A phantom exhaustion is a FAIL.
+
+### T-6760 · AI failure · partial failure: verdict arrived but reasoning missing — labeled partial, never faked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AY-PRO
+
+Steps: 1. Survey recent verdicts for any with a verdict word but no reasoning (partial response). 2. If one exists, copy its presentation verbatim. 3. If none exists, record N-A.
+
+Expected: The partial verdict is labeled as partial ("reasoning unavailable") — the UI never invents reasoning to fill the gap. Faked reasoning is a FAIL.
+
+### T-6761 · AI failure · failure copy at phone width: fully readable, retry control tappable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. At phone width (390px), flip to keyless Meta direct and cause an AI failure. 2. Read the failure copy fully; try the retry control. 3. Flip back to OpenRouter.
+
+Expected: The failure message is fully readable at phone width and the retry control is tappable — no clipped message, no unreachable retry. Any phone-width breakage is a FAIL.
+
+### T-6762 · AI failure · first-ever AI failure (no history): the onboarding explains the failure, not just the error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AY-PRO
+
+Steps: 1. On a surface where the tester has never successfully used the AI, cause a failure (keyless flip). 2. Copy the failure presentation verbatim — does it explain what the AI is and what to do next? 3. Flip back to OpenRouter.
+
+Expected: The first failure teaches — it explains the AI needs a working key and where to fix it, not just "error". A bare error with no guidance for a first-timer is a FAIL.
+
+### T-6763 · AI failure · post-recovery verdicts are fresh — the failed verdict is never resurrected as the answer
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip to keyless Meta direct; trigger a verdict (it fails — note the failure). 2. Flip back to OpenRouter; re-trigger the verdict on the same signal. 3. Copy the new verdict verbatim.
+
+Expected: The new verdict is genuinely fresh — the UI never presents the old failure as the answer, never caches the failure as the verdict. A resurrected failure is a FAIL.
+
+### T-6764 · AI failure · the retry control re-asks — never serves the cached failure as success
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Cause an AI failure on a question; note the failure. 2. Press the retry control (if one exists; otherwise record N-A). 3. Copy the retry's outcome verbatim.
+
+Expected: The retry makes a genuine new attempt — on recovery it answers fresh; on continued failure it fails honestly again. A retry that displays the old failure as a success is a FAIL.
+
+### T-6765 · AI failure · failure during provider switch: the switch lands cleanly or not at all
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. With OpenRouter failing (keyless flip already applied? No — instead: start from working OpenRouter). 2. Begin a provider switch to Meta direct; while saving, cause a disruption (rapid reload). 3. After settling, read the active provider, model, and key indicator verbatim.
+
+Expected: Exactly one clean outcome — the switch completed fully, or the original state is intact. A half-switched state (provider says Meta, model still OpenRouter-only) is a FAIL. (Restore OpenRouter + contributor model before the case ends.)
+
+### T-6766 · AI failure · error copy never echoes the key — failures leak nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Cause three different AI failures (keyless flip, bad Test, outage if real). 2. Copy each failure message verbatim. 3. Scan each for key fragments (prefix, length hints, last-4 beyond the indicator).
+
+Expected: Zero key material in any failure message — failures describe the problem, never the credential. Any leaked fragment is an immediate FAIL and the case stops.
+
+### T-6767 · AI failure · failure doesn't freeze the rest of the app — non-AI surfaces keep working
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Flip to keyless Meta direct (AI failing). 2. Walk the non-AI surfaces: /home, trading view, /history, journal — confirm each loads and works. 3. Flip back to OpenRouter.
+
+Expected: The app without its brain still functions — an AI failure never freezes trading views, history, or journal. A frozen app from an AI failure is a FAIL.
+
+### T-6768 · AI failure · acceptance: full inject-fail-recover cycle — break it three ways, recover, verify zero residue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AY-PRO
+
+Steps: 1. Break the brain three ways in sequence: keyless provider flip, failed Test, model switch to an inaccessible model — copying each failure verbatim. 2. Recover fully: OpenRouter + contributor model + green Test. 3. Verify: ask a question (fresh answer), check a verdict (fresh verdict), confirm the key indicator is the original, confirm no surface is stuck degraded.
+
+Expected: Every break was honest, the recovery is complete, and zero residue remains — no stuck degraded surface, no phantom failure, no altered key. Any residue is a FAIL.
+
+## Section AZ · AI as a brain: persistence & cross-page state — the brain is the same brain everywhere (25 cases: T-6769–T-6793)
+
+Saad's order 2026-09-27 ("add hundreds of cases"): detailed testing of "using AI as a brain in the trading app", from every angle, UI-only. Section AS proved verdicts and provider state survive reloads and tunnel rotations. This section goes wider — the AI's state across EVERY page, reloads mid-call, navigation mid-verdict, tunnel outages mid-call, multi-tab behavior, and server restarts. The brain must be the same brain on every page, after every disruption. Each case runs through the live UI. Written 2026-09-27 ~08:35 PDT.
+
+### T-6769 · AI state · AI chat history is identical on every page that shows it — one history, not per-page copies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. Ask the AI two questions; copy the last line of each answer. 2. Open every page that shows AI chat/history; copy the last lines on each. 3. Compare.
+
+Expected: Identical history everywhere — never a page showing a stale or partial copy. A divergent history is a FAIL. (If history shows on only one page, record that honestly.)
+
+### T-6770 · AI state · reload during an AI call: the call resolves or fails honestly — never silently lost
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Ask the AI a question; while it shows "waiting", reload the page. 2. After reload, check the chat: did the answer arrive, is it still waiting honestly, or is there a failure note? 3. Copy the outcome verbatim.
+
+Expected: Exactly one honest outcome — the answer landed, the wait continues with progress copy, or a plain-words note says the call was interrupted. A silently vanished question is a FAIL.
+
+### T-6771 · AI state · navigation mid-verdict: the verdict is findable after returning
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Trigger a fresh verdict; while "waiting", navigate to /home. 2. Wait past the expected answer time; navigate back to the signal. 3. Copy the verdict area verbatim.
+
+Expected: The verdict is there — navigation never loses a verdict computed while away. A verdict lost to navigation is a FAIL.
+
+### T-6772 · AI state · tunnel outage during an AI call: honest outcome after recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Ask the AI a question; during the wait, a tunnel rotation/outage occurs. 2. After the tunnel recovers, reload and check the chat. 3. Copy the outcome verbatim. 4. If no outage occurs this session, record N-A.
+
+Expected: The call either completed server-side and the answer appears, or the UI says plainly the call was interrupted — never a forever-"waiting" and never a fake answer. A dishonest outcome is a FAIL.
+
+### T-6773 · AI state · provider switch is instant on all pages — no page shows the old brain after a switch
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. With OpenRouter active, open the AI chat, signals view, and /settings in three tabs. 2. On /settings, flip to Meta direct and save. 3. Without reloading, read the provider badge/attribution on the other two tabs.
+
+Expected: Both tabs reflect the switch (or state plainly they need a reload) — never a tab silently answering as the old provider. A stale-brain tab is a FAIL. (Restore OpenRouter before the case ends.)
+
+### T-6774 · AI state · model switch persists across reload — and the next answer proves it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Switch to a different model; save; reload; confirm the selector still shows it. 2. Ask a question; check the attribution names the new model. 3. Restore the contributor model.
+
+Expected: The switch survives reload AND the next answer proves the new brain is live — a selector that says X while answers come from Y is a FAIL.
+
+### T-6775 · AI state · AI profile edits are visible on verdict surfaces immediately — no stale-profile verdicts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Edit one visible profile field (e.g. style note); save. 2. Without reloading, open a signal and trigger a fresh verdict. 3. Check whether the verdict reflects the edited profile (or honestly notes the profile version used). 4. Restore the field.
+
+Expected: The fresh verdict uses the current profile — or says which profile version it used. A verdict silently using the pre-edit profile with no note is a FAIL.
+
+### T-6776 · AI state · budget counters agree across pages — chat page vs settings show the same number
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. Find the AI usage counter on every page that shows one; copy each verbatim without reloading between reads. 2. Compare. 3. If only one page shows a counter, record that honestly.
+
+Expected: All counters identical — never two pages disagreeing about today's usage. A disagreeing counter is a FAIL.
+
+### T-6777 · AI state · the AI badge in nav/sidebar agrees with /settings on every page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. On /settings, copy the active provider + model. 2. Walk every main page (/home, signals, /history, journal); copy any AI provider/model badge shown. 3. Compare each against /settings.
+
+Expected: Every badge matches /settings — no page shows a stale provider or model. A stale badge is a FAIL. (If no badges exist outside /settings, record that honestly.)
+
+### T-6778 · AI state · a deep link to a verdict works after reload — the link doesn't rot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Open a signal's verdict; copy the page URL. 2. Reload the page via the URL (fresh navigation). 3. Confirm the verdict is shown, not a generic page.
+
+Expected: The deep link lands on the verdict every time — never a rotted link that drops to a generic view. A rotted link is a FAIL. (If verdicts have no addressable URLs, record N-A with the absence noted.)
+
+### T-6779 · AI state · back-button through AI surfaces: states stay consistent, no phantom screens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Walk: /settings → AI chat (ask a question) → signal verdict → back → back. 2. At each back step, copy what the page shows. 3. Check the chat answer and verdict survived the round trip.
+
+Expected: Back navigation restores each prior state faithfully — no phantom screens, no lost answers, no resurrected stale states. A broken back chain is a FAIL.
+
+### T-6780 · AI state · two tabs: an AI change in one is visible in the other after reload — honestly stale before
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Open the AI chat in two tabs. 2. In tab 1, ask a question; let it answer. 3. In tab 2 WITHOUT reloading, check whether the new Q&A appears. 4. Reload tab 2; check again.
+
+Expected: Exactly one honest behavior — tab 2 live-updates, or it honestly shows the older state until reload, then syncs. A tab that shows a DIFFERENT (contradictory) history after reload is a FAIL.
+
+### T-6781 · AI state · server restart: provider and key survive, in-flight calls fail honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. Run only after a server restart you did not cause (or note the next natural restart); otherwise record N-A. 2. After the restart, open /settings → AI providers: provider, model, indicator intact? 3. Ask a question: fresh answer?
+
+Expected: Configuration survives the restart byte-identical; any call in flight during the restart is reported honestly (not presented as answered). A wiped key or a phantom answer is a FAIL.
+
+### T-6782 · AI state · a drafted question survives a tunnel rotation — the words aren't lost to the network
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Type (don't send) a long question in the AI chat. 2. During/after a tunnel rotation, reload via the bookmark and return to the chat. 3. Read the input box verbatim.
+
+Expected: The draft survives — or the UI warned before discarding. A silently wiped draft is a FAIL. (Extends T-6612: this covers the rotation case specifically.)
+
+### T-6783 · AI state · verdict pagination never loses verdicts — page 2's verdicts are as complete as page 1's
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. If the signals/verdict list paginates, open page 2 (or scroll-load more). 2. Open three verdicts from the later page; verify verdict + reasoning + attribution all present. 3. If no pagination exists, record N-A.
+
+Expected: Later pages are as complete as the first — pagination never drops verdict data. A data-thin later page is a FAIL.
+
+### T-6784 · AI state · AI timestamps use one timezone everywhere — chat, verdicts, history, audit agree
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. Copy one timestamp from each: an AI chat answer, a signal verdict, a notification history row, an audit entry — all from the same hour. 2. Compare formats and zones.
+
+Expected: One consistent timezone/format across all four — the tester never has to convert. Mixed zones with no labels are a FAIL.
+
+### T-6785 · AI state · exported AI data matches the UI — the export is the same brain's work
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. If any export includes AI content (verdicts, chat, scan results), export it. 2. Compare three entries against the UI verbatim. 3. If no AI export exists, record N-A.
+
+Expected: The export matches the UI exactly — same verdicts, same attributions, same times. A diverging export is a FAIL.
+
+### T-6786 · AI state · an AI error banner dismissed on one page stays dismissed — or reappears honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Cause an AI failure; dismiss its error banner. 2. Navigate to two other pages and back. 3. Note whether the banner reappears.
+
+Expected: Exactly one honest behavior — the dismissal holds everywhere, or the banner reappears with a plain-words reason (new failure). A banner that haunts every page after dismissal is a FAIL. (Restore the provider before the case ends.)
+
+### T-6787 · AI state · verdict counts on the dashboard agree with the signals page — one truth, two views
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. If /home or a dashboard shows AI verdict counts/summaries, copy them verbatim. 2. Count the matching verdicts on the signals page. 3. Compare. 4. If no dashboard counts exist, record N-A.
+
+Expected: The counts agree — the dashboard never shows verdicts the signals page doesn't have. A disagreeing count is a FAIL.
+
+### T-6788 · AI state · AI scan results read identically from the scan page and from notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. Run a scan; copy one finding from the scan page verbatim. 2. Open the scan's notification row; copy its finding text. 3. Compare. 4. If no scan surface exists, record N-A.
+
+Expected: Identical findings — the notification never paraphrases the scan into something different. Any drift is a FAIL.
+
+### T-6789 · AI state · the AI provider indicator in the page footer/sidebar agrees with /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AZ-PRO
+
+Steps: 1. On /settings, copy the provider Active state + model. 2. Check the sidebar/footer on three other pages for an AI status indicator; copy each. 3. Flip the provider; re-check one page. 4. Restore OpenRouter.
+
+Expected: Every indicator matches /settings before and after the flip — no page shows a stale brain. A stale indicator is a FAIL. (If no such indicators exist, record that honestly.)
+
+### T-6790 · AI state · half-completed AI onboarding resumes honestly — never restarts silently, never skips
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. If the AI setup has a multi-step onboarding, complete half, then reload mid-flow. 2. Note where it resumes. 3. If no onboarding exists, record N-A.
+
+Expected: The flow resumes where it left off — or states plainly it restarted. A silent skip of steps is a FAIL.
+
+### T-6791 · AI state · AI state after browser restart: history, provider, and profile all intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Ask a question (copy the last line); note provider, model, and one profile field. 2. Fully close and reopen the browser; return via the bookmark. 3. Re-check all four.
+
+Expected: Everything intact — history, provider, model, profile. A browser restart never wipes the brain's configuration or memory. Any loss is a FAIL.
+
+### T-6792 · AI state · AI settings group collapse state never hides a changed value — collapsed groups show a "changed" hint
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Open /settings; change one AI group field and save. 2. Collapse the group; reload the page. 3. Look at the collapsed group header — is there any hint a value was changed?
+
+Expected: The collapsed header hints at the change (dot, "modified" tag — or the group stays expanded). A collapse that silently hides changed values is a FAIL. (Restore the original value before the case ends.)
+
+### T-6793 · AI state · acceptance: full cross-page consistency walk — one brain, every page, after reload and rotation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AZ-PRO
+
+Steps: 1. Record: provider, model, key indicator, one verdict's attribution, one chat answer's last line, one counter value. 2. Walk every main page; verify the AI state matches everywhere. 3. Reload; verify again. 4. After the next tunnel rotation, verify once more.
+
+Expected: One consistent brain on every page, across reload and rotation — no stale badge, no lost history, no divergent counter. Any inconsistency is a FAIL.
+
+## Section BA · AI as a brain: mobile-viewport wording — the brain in a phone screen (25 cases: T-6794–T-6818)
+
+Saad's order 2026-09-27 ("add hundreds of cases"): detailed testing of "using AI as a brain in the trading app", from every angle, UI-only. AR touched phone-width verdict pairing; AV/AX/AY touched phone-width scan/notification/failure rendering. This section is the dedicated mobile pass over EVERY AI surface — providers, chat, verdicts, profile, scan, errors, counters — at 390px, checking reachability, readability, and wording (no desktop-geometry language). Saad reads on his phone; the brain must work there. Each case runs through the live UI at phone width. Written 2026-09-27 ~08:35 PDT.
+
+### T-6794 · AI mobile · AI providers page at 390px: every control reachable, no overlap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: BA-PRO
+
+Steps: 1. Open /settings → AI providers at phone width (390px). 2. Scroll top to bottom; try every control: provider toggle, key field, model dropdown, Test button, save. 3. Note any overlap, unreachable control, or horizontal scroll.
+
+Expected: Every control reachable and usable — no overlap, no off-screen button, no horizontal scrolling. Any phone-width breakage is a FAIL. (Change nothing; restore nothing needed.)
+
+### T-6795 · AI mobile · model dropdown at 390px: options readable, selection tappable, no clipping
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: BA-PRO
+
+Steps: 1. At phone width, open the model dropdown. 2. Read every option; check none is clipped mid-name. 3. Tap a different option (then tap back to the contributor model without saving, or save and restore).
+
+Expected: All options fully readable and tappable — no truncated model names that hide which model is which. Clipped options are a FAIL.
+
+### T-6796 · AI mobile · Test result text at 390px: wraps cleanly, no horizontal scroll, full text visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: BA-PRO
+
+Steps: 1. At phone width, press "Test connection" once. 2. Read the full result text; check for horizontal scrolling or clipped lines.
+
+Expected: The entire result is readable by vertical scrolling only — long JSON/details wrap or scroll within their box, never forcing page-level horizontal scroll. A horizontal-scroll trap is a FAIL.
+
+### T-6797 · AI mobile · AI chat at 390px: input reachable, send tappable, answers readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: BA-PRO
+
+Steps: 1. At phone width, open the AI chat. 2. Type a question; confirm the keyboard doesn't trap the input or hide the send button. 3. Send; read the full answer.
+
+Expected: The chat is fully usable — input visible while typing, send always tappable, answers readable without horizontal scroll. Any keyboard trap or hidden send is a FAIL.
+
+### T-6798 · AI mobile · verdict cards at 390px: text sizes legible, verdict never microscopic
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: BA-PRO
+
+Steps: 1. At phone width, open three signal verdicts. 2. Judge legibility: verdict word, reasoning, attribution — all readable without zooming.
+
+Expected: Everything legible at normal reading distance — no microscopic verdict text, no reasoning shrunk to fit. Illegible text is a FAIL.
+
+### T-6799 · AI mobile · AI profile form at 390px: fields stack, save reachable, no overlap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: BA-PRO
+
+Steps: 1. At phone width, open the AI profile. 2. Scroll every field; check labels sit with their inputs (no detached labels). 3. Confirm the save control is reachable.
+
+Expected: Clean stacked form — no overlapping fields, no detached labels, save reachable. Any overlap is a FAIL. (Change nothing.)
+
+### T-6800 · AI mobile · scan controls at 390px: trigger, scope, and stop all tappable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: BA-PRO
+
+Steps: 1. At phone width, open the scan surface. 2. Check the trigger, scope selectors, and stop control are all tappable without zooming. 3. If no scan surface exists, record N-A.
+
+Expected: All scan controls usable at phone width — no tiny tap targets, no control hidden behind another. Unusable controls are a FAIL. (Don't start a scan unless needed.)

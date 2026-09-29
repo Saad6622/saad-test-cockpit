@@ -1,0 +1,1207 @@
+QA BRIEF — BULK LANE B2 chunk 15/45 (T-5401–T-5500)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-5401 · Fix-wave · Fill timestamps render with labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read each row's time beside its side label.
+
+Expected: Time and side together -- the row reads as one complete record.
+
+---
+
+### T-5402 · Fix-wave · Lane header names the side column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read the fills-lane header.
+
+Expected: The lane needs no side-column header -- the side shows inline per row (BUY/SELL beside each row's price), which is self-explanatory in this non-tabular lane. (Case text corrected 2026-09-27: inline-by-design per ISS-065 wave — the earlier 'header names the side column' expectation was wrong, not a software defect.)
+
+---
+
+### T-5403 · Fix-wave · Transport controls still work with labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Use the replay transport controls with fills present.
+
+Expected: Transport works -- the label fix changed the lane, not the controls.
+
+---
+
+### T-5404 · Fix-wave · Row selection keeps its label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If rows are selectable, select a fill row.
+
+Expected: The selected row keeps its side label -- selection does not hide it.
+
+---
+
+### T-5405 · Fix-wave · Scrolling keeps labels attached
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Scroll the fills lane up and down.
+
+Expected: Labels scroll with their rows -- never detached, never duplicated.
+
+---
+
+### T-5406 · Fix-wave · Empty replay still honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If no tape is wired, read the booth.
+
+Expected: The honest 'No tape to replay' state -- the fix did not invent fills.
+
+---
+
+### T-5407 · Fix-wave · Transport disabled state unchanged
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. With no tape, check the transport controls.
+
+Expected: Still disabled with the honest empty state -- labels change nothing here.
+
+---
+
+### T-5408 · Fix-wave · Lane refresh keeps labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Run the cockpit panel refresh and re-read the fills lane.
+
+Expected: Labels re-render with the rows -- refresh never drops them.
+
+---
+
+### T-5409 · Fix-wave · Unknown side reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If a fill lacks side data, read its row.
+
+Expected: An honest 'side unknown' style note -- never a guessed side.
+
+---
+
+### T-5410 · Fix-wave · No fills: no label ghosts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. With an empty lane, look for stray labels.
+
+Expected: No orphan labels floating without rows.
+
+---
+
+### T-5411 · Fix-wave · Partial fills all labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If some fills are partial, read each row.
+
+Expected: Partial rows carry labels too -- the fix covers every row, not just full ones.
+
+---
+
+### T-5412 · Fix-wave · Error state keeps the lane honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If the replay feed errors, read the booth.
+
+Expected: A calm error -- the lane does not show half-labeled rows.
+
+---
+
+### T-5413 · Fix-wave · Labels never contradict the row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read each row's label against its price action.
+
+Expected: No label contradicts its own row's data.
+
+---
+
+### T-5414 · Fix-wave · Lane honest when tape disconnects
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If the tape drops mid-replay, read the lane.
+
+Expected: Existing rows keep their labels; the disconnect reads calmly.
+
+---
+
+### T-5415 · Fix-wave · Side words are trader words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read every side label aloud.
+
+Expected: Words a trader uses -- no internal direction codes.
+
+---
+
+### T-5416 · Fix-wave · No raw side codes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read the fills lane character for character.
+
+Expected: No 1/-1, no L/S abbreviations without words -- plain sides.
+
+---
+
+### T-5417 · Fix-wave · Header words read plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read the lane header aloud.
+
+Expected: Plain column names.
+
+---
+
+### T-5418 · Fix-wave · Unknown-side note reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. If a side is unknown, read its note.
+
+Expected: A human sentence -- not 'null', not a blank.
+
+---
+
+### T-5419 · Fix-wave · Empty state still plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-17
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. With no tape, read the empty state.
+
+Expected: 'No tape to replay' in plain words -- unchanged by the fix.
+
+---
+
+### T-5420 · Fix-wave · Receipt timeline rows show sides
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the receipt timeline and read the fill rows.
+
+Expected: Each receipt shows its side -- the timeline agrees with the replay lane.
+
+---
+
+### T-5421 · Fix-wave · Receipt side labels consistent with replay
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Compare a receipt's side with the same fill in the replay lane.
+
+Expected: Same side in both places -- one vocabulary.
+
+---
+
+### T-5422 · Fix-wave · Receipt prices still 2 decimals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Read the receipt prices.
+
+Expected: Two decimals -- the label work touched sides, not prices.
+
+---
+
+### T-5423 · Fix-wave · Receipt rows complete
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Read a full receipt row: venue, side, price, P&L, time.
+
+Expected: Every field present -- nothing dropped by the fix.
+
+---
+
+### T-5424 · Fix-wave · New receipts carry side labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Wait for a new fill, then read its receipt.
+
+Expected: The new receipt shows its side immediately -- labels are live, not backfilled.
+
+---
+
+### T-5425 · Fix-wave · Timeline updates keep labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Watch the timeline as fills arrive.
+
+Expected: Incoming rows render with labels from the first paint.
+
+---
+
+### T-5426 · Fix-wave · Labels survive timeline refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Run the cockpit panel refresh and re-read the timeline.
+
+Expected: Labels re-render -- refresh never strips them.
+
+---
+
+### T-5427 · Fix-wave · Timeline honest when side unknown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. If a receipt lacks side data, read its row.
+
+Expected: An honest note -- never a guessed side.
+
+---
+
+### T-5428 · Fix-wave · Timeline error keeps rows honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. If the timeline feed errors, read it.
+
+Expected: Calm error -- existing rows keep their labels.
+
+---
+
+### T-5429 · Fix-wave · Empty timeline stays honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. With no fills, read the timeline.
+
+Expected: The honest empty state -- no label ghosts.
+
+---
+
+### T-5430 · Fix-wave · Replay side matches receipt side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read a fill's side in the replay lane. 1. Open the full cockpit page (/). 2. Find the same fill in the receipt timeline.
+
+Expected: Both show the same side -- the fix is consistent across the two views.
+
+---
+
+### T-5431 · Fix-wave · Every replay fill has a receipt twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Count the replay fills. 1. Open the full cockpit page (/). 2. Count the matching receipts.
+
+Expected: The home timeline shows only the LATEST fill's receipt by design (per-alert viewer, not a receipt list) -- the other fills' receipts exist individually and render at /v1/ui/receipt/{alert_id}. (Case text corrected 2026-09-27 per ISS-066: latest-only is the design — the earlier 'counts agree' expectation was wrong, not a software defect.)
+
+---
+
+### T-5432 · Fix-wave · Side agrees with P&L direction
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Read a receipt's side and its realized P&L sign.
+
+Expected: Side and P&L tell one coherent story per row.
+
+---
+
+### T-5433 · Fix-wave · Third fill twin labeled in both
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the replay booth. 3. Read the third fill's side. 1. Open the full cockpit page (/). 2. Find its receipt twin.
+
+Expected: Labeled in both -- the previously-missing label is fixed everywhere.
+
+---
+
+### T-5434 · Fix-wave · Receipt sides read as words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-15
+
+Steps: 1. Open the full cockpit page (/). 2. Read the receipt sides aloud.
+
+Expected: Trader words -- no codes.
+
+---
+
+### T-5435 · Fix-wave · FVG-21041 error card renders a disclosure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Find the FVG-21041 card in its error state.
+
+Expected: A technical-details disclosure now renders -- the card that lacked one has it.
+
+---
+
+### T-5436 · Fix-wave · Disclosure opens and closes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Click the FVG-21041 technical-details disclosure.
+
+Expected: It expands to the detail and collapses cleanly.
+
+---
+
+### T-5437 · Fix-wave · SWR H4 disclosure renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Find the SWR H4 card and open its disclosure.
+
+Expected: The disclosure renders with its three parts.
+
+---
+
+### T-5438 · Fix-wave · What-happened part renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open any strategy error disclosure and read its first part.
+
+Expected: 'What happened' is present -- the story starts with facts.
+
+---
+
+### T-5439 · Fix-wave · What-it-means part renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the disclosure's second part.
+
+Expected: 'What this means' is present -- the facts get an interpretation. (Case text corrected 2026-09-27: the served heading is "What this means:" — the earlier "What it means" string was a case-text error, not a software defect.)
+
+---
+
+### T-5440 · Fix-wave · What-to-do-next part renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the disclosure's third part.
+
+Expected: 'What to do next' is present -- the card ends with an action.
+
+---
+
+### T-5441 · Fix-wave · Disclosure renders at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Load at phone width and open an error disclosure.
+
+Expected: All three parts readable -- nothing truncated.
+
+---
+
+### T-5442 · Fix-wave · Every error card has the same structure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open the disclosures on three different error cards.
+
+Expected: Same three-part structure on each -- the fix made them consistent.
+
+---
+
+### T-5443 · Fix-wave · Retry control renders in the disclosure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read to the end of an error disclosure.
+
+Expected: A retry path -- Check now or equivalent -- is offered.
+
+---
+
+### T-5444 · Fix-wave · Disclosure header reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the disclosure's header text.
+
+Expected: 'Technical details' or equivalent plain words -- not a code.
+
+---
+
+### T-5445 · Fix-wave · FVG-21041 disclosure toggles
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Click the FVG-21041 disclosure open, then closed.
+
+Expected: Toggles cleanly -- the newly added disclosure behaves like the others.
+
+---
+
+### T-5446 · Fix-wave · Check-now retry runs from the disclosure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open an error disclosure and press its Check now control.
+
+Expected: A single-strategy check runs and the card updates.
+
+---
+
+### T-5447 · Fix-wave · Disclosure toggle keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Tab to an error disclosure and press Enter.
+
+Expected: Toggles from the keyboard exactly like a click.
+
+---
+
+### T-5448 · Fix-wave · Multiple disclosures open independently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open two error disclosures at once.
+
+Expected: Each toggles on its own -- opening one does not close the other unexpectedly.
+
+---
+
+### T-5449 · Fix-wave · Disclosure survives list refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open a disclosure, then click the refresh button.
+
+Expected: The card re-renders with its disclosure intact.
+
+---
+
+### T-5450 · Fix-wave · Retry after fix works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. If the underlying error cleared, press the disclosure's retry.
+
+Expected: The card recovers to its watching state.
+
+---
+
+### T-5451 · Fix-wave · Disclosure does not fire a full cycle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open a disclosure and press its retry control.
+
+Expected: Only that strategy is checked -- the runner's schedule is untouched.
+
+---
+
+### T-5452 · Fix-wave · Collapsed state is the default
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Reload /strategies and look at error cards.
+
+Expected: Disclosures start collapsed -- detail on demand, not a wall of text.
+
+---
+
+### T-5453 · Fix-wave · Disclosure link inside what-to-do-next works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Follow any link in the 'What to do next' part.
+
+Expected: It lands where promised -- e.g. the Alerts panel or the strategy card.
+
+---
+
+### T-5454 · Fix-wave · Error card toggle does not disturb neighbors
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Toggle one card's disclosure and read the next card.
+
+Expected: Neighbors unaffected.
+
+---
+
+### T-5455 · Fix-wave · FVG-21041 failure still reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the FVG-21041 card in its error state.
+
+Expected: The failure is named -- the new disclosure explains, it does not hide.
+
+---
+
+### T-5456 · Fix-wave · SWR H4 failure reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the SWR H4 card in its error state.
+
+Expected: Calm, truthful -- the card says what failed.
+
+---
+
+### T-5457 · Fix-wave · Disclosure never blames the trader
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read three error disclosures fully.
+
+Expected: No blame language -- the copy explains the system, not the user.
+
+---
+
+### T-5458 · Fix-wave · Persistent error stays visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. If an error persists across cycles, read the card.
+
+Expected: Still shown as an error -- time does not quietly clear it.
+
+---
+
+### T-5459 · Fix-wave · Recovered card leaves the error state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. If a strategy recovers, read its card.
+
+Expected: The error state clears -- no ghost error lingering.
+
+---
+
+### T-5460 · Fix-wave · Disclosure honest when cause unknown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. If the cause is unknown, read the 'What happened' part.
+
+Expected: It says the cause is not known -- never invents one.
+
+---
+
+### T-5461 · Fix-wave · Error age reads truthfully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read any age or time on an error card.
+
+Expected: The age is real -- the card does not pretend a fresh error is old or vice versa.
+
+---
+
+### T-5462 · Fix-wave · No silent error cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Scan all 15 cards for errors without any explanation.
+
+Expected: Every error card carries its disclosure -- none fail silently.
+
+---
+
+### T-5463 · Fix-wave · Disclosure during halt stays honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. With Halt trading on, read an error card.
+
+Expected: The error and the halt state are both shown -- neither hides the other.
+
+---
+
+### T-5464 · Fix-wave · What-it-means never overpromises
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the 'What it means' part of three disclosures.
+
+Expected: No promises about when it will clear -- honest uncertainty.
+
+---
+
+### T-5465 · Fix-wave · Retry failure reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. If a retry fails, read the disclosure again.
+
+Expected: The new failure is reported -- the card does not pretend the retry worked.
+
+---
+
+### T-5466 · Fix-wave · Card honest when error is transient
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. If an error clears on the next cycle, read the card.
+
+Expected: It shows watching again -- transient errors are not memorialized.
+
+---
+
+### T-5467 · Fix-wave · No raw (HTTP 500) anywhere
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Search every strategy card and disclosure for '(HTTP 500)'.
+
+Expected: Gone -- no raw status codes on any card.
+
+---
+
+### T-5468 · Fix-wave · No raw HTTP codes on any card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Scan all 15 cards for patterns like (HTTP 4xx) or (HTTP 5xx).
+
+Expected: None -- codes became words everywhere.
+
+---
+
+### T-5469 · Fix-wave · FVG-21041 disclosure has no raw strings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open the FVG-21041 disclosure and read it fully.
+
+Expected: No engine strings, no slugs -- the newly added disclosure is as plain as the old ones.
+
+---
+
+### T-5470 · Fix-wave · SWR H4 what-to-do-next has no raw code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read the SWR H4 'What to do next' part character for character.
+
+Expected: The raw '(HTTP 500)' is replaced with words a trader can act on.
+
+---
+
+### T-5471 · Fix-wave · What-happened uses trader words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read three 'What happened' parts aloud.
+
+Expected: Trader words -- no fetcher, no adapter, no traceback vocabulary.
+
+---
+
+### T-5472 · Fix-wave · What-it-means uses trader words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read three 'What it means' parts aloud.
+
+Expected: Plain interpretation -- a trader knows whether to worry.
+
+---
+
+### T-5473 · Fix-wave · What-to-do-next is an action
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read three 'What to do next' parts.
+
+Expected: Each names a concrete action -- Check now, wait, or look somewhere specific.
+
+---
+
+### T-5474 · Fix-wave · No JSON in disclosures
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open every error disclosure and scan for braces and quotes.
+
+Expected: No raw JSON payloads -- explanations, not dumps.
+
+---
+
+### T-5475 · Fix-wave · No stack traces in disclosures
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open every error disclosure and scan for tracebacks.
+
+Expected: None -- the detail is written for humans.
+
+---
+
+### T-5476 · Fix-wave · No 'undefined' or 'NaN' on cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Scan all cards for 'undefined' and 'NaN'.
+
+Expected: None -- missing values read as words.
+
+---
+
+### T-5477 · Fix-wave · Error titles read plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read each error card's title.
+
+Expected: Plain titles -- no exception class names.
+
+---
+
+### T-5478 · Fix-wave · Retry labels read plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read each retry control's label.
+
+Expected: 'Check now' or equivalent -- not 'retry_fetch'.
+
+---
+
+### T-5479 · Fix-wave · Consistent vocabulary across cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Compare the same concept's wording on three cards.
+
+Expected: One vocabulary -- the fix aligned them.
+
+---
+
+### T-5480 · Fix-wave · No blame words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Scan disclosures for blame language.
+
+Expected: None -- 'the feed failed', never 'you broke'.
+
+---
+
+### T-5481 · Fix-wave · Disclosure length stays readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open the longest disclosure and read it.
+
+Expected: Thorough but readable -- detail without a wall of text.
+
+---
+
+### T-5482 · Fix-wave · FVG-21041 structure matches SWR H4
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open both disclosures side by side.
+
+Expected: Same three parts in the same order -- the inconsistency is fixed.
+
+---
+
+### T-5483 · Fix-wave · All error cards share the structure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Open every error disclosure and note its parts.
+
+Expected: Every card: what happened, what it means, what to do next -- no outliers.
+
+---
+
+### T-5484 · Fix-wave · Disclosure cause matches the runner strip
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read an error's stated cause, then the runner strip.
+
+Expected: The strip agrees -- the card's story matches the runner's.
+
+---
+
+### T-5485 · Fix-wave · Retry outcome matches the card state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Press a disclosure's retry and read the card after.
+
+Expected: The card state matches what the retry reported.
+
+---
+
+### T-5486 · Fix-wave · Error counts match across views
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Count error cards. 1. Open the full cockpit page (/). 2. Count error mentions in the overview panel.
+
+Expected: Counts agree.
+
+---
+
+### T-5487 · Fix-wave · Disclosure wording matches the banner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read a card's status banner and its disclosure.
+
+Expected: The banner's short text agrees with the disclosure's detail.
+
+---
+
+### T-5488 · Fix-wave · What-to-do-next matches available controls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Read a 'What to do next' part, then look for the control it names.
+
+Expected: The named control exists -- the advice is actionable, not aspirational.
+
+---
+
+### T-5489 · Fix-wave · Fixed cards match unfixed-era screenshots
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-38
+
+Steps: 1. Open /strategies. 2. Compare the current disclosure structure with the pre-fix notes.
+
+Expected: The structure is the same three parts -- the fix added the missing disclosure, it did not redesign the others.
+
+---
+
+### T-5490 · Fix-wave · Interface group shows theme controls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read the whole group.
+
+Expected: Theme controls render -- the group is about the interface again.
+
+---
+
+### T-5491 · Fix-wave · No VERIFIER PROBE FLAG text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Search the group for 'VERIFIER PROBE FLAG'.
+
+Expected: Gone -- the probe key no longer renders.
+
+---
+
+### T-5492 · Fix-wave · No W47 PROBE text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Search the group for 'W47 PROBE'.
+
+Expected: Gone -- the probe key no longer renders.
+
+---
+
+### T-5493 · Fix-wave · Theme selector renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Find the theme control.
+
+Expected: A theme selector with its options renders -- labeled, readable.
+
+---
+
+### T-5494 · Fix-wave · Current theme shown as selected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read which theme is currently selected.
+
+Expected: The active theme is visibly marked -- the tester knows the current value.
+
+---
+
+### T-5495 · Fix-wave · Every option labeled in words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read each theme option.
+
+Expected: Named themes -- no codes, no internal ids.
+
+---
+
+### T-5496 · Fix-wave · Default page control renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Find the default-page control in the group.
+
+Expected: It renders with the current default page shown.
+
+---
+
+### T-5497 · Fix-wave · Group renders at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Load at phone width and read the group.
+
+Expected: Controls fully readable -- nothing truncated.
+
+---
+
+### T-5498 · Fix-wave · Group heading reads correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read the group's heading.
+
+Expected: 'Interface' -- the group is what it claims to be.
+
+---
+
+### T-5499 · Fix-wave · No probe-like keys anywhere in the group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Scan the whole group for ALL-CAPS probe-style keys.
+
+Expected: None -- every row is a real interface control.
+
+---
+
+### T-5500 · Fix-wave · Helper copy renders with controls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read the helper text under the theme control.
+
+Expected: Plain helper copy explains what the theme changes.
+
+---

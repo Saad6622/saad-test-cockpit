@@ -1,0 +1,1165 @@
+QA BRIEF — BULK LANE B5 chunk 36/45 (T-7501–T-7600)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-7501 · ISS-131 regression · a kill-switch control added by the fix reads its state in the UI and presses the real halt path
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DR-131
+
+Steps: 1. Look for a dedicated kill-switch control — if the fix instead corrected the drill copy and no control was added, record N-A with the absence stated (the copy fix is covered by T-7497). 2. Read the control's state. 3. Press it — permitted under Saad's standing approval authority (never fire real orders). 4. Verify the press drives the real halt/kill path, then restore the prior state.
+Expected: The control's state reads honestly before and after the press, and the press drives the real halt/kill path — not a decorative confirm; a state that doesn't read, or a press that claims a kill it didn't perform, is a FAIL. (T-6249 proved the drill control runs end-to-end; the added control's own state-and-path contract is new.)
+
+---
+
+## Section DS · Proactive: tunnel-outage-UI wave-6 — the seams BH/BP/CA/CK/DD didn't touch (10 cases: T-7502–T-7511)
+
+Proactive gardener block, 2026-09-28 ~01:10 PDT. Tunnel-outage-UI wave-6 — the seams the first five waves didn't touch. BH (T-6925–T-6936, the foundational wave: dead-tunnel 503 names the rotation, 9 pages carry rotation copy, bookmark survival, redirect-rebuild honesty, /trading card blames the connection, STALE names age, preview press fails honestly, check-now re-anchors, server-needed controls refuse, freshness freezes, recovery signal, backtests run refuses), BP (T-7019–T-7030, wave-2: journal draft survives, settings save refuses with no phantom persist, AI Test connection blames the connection, halt confirm fails honestly, preview pre-rotation reconciles, two rotations stacked, tunnel-up/server-down distinguished, alerts feed gap honesty, receipt timeline readable, envelope validator fails honestly, bottom nav alive, stale bookmark redirect copy), CA (T-7125–T-7132, wave-3: Copilot question refuses, preview mid-send single outcome, post-recovery balance names the gap, strategy toggle stays put, auto-refresh marks failed attempts, Retry bounded, all pages name the same cause, AI DRAFT panel readable), CK (T-7205–T-7214, wave-4: pre-armed halt survives, countdowns freeze, SmartTrade Load refuses with selection intact, journal Save fails with text preserved, failure line tracks the CURRENT rotation, funding rail re-anchors, last-poll rows freeze then resume, deep-link refuses then resolves, history export refuses then names the gap, staggered tabs agree), DD (T-7378–T-7387, wave-5: pre-drop toggle holds engine-agreed state, header pill keeps last known state, two preview presses log two rows, exchange Test connection names the connection, pre-drop backtest launch gets outcome-unknown, recovery polls don't flicker, funding as-of freeze, Check-now refuses without stamping, two-page Retry agreement, reload clears zombies). Wave-6 covers ten seams none of those touched: the /journal CSV/JSONL download mid-rotation, the key-slot save's exactly-once landing, the saved-backtests list render mid-rotation, the AI Test-connection's standing-indicator discipline, per-page-per-event rotation wording, the reconnected notice's audience, the SmartTrade arm pressed mid-rotation, the balance STALE marker's no-reload clearing, the notification-history export, and the envelope-validator paste surviving the failure render.
+
+### T-7502 · Tunnel-outage wave-6 · a /journal CSV/JSONL download pressed mid-rotation refuses honestly — never a corrupt or empty file
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DS-TUN6
+
+Steps: 1. During a natural tunnel rotation (never manufacture one), press a /journal CSV or JSONL download. 2. Copy the refusal verbatim. 3. Inspect any file that lands — size, contents, honesty. (If no rotation occurs during the run, record N-A with the absence stated.)
+Expected: The press refuses in plain words naming the connection — never a corrupt, empty, or partial file presented as the export. (T-6918 proved the no-notes download honesty; T-7213 proved history-export outage honesty; the /journal export mid-rotation is the uncovered seam.)
+
+---
+
+### T-7503 · Tunnel-outage wave-6 · a key-slot save pressed mid-rotation never claims success — and lands exactly once after recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DS-TUN6
+
+Steps: 1. During a natural rotation (never manufacture one), paste a deliberately FAKE key into a key slot's field and press save. 2. Copy the feedback verbatim. 3. After recovery, press save once more and verify the slot state and audit trail. (If no rotation occurs during the run, record N-A with the absence stated.)
+Expected: Mid-rotation the save refuses naming the connection — never a success toast, never key-blame for a tunnel death; after recovery exactly one save lands (one slot state, one audit row) — never a doubled or phantom write. (T-7020 proved settings-save outage honesty; the key-slot save's exactly-once is the uncovered seam.)
+
+---
+
+### T-7504 · Tunnel-outage wave-6 · the saved-backtests list mid-rotation reads honestly — never "0 backtests" as if empty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DS-TUN6
+
+Steps: 1. During a natural rotation (never manufacture one), open /backtests and read the saved-results list region verbatim. 2. After recovery, reload and compare the list. (If no rotation occurs during the run, record N-A with the absence stated.)
+Expected: Mid-rotation the list shows an honest failure-or-unknown state — never an empty-list reading ("0 backtests", "no saved backtests") that implies the saved runs vanished; post-recovery the list returns unchanged. (T-6936 proved the run button refuses mid-outage; the saved-list render was never covered.)
+
+---
+
+### T-7505 · Tunnel-outage wave-6 · an AI Test-connection pressed mid-rotation never flips the saved-key standing indicator
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DS-TUN6
+
+Steps: 1. Before a natural rotation, note the saved-key indicator on the AI slot. 2. During the rotation (never manufacture one), press the slot's Test connection and read the result verbatim. 3. After recovery, read the indicator again.
+Expected: The failed Test names the connection, and the indicator still reads the saved state (last-4, saved) — a mid-rotation failed Test never brands the saved key as bad, expired, or standing-failed; any indicator flip caused by the outage press is a FAIL. (T-7021 proved the blame names the connection; T-6582 proved a refused save leaves the indicator untouched; the failed-Test indicator corruption was never covered.)
+
+---
+
+### T-7506 · Tunnel-outage wave-6 · two pages that died on different rotations name their own rotation — never the first page's stale wording
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DS-TUN6
+
+Steps: 1. Across two natural back-to-back rotations (never manufacture one), keep page A in its failure state from the first and let page B fail on the second. 2. Copy both failure lines verbatim. 3. Compare which event each line names.
+Expected: Each page's failure line reflects its own rotation's condition — page B never shows page A's first-outage wording for the second event; both lines are honest for their own window. (T-7209 proved one page tracks the CURRENT rotation; T-7131 proved cross-page cause agreement; the per-page-per-event wording is the uncovered seam.)
+
+---
+
+### T-7507 · Tunnel-outage wave-6 · a "reconnected" notice never reaches a tab opened after recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DS-TUN6
+
+Steps: 1. After a natural rotation and recovery (never manufacture one), open a NEW tab to the cockpit. 2. Read whether any "reconnected" notice appears. 3. Compare with a tab that was open during the outage.
+Expected: The new tab shows a clean healthy render with no "reconnected" notice — the notice belongs to tabs that lived through the outage; a stale notice served to a tab that never saw the outage is a FAIL. (T-6935 treated recovery signals as a finding; the notice-audience hygiene is new.)
+
+---
+
+### T-7508 · Tunnel-outage wave-6 · a SmartTrade arm pressed mid-rotation is refused honestly — never armed blindly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DS-TUN6
+
+Steps: 1. During a natural rotation (never manufacture one), attempt to ARM a SmartTrade ticket (the arm step only — never fire). 2. Read the outcome verbatim. 3. After recovery, verify the arm state reads OFF with no order traffic. (If no rotation occurs during the run, record N-A with the absence stated.)
+Expected: The arm refuses in plain words naming the connection — the control never claims armed on a dead connection, and after recovery the arm state reads OFF with no order traffic; an arm that claimed success on dead data is an immediate FAIL and the case stops. (T-7022 proved the halt confirm fails honestly mid-outage; the SmartTrade arm — the most dangerous untested control — was never covered.)
+
+---
+
+### T-7509 · Tunnel-outage wave-6 · post-recovery the balance block's STALE marker clears on the first real poll — never a lingering zombie
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DS-TUN6
+
+Steps: 1. During a natural rotation (never manufacture one), confirm the balance block shows its STALE marker. 2. After recovery, watch the first successful poll — no manual reload. 3. Read the marker and the "Data as of" line. (If no rotation occurs during the run, record N-A with the absence stated.)
+Expected: The first real poll clears the STALE marker and the "Data as of" jumps to post-recovery — no reload required, no lingering STALE over fresh numbers, no flicker back to failure. (T-7127 proved the as-of names the gap; the no-reload STALE clearing was never covered.)
+
+---
+
+### T-7510 · Tunnel-outage wave-6 · a notification-history export pressed mid-rotation refuses honestly — post-recovery export names the gap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DS-TUN6
+
+Steps: 1. During a natural rotation (never manufacture one), press the /notifications history export and read the outcome verbatim. 2. After recovery, export again and read the gap coverage. (If no rotation occurs during the run, record N-A with the absence stated.)
+Expected: Mid-rotation the export refuses in plain words — no phantom file; the post-recovery export contains the real rows and names the outage gap honestly in its timestamps and coverage. (T-7213 proved history-export outage honesty; the notification-history export is the uncovered per-surface seam.)
+
+---
+
+### T-7511 · Tunnel-outage wave-6 · envelope-validator pasted text survives the outage failure render — never wiped by the error state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DS-TUN6
+
+Steps: 1. Paste an envelope into the validator (a real payload shape — never press fire). 2. During a natural rotation (never manufacture one), press validate and read the failure render. 3. Check the textarea still holds the pasted text verbatim. (If no rotation occurs during the run, record N-A with the absence stated.)
+Expected: The pasted envelope survives the failure render character-for-character — the error state never wipes, truncates, or replaces the paste; the text is validatable again after recovery. (T-7028 proved the validator's press fails honestly mid-outage; the paste-preservation lineage — T-7019, T-7132 — never reached the validator.)
+
+---
+## Section DT · Regression ISS-132 — "Test connection" never presents a label's tail as the key's tail (6 cases: T-7512–T-7517)
+
+---
+
+### T-7512 · ISS-132 regression · a saved-key Test press names the tested key's own tail — never the dashboard label's tail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DT-ISS132
+
+Steps: 1. On the AI providers panel, with a saved key in the OpenRouter slot, press "Test connection" and copy the success summary verbatim. 2. Compare the "key ending …NNNN" in the summary against the slot's own masked last-4 hint.
+Expected: The summary names the TESTED key's own tail — the same last-4 the slot shows. ISS-132's exact failure (summary reading "the key ending …6653 is valid" while the test ran against the saved …3653 key, because `_probe_summary_body` mined the dashboard label) is a FAIL: the user can never be shown a last-4 that matches no key they own. (DL T-7454 pinned the slot↔Test tail agreement on the clean path; ISS-132 proved the label-mining path breaks it — this pins the fixed contract.)
+
+---
+
+### T-7513 · ISS-132 regression · a dashboard label quoted in the summary is presented as a label — never bare tail copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DT-ISS132
+
+Steps: 1. Give the saved key a dashboard label whose tail differs from the key's tail (or observe the existing label, e.g. a label whose last-4 alphanumerics are …6653). 2. Press "Test connection" and read the summary verbatim. 3. Check how the label's content is attributed.
+Expected: If the summary uses the label at all, it is quoted and attributed AS a label — "the key labeled '…' is valid" — never a bare "…6653" that reads as the key's tail. An attributed label is honest; an unattributed label tail presented like key material is ISS-132 verbatim. (T-7455 pinned mask discipline on the result line; this pins the label-attribution discipline on it.)
+
+---
+
+### T-7514 · ISS-132 regression · the which-key note fires on the saved-key path too — tested_saved_key never skips identity honesty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DT-ISS132
+
+Steps: 1. Press "Test connection" on a SAVED key (the tested_saved_key:true path where ISS-132 lived). 2. Read the full result area — summary plus any which-key note — verbatim. 3. Ask whether a user could tell which credential was tested.
+Expected: The saved-key result carries the same which-key identity note as the pasted-key path — the tested slot and its last-4 named plainly. ISS-132's escape hatch was precisely that the ISS-126 which-key note did not fire on this path, so the user read an unreconcilable last-4 with no explanation; a saved-key result with no identity note is a FAIL even if the tail happens to be right. (T-7456 pinned four-surface agreement at a point in time; this pins the note-presence contract on the exact path ISS-132 escaped through.)
+
+---
+
+### T-7515 · ISS-132 regression · no surface shows a credential tail the summary names — the cross-surface no-phantom-tail audit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DT-ISS132
+
+Steps: 1. Press "Test connection" on the saved key and copy the summary's "key ending …NNNN" verbatim. 2. Inventory every surface that can show a key tail: the AI panel slot hint, /settings AI group, /keys OpenRouter row, any cost-counter row naming a key. 3. Check the summary's NNNN against that inventory.
+Expected: The summary's tail appears in at least one surface as a real key tail — it never floats as a value no surface shows. ISS-132 failed exactly this audit (…6653 on the summary, no surface showing a key ending 6653). A phantom tail is an immediate FAIL and the case stops. (T-7456's four-surface agreement checked equality between surfaces; this checks the summary against ALL surfaces, including /keys and the cost counter which T-7456 didn't inventory.)
+
+---
+
+### T-7516 · ISS-132 regression · an empty or missing dashboard label renders no bare tail — never "key ending …" with garbage
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DT-ISS132
+
+Steps: 1. If the saved key's dashboard label is empty or missing (never clear a label to test; otherwise N-A with the absence stated). 2. Press "Test connection" and read the summary verbatim. 3. Check the tail rendering.
+Expected: The summary never renders a bare "key ending …" with an empty, "None", or garbage tail mined from a missing label — it names the key's real tail or says "valid" plainly without tail copy. The label-mining code path treats `data.label` as authoritative; a missing label must not produce label-tainted copy. (T-7455 pinned mask discipline; DE T-7390 pinned whitespace-padded-key naming — the missing-label twin is new.)
+
+---
+
+### T-7517 · ISS-132 regression · a Test after a key switch names the NEW key's tail — never the old probe's label tail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DT-ISS132
+
+Steps: 1. With key A saved, press "Test connection" and note the summary tail. 2. Switch to a different saved key B on the same slot (under the standing approval authority for state-changing tests; never paste a foreign key). 3. Press "Test connection" again and read the new summary verbatim. 4. Compare against both keys' real tails.
+Expected: The second summary names key B's own tail — never key A's tail, never key A's probe label tail carried over. A stale summary from the previous probe (tail or label alike) presented as the new test's result is a FAIL. (T-7459 pinned post-rotation naming after a tunnel rotation; this pins the re-test naming after a credential switch — the stale-probe twin DE's T-7392 answering-identity seam never reached.)
+
+---
+
+## Section DU · Proactive: AI-provider paths wave-6 — the seams BI/BQ/CL/CW/DE didn't touch (10 cases: T-7518–T-7527)
+
+---
+
+### T-7518 · AI-provider paths wave-6 · the consult verdict entry never renders a label's tail as a key's tail — ISS-132's consult-surface twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DU-AP6
+
+Steps: 1. Run a natural AI advisory consult (within the sealed caps). 2. Read the consult/verdict entry (ai_verdict row, notification entry, or verdict card) verbatim wherever it names the serving key. 3. Compare any tail shown against the real tested-key tail.
+Expected: The consult surface shows the real key tail or attributes the label as a label — the ISS-132 label-tail-as-key-tail copy never appears outside the Test path. (DE T-7392 pinned the answering model id on the probe path; T-7486 pinned constraint enumeration on verdicts — the identity-copy twin on the consult surface is new. Cross-checked: ISS-124 fixed only the ai_verdict entry's wiring, not its tail-copy contract.)
+
+---
+
+### T-7519 · AI-provider paths wave-6 · the saved-key "OK" line's timestamp agrees with the panel's "last checked" after a Test
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DU-AP6
+
+Steps: 1. Note the "Last check of the saved key" line and the panel's "last checked" line (ISS-103 gave the first a timestamp; DE T-7391-era waves proved the second ticks). 2. Press "Test connection" and re-read both lines. 3. Compare the two timestamps.
+Expected: After one Test press both lines name the same check event — the saved-key "OK" timestamp agrees with the panel "last checked" within the same minute. A fresh Test that leaves the saved-key line on an old timestamp (stale OK) is a FAIL. (T-7221 proved last-consult↔cost-counter timestamp agreement; the saved-key-line↔panel twin after a live Test is new.)
+
+---
+
+### T-7520 · AI-provider paths wave-6 · a Test on a non-active provider slot names the slot tested — never implied brain identity
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DU-AP6
+
+Steps: 1. With the brain on provider slot X (e.g. the Meta slot), press "Test connection" on a DIFFERENT slot Y that also holds a saved key. 2. Read the result summary verbatim. 3. Check which provider the summary names.
+Expected: The summary names slot Y as the tested provider — the reader can never infer it tested the brain's slot X. A bare "key ending …NNNN is valid" with no slot name, on a panel with multiple saved slots, is a FAIL. (BQ T-7039 proved the no-slot-selected naming; DE T-7392 pinned probe-path answering identity — the wrong-slot-implication twin is new.)
+
+---
+
+### T-7521 · AI-provider paths wave-6 · the cost-counter provider column names the provider that actually served the consult — post-switch attribution
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DU-AP6
+
+Steps: 1. Switch the active provider (the switch itself is under the standing approval authority; never fire orders in this section). 2. Run one natural consult within the sealed caps. 3. Read the newest cost-counter row's provider/model column verbatim. 4. Compare with the provider active at consult time.
+Expected: The row attributes the consult to the provider that actually served it — no zombie attribution to the pre-switch provider, no re-attribution on later refreshes. (CL T-7220 proved no zombie rows and no re-attribution for SCHEDULED-scan rows across a switch; the live-consult row attribution twin is new. T-7218's exactly-once billing is the cost cousin, not the identity contract.)
+
+---
+
+### T-7522 · AI-provider paths wave-6 · a failed probe with keys on two slots names the failing slot — never generic blame
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DU-AP6
+
+Steps: 1. With saved keys on two provider slots, press "Test connection" on the slot that fails (a naturally failing slot — wrong key, expired key; never corrupt a good key to test). 2. Read the failure line verbatim. 3. Check whether it names the slot.
+Expected: The failure names the failing slot (OpenRouter vs the other slot) — the healthy slot's key is never implicitly blamed. Generic "connection failed" copy with no slot name, on a two-slot panel, is a FAIL. (BI proved single-provider blame honesty; DE T-7395 proved right-key-wrong-model naming — the multi-slot blame twin is new.)
+
+---
+
+### T-7523 · AI-provider paths wave-6 · a key removed while the loop runs on that provider surfaces the missing key — never a zombie "OK"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DU-AP6
+
+Steps: 1. With the AI loop ON on provider slot X, remove slot X's key through the key-removal flow (under the standing approval authority; restore + re-test afterward). 2. Wait for the loop's next verdict cycle. 3. Read the verdict area and the slot's status line verbatim.
+Expected: The next verdict names the missing key honestly (the no-key notice) — the slot never keeps showing a stale "OK"/connected, and no zombie verdict claims a provider answer arrived. (DM pinned the whole-brain keyless degradation; DE T-7396 pinned switch-while-loop-Off; T-7223 pinned the key-removal flow's loop closure for the saved-key line — the loop-ON verdict-line twin is new.)
+
+---
+
+### T-7524 · AI-provider paths wave-6 · a fast probe never carries a stale latency figure from an earlier slow probe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DU-AP6
+
+Steps: 1. Press "Test connection" on a slow-but-answering slot and note any latency figure shown (the DE T-7397 latency-warning seam). 2. Press "Test connection" on a fast slot. 3. Read the second result's latency display verbatim.
+Expected: The fast probe shows its own figure (or no latency figure) — never the slow probe's stale milliseconds carried over. A latency number that could only have come from the previous press is a FAIL. (DE T-7397 proved the slow-probe warning exists; the cross-press staleness twin is new — DE never checked figure ownership across presses.)
+
+---
+
+### T-7525 · AI-provider paths wave-6 · copilot's "Drafting…" updates to the outage copy when the provider hangs — never freezes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DU-AP6
+
+Steps: 1. Start a copilot ask. 2. If the provider hangs during the ask (a natural hang — never force one; otherwise N-A with the absence stated). 3. Read the status line verbatim through the hang.
+Expected: The "Drafting…" line gives way to the provider-hang copy (distinct from outage/401/429 per DE T-7388) — it never freezes on "Drafting…" forever (ISS-104's stale-status failure) and never resolves into a stub answer. (DJ T-7438 proved the bounded render window for asks; DE T-7388 proved hang copy on the consult path — the copilot status-line twin is new.)
+
+---
+
+### T-7526 · AI-provider paths wave-6 · the slot hint and the /settings AI-group last-4 agree after a key rotation — the rotate-time twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DU-AP6
+
+Steps: 1. Rotate the saved key on the AI providers panel (save a new key over the old one under the standing approval authority). 2. Read the slot's masked last-4 hint. 3. Open /settings AI group and read its last-4 hint. 4. Compare.
+Expected: Both surfaces show the NEW key's last-4 — the /settings line never lags on the old key's tail while the slot shows the new one. (DL T-7456 pinned four-surface agreement at a point in time; CM T-7228 pinned /keys↔/settings at a point — the post-rotation update twin is new. T-5125 pinned refresh-survival, not rotate-time agreement.)
+
+---
+
+### T-7527 · AI-provider paths wave-6 · two quick Test presses never clobber the first result mid-read — each press owns its line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DU-AP6
+
+Steps: 1. Press "Test connection", read the result as it appears, and IMMEDIATELY press it again while the first result is still visible. 2. Watch the result area through both presses. 3. Count how many distinct result states the area shows.
+Expected: The area never shows press-2's summary labeled as press-1's (or a torn line mixing both): each press's outcome renders as its own complete state — replaced-not-stacked if the design uses one line (T-5159's contract), or clearly timestamped lines if it keeps two. A torn line (press-1's tail with press-2's latency) is a FAIL. (DQ T-7495 pinned consecutive-press idempotency for "Re-ask the brain"; DE T-7380-adjacent T-7380 covered two-press row-counting for previews — the probe-result clobber seam is new.)
+
+---
+
+## Section DV · Proactive: cross-page persistence wave-7 — the seams waves 1–6 didn't touch (10 cases: T-7528–T-7537)
+
+Gardener proactive block, 2026-09-28 ~01:40 PDT. Rotation: cross-page persistence (wave-7, after AM T-6529–T-6538 / BJ T-6949–T-6958 / BR T-7041–T-7050 / CD T-7145–T-7152 / CM T-7225–T-7234). Zero new ISS entries above the watermark (registry max ISS-132) — pure proactive extension per the standing growth order. The seams below are the ones waves 1–6 never checked: cross-surface balance-freshness agreement (not just no-rewind on one page), the settings version-counter contract, sealed-profile badge agreement outside the settings page, disclosure survival across PAGE navigation (ISS-067 pinned reload), completed-copilot-answer survival (T-7232 pinned the half-typed ask), filters+pagination surviving TOGETHER, exchange test-connection last-checked agreement (T-7146 pinned the AI-provider line), leaderboard-period↔home-tiles agreement, loaded-ticket content agreement between two pages (T-7152 pinned draft opening from the combobox; T-6957 pinned combobox agreement), and the manual-check stamp agreement across the card/strip seam.
+
+---
+
+### T-7528 · Cross-page persistence wave-7 · the balance "Data as of" line agrees between /home and /history across navigation and reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. On /home read the balance block's "Data as of" timestamp verbatim. 2. Navigate to /history and read its balance block's "Data as of" timestamp. 3. Reload /history and re-read it; navigate back to /home and re-read it.
+Expected: Both pages name the same balance poll — the two "Data as of" timestamps agree after navigation and after reload, and neither rewinds. One page showing a newer poll while the other shows an older one with no reconciliation is a FAIL. (T-7151 proved the /history label never rewinds after navigation; T-7045 proved KPI "Data as of" agreement /home↔/journal — the balance-block↔balance-block agreement across both pages is new.)
+
+---
+
+### T-7529 · Cross-page persistence wave-7 · the "Saved interface settings — version N" counter agrees across pages after a save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. Save one interface setting change on /settings (a reversible one, e.g. a theme toggle — restore afterward) and read the "Saved interface settings — version N" confirmation verbatim. 2. Navigate to another page and read any surfaced settings-version line there (settings summary, footer, or profile line — wherever the cockpit repeats it). 3. Reload that page and re-read.
+Expected: Every surface shows the same version counter — no page lags on the old version after a save, and reload never rolls the counter backward. A version N+1 confirmation followed by another page showing N is a FAIL. (Batch-8 closeout proved version 46 rendered post-save; the cross-surface counter agreement after a save is new.)
+
+---
+
+### T-7530 · Cross-page persistence wave-7 · the sealed AI profile badge agrees between the AI provider panel and /settings after navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DV-CPP7
+
+Steps: 1. On the AI provider panel read the sealed-profile badge/state line verbatim ("Sealed", "Closed", caps MAX PER DAY 6 / MAX PER HOUR 2 — ISS-103 lineage). 2. Navigate to /settings, open the AI group, and read its sealed-profile line. 3. Compare state, badge, and cap values.
+Expected: Both surfaces agree on the sealed state — same badge ("Sealed"/"Closed"), same caps, same last-consult stamp. A panel showing "Sealed" while /settings shows an unsealed or stale-cap line after plain navigation is a FAIL. (T-6616 pinned indicator timestamps on the panel; the panel↔settings sealed-state agreement is new.)
+
+---
+
+### T-7531 · Cross-page persistence wave-7 · an expanded strategy disclosure survives a navigation round-trip — never silently collapsed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. On /strategies expand one strategy's technical-details/why disclosure (ISS-067's surface) and confirm its expanded content renders. 2. Navigate to another page, then navigate back to /strategies. 3. Read the disclosure's state.
+Expected: The disclosure either stays expanded (same content, same card) or collapses with an honest, visible state — it never silently collapses while rendering a layout that implies content, and never loses the content itself. (ISS-067 pinned disclosure survival across RELOAD; the cross-page navigation twin is new.)
+
+---
+
+### T-7532 · Cross-page persistence wave-7 · a completed copilot answer stays visible across a navigation round-trip — never re-asked, never blanked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. Ask the copilot one question and wait for the completed answer to render fully. 2. Navigate to another page and back to the copilot surface. 3. Read the answer area verbatim.
+Expected: The completed answer is still there, verbatim — it is never blanked, never replaced with a fresh "Drafting…" (no silent re-ask, no double billing of the sealed caps). A "the answer is gone, ask again" state after plain navigation is a FAIL. (T-7232 pinned the half-typed ask surviving navigation; the completed-answer twin is new.)
+
+---
+
+### T-7533 · Cross-page persistence wave-7 · /history filters plus pagination index survive a navigation round-trip together — never stale, never applied to the wrong page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. On /history set a filter (e.g. a venue or symbol filter) AND move to page 2+ of the results. 2. Navigate to another page and back. 3. Read the filter line and the page indicator, and verify the visible rows match both.
+Expected: Filter and page index return together and agree — the old filter is never applied to page 1's data (stale-filter), and the page-2 index is never applied to the unfiltered dataset (wrong-dataset). Either mismatch is a FAIL. (T-6537 pinned filters never applying stale to fresh data; T-6956 pinned the pagination index never applying to a different dataset — the combined round-trip twin is new.)
+
+---
+
+### T-7534 · Cross-page persistence wave-7 · the exchange "Test connection" last-checked agrees between /keys and /settings after navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DV-CPP7
+
+Steps: 1. On /keys press "Test connection" for the saved exchange row (read-only test — no secret changes) and note the result's last-checked timestamp. 2. Navigate to /settings and find the venue/exchange row's last-checked line. 3. Compare the two.
+Expected: Both surfaces name the same test event — the /settings row never shows an older check while /keys shows the fresh one after plain navigation, and neither invents a check that never ran. (T-7146 pinned the timestamped key-check label agreeing /settings↔/keys for the AI providers; the EXCHANGE test-connection twin is new.)
+
+---
+
+### T-7535 · Cross-page persistence wave-7 · the /journal leaderboard's selected period agrees with the /home journal tiles after navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. On /journal select a non-default leaderboard period (month/week) and note the period label plus the leaderboard figures. 2. Navigate to /home and read the journal-derived tiles (net P&L, closed trades — T-7229's tiles). 3. Note whether the tiles carry a period label and whether the figures agree with the selected period.
+Expected: The /home tiles either carry the same period label and agree to the cent, or carry an explicit default-period label that names its own window — they never silently show a different period's figures under a matching label. (T-7049 pinned the leaderboard's selected month surviving navigation to the leaderboard-back; T-7229 pinned tile↔/journal agreement to the cent — the period-attribution twin is new.)
+
+---
+
+### T-7536 · Cross-page persistence wave-7 · a loaded SmartTrade ticket's contents agree between /home and /trading after navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. Load one draft into the SmartTrade ticket on /trading (Load only — never arm, never fire) and read the ticket's fields verbatim. 2. Navigate to /home and open the SmartTrade ticket there. 3. Compare field by field.
+Expected: The same draft shows the same contents on both pages — symbol, side, quantity, price, and any flags match exactly. /home never shows an older draft, a cleared ticket, or a partially-loaded one after plain navigation. (T-7152 pinned a draft created on /home opening from the /trading combobox; T-6957 pinned combobox agreement; T-7230 pinned the loaded ticket surviving a navigation round-trip on the SAME page — the two-page content agreement twin is new.)
+
+---
+
+### T-7537 · Cross-page persistence wave-7 · the manual "Check now" stamp agrees between the /strategies card and the /home runner strip after navigation and reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DV-CPP7
+
+Steps: 1. On /strategies press "Check now" for one strategy (read-only — no toggles, no halt) and read its "last check" stamp. 2. Navigate to /home and read the runner strip's corresponding check line. 3. Reload /strategies and re-read the card stamp.
+Expected: Card and strip agree on the manual check — same timestamp, same outcome label, and the strip never reports it as a scheduled-runner check (ISS-068's contamination stayed fixed). After reload the card's stamp survives verbatim. (T-6958 pinned next-run countdown agreement; ISS-068's wave pinned the strip showing manual checks honestly — the stamp agreement across the seam after navigation+reload is new.)
+
+---
+
+## Section DW · Regression ISS-133 — strategy delete confirm names the exact strategy id (6 cases: T-7538–T-7543)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. Regression coverage for ISS-133 (found 2026-09-28 ~02:55 PDT, lane 9 T-1602 — the delete confirm arms as "Press again to delete" without ever naming the strategy id; with 15+ similarly-named rows the user confirms a destructive action blind). ISS-133 is OPEN; its fix wave is sequenced after the 10 lanes — the cases below pin the fixed contract, so an armed confirm naming no id is a FAIL. The seams below are the ones T-1602 didn't cover: the full-id contract on similarly-named rows (the wrong-target hazard), disarm honesty, armed-id vs row-id agreement (the stale-id twin), the expanded-card surface, and the keyboard/AT name. SAFETY: arm the confirm and read its text only — never press the final delete.
+
+---
+
+### T-7538 · ISS-133 regression · the armed delete confirm names the exact strategy id
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DW-ISS133
+
+Steps: 1. On /strategies, pick any strategy row and click its Delete control once to arm the confirm step (do NOT press again). 2. Read the armed confirm control's text verbatim. 3. Disarm via Cancel.
+Expected: The armed confirm names the exact strategy id — e.g. "Press again to delete mom2089" — before anything commits. ISS-133's exact failure (the armed step reading a bare "Press again to delete" with no id) is a FAIL. (T-3074 probed the naming as dead text; ISS-133 proved the probe right — the armed step names no id. This pins the fixed contract with the ISS-133 verbatim.)
+
+---
+
+### T-7539 · ISS-133 regression · the armed confirm names the FULL id on similarly-named rows — the wrong-target twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DW-ISS133
+
+Steps: 1. Find two strategy rows whose ids share a prefix (per-instance families like mom2089 vs mom2097). 2. Arm Delete on one with a single press only. 3. Read the armed text verbatim. 4. Disarm via Cancel.
+Expected: The armed text carries the FULL exact id, never a truncated or shortened form — with similarly-named rows a partial id is a FAIL, because the user cannot tell mom2089 from mom2097 at the confirm step. (Per-instance families are deliberately separate tests per the keep-list; this pins the id-naming contract on the exact rows the wrong-target hazard threatens.)
+
+---
+
+### T-7540 · ISS-133 regression · disarming the confirm leaves the row untouched and clears the armed state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DW-ISS133
+
+Steps: 1. Arm Delete on a strategy row (single press) and read the armed text. 2. Cancel/dismiss the confirm without pressing delete. 3. Check the row's presence and enabled state. 4. Arm once more and read the text again.
+Expected: The row is still present with its enabled state unchanged; the second arming shows the same named confirm — no stacked "Press again" lines, no residue from the first arming. Arming is inspection, never a half-delete. (T-5159 pinned replace-not-stack for preview feedback — the delete-arm twin.)
+
+---
+
+### T-7541 · ISS-133 regression · the armed confirm names the id from the expanded strategy card too — the second-surface twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DW-ISS133
+
+Steps: 1. Expand a strategy's detail/disclosure card on /strategies; if it carries its own delete control, arm it with a single press (otherwise arm from the list row). 2. Read the armed confirm text verbatim. 3. Disarm via Cancel.
+Expected: Every surface that arms a delete names the id — the list row and the expanded card agree on the named id. A surface arming an unnamed delete while another names it is a FAIL. (T-316/T-380 keep-list: the same test on different pages is deliberate cross-page coverage.)
+
+---
+
+### T-7542 · ISS-133 regression · the armed confirm's id matches the row's own displayed id — never a stale id
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DW-ISS133
+
+Steps: 1. Arm Delete on strategy row A (single press) and read the armed id. 2. Disarm via Cancel. 3. Arm Delete on a DIFFERENT row B and read the armed id. 4. Compare each armed id character-by-character against its row's strategy-id label.
+Expected: Each arming names its own row's id — the second arming never carries row A's id. A stale id from a previous arming presented as the current target is an immediate FAIL. (T-7517 pinned re-test naming after a credential switch — the delete-arm stale-id twin.)
+
+---
+
+### T-7543 · ISS-133 regression · the armed confirm's accessible name names the id — the keyboard/AT twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DW-ISS133
+
+Steps: 1. Tab to a strategy row's Delete control and press Enter to arm (single press). 2. Read the focused confirm control's accessible name — what a screen reader announces. 3. Disarm via keyboard (Escape or the Cancel control).
+Expected: The armed confirm's accessible name includes the strategy id — a keyboard/AT user hears WHICH strategy is armed, not just "press again to delete". An unnamed accessible confirm is a FAIL. (DZ's T-7569 pins the halt openers' accessible names — the delete-confirm twin.)
+
+---
+## Section DX · Regression ISS-134 — delete confirm states what happens to past deliveries/signal history (6 cases: T-7544–T-7549)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. Regression coverage for ISS-134 (found 2026-09-28 ~02:55 PDT, lane 9 T-1603 — the delete confirm carries no warning about the strategy's past deliveries or signal history; nothing tells the user what context is lost or kept). ISS-134 is OPEN; its fix wave is sequenced after the 10 lanes — the cases below pin the fixed contract, so an armed confirm with no history warning is a FAIL. The seams below are the ones T-1603 didn't cover: the journal-retention twin, the confirm↔detail-card agreement, the zero-history empty state, the warning's placement in the armed step (not behind the final press), and arming side-effect freedom. SAFETY: arm the confirm and read its text only — never press the final delete.
+
+---
+
+### T-7544 · ISS-134 regression · the armed delete confirm states what happens to past deliveries
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DX-ISS134
+
+Steps: 1. Pick a strategy with delivered signals (check /notifications or the strategy's signal history first). 2. Arm its Delete with a single press (do NOT press again). 3. Read the armed confirm's history warning verbatim. 4. Disarm via Cancel.
+Expected: The armed step states what happens to past deliveries — kept in history vs deleted with the strategy — in plain words. ISS-134's exact failure (no warning about past deliveries at all) is a FAIL. (T-1603 pinned the current copy; this pins the fixed contract.)
+
+---
+
+### T-7545 · ISS-134 regression · the armed confirm states the journal-retention rule too — the journal twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DX-ISS134
+
+Steps: 1. Arm Delete on a strategy referenced by journal entries (single press). 2. Read the armed confirm's full warning text verbatim. 3. Disarm via Cancel.
+Expected: The warning names the journal rule as well — whether journal entries referencing the strategy are kept or removed. Deliveries-only wording that stays silent on journal entries is a FAIL. (T-1603 pinned the delivery-history copy; the journal twin is new.)
+
+---
+
+### T-7546 · ISS-134 regression · the armed confirm's retention claim agrees with the strategy detail card — the cross-surface twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DX-ISS134
+
+Steps: 1. Read the strategy's detail/disclosure card for any retention/history line. 2. Arm its Delete (single press) and read the confirm's history warning. 3. Compare the two claims. 4. Disarm via Cancel.
+Expected: Both surfaces make the same kept-vs-deleted claim — a detail card saying "history is kept" next to a confirm warning "history will be deleted" is a FAIL. (ISS-134 is about the confirm; the agreement contract is new.)
+
+---
+
+### T-7547 · ISS-134 regression · arming delete on a zero-history strategy shows no stale warning — the empty-state twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DX-ISS134
+
+Steps: 1. Pick a strategy with no past deliveries (a fresh or never-signaled row). 2. Arm its Delete (single press). 3. Read the armed warning text. 4. Disarm via Cancel.
+Expected: The confirm either states "no past deliveries" honestly or omits the history warning — it never shows another strategy's history warning. A stale warning carried over from a previous arming is a FAIL. (T-7542 pinned stale-id arming; the stale-warning twin.)
+
+---
+
+### T-7548 · ISS-134 regression · the history warning lives in the ARMED step — never behind the final press
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DX-ISS134
+
+Steps: 1. Arm Delete on a strategy with past deliveries (single press). 2. Note exactly when the history warning appears — at the armed step, or only later. 3. Disarm via Cancel.
+Expected: The warning is visible at the armed step, BEFORE the final delete press — a warning that only appears after deletion commits (or in a post-delete toast) is a FAIL. The user must see the consequences while they can still back out. (The two-step ordering contract — new.)
+
+---
+
+### T-7549 · ISS-134 regression · arming and disarming never touches deliveries or history — the no-side-effects twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DX-ISS134
+
+Steps: 1. Note a strategy's signal-history row count on /notifications. 2. Arm its Delete (single press), read the warning, then Cancel. 3. Re-check the signal-history rows.
+Expected: Arming and canceling changes nothing — the history rows are all still there, counts unchanged. A confirm step with side effects is a FAIL. (T-7540 pinned row-untouched for the strategy itself; the history twin.)
+
+---
+## Section DY · Regression ISS-135 — dead-text phantom controls: webhook-receiver and news-filter copy with no controls (8 cases: T-7550–T-7557)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. Regression coverage for ISS-135 (found 2026-09-28 ~03:00 PDT, four lanes' start-of-run recordings — (a) the home page hints "the webhook receiver is switched off on the Cockpit page", naming a switch that exists nowhere; (b) the blackout drill copy says it "tests the news filter against a fake calendar event" and AI verdict rows cite a news filter among the guards, yet no news-filter ON/OFF + threshold control exists anywhere). ISS-135 is OPEN triage — either wire the controls or correct the copy; the cases below pin the no-phantom-control contract, so a reference with no reachable control is a FAIL. These are the dead-text seams, not re-tests of the old control cases (T-1001/T-1081/T-3622 families were written against controls that no longer exist — that absence is the finding).
+
+---
+
+### T-7550 · ISS-135 regression · the webhook-receiver hint is verified against every settings group — the control either exists or the hint is gone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DY-ISS135
+
+Steps: 1. On the home page copy the webhook-receiver hint verbatim ("the webhook receiver is switched off on the Cockpit page"). 2. Visit the Cockpit page and every /settings group hunting for the webhook-receiver ON/OFF control. 3. Compare.
+Expected: Either the switch exists where the hint says it is, or the hint is corrected/removed. ISS-135's exact failure (the hint names a switch no lane could find) is a FAIL. (Four lanes recorded the absence; this pins the triage resolution.)
+
+---
+
+### T-7551 · ISS-135 regression · the blackout drill's news-filter claim is backed by a reachable filter state — the drill twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DY-ISS135
+
+Steps: 1. Open the blackout drill and copy its news-filter line verbatim ("tests the news filter against a fake calendar event"). 2. From the drill, find the news filter's ON/OFF + threshold — follow any link the drill offers, then search the settings groups. 3. Compare.
+Expected: The drill either links to or shows the filter it claims to test, or the copy no longer claims to test it. A drill testing a filter the user can never see or set is a FAIL. (The reference-to-control reachability contract — new.)
+
+---
+
+### T-7552 · ISS-135 regression · AI verdict rows citing the news filter name where it lives — the verdict-row twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DY-ISS135
+
+Steps: 1. Find an AI verdict row citing the news filter among the guards. 2. Read the citation verbatim and check for a link or a location naming where the filter's ON/OFF + threshold lives. 3. Try to reach it.
+Expected: The citation is actionable — it links to or names the filter's control. A guard citation pointing at a control that exists nowhere is a FAIL. (T-7551 pinned the drill; the verdict-row twin.)
+
+---
+
+### T-7553 · ISS-135 regression · the global no-phantom-control audit for both features
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DY-ISS135
+
+Steps: 1. Inventory every UI reference to "webhook receiver" and "news filter" (home hint, drill copy, verdict rows, settings search results). 2. Inventory every real ON/OFF control for them. 3. Reconcile the two lists.
+Expected: Reference count and control count reconcile — every reference resolves to a real control, or zero references remain. Any dangling reference after the triage is a FAIL. (Section T pinned dead text generally; this is the ISS-135 pair audit.)
+
+---
+
+### T-7554 · ISS-135 regression · the Cockpit page's own webhook-receiver wording agrees with the home hint — the state-agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DY-ISS135
+
+Steps: 1. Read the home-page webhook-receiver hint verbatim. 2. Read the Cockpit page's own webhook-receiver status line — whatever it shows (status, note, or nothing). 3. Compare.
+Expected: The two pages never contradict — if the Cockpit shows the receiver active while home says "switched off", that's a FAIL. Silence on one side is acceptable only if the other side no longer makes the claim. (ISS-141 pinned header↔Overview agreement — the hint↔cockpit twin.)
+
+---
+
+### T-7555 · ISS-135 regression · a referenced control is reachable within two clicks — the reachability contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DY-ISS135
+
+Steps: 1. From each page that references the webhook receiver or the news filter (post-triage), count the clicks to the real control — link, tab, or same-page section. 2. Note the longest path.
+Expected: The control is reachable within two clicks of the reference. A reference whose control is buried deeper is nearly as dead as a phantom — a FAIL on the reachability contract. (New — no prior wave pinned reference-to-control distance.)
+
+---
+
+### T-7556 · ISS-135 regression · the drill's "fake calendar event" copy agrees with the Economic calendar group — the calendar twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DY-ISS135
+
+Steps: 1. Copy the blackout drill's calendar-event line verbatim. 2. Open the Economic calendar settings group and read its state line. 3. Compare what the drill claims to test against what the group shows.
+Expected: The drill's claim and the group's state agree — a drill "testing against a fake calendar event" while the calendar group shows a different source or mode is a FAIL. (ISS-147 notes the group is unsealed; this is the drill-copy↔group agreement seam.)
+
+---
+
+### T-7557 · ISS-135 regression · cockpit search finds the referenced features or reports honestly — the discoverability twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DY-ISS135
+
+Steps: 1. In the cockpit's command palette / search (T-6519/T-6520 lineage), search "webhook receiver" and then "news filter". 2. Read what the palette offers for each.
+Expected: The palette jumps to the real control or states plainly that no such control exists. A search that surfaces the dead hint text as if it were a control is a FAIL. (The discoverability contract — new.)
+
+---
+## Section DZ · Regression halt-button deep area — ISS-136 / ISS-152 / ISS-154 (12 cases: T-7558–T-7569)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. Halt-button deep area covering ISS-136 (found 2026-09-28 ~03:10 PDT, lane 1 T-26 — clicking the halt control while already halted opens a SECOND "Halt trading?" modal with no "already halted" explanation), ISS-152 (found 2026-09-28 ~03:50 PDT, lane 1 T-32/T-36 — the halt modal has no keyboard focus trap; Tab escapes to the page behind), and ISS-154 (found 2026-09-28 ~03:50 PDT, lane 1 T-17 — the modal heading reads "Halt trading?" while the cases expect "Halt all trading?"; naming triage). All three are OPEN; fix waves are sequenced after the 10 lanes — the cases below pin the fixed contracts. Twin lineage: ISS-043's three-opener one-truth (header + sidebar + risk-control region), T-17's heading, T-26's already-halted either/or, T-27's Escape, T-32/T-36's focus absence, T-6521's drill copy. SAFETY: open the modal, read it, Cancel — never submit it.
+
+---
+
+### T-7558 · Halt-button deep area · clicking halt while already halted states "already halted" — never a fresh confirm modal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. With trading halted (use the execution line's halt window; never halt it yourself for this case — if the engine is not halted, record N-A with the state stated). 2. Click the halt control and read what appears verbatim. 3. Cancel anything opened.
+Expected: The UI states "already halted" (or the control already shows the halted state) instead of opening a fresh "Halt trading?" confirm. ISS-136's exact failure (a second full confirm modal with no "already halted" explanation) is a FAIL. (T-026 allowed either no-second-modal or an explanation; ISS-136's observed second-modal-with-no-explanation showed the either/or was too loose — this pins the "already halted" branch.)
+
+---
+
+### T-7559 · Halt-button deep area · all three halt openers agree while halted — the three-button one-truth twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. While halted, click each halt opener in turn — header button, sidebar entry, risk-control region button — Canceling after reading each. 2. Compare the three responses verbatim.
+Expected: All three behave identically — the same "already halted" state, never a mix where one opens a fresh confirm and another states the state. (ISS-043 proved the three openers wire to one modal; this pins the already-halted branch on all three.)
+
+---
+
+### T-7560 · Halt-button deep area · the already-halted state names the way back — the resume-path twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DZ-HALT
+
+Steps: 1. While halted, read the halt control's state line and any "already halted" explanation verbatim. 2. Check whether it names the resume path.
+Expected: The halted state points at resuming — e.g. "resume trading from the risk panel". An "already halted" dead end with no path to resume is a FAIL. (The way-back contract — new.)
+
+---
+
+### T-7561 · Halt-button deep area · focus stays trapped inside the open halt modal — the trap contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. Open the halt modal (Cancel at the end — never submit). 2. Starting from the first control, press Tab repeatedly through every control and past the last one ("Cancel"). 3. Repeat with Shift+Tab in reverse.
+Expected: Focus cycles inside the modal and never reaches the page behind. ISS-152's exact failure (Tab from "Cancel" landing on the "Skip to main" link behind the modal) is a FAIL. (T-32/T-36 pinned the absence; this pins the fixed contract.)
+
+---
+
+### T-7562 · Halt-button deep area · the trap holds on every modal variant — the variant twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. Open the halt modal from each of the three openers in turn (Cancel each time — never submit). 2. On each, Tab past the last control and note where focus lands.
+Expected: Every variant traps focus — no opener's modal lets Tab escape to the page behind. A fixed trap on one opener's modal but not the others is a FAIL. (T-7561 pinned the trap; the three-variant coverage is new.)
+
+---
+
+### T-7563 · Halt-button deep area · Escape closes the modal and returns focus to the invoking control — the focus-return twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. Open the halt modal from the header button. 2. Press Escape. 3. Check where focus lands.
+Expected: The modal closes and focus returns to the header halt button that opened it — not to the top of the page, not lost to the body. Focus dropped to the top after Escape is a FAIL. (T-027 pinned Escape closing the modal; the focus-return contract is new.)
+
+---
+
+### T-7564 · Halt-button deep area · one stable halt name everywhere — the ISS-154 naming resolution
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DZ-HALT
+
+Steps: 1. Open the halt modal (Cancel after reading — never submit) and copy its h2 heading verbatim. 2. Read each opener's label, the drills card copy, and the Halt trading settings group heading. 3. Compare all of them.
+Expected: ONE stable name ("Halt trading?" or "Halt all trading?") across every surface. ISS-154's exact failure (cases expect "Halt all trading?", UI shows "Halt trading?") is resolved by agreement — mixed naming across surfaces is a FAIL. (T-17 pinned the heading; the cross-surface naming contract.)
+
+---
+
+### T-7565 · Halt-button deep area · the modal's scope sentence is identical from every opener — the scope-parity twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DZ-HALT
+
+Steps: 1. Open the halt modal from each opener in turn (Cancel each time) and copy the scope sentence verbatim ("This blocks all new entries immediately — open positions stay open and must be closed manually. The halt holds until you resume trading from the risk panel."). 2. Compare the three copies.
+Expected: The scope sentence is identical from all three openers. A variant modal with different scope copy is a FAIL. (T-7564 pinned the heading; the scope-sentence twin.)
+
+---
+
+### T-7566 · Halt-button deep area · opening the halt modal never flips engine state — the inspection-only contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. Read the header and Overview engine state. 2. Open the halt modal from each opener and Cancel each (never submit). 3. Re-read the header and Overview state.
+Expected: The state is unchanged by opening and canceling — the modal is a question, never an action. Any state flip from a canceled modal is an immediate FAIL. (New — no prior case pinned the modal's side-effect freedom.)
+
+---
+
+### T-7567 · Halt-button deep area · the optional reason field sits inside the trapped focus order — the new-field twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. Open the halt modal (Cancel at the end — never submit). 2. Tab through the full focus order and note where the optional reason field (added by the ISS-064 wave-2 fix) falls. 3. Tab past the last control.
+Expected: The reason field is reachable by Tab within the trap — before or after the confirm/cancel controls, but inside the modal. A reason field skipped by the tab order, or sitting outside the trap, is a FAIL. (The ISS-064 field meets the ISS-152 trap — new.)
+
+---
+
+### T-7568 · Halt-button deep area · while halted, resume is the prominent control — the post-fix layout twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. While halted, read the risk-control region and the halt openers' labels verbatim. 2. Note which control is visually primary.
+Expected: The halted-state UI leads with resume — the halt control either reads halted-state or yields prominence to the resume control. A halted page whose primary invitation is "halt again" is a FAIL. (T-7558 pinned the already-halted branch; the layout twin.)
+
+---
+
+### T-7569 · Halt-button deep area · the three openers' accessible names agree — the AT twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DZ-HALT
+
+Steps: 1. Read the accessible name of each halt opener — header button, sidebar entry, risk-region button. 2. Compare with the modal heading from T-7564.
+Expected: All three announce the same halt action, matching the chosen heading name. Mixed accessible names across the three openers is a FAIL. (T-7543 pinned the delete confirm's accessible name — the halt twin.)
+
+---
+## Section EA · Regression journal composer/notes — ISS-137 / ISS-138 / ISS-139 (10 cases: T-7570–T-7579)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. Journal composer/notes covering ISS-137 (found 2026-09-28 ~03:15 PDT, lane 8 T-1436/T-1438 — the NOTE textbox shows a live counter "11/4000" but ALERT ID shows no "0/64" and TAGS shows no "0/200"), ISS-138 (found 2026-09-28 ~03:15 PDT, lane 8 T-1440/T-1441 — the saved note "verify-probe-117" is not listed; the list reads "No notes yet" with no count), and ISS-139 (found 2026-09-28 ~03:15 PDT, lane 8 T-1434/T-1435/T-1442 — no Notes searchbox and no "Filter by tag" control; three cases blocked). All three are OPEN; fix waves are sequenced after the 10 lanes — the cases below pin the fixed contracts. Twin lineage: T-1434–T-1442, T-6542 (empty-note refusal), ISS-102 (navigation must not wipe composer text), T-7277 (in-group zero-match copy), T-7533 (filters+pagination composing on /history).
+
+---
+
+### T-7570 · Journal-notes regression · the ALERT ID textbox shows its counter like NOTE does
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. On /journal, click into the ALERT ID textbox and type a few characters. 2. Watch for the counter beside it.
+Expected: The counter renders and updates (e.g. "0/64" → "5/64") exactly like NOTE's "11/4000". ISS-137's exact failure (no counter on ALERT ID while NOTE has one) is a FAIL.
+
+---
+
+### T-7571 · Journal-notes regression · the TAGS textbox shows its counter — the TAGS twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. On /journal, click into the TAGS textbox and type a few characters. 2. Watch for the counter beside it.
+Expected: The counter renders and updates (e.g. "0/200") like NOTE's. ISS-137's exact failure on TAGS is a FAIL. (T-7570 pinned ALERT ID; the TAGS twin.)
+
+---
+
+### T-7572 · Journal-notes regression · the counters clamp at their stated max — the boundary twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. Type or paste past each field's limit (64 for ALERT ID, 200 for TAGS, 4000 for NOTE). 2. Read each counter.
+Expected: No counter reads past its max with the extra characters accepted — it clamps or the input refuses, and the behavior is identical on all three fields. A counter reading "65/64" while the 65th character stays in the box is a FAIL. (T-7570/T-7571 pinned presence; the boundary contract is new.)
+
+---
+
+### T-7573 · Journal-notes regression · a saved note appears in the list with a visible count
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. Save a probe note with a unique id (e.g. "gardener-probe" plus the time). 2. Read the notes list and any count line verbatim.
+Expected: The note is listed and the list shows a count. ISS-138's exact failure ("No notes yet" after saving, no count shown) is a FAIL. (T-1440/T-1441 pinned the current copy; this pins the fixed contract.)
+
+---
+
+### T-7574 · Journal-notes regression · the notes count agrees with the visible rows — the count-vs-rows twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. With N notes saved, read the count line verbatim. 2. Count the rendered rows. 3. Compare.
+Expected: The count reads N and N rows render — no more, no fewer. A count of 3 over 2 rows (or vice versa) is a FAIL. (T-7573 pinned listing; the agreement contract is new.)
+
+---
+
+### T-7575 · Journal-notes regression · a failed save is named plainly and the text is preserved — the failed-save twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. Compose a note and force a save failure — e.g. a note over the 4000 limit, or save during a natural tunnel drop (never break the setup deliberately). 2. Read the failure line verbatim and check the composer.
+Expected: The failure is named in plain words and the typed text stays in the composer — nothing silently lost. ISS-138's triage branch (the save failed silently) is resolved by honesty; a failure that wipes the composer is a FAIL. (T-6542 pinned empty-note refusal; ISS-102 pinned navigation must not wipe — the failed-save twin.)
+
+---
+
+### T-7576 · Journal-notes regression · the Notes searchbox exists and narrows the list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. With several saved notes on /journal, type a saved note's unique id into the Notes searchbox. 2. Read the filtered list.
+Expected: The list narrows to matching notes. ISS-139's exact failure (no searchbox at all) is a FAIL. (T-1434/T-1435 were blocked on the missing controls; this pins the fixed contract.)
+
+---
+
+### T-7577 · Journal-notes regression · "Filter by tag" filters the list — the tag twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. Save two notes with different tags (or use existing tagged notes). 2. Set "Filter by tag" to one tag. 3. Read the list.
+Expected: Only notes carrying that tag show. ISS-139's exact failure (no filter control) is a FAIL. (T-7576 pinned search; the tag twin.)
+
+---
+
+### T-7578 · Journal-notes regression · search and tag filter compose — the composition twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EA-JOUR
+
+Steps: 1. Apply a tag filter AND a search string together. 2. Read the list. 3. Clear the search but keep the tag filter; then clear the tag filter.
+Expected: The combined state shows notes matching BOTH; clearing one restores the other's results exactly. A combined state showing the union, or a clear that drops both filters, is a FAIL. (T-7533 pinned filters+pagination composing on /history — the journal twin.)
+
+---
+
+### T-7579 · Journal-notes regression · an empty search result says so plainly — the zero-match twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EA-JOUR
+
+Steps: 1. On /journal with saved notes present, search for a string that matches no note. 2. Read the list's empty line verbatim.
+Expected: The line says no notes match the search — never "No notes yet", which would lie about the journal being empty. A zero-match state reusing the empty-journal copy is a FAIL. (T-7277 pinned in-group zero-match copy on settings — the journal twin.)
+
+---
+## Section EB · Regression SmartTrade ticket seams — ISS-140 / ISS-142 / ISS-157 (10 cases: T-7580–T-7589)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. SmartTrade ticket seams covering ISS-140 (found 2026-09-28 ~03:15 PDT, lane 8 T-1421 — the preview estimates stay "—" by design: "The preview never prices the ticket, so estimates stay blank — nothing here is a quote"; the case expected priced estimates — triage), ISS-142 (found 2026-09-28 ~03:15 PDT, lane 8 T-1424 — STOP % = 0 with TP1 armed renders the hard banner "TICKET INVALID — NOTHING WOULD FIRE: stop_pct must be finite > 0"; triage on the banner UX), and ISS-157 (found 2026-09-28 ~03:50 PDT, lane 1 — the ticket shows an "ARMED" label next to the TP1 size fraction while the arm checkbox "I've reviewed every leg — arm the ticket" is unchecked and both action buttons are disabled). All three are OPEN triage; the cases below pin the honest-state contracts. SAFETY: never arm or fire SmartTrade — the arm checkbox stays unchecked throughout; leg fields may be filled, nothing is submitted. Twin lineage: T-1421/T-1424, T-7536 (ticket content agreement /home↔/trading), T-6916 (dangling draft).
+
+---
+
+### T-7580 · SmartTrade-ticket regression · the "—" estimates always carry the honesty copy — the never-a-quote twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EB-ST
+
+Steps: 1. Load a SmartTrade draft ticket. 2. Read the preview estimates area verbatim, in every ticket state reachable without arming.
+Expected: The estimates stay "—" AND the honesty line is present — "The preview never prices the ticket, so estimates stay blank — nothing here is a quote." Blank estimates with the explanation missing is a FAIL. (T-1421 pinned the current copy; this pins the design contract.)
+
+---
+
+### T-7581 · SmartTrade-ticket regression · no priced figure leaks anywhere on the ticket — the quote-leak audit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EB-ST
+
+Steps: 1. Load a draft ticket and scan every figure on it — labels, tooltips, titles, aria labels. 2. Check each against the "—" estimates.
+Expected: No figure anywhere reads as a quote for the ticket — every estimate-class figure is "—" or covered by the honesty copy. A stray priced number beside the "—" estimates is a FAIL. (T-7580 pinned the copy; the leak audit is new.)
+
+---
+
+### T-7582 · SmartTrade-ticket regression · the invalid-ticket banner names the constraint and the recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EB-ST
+
+Steps: 1. Set STOP % = 0 with TP1 armed (fill the legs; do NOT check the arm checkbox). 2. Read the banner verbatim.
+Expected: The banner names the constraint AND how to fix it — "TICKET INVALID — NOTHING WOULD FIRE: stop_pct must be finite > 0" plus the recovery. ISS-142's banner is the honest baseline; a banner that says INVALID with no recovery path is a FAIL. (T-1424 pinned the current copy; this pins the banner contract.)
+
+---
+
+### T-7583 · SmartTrade-ticket regression · fixing the leg clears the banner without a reload — the clear-on-correct twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EB-ST
+
+Steps: 1. With the ISS-142 banner showing, set STOP % to a valid value. 2. Watch the banner.
+Expected: The banner clears on the correction — no reload, no stale banner left behind. A banner that survives its own fix is a FAIL. (T-7582 pinned the banner; the clearing contract is new.)
+
+---
+
+### T-7584 · SmartTrade-ticket regression · the banner never implies the ticket fired — the state-coherence twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EB-ST
+
+Steps: 1. With the invalid banner showing, read the ticket's arm checkbox state, the action buttons' state, and the preview estimates.
+Expected: The ticket still reads disarmed and unpriced — checkbox unchecked, buttons disabled-honest, estimates "—". A banner whose tone suggests something fired, or buttons enabled under it, is a FAIL. (New — no prior case pinned banner-vs-ticket coherence.)
+
+---
+
+### T-7585 · SmartTrade-ticket regression · no leg label reads "ARMED" while the ticket is disarmed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EB-ST
+
+Steps: 1. Load a draft ticket with the arm checkbox UNCHECKED and action buttons disabled. 2. Read the TP1 size-fraction label verbatim.
+Expected: The label never reads "ARMED" while the ticket is disarmed. ISS-157's exact failure ("ARMED" next to the TP1 size fraction on a disarmed ticket) is a FAIL.
+
+---
+
+### T-7586 · SmartTrade-ticket regression · leg-armed and ticket-armed use different words — the wording twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EB-ST
+
+Steps: 1. On the disarmed ticket, read the TP1 label's exact post-fix wording. 2. Read the arm checkbox's label ("I've reviewed every leg — arm the ticket").
+Expected: The two armed-states are worded differently — the leg's wording can never be read as the ticket's armed state. Identical "ARMED" wording for both readings is a FAIL. (T-7585 pinned the disarmed state; the wording-discipline contract.)
+
+---
+
+### T-7587 · SmartTrade-ticket regression · disabled action buttons say why — the disabled-honesty twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EB-ST
+
+Steps: 1. On the disarmed ticket, read each disabled action button's label and any reason line. 2. Note what each button says about why it is disabled.
+Expected: Every disabled button names its reason (ticket disarmed / invalid legs). A disabled button with no reason is a FAIL. (New — no prior wave pinned the ticket's disabled-button copy.)
+
+---
+
+### T-7588 · SmartTrade-ticket regression · the TP1 label wording agrees between /home and /trading — the cross-page twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EB-ST
+
+Steps: 1. Load the same draft ticket on /home and on /trading. 2. Read the TP1 label verbatim on both.
+Expected: The label wording is identical on both pages — post-fix, no page shows the old "ARMED"-while-disarmed wording. (T-7536 pinned ticket content agreement; the ISS-157 label-wording twin.)
+
+---
+
+### T-7589 · SmartTrade-ticket regression · the disarmed ticket never announces "armed" to assistive tech — the AT twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EB-ST
+
+Steps: 1. On the disarmed ticket (arm checkbox unchecked), read the ticket region's accessible name and state — what a screen reader announces for the TP1 leg and the ticket as a whole.
+Expected: Nothing announces the ticket as armed while the arm checkbox is unchecked. An "armed" announcement on a disarmed ticket is a FAIL. (T-7543/T-7569 pinned accessible names for delete/halt — the ticket twin.)
+
+---
+## Section EC · Regression engine-state agreement — ISS-141 (6 cases: T-7590–T-7595)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. Regression coverage for ISS-141 (found 2026-09-28 ~03:15 PDT, lane 8 — the page header intermittently read "TRADING · ENTRIES ALLOWED" while the Overview read "ENGINE STATE Halted" during lane 1's halt→restore window; lane 8 never touched the halt control). ISS-141 is OPEN triage — the cases below pin the agreement contract: header and Overview agree at all times, including mid-transition. No halt needed — the sampling contract below requires no state changes. Twin lineage: ISS-043's three-opener one-truth, T-7528 (cross-surface "Data as of" agreement).
+
+---
+
+### T-7590 · ISS-141 regression · header and Overview agree on engine state at rest — the steady-state twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EC-ISS141
+
+Steps: 1. Read the page header's engine-state line verbatim. 2. Read the Overview's "ENGINE STATE" line verbatim. 3. Compare.
+Expected: The two agree — same state, same words. ISS-141's exact failure (header "TRADING · ENTRIES ALLOWED" vs Overview "ENGINE STATE Halted" at the same moment) is a FAIL.
+
+---
+
+### T-7591 · ISS-141 regression · the agreement holds across a reload — the reload twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EC-ISS141
+
+Steps: 1. Reload the page. 2. Immediately read the header state and the Overview state back-to-back. 3. Repeat once more after 10 seconds.
+Expected: The two agree on every read — no transient contradiction right after load. A reload that briefly shows the header ALLOWED while Overview says Halted is a FAIL. (T-7590 pinned rest; the reload twin.)
+
+---
+
+### T-7592 · ISS-141 regression · the header's state line carries a freshness signal — the staleness twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EC-ISS141
+
+Steps: 1. Read the header's engine-state line verbatim. 2. Check for a freshness indicator (timestamp, "as of", tick age).
+Expected: The header names how fresh its state is — a state line with no freshness signal that could silently lag the Overview is a FAIL. (New — no prior case pinned the header's state freshness.)
+
+---
+
+### T-7593 · ISS-141 regression · five back-to-back samples never disagree — the sampling contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EC-ISS141
+
+Steps: 1. Five times over one minute, read the header state and the Overview state back-to-back. 2. Log each pair.
+Expected: All five pairs agree. Any single disagreeing sample is a FAIL — ISS-141 was intermittent, so one clean read is not proof. (The intermittence contract — new.)
+
+---
+
+### T-7594 · ISS-141 regression · the risk panel joins the agreement — the three-surface twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EC-ISS141
+
+Steps: 1. Read the header state, the Overview "ENGINE STATE", and the risk panel's halt-state line back-to-back. 2. Compare all three.
+Expected: All three agree. (ISS-043's three-opener one-truth lineage extended to three state displays — the header↔Overview↔risk-panel contract.)
+
+---
+
+### T-7595 · ISS-141 regression · both state lines name the same source — the single-source twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EC-ISS141
+
+Steps: 1. Read the header's state line and the Overview's "ENGINE STATE" line verbatim, including any source or tick attribution. 2. Compare what each claims to read from.
+Expected: Both lines read from the same state source (same tick, same feed). Two state displays fed by different sources — the architecture that produced ISS-141 — is a FAIL even when they currently agree. (The single-source contract — new.)
+
+---
+## Section ED · Regression settings disclosure behavior — ISS-143–ISS-148 (12 cases: T-7596–T-7607)
+
+Gardener regression block, 2026-09-28 ~02:05 PDT. Settings disclosure behavior covering ISS-143 (found 2026-09-28 ~03:20 PDT, lane 10 T-1802/T-1812/T-1822/T-1832/T-1842 — clicking an expanded group heading does NOT collapse it; only the Close button does), ISS-144 (T-1803/T-1813/T-1823/T-1833/T-1843 — group headings are plain h3 with no id; no "copy-reader"/"command-palette"/"replay" slug; the URL never deep-links), ISS-145 (T-1803 — the heading reads "Copy reader", the cases expect "Copy trading"; naming triage), ISS-146 (T-1824/T-1834/T-1844 — "Copy reader" shows "Read-only" and "Command palette" shows "Modified", but Replay, Economic calendar, and Halt trading show no badge), ISS-147 (T-1838/T-1839 — the Economic calendar group is not sealed and has no 3-step read-through; triage), and ISS-148 (T-1848 — the "3 steps" gate CHANGING the settings, not reading them; values show directly; triage on sealed semantics). All six are OPEN; fix waves are sequenced after the 10 lanes — the cases below pin the fixed contracts. Twin lineage: T-1802–T-1848, T-7320 (unsaved indicator collapsed-vs-expanded), DR T-7499 (step-list inventory for the kill flow).
+
+---
+
+### T-7596 · Settings-disclosure regression · clicking an expanded group heading collapses it — the toggle twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ED-SET
+
+Steps: 1. On /settings, expand the "Copy reader" group (or its post-triage name). 2. Click its heading. 3. Repeat on "Command palette" and "Replay".
+Expected: The heading collapses its group — same control, both directions. ISS-143's exact failure (the heading opens but never closes; only the Close button collapses) is a FAIL.
+
+---
+
+### T-7597 · Settings-disclosure regression · the heading toggle cycles cleanly — the cycle twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ED-SET
+
+Steps: 1. On one group, click the heading four times in a row: expand, collapse, expand, collapse. 2. Watch for stuck states.
+Expected: Every click toggles — no stuck-expanded, no stuck-collapsed, no double-render. A heading that stops responding mid-cycle is a FAIL. (T-7596 pinned one toggle; the cycle contract.)
+
+---
+
+### T-7598 · Settings-disclosure regression · every group heading carries its anchor slug
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ED-SET
+
+Steps: 1. On /settings, check each group heading for its anchor — hover for the link target or watch the URL fragment on click. 2. List the slugs found.
+Expected: Each heading has its slug ("copy-reader", "command-palette", "replay", "economic-calendar", "halt-trading", and the rest). ISS-144's exact failure (plain h3, no id, URL never deep-links) is a FAIL.
+
+---
+
+### T-7599 · Settings-disclosure regression · anchor deep-linking opens the right group — the deep-link twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ED-SET
+
+Steps: 1. Navigate directly to /settings#replay (or another group's slug). 2. Observe which group is expanded and in view.
+Expected: The linked group opens and scrolls into view. A deep link that lands on /settings with no group opened is a FAIL. (T-7598 pinned slug presence; the behavior twin.)
+
+---
+
+### T-7600 · Settings-disclosure regression · one stable feature name everywhere — the ISS-145 naming resolution
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ED-SET
+
+Steps: 1. Read the copy group's heading verbatim. 2. Read its row label, the command palette entry, and any docs reference. 3. Compare all of them.
+Expected: ONE name ("Copy reader" or "Copy trading") everywhere. ISS-145's exact failure (heading "Copy reader", cases expecting "Copy trading") is resolved by agreement — mixed naming is a FAIL.
+
+---

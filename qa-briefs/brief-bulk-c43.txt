@@ -1,0 +1,1679 @@
+QA BRIEF — BULK LANE B6 chunk 43/45 (T-8201–T-8300)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-8201 · bare quantity units · LONG and SHORT rows carry the unit identically — the no-side-branch twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GQ-263
+
+Steps: 1. In the fills lane (or receipt timeline) read one LONG row and one SHORT row verbatim, quantity cell included.
+
+Expected: the unit is present on both sides — the quantity-rendering path covers both branches. A fix that labels LONG rows but leaves SHORT rows bare (or vice versa) is a FAIL. (The ISS-065 side-mapping fix proved both side branches render; this pins the unit path to the same both-branches bar.)
+
+---
+
+### T-8202 · bare quantity units · expanded fill-detail rows carry the unit too
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GQ-262
+
+Steps: 1. If a fill row offers an expand/detail control, open it and read the detail text verbatim.
+
+Expected: the detail row carries the unit as well — the systemic path (ISS-263) must reach the detail view, not stop at the row. If no expand control exists on the fill rows, record N-A with the absence stated — never invent the control. (New angle: the detail layer was never pinned by the ISS-261/262/263 entries, which only covered row-level text.)
+
+---
+
+### T-8203 · bare quantity units · the QTY column is self-describing — no panel-consult needed to decode a number
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GQ-261
+
+Steps: 1. Read the orders table alone — the QTY column, its header, and any column-level unit note. 2. Ask the decoding question against this panel only: can "2" be decoded to a unit without opening the summary or another page?
+
+Expected: yes — the column header or cells name the unit ("contracts") so the panel answers "2 of what" by itself. The ISS-261 failure was precisely that the operator had to consult the summary; the fixed state never requires the consult. (New angle: the column-header layer — T-8194/8199 pinned cells and row/summary agreement; this pins the header's own honesty.)
+
+---
+
+## Section GR · Regression: ISS-264 (silent disabled transport) + ISS-269 (fills-list-only "replay") — lane 19 chunk-1 findings (8 cases: T-8204–T-8211)
+
+Regression coverage for ISS-264 (OPEN — replay booth "Play or pause" button [disabled]; browser refused the click; "Playback needs a price tape — the transport controls are disabled until a tape feed is wired." present on the page, but the control itself gives no feedback when tapped) and ISS-269 (OPEN — time-travel replay is fills-list-only: "No tape" + the disabled transport; a past session cannot be rewound, so "what the system saw and did" is unrecoverable; the booth must wire a real tape or be explicitly labeled a fills viewer). Both surfaced 2026-09-29 ~05:14–05:16 UTC in lane-19 chunk 1 (ISS-264) and lane-14 chunk 1 (ISS-269): T-3612 "replay booth primary control works" → ISS-264, T-3619 "time-travel replay is useful in the actual market" → ISS-269. Written against the EXPECTED FIXED state: the disabled control acknowledges interaction, the "no tape" explanation lives at the control, and the booth is labeled honestly either way. Title sweep: the silent-control class belongs to ISS-258/259 (finding cases T-3913/T-3929; regression Section FT T-7981/T-7982 proved the acknowledgment pattern for the journal CSV and copy-Pine-script controls) — GR is the transport-control twin of that family, a genuinely different control on a genuinely different page. T-3613 PASSed the page-level "No tape to replay" copy (the placement at the control was never pinned), T-2616 PASSed the finished render. Safety: read-only; the transport is pressed but never depended on to move; no tape, order, or fire control is touched.
+
+---
+
+### T-8204 · replay booth · the disabled "Play or pause" click gets visible acknowledgment — the ISS-264 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INTERACTION
+
+Feature: GR-264
+
+Steps: 1. Open the replay booth. 2. Click (tap) the disabled "Play or pause" control. 3. Record everything the page shows within 2 seconds — motion, tooltip, inline text, focus change, nothing.
+
+Expected: the click is visibly acknowledged — a shake, a tooltip, or the "no tape" explanation surfaced at the control — never swallowed in total silence. Total silence after the click is a FAIL (the ISS-264 symptom verbatim). (ISS-264 inverted: T-3612 FAILed the silent button. Twin of FT T-7981/T-7982's acknowledged-click pattern, applied to the transport control for the first time.)
+
+---
+
+### T-8205 · replay booth · the "no tape" explanation is surfaced AT the transport control, not only elsewhere on the page
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GR-264
+
+Steps: 1. Read the text immediately adjacent to (or beneath) the disabled transport control. 2. Read the page's no-tape copy wherever it lives.
+
+Expected: the disabled reason is visible AT the control — the ISS-264 Expected names this exactly ("the 'no tape' explanation surfaced at the control"). A page that explains the tape only in a distant paragraph while the button sits mute is a FAIL. (Twin of T-3613, which PASSed the page-level copy — this pins the PLACEMENT, never before required.)
+
+---
+
+### T-8206 · replay booth · the disabled state reads as an honest pending state, never as a broken control
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GR-264
+
+Steps: 1. Study the transport control's visual state — affordance, color, cursor, accompanying text — without clicking.
+
+Expected: it reads as a deliberate disabled-because-no-tape state (an honest pending state), never as a crashed or half-rendered button. An operator must be able to tell "waiting on a tape" from "broken" at a glance. (New angle: the affordance-reading layer — T-8204 pins post-click acknowledgment, this pins the pre-click visual honesty.)
+
+---
+
+### T-8207 · replay booth · the booth is labeled honestly — a real tape replayer or an explicitly named fills viewer — the ISS-269 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GR-269
+
+Steps: 1. Read the booth's title, subtitle, and description lines verbatim.
+
+Expected: exactly one honest label — either a wired tape exists (then ISS-269 was fixed the tape way and this case records the tape's presence) or the booth is explicitly labeled a fills viewer. "Replay" promises with fills-only delivery is a FAIL — ISS-269's Expected names the two honest branches ("wires a real tape (or is explicitly labeled a fills viewer)"). (ISS-269 inverted: T-3619 FAILed the unusable replay; this passes only when the label matches the capability.)
+
+---
+
+### T-8208 · replay booth · the 3 known fills render side + qty + price with units — the lane-19 triple-fill twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GR-269
+
+Steps: 1. Read the 3 known fills rows in full — side, quantity + unit, price, time (lane 19 saw LONG/SHORT rows at $83,973.50, $83,992.20, $83,963.00).
+
+Expected: each row shows side (LONG/SHORT per the ISS-065 mapping lineage — CX T-7321, GO T-8176), quantity WITH its unit (GQ lineage), and price. A row missing any of the three is a FAIL — if the booth is a fills viewer, the fills themselves must be complete. (Twin of GQ T-8196's unit pin, extended to the full row: side + qty + price together.)
+
+---
+
+### T-8209 · replay booth · pressing the disabled transport pins the acknowledgment at the control on EVERY press — the no-flake twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INTERACTION
+
+Feature: GR-264
+
+Steps: 1. Press the disabled "Play or pause" control three times with a few seconds between presses. 2. Record the acknowledgment after each press.
+
+Expected: the acknowledgment appears every time — never a one-shot tooltip that fires once and then goes mute (a flake class the silent-control family would otherwise miss). Three presses, three acknowledgments, or a FAIL. (New angle: T-8204 pins acknowledgment exists; this pins it doesn't decay.)
+
+---
+
+### T-8210 · replay booth · the "No tape" copy names what is missing AND what still works
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GR-269
+
+Steps: 1. Read the "No tape" / no-tape copy verbatim in full.
+
+Expected: the copy names BOTH directions — the missing price tape AND the still-working fills list. Copy that names only the missing half leaves the operator unsure what the booth is still good for; that is a FAIL. (New angle: the copy-completeness layer — T-3613 passed the copy's existence, T-8205 pins its placement, this pins its two-sided content.)
+
+---
+
+### T-8211 · replay booth · hovering the disabled transport shows its reason without a click — the discoverability twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GR-264
+
+Steps: 1. Hover the disabled "Play or pause" control (long-press on a touch device). 2. Read any tooltip, title text, or accessible description verbatim.
+
+Expected: the disabled reason is discoverable BEFORE a click — the operator learns why without having to press a dead button first. A disabled control that explains itself only after a failed click is a partial FAIL. (Twin of GP T-8184's pill-tooltip angle — the same discoverability bar, applied to the transport control for the first time.)
+
+---
+
+## Section GS · Regression: ISS-265 — no news filter section on the / page (6 cases: T-8212–T-8217)
+
+Regression coverage for ISS-265 (OPEN — cases T-3622–T-3626 expect a news filter on the / page; none exists; the only reference found is the blackout drill's "Run blackout drill — What it does: tests the news filter against a fake calendar event."; /settings shows 19 groups with no News filter). Surfaced 2026-09-29 ~05:14 UTC in the lane-19 UI run, chunk 1: T-3622 "news filter renders on /" → ISS-265. Written against the EXPECTED FIXED state: a news-filter status surface exists and its ON/OFF + threshold/lookahead are observable. Title sweep: Section I (T-3622–T-3626) is the ORIGINAL five-case block, written against a surface that never shipped — GS inverts those exact expectations now that the surface must exist (I pinned the missing surface; GS pins the shipped one). Section DY (T-7550–T-7557) covers dead-text phantom controls including news-filter copy with no controls — GS T-8215 is the drill-text twin of that class. The EL/EM drill sections cover halt/blackout controls, not the filter surface. Safety: read-only; the drill card is read, and if its modal opens it is read only, never confirmed.
+
+---
+
+### T-8212 · news filter surface · a news-filter status surface exists on the / page in the fixed state — the ISS-265 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GS-265
+
+Steps: 1. Open the / page through the live browser. 2. Scan it top to bottom for a news filter section; read the section verbatim if found.
+
+Expected: the surface EXISTS in the UI — the pass condition is existence, with placement recorded. ISS-265's "why it matters" inverted: the five-case Area-1 block must have something to observe. No surface anywhere is a FAIL (the ISS-265 symptom). (ISS-265 inverted: T-3622 FAILed the missing surface; this passes only when it renders.)
+
+---
+
+### T-8213 · news filter surface · the filter's ON/OFF state is observable on the surface
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GS-265
+
+Steps: 1. On the / news-filter surface, read the state indicator verbatim.
+
+Expected: ON or OFF readable at a glance — the ISS-265 Expected names ON/OFF observability explicitly. A surface that exists but hides its state behind a settings dive is a FAIL. (Twin of Section I's T-3622/T-3624 family — those expected a working primary control; this pins the state READ, the precondition the control's honesty depends on.)
+
+---
+
+### T-8214 · news filter surface · the filter's threshold and lookahead are observable on the surface
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GS-265
+
+Steps: 1. On the / news-filter surface, read the threshold and lookahead values verbatim.
+
+Expected: the values are shown — or an honest "not configured" line stands in their place. Absence shown as absence is a pass; a blank where a value belongs is a FAIL. (Twin of T-8213's state-read angle, applied to the two numeric knobs the ISS-265 Expected names: "its ON/OFF + threshold are observable".)
+
+---
+
+### T-8215 · news filter surface · the blackout drill's "tests the news filter against a fake calendar event" text resolves to the real surface — the dead-text twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GS-265
+
+Steps: 1. Find the drill text quoted in ISS-265 ("Run blackout drill — What it does: tests the news filter against a fake calendar event."). 2. Follow any link or reference it carries; if it opens a modal, read the modal only and close it without confirming.
+
+Expected: the text RESOLVES to the real filter surface — a link, a named location, or modal copy that lands on (or names) the surface from T-8212. Text that points at nothing is the dead-text class Section DY (T-7550–T-7557) was built to kill; its recurrence here is a FAIL. (Twin of DY's news-filter phantom-copy angle — DY proved the copy class dies; this pins the drill's specific line against the shipped surface.)
+
+---
+
+### T-8216 · news filter surface · no two surfaces contradict the filter's state — the one-truth twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GS-265
+
+Steps: 1. Read the / surface's ON/OFF + threshold. 2. Read every other filter mention found in the pass (settings groups, drill cards, any status line). 3. Compare.
+
+Expected: one truth everywhere — a surface reading ON while another reads OFF (or thresholds that disagree) is a FAIL. (New angle: cross-surface agreement applied to the filter's state for the first time — the ISS-065 family proved agreement for side labels and units; the filter's state deserves the same bar.)
+
+---
+
+### T-8217 · news filter surface · the settings groups no longer imply a filter that isn't observable — the 19-group honesty twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GS-265
+
+Steps: 1. Open /settings and scan the group list for news/blackout/calendar entries. 2. Read what each such entry promises verbatim.
+
+Expected: every entry resolves to the observable surface from T-8212 — or the entry honestly states the filter's location/status. ISS-265 noted "Settings shows 19 groups with no News filter": the fixed state either shows the group or explains the gap; a group that promises filter controls with no observable surface is a FAIL. (Twin of GU T-8228's count-honesty angle — both pin the settings list's truthfulness, this for the filter's presence, that for the count.)
+
+---
+
+## Section GT · Regression: ISS-266 — Jev consultation "source mock" contradicts the panel's "built-in advisory model" (6 cases: T-8218–T-8223)
+
+Regression coverage for ISS-266 (OPEN — Jev panel says "Jev answers from its built-in advisory model", but recent consultations read "Jev consultation · advisory: skip · quality 0.20 (scale 0–1: 0.20 poor setup · 0.50 fair · 0.90 strong) · source mock · cost $0.0000" — "source mock" contradicts the described model; provenance must be singular and honest). Surfaced 2026-09-29 ~05:14 UTC in the lane-19 UI run (T-3601 observation). Written against the EXPECTED FIXED state: exactly one provenance on panel and consultations, and the quality-scale line retained without the contradiction. Title sweep: Section AU (T-6635–T-6650) pinned SLOT-mode honesty — T-6635 ("Slot mode: mock · backend: mock · configure in Settings → AI providers"), T-6636 (MOCK honesty identical on Brain, Copilot, Settings), T-6637 (experiment "not run" in MOCK) — all about the SLOT's label, never about a per-CONSULTATION source line. GT is the consultation-provenance twin, a genuinely new layer. Safety: read-only; the Jev panel and consultation log are read, never re-run.
+
+---
+
+### T-8218 · jev provenance · a consultation's source label is singular and honest — the ISS-266 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GT-266
+
+Steps: 1. Open the Jev panel/consultation log. 2. Read the most recent consultation's source field verbatim.
+
+Expected: exactly ONE provenance — "built-in advisory model" or "mock" — matching the panel description. Both labels on one answer (the ISS-266 contradiction) is a FAIL. (ISS-266 inverted: the observation FAILed the contradiction; this passes only when the source line is singular.)
+
+---
+
+### T-8219 · jev provenance · "source mock" is gone wherever the panel says "built-in advisory model" — the agreement twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GT-266
+
+Steps: 1. Read the Jev panel's description line verbatim ("Jev answers from its built-in advisory model" or whatever it now says). 2. Read the source lines of the last 3 consultations.
+
+Expected: panel and consultations AGREE — both name the advisory model, or both name the mock. Any consultation whose source contradicts the panel's description is a FAIL. (Twin of AU T-6636's identical-everywhere honesty — AU proved the SLOT label is identical on Brain, Copilot, Settings; this proves the PANEL description and the CONSULTATION sources tell one story.)
+
+---
+
+### T-8220 · jev provenance · the quality-scale line survives on consultations — the scale-preservation twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GT-266
+
+Steps: 1. Read a full consultation line verbatim, including its quality segment.
+
+Expected: the quality scale is present and readable (ISS-266 quoted the healthy part: "quality 0.20 (scale 0–1: 0.20 poor setup · 0.50 fair · 0.90 strong)") — the provenance fix must not strip the scale along with the contradiction. A consultation with no interpretable quality scale is a FAIL. (New angle: pins that the fix removed the CONTRADICTION, not the whole informative line.)
+
+---
+
+### T-8221 · jev provenance · advisory skip/fail labels name their cause honestly
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GT-266
+
+Steps: 1. Read an "advisory: skip" (or "fail") consultation line verbatim in full.
+
+Expected: the skip/fail carries its cause in plain words — a bare "skip" with no reason is a FAIL. Diagnostics must name names: the operator needs to know WHY Jev declined, not just that it did. (Twin of GW's per-guard naming class, applied to Jev's advisory verdicts for the first time — same "name the reason" bar, different panel.)
+
+---
+
+### T-8222 · jev provenance · the cost line never implies a live call when the source is not live
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GT-266
+
+Steps: 1. Read a consultation's cost line together with its source label ("cost $0.0000" beside the source, per ISS-266).
+
+Expected: beside a mock/labeled-model source the cost reads as "no live call was made" — never as a priced live call; if a source is ever labeled live, the cost must be a real billed figure or an honest "not metered" line. A $0.0000 beside a live-source label that implies metering happened is a FAIL. (New angle: the cost/provenance cross-read — neither AU nor ISS-266 pinned what the cost line may claim next to a given source.)
+
+---
+
+### T-8223 · jev provenance · the Jev panel carries zero banned words
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GT-266
+
+Steps: 1. Read the entire Jev panel plus the recent consultation lines top to bottom. 2. Note every occurrence of the banned words.
+
+Expected: ZERO occurrences of the two banned words (case-insensitive) in the panel or its consultations — visible text, quotes, or attributes. Any occurrence is a FAIL — the provenance rewrite is the exact moment such words could slip in ("mock mode" must never be written as the banned words). (Standing-rule pin: the whole plan carries the zero-banned-words gate; this is its first dedicated Jev-panel application.)
+
+---
+
+## Section GU · Regression: ISS-267 — settings summary shows no guard values (6 cases: T-8224–T-8229)
+
+Regression coverage for ISS-267 (OPEN — cockpit summary shows only "19 groups — risk, alerts, AI profile, venues and more." with no values; it does not answer "what are my guards right now" without opening settings; T-2608 PASSes that the group count matches /settings). Surfaced 2026-09-29 ~05:16 UTC in the lane-14 UI run, chunk 1: T-2609 "Settings summary is useful in the actual market" → ISS-267. Written against the EXPECTED FIXED state: the summary carries live guard values (risk caps, alert states, AI profile, venue) or an honest "open settings for values" line — never a value-less teaser. Title sweep: T-2608 is the count-agreement twin (retained as GU T-8228 so the value work cannot break it); T-2609 is the usefulness case that FAILed into this issue. The FN/GO settings families pin group mechanics, never the summary's content. Safety: the value-touching case records the original value first and restores it before moving on — nothing is ever saved dirty on the TEST setup; all other cases are read-only.
+
+---
+
+### T-8224 · settings summary · the cockpit summary carries live guard values — the ISS-267 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GU-267
+
+Steps: 1. Open the cockpit and read the settings summary block verbatim in full.
+
+Expected: the block carries LIVE guard values — risk caps, alert states, AI profile, venue — answering "what are my guards right now" without opening settings. The ISS-267 teaser ("19 groups — risk, alerts, AI profile, venues and more." with no values) never recurs: that exact value-less form is a FAIL. (ISS-267 inverted: T-2609 FAILed the decorative summary; this passes only when the summary answers the question it exists for.)
+
+---
+
+### T-8225 · settings summary · the summary's values match /settings values exactly — the source-of-truth twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GU-267
+
+Steps: 1. Pick two guard values shown in the cockpit summary. 2. Open /settings and read the same two fields verbatim.
+
+Expected: exact agreement — the summary never drifts from the source of truth. A summary value that disagrees with /settings is a FAIL (a summary that invents values is worse than a teaser). (New angle: the agreement layer — T-8224 pins values EXIST; this pins they are TRUE.)
+
+---
+
+### T-8226 · settings summary · the summary is never a value-less teaser — the teaser-death twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GU-267
+
+Steps: 1. Read the summary block's full text, including any collapsed or secondary lines.
+
+Expected: nowhere does the block restate the group count (or a category list) INSTEAD of values. The ISS-267 sentence in any form — count-without-values — is a FAIL wherever it appears, including in tooltips or subtitles. (Twin of T-8224's inversion with a wider net: T-8224 checks the primary block; this sweeps the block's secondary text where the teaser could hide.)
+
+---
+
+### T-8227 · settings summary · the honest "open settings for values" fallback is allowed where a value can't be shown
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GU-267
+
+Steps: 1. Read the summary block; for every slot that carries no value, read its fallback line verbatim.
+
+Expected: the ISS-267 Expected's honest branch — an "open settings for values" line (or equivalent plain-words fallback) that NAMES the missing value. A gap shown as a gap is a pass; a gap masked by the teaser, or a bare blank, is a FAIL. (New angle: pins the fallback branch of the ISS-267 Expected, which T-8224's values-branch does not cover.)
+
+---
+
+### T-8228 · settings summary · the group-count agreement from T-2608 is retained — the count-survival twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GU-267
+
+Steps: 1. Read the summary's group count. 2. Count the groups on /settings. 3. Compare.
+
+Expected: still 19 = 19 — the T-2608 PASS holds after the value work lands. A summary that gained values but lost the count (or shows a count /settings disagrees with) is a FAIL. (Direct twin of T-2608 "Settings summary does what it claims" — the count agreement must survive the ISS-267 fix.)
+
+---
+
+### T-8229 · settings summary · the summary reflects a saved change — then the change is reverted — the liveness twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GU-267
+
+Steps: 1. Record a guard value's original (choose a harmless text/number field in a settings group on the TEST setup). 2. Change it through the /settings UI and save. 3. Re-read the cockpit summary. 4. Restore the original value through the same UI, save again, and confirm the summary reverts.
+
+Expected: the summary tracks BOTH the save and the revert — proving the values are live-bound, not rendered once. Nothing is saved dirty: the original is restored before moving on, and the summary's final read matches the pre-case read. (New angle: the liveness layer — T-8224/T-8225 pin values exist and agree at rest; this pins they TRACK a save.)
+
+---
+
+## Section GV · Regression: ISS-268 — Smart Trade ticket preview never prices the ticket (6 cases: T-8230–T-8235)
+
+Regression coverage for ISS-268 (OPEN — "The preview never prices the ticket, so estimates stay blank — nothing here is a quote."; Est. notional / Est. margin / Est. taker fee all stay "—" for both Long and Short and do not recompute for the new side; a trade cannot be sized from the estimates. T-2613 PASS: the preview click itself works — "Preview OK — nothing fired."). Surfaced 2026-09-29 ~05:16 UTC in the lane-14 UI run, chunk 1: T-2612/T-2614 observations → ISS-268. Written against the EXPECTED FIXED state: the preview prices the ticket (notional, margin, taker fee recompute for the chosen side) or the estimate fields are removed — never a bare "—" in a quote position. Title sweep: T-2613 is the click-works twin (PASS — "Preview OK — nothing fired."), T-2612 the live-data twin, T-2614 the usefulness twin. GV pins the one layer none of them covered: the NUMBERS inside the preview. Safety: preview only — the Preview button is pressed, the Fire button is never pressed, and no ticket is ever committed on the TEST setup.
+
+---
+
+### T-8230 · smart trade preview · the preview prices a Long ticket — est. notional is not "—" — the ISS-268 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INTERACTION
+
+Feature: GV-268
+
+Steps: 1. Build a Long ticket on the TEST setup (side Long, a modest qty; do not fire). 2. Press Preview. 3. Read Est. notional / Est. margin / Est. taker fee verbatim.
+
+Expected: real computed NUMBERS in all three fields — none reads "—". A "—" in any estimate field is a FAIL (the ISS-268 symptom verbatim). (ISS-268 inverted: T-2612/T-2614 observations FAILed the blank estimates; T-2613's click PASS is retained as GV T-8234.)
+
+---
+
+### T-8231 · smart trade preview · the preview prices a Short ticket too — the side-parity twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INTERACTION
+
+Feature: GV-268
+
+Steps: 1. Build a Short ticket (same qty as T-8230; do not fire). 2. Press Preview. 3. Read the three estimates verbatim.
+
+Expected: real numbers for Short as well — the pricing path covers both sides. A fix that prices Long but leaves Short at "—" is a FAIL. (Twin of T-8230's Long angle with the GQ T-8201 both-branches bar applied to pricing.)
+
+---
+
+### T-8232 · smart trade preview · switching side recomputes all three estimates — the recompute twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INTERACTION
+
+Feature: GV-268
+
+Steps: 1. Preview a Long ticket; record all three estimates. 2. Switch the ticket to Short (same qty); press Preview again. 3. Record all three estimates.
+
+Expected: all three numbers RECOMPUTE for the new side — ISS-268's "they do not recompute for the new side" inverted. Estimates identical across the side switch (or a mix of recomputed and stale) is a FAIL. (New angle: the recompute layer — T-8230/T-8231 pin each side prices; this pins the SWITCH re-derives.)
+
+---
+
+### T-8233 · smart trade preview · editing qty after a preview never leaves stale estimates — the stale-quote twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INTERACTION
+
+Feature: GV-268
+
+Steps: 1. Preview a ticket; record the estimates. 2. Edit the qty field (ticket fields are not persisted — no save involved). 3. WITHOUT pressing Preview again, read the estimates. 4. Restore the qty field's prior value.
+
+Expected: the estimates either clear, recompute, or carry a "stale — re-preview" marker — a silently stale quote that still reads as current is a FAIL. A trader sizing from a stale notional is the exact harm ISS-268 names. (New angle: the staleness layer — no prior case pinned what the estimates show between edits.)
+
+---
+
+### T-8234 · smart trade preview · "Preview OK — nothing fired." is retained on every preview — the safety-line twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INTERACTION
+
+Feature: GV-268
+
+Steps: 1. Preview a Long ticket; read the confirmation line verbatim. 2. Preview a Short ticket; read it again.
+
+Expected: the T-2613 line "Preview OK — nothing fired." verbatim on BOTH previews — the pricing fix must not lose the safety confirmation, and nothing is ever fired during the case. A preview without the confirmation line, or any fired order, is a FAIL. (Direct twin of T-2613 "Smart Trade ticket does what it claims" — the PASS this section is built around retaining.)
+
+---
+
+### T-8235 · smart trade preview · if estimates cannot be computed, the fields are removed — never a bare "—" that reads as a quote — the honest-absence twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GV-268
+
+Steps: 1. Read the preview block in the fixed state, fields and their current contents.
+
+Expected: the ISS-268 Expected's alternative branch — fields present WITH numbers, or fields gone entirely. A persistent "—" sitting in a quote position (looking like a price that failed to load) is a FAIL. This case passes on EITHER honest branch — priced or removed — but never on the bare-dash middle. (New angle: pins the ISS-268 Expected's "or the estimate fields are removed" branch, which the pricing cases do not cover.)
+
+---
+
+## Section GW · Regression: ISS-270 — risk-check what-if gives group-level verdicts only (6 cases: T-8236–T-8241)
+
+Regression coverage for ISS-270 (OPEN — what-if output shows "PASS T1-T8 — no window covers worker-now", "PASS R1-R11 — all checks passed" — individual guards T1…T8, R1…R11 not named per guard; T-2628 PASS: the group verdicts agree with the Risk Control bars. "Why it matters": when it fails, the lumped label won't say which guard failed or why — what-if is a diagnostic; diagnostics must name names). Surfaced 2026-09-29 ~05:16 UTC in the lane-14 UI run, chunk 1: T-2627 "Risk-check tool is connected to live data" → ISS-270. Written against the EXPECTED FIXED state: the what-if names each guard T1–T8 and R1–R11 individually with its own PASS/FAIL + reason. Title sweep: T-2628 is the group-agreement twin (PASS — verdicts agree with the Risk Control bars; GW T-8240 takes that bar one level deeper to per-guard reasons), T-2627 the connectivity twin. GT T-8221 borrows this section's "name the reason" class for Jev — GW is the original. Safety: read-only; the what-if tool is run, never applied — no guard, halt, or trade control is touched.
+
+---
+
+### T-8236 · what-if guards · the what-if names each T guard T1–T8 individually with PASS and its own reason — the ISS-270 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GW-270
+
+Steps: 1. Run the risk-check what-if through the UI (read-only). 2. Read the T-guard output lines verbatim in full.
+
+Expected: EIGHT individual lines — "PASS T1 — <its own reason>" through "PASS T8 — <its own reason>" — each with a reason that belongs to THAT guard. The lumped "PASS T1-T8 — no window covers worker-now" never recurs: that exact lumped form is a FAIL. (ISS-270 inverted: T-2627 FAILed the lumped output; this passes only when every T guard is named.)
+
+---
+
+### T-8237 · what-if guards · the what-if names each R guard R1–R11 individually — the R-half twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GW-270
+
+Steps: 1. In the same what-if output, read the R-guard lines verbatim in full.
+
+Expected: ELEVEN individual lines — "PASS R1 — <reason>" through "PASS R11 — <reason>". The lumped "PASS R1-R11 — all checks passed" never recurs: that exact form is a FAIL. (Twin of T-8236's T-half angle — ISS-270's Expected names both halves, so both get their own case.)
+
+---
+
+### T-8238 · what-if guards · the group verdict equals the AND of the per-guard lines — the summary-honesty twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GW-270
+
+Steps: 1. Read the group verdict line AND all 19 per-guard lines from one what-if run.
+
+Expected: the group line is a SUMMARY of the named lines, not a replacement — group PASS if and only if every per-guard line PASSes. A group line that disagrees with its own per-guard lines (or a group line shown while per-guard lines are absent) is a FAIL. (New angle: the summary/per-line consistency layer — T-8236/T-8237 pin the lines exist; this pins the group line is DERIVED from them.)
+
+---
+
+### T-8239 · what-if guards · the guard count is named — 19 total, none silently dropped
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GW-270
+
+Steps: 1. Count the per-guard lines in the what-if output: T-half and R-half separately.
+
+Expected: 8 T + 11 R = 19 named guards. A guard silently dropped from the listing (7 T lines, 10 R lines) is a FAIL — the lumped labels could hide a missing guard, the named listing cannot. (New angle: the completeness layer — naming guards is only honest if ALL of them are named.)
+
+---
+
+### T-8240 · what-if guards · per-guard reasons agree with the Risk Control bars — the one-level-deeper twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GW-270
+
+Steps: 1. Read the what-if per-guard reasons. 2. Read the Risk Control bars' state on the / page. 3. Compare guard by guard.
+
+Expected: agreement at the PER-GUARD level — a reason that contradicts its bar is a FAIL. (Direct twin of T-2628 "Risk-check tool does what it claims", which PASSed the GROUP-level agreement — this takes the same bar one level deeper, the genuinely new angle ISS-270 demands.)
+
+---
+
+### T-8241 · what-if guards · a group-level FAIL, if ever observed, expands to the failing guard's name + reason — the diagnostic twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GW-270
+
+Steps: 1. Read any FAIL verdict present in the what-if output during the pass. 2. If none occurs, record the PASS structure from T-8236/T-8237 and the stated expectation below.
+
+Expected: a FAIL names the failing guard and its reason — the ISS-270 "why it matters" inverted ("when it fails, the lumped label won't say which guard failed or why"). A lumped FAIL with no guard name is a FAIL of the case. If no FAIL occurs naturally during the pass, record that honestly — the class is pinned by the PASS structure plus this stated expectation; a failure is never manufactured. (New angle: the FAIL-path layer — all sibling cases pin the PASS shape; this pins the shape the operator actually needs when something is wrong.)
+
+---
+
+## Section GX · Regression: ISS-271 — session log remembers an open leg the exchange denies (stale position ghost) + notification topics stuck loading (6 cases: T-8242–T-8247)
+
+Regression coverage for ISS-271 (OPEN — session log remembers an open leg the exchange denies: "The session log remembers an open leg, but the exchange reports no open position. This is not real exposure — nothing is at risk. It stays visible here until the log clears it." on POSITIONS & ORDERS; lane 19's chunk-1 start-of-run saw the same ghost: "Long", "2 contracts (0.0002 BTC)", "GATEIO:BTCUSDT.P", "ENTRY $83,963.00", "SOURCE Session log only", "Orders — 3 retained — none live". Also: notification topic checkboxes showed "Loading your saved settings…" (disabled) at recording time — Telegram connected, push "console fallback (no push URL)"). Surfaced 2026-09-29 ~05:16 UTC in the lane-14 UI run, chunk 1 (T-2609 observation). Written against the EXPECTED FIXED state: the session log reconciles against the exchange on load and clears ghost legs with an audit line (not a permanent disclaimer), and notification topics render from saved settings promptly. Title sweep: T-2609 is the source observation (session-log grading); the notification-topics lineage is T-464/T-491–T-493 (toggles visible, all-on/all-off, persistence) — those pinned the TOGGLES, never the loading state (GX T-8246 is the genuinely new loading-path angle); ISS-064's delivery-badge honesty (T-5148 lineage) is the label-honesty twin for GX T-8247. Safety: read-only; positions are read, never closed; notification topics are read, never toggled (no saved setting is changed).
+
+---
+
+### T-8242 · stale position ghost · the session log reconciles a ghost leg on load — cleared when the exchange reports flat, with an audit line — the ISS-271 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GX-271
+
+Steps: 1. Open POSITIONS & ORDERS. 2. If a "SOURCE Session log only" leg is present while the exchange reports no open position, reload the page and read what happens to the leg. 3. Read any audit/reconciliation line verbatim.
+
+Expected: the ghost is RECONCILED — cleared because the exchange reports flat — with an audit line ("cleared: exchange reports flat" or equivalent). ISS-271's Expected names reconciliation, not a permanent disclaimer: "It stays visible here until the log clears it" as a STANDING state is a FAIL. If no ghost leg is present during the pass, record that the class is currently absent (that's the fixed state's steady condition) — never invent one. (ISS-271 inverted: the observation FAILed the permanent-disclaimer pattern; this passes only on reconcile-with-audit-line.)
+
+---
+
+### T-8243 · stale position ghost · a ghost leg is never presented as real exposure — the exposure-honesty twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GX-271
+
+Steps: 1. If any session-log-only leg is visible, read its full surrounding copy verbatim. 2. If none is visible, record the positions panel's empty/flat state verbatim.
+
+Expected: no ghost leg ever reads as live exposure — the ISS-271 observation's own honest sentence ("This is not real exposure — nothing is at risk") is the MINIMUM bar; the fixed state (T-8242) should have no ghost at all. A stale leg shown with live-exposure language is a FAIL. (Twin of T-8242's reconcile angle with the copy layer pinned: T-8242 pins the ghost is CLEARED; this pins that anything still shown is never exposure.)
+
+---
+
+### T-8244 · stale position ghost · "SOURCE Session log only" legs and the live position feed agree — or the ghost is gone
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GX-271
+
+Steps: 1. Read the session-log legs and the live position feed side by side (the lane-19 ghost read "Long", "2 contracts (0.0002 BTC)", "GATEIO:BTCUSDT.P", "ENTRY $83,963.00", "SOURCE Session log only").
+
+Expected: agreement — every session-log leg has a live counterpart, or no session-log-only legs exist at all. A "SOURCE Session log only" leg with no live position is the ISS-271 ghost: a FAIL in the fixed state. (New angle: the agreement layer — T-8242 pins the clear-on-load behavior; this pins the steady-state invariant it must maintain.)
+
+---
+
+### T-8245 · stale position ghost · "3 retained — none live" wording stays honest about what retained means
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GX-271
+
+Steps: 1. On POSITIONS & ORDERS read the Orders line verbatim (ISS-271 quoted "Orders — 3 retained — none live").
+
+Expected: "retained" is never confused with "live" — retained rows carry history language, never live-state language, and the "none live" half is present and true. A retained row that reads as an active order is a FAIL. (Twin of the ISS-066 latest-receipt-only disclosure class (GO T-8177) — both pin that a retained/history list never impersonates the live list.)
+
+---
+
+### T-8246 · stale position ghost · notification topic checkboxes render from saved settings promptly — never stuck on "Loading your saved settings…"
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GX-271
+
+Steps: 1. Open /notifications topics. 2. Read what is shown immediately, then again after 5 seconds. 3. Do not toggle anything — read only.
+
+Expected: the checkboxes render from saved settings PROMPTLY — the ISS-271 "Loading your saved settings…" (disabled) state never persists. A loader stuck beyond a few seconds is a FAIL (it reads as a save that never landed). (Twin of the T-464/T-491–T-493 topics family — those pinned toggle visibility and persistence; this is the genuinely new LOADING-path angle ISS-271 surfaced.)
+
+---
+
+### T-8247 · stale position ghost · Telegram "connected" and push "console fallback (no push URL)" labels stay honest
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GX-271
+
+Steps: 1. On /notifications read the channel labels verbatim — Telegram state and the push line (ISS-271 saw Telegram connected, push "console fallback (no push URL)").
+
+Expected: the Telegram label reflects the real connection state (ISS-064 lineage — the delivery-badge honesty bar from the T-5148 wave) and the push label names the fallback plainly — never implying a live push path that doesn't exist. A "connected" label on a dead channel, or a fallback described as a delivery path, is a FAIL. (Twin of ISS-064's badge honesty, applied to the channel labels ISS-271 quoted.)
+## Section GY · Regression: ISS-272/273/276 — copy-hygiene (6 cases: T-8248–T-8253)
+
+Gardener regression block, 2026-09-28 ~22:35 PDT. Covers ISS-272 (OPEN — garbled duplicated copy fragments in the alert JSON contract: "sizing still comes from (optional): per-signal risk hint... sizing still comes from qty_mode / qty_value" — a duplicated middle fragment — and in the approval reply text: "Reply YES <confirm-id> PIN <pin> YES <confirm-id> PIN <pin>"), ISS-273 (OPEN — typo "asof" in the AI stance panel, should read "as of"), and ISS-276 (OPEN — envelope validator sub-view has a dangling "the box above" reference with no input box visible). All three surfaced in lane runs 2026-09-29 ~05:16–05:20 UTC. Written against the EXPECTED FIXED state like past regression sections: duplicated fragments read exactly once, the timestamp reads "as of", and every spatial reference resolves to a visible control. Twin-lineage: the ISS-253/254 copy-twins family (duplicated copy reported once, fixed once — a fix that only removes the reported duplicates without sweeping the page is the known failure mode). Safety: read-only throughout; no ticket, order, halt, or fire control is touched.
+
+---
+
+### T-8248 · garbled contract copy · the qty_mode/qty_value sizing sentence appears exactly once, clean
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GY-272
+
+Steps: 1. Open the alert JSON contract where ISS-272 found the sizing fragment ("sizing still comes from (optional): per-signal risk hint... sizing still comes from qty_mode / qty_value"). 2. Read the sizing paragraph verbatim, character for character.
+
+Expected: the sizing sentence appears exactly once and reads clean — no duplicated middle fragment, no stutter. A repeated "sizing still comes from … sizing still comes from" is a FAIL (the ISS-272 symptom). (Twin of the ISS-253/254 copy-twins family: the reported duplicate is pinned here; T-8250 sweeps the rest of the page.)
+
+---
+
+### T-8249 · garbled approval reply copy · "Reply YES <confirm-id> PIN <pin>" appears once, clean
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GY-272
+
+Steps: 1. Open the surface carrying the approve/deny reply-text instructions (the copy ISS-272 quoted as "Reply YES <confirm-id> PIN <pin> YES <confirm-id> PIN <pin>"). 2. Read the reply-command line verbatim.
+
+Expected: the command appears exactly once — "Reply YES <confirm-id> PIN <pin>" with one YES and one PIN — and a trader copying it character for character sends a valid reply. The doubled "YES <confirm-id> PIN <pin> YES <confirm-id> PIN <pin>" is a FAIL. (Twin of T-8248: the same garbling class, different surface — both halves of ISS-272 pinned separately.)
+
+---
+
+### T-8250 · duplicated-fragment sweep · no other middle-fragment duplications anywhere on the contract page
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GY-272
+
+Steps: 1. Read the whole alert JSON contract page top to bottom. 2. Flag any sentence whose middle fragment repeats (the ISS-272 garble pattern), not just the two reported fragments.
+
+Expected: zero duplicated fragments anywhere on the page — ISS-272's two were the only ones. A fix that removed the two reported duplications while a third stuttered sentence survives elsewhere on the same page is a FAIL. (Twin of the ISS-253/254 copy-twins family: the known failure mode is fixing the reported instance and leaving its twin on the same page — this case pins the sweep.)
+
+---
+
+### T-8251 · "asof" typo · the AI stance timestamp line reads "as of"
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GY-273
+
+Steps: 1. Open the AI stance panel. 2. Read the timestamp line verbatim (ISS-273 saw "asof").
+
+Expected: the line reads "as of" with the space — e.g. "as of <time>". The string "asof" anywhere on the panel is a FAIL. (Twin of the ISS-253/254 copy-hygiene family: a one-character class apart from T-8248's duplications — typos and duplications travel together, so the typo gets its own pin.)
+
+---
+
+### T-8252 · dangling "box above" · the validator sub-view instruction names the real control or the box is above it
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GY-276
+
+Steps: 1. Open the envelope validator sub-view and find the instruction referencing "the box above" (ISS-276 saw no input box visible). 2. Look at what sits directly above the instruction and read the instruction verbatim.
+
+Expected: either the input box is actually above the instruction, or the instruction names the real control ("paste the envelope into the text field below") — never a dangling spatial reference pointing at nothing. A "the box above" with no box above it is a FAIL (the ISS-276 symptom). (Twin of T-8253: the reported instance pinned here, the class swept there.)
+
+---
+
+### T-8253 · spatial-reference sweep · every spatial word on the validator view resolves to a visible control
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GY-276
+
+Steps: 1. Read the envelope validator sub-view fully. 2. For every spatial reference ("above", "below", "to the left/right", "the box", "the panel", "this field"), locate the control it points at.
+
+Expected: every spatial reference resolves to a visible control on the same view — none dangle, none point at a control that only exists on a different tab. A second dangling reference anywhere on the view (beyond ISS-276's reported one) is a FAIL. (Twin of T-8252: that pins the reported "box above"; this pins the reference class the garble came from.)
+
+## Section GZ · Regression: ISS-274/275/284 — AI-panel honesty (8 cases: T-8254–T-8261)
+
+Gardener regression block, 2026-09-28 ~22:35 PDT. Covers ISS-274 (OPEN — 10 identical mock Jev consultation rows presented as history), ISS-275 (OPEN — AI stance card shows "model -- · cost $0" with blank ENTRY/STOP/TARGET/SIZE/CONFIDENCE), and ISS-284 (OPEN — AI copilot shows contradictory state: "AI scanning paused until sign-off" alongside "LATEST AI STANCE / LONG SOL · entry · confidence 100%" with "Size math unavailable"). All three surfaced in lane runs 2026-09-29 ~05:16–05:20 UTC. Written against the EXPECTED FIXED state: consultation history holds real consultations (or mock rows are labeled and quarantined), the stance card names its model and never dresses a blank verdict as a stance, and a paused scanner's stale verdict is labeled stale or hidden. Twin-lineage: the ISS-266 "source mock" contradiction family (mock data wearing real labels) — ISS-274 is its direct twin; ISS-275/284 extend the same honesty bar to the stance card's blank fields and the page's contradictory states. Safety: read-only throughout; no ticket, order, halt, or fire control is touched.
+
+---
+
+### T-8254 · mock Jev rows · consultation history shows real consultations only, or mock rows labeled and quarantined
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GZ-274
+
+Steps: 1. Open the Jev/AI consultation history. 2. Read every row — timestamps, symbols, verdicts, sources.
+
+Expected: the history holds real consultations only — distinct timestamps, distinct content. If mock/seed rows exist, they are labeled as mock and quarantined from the real history (separate section, clear label), never interleaved as history. Ten identical rows presented as ten consultations is a FAIL (the ISS-274 symptom). (Twin of ISS-266's "source mock" contradiction — the same mock-wearing-real-labels class, now in the consultation history.)
+
+---
+
+### T-8255 · mock-as-real contradiction · no row's data contradicts its source label — the ISS-266 twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GZ-274
+
+Steps: 1. For each consultation-history row, compare its source label against the row's data (timestamp, symbol, verdict text). 2. Flag any row whose label says one thing and whose data says another.
+
+Expected: label and data always agree — a row labeled mock never wears real-consultation data, and a row wearing real data never hides behind a mock label. A contradiction in either direction is a FAIL. (Direct twin of ISS-266 — that pinned the "source mock" contradiction on its surface; this pins the same contradiction inside the consultation rows ISS-274 quoted.)
+
+---
+
+### T-8256 · blank AI stance · the stance card names the model that produced it — never "--"
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GZ-275
+
+Steps: 1. Open the AI stance card. 2. Read the model line verbatim (ISS-275 saw "model --").
+
+Expected: a real model name stands where the model should be — never "--", never blank. A stance card that cannot name the model behind its verdict is a FAIL (the ISS-275 symptom's first half). (Twin of T-8258: the model line and the cost line must agree with each other — both pinned, neither assumed from the other.)
+
+---
+
+### T-8257 · blank verdict dressed as stance · ENTRY/STOP/TARGET/SIZE/CONFIDENCE never blank under a verdict label
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GZ-275
+
+Steps: 1. Read the stance card's verdict fields — ENTRY, STOP, TARGET, SIZE, CONFIDENCE — verbatim (ISS-275 saw all blank under a stance presentation). 2. Read the card's headline verdict state.
+
+Expected: when no verdict exists, the card says so explicitly ("no verdict", "no stance") or hides the fields — blank fields never sit under a live-looking verdict. A blank verdict dressed as a stance is a FAIL (the ISS-275 symptom's second half). (Twin of T-8256: that pins the card's attribution, this pins the card's content — a card can name its model and still dress a blank verdict as a stance.)
+
+---
+
+### T-8258 · cost line honesty · "cost $0" appears only when zero-cost is real
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GZ-275
+
+Steps: 1. Read the stance card's cost line verbatim (ISS-275 saw "cost $0" beside "model --"). 2. Read the model line beside it.
+
+Expected: "$0" appears only when the zero-cost path is genuine (e.g. a stated local/mock path) — a "$0" beside a real-model claim, or beside a named paid model, is a contradiction FAIL. The cost line and the model line must agree. (Twin of T-8256: that pins the model name; this pins the cost that must agree with it — ISS-275's "model -- · cost $0" was two contradictions in one line.)
+
+---
+
+### T-8259 · paused scanner · the stale stance is labeled stale or hidden — never at full confidence
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GZ-284
+
+Steps: 1. With the AI scanner paused ("AI scanning paused until sign-off" banner visible), read the LATEST AI STANCE card verbatim (ISS-284 saw "LONG SOL · entry · confidence 100%"). 2. Note the card's confidence and any staleness labeling.
+
+Expected: the paused scanner's leftover stance is labeled stale (with its age) or hidden — never presented at 100% confidence as if freshly scanned. A full-confidence verdict under a paused-until-sign-off banner is a FAIL (the ISS-284 symptom). (Twin of T-8261: this pins the stance card's own labeling; that pins the page-level state agreement.)
+
+---
+
+### T-8260 · sizing-inputs honesty · "Size math unavailable" names the missing input in trader words
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: GZ-284
+
+Steps: 1. On the stance card where sizing inputs are missing, read the sizing line verbatim (ISS-284 saw "Size math unavailable"). 2. Read the surrounding card for any explanation of what is missing.
+
+Expected: the card says WHY sizing is unavailable — which input is missing, in trader words — not just that it is. A bare "Size math unavailable" with no cause named is a FAIL. (Twin of T-8257's blank-SIZE pin: that demands the field never be blank under a verdict; this demands the stated reason never be content-free.)
+
+---
+
+### T-8261 · contradictory AI state · the page never shows paused-scanner and live-verdict at once
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: GZ-284
+
+Steps: 1. Read the AI panel top to bottom — the pause banner, the stance card, the scanning-state line — in one pass. 2. Check whether the banner's claim and the card's presentation agree.
+
+Expected: the page's states agree with each other — a "paused until sign-off" banner never shares the page with an unqualified live-looking verdict. The ISS-284 contradiction (paused banner + "LATEST AI STANCE / LONG SOL · confidence 100%") is a FAIL. (Twin of T-8259: that pins the card's staleness label; this pins the page-level agreement — a labeled-stale card under a pause banner is consistent, an unlabeled full-confidence card is not.)
+
+## Section HA · Regression: ISS-277/278/279 — plain-words and formatting (8 cases: T-8262–T-8269)
+
+Gardener regression block, 2026-09-28 ~22:35 PDT. Covers ISS-277 (OPEN — funding rail number formatting inconsistent: "veto > 30bp" with no space vs "veto 30.0 bp" vs "30 bp veto threshold"; "worst 0.6 bp" vs "ETH_USDT 0.60 bp"), ISS-278 (OPEN — unexplained jargon batch: EXPECTANCY (NET/GROSS), MAX DRAWDOWN, HEAT, CLUSTER on cap-bar labels, "mirrors R7", b-profile flag, TypeSafe, slot mode "Standby · backend: Standby"), and ISS-279 (OPEN — SmartTrade ticket copy uses unexplained "MCP"). All three surfaced in lane runs 2026-09-29 ~05:16–05:20 UTC. Written against the EXPECTED FIXED state: one formatting rule governs the whole rail ("30 bp", "0.6 bp" everywhere — pill, detail, gauge), every jargon term is defined on first use or replaced with trader words, and MCP is defined on first use on EVERY surface where it appears. Twin-lineage: ISS-260 (the MCP acronym's first surfacing — the per-panel fix is the known failure mode; ISS-279 is its twin proving the fix must be global, not per panel). Safety: read-only throughout; no ticket, order, halt, or fire control is touched.
+
+---
+
+### T-8262 · funding rail formatting · one rule for the threshold: "30 bp" everywhere
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-277
+
+Steps: 1. Read every funding-rail surface that quotes the veto threshold — the pill (ISS-277 saw "veto > 30bp"), the detail line ("veto 30.0 bp"), the gauge ("30 bp veto threshold"). 2. Compare the three verbatim.
+
+Expected: one formatting rule everywhere — "30 bp" with the space, one consistent decimal form. The variants "30bp" and "30.0 bp" are gone. Any surface still quoting the threshold in a different format is a FAIL (the ISS-277 symptom). (Twin of T-8263: the same one-rule bar pinned for the threshold half of the rail; that pins the value half.)
+
+---
+
+### T-8263 · funding rail formatting · the worst-leg value reads "0.6 bp" everywhere
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-277
+
+Steps: 1. Read every surface quoting the worst funding leg — the summary (ISS-277 saw "worst 0.6 bp") and the per-symbol line ("ETH_USDT 0.60 bp"). 2. Compare decimal places verbatim.
+
+Expected: one decimal-place rule everywhere — "0.6 bp", never "0.60 bp". A surface still showing two decimals while another shows one is a FAIL. (Twin of T-8262: that pins the threshold's format; this pins the value's format — the rail's formatting rule covers both or it covers neither.)
+
+---
+
+### T-8264 · cap-bar jargon · EXPECTANCY NET/GROSS, MAX DRAWDOWN, HEAT, CLUSTER defined on first use
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-278
+
+Steps: 1. Read the risk-panel cap-bar labels verbatim — EXPECTANCY (NET/GROSS), MAX DRAWDOWN, HEAT, CLUSTER. 2. Hover or tap each label (and read the surrounding hint text) for its definition.
+
+Expected: each term carries a trader-words definition on first use (or the label itself is replaced with trader words). A bare "CLUSTER" or "HEAT" on a cap bar with no definition anywhere on the panel is a FAIL (the ISS-278 symptom). (Twin of T-8265: that pins the non-cap-bar terms; this pins the cap-bar set — the batch is split so no term hides behind another's fix.)
+
+---
+
+### T-8265 · jargon batch · "mirrors R7", b-profile flag, TypeSafe defined or plain-worded
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-278
+
+Steps: 1. Find each term where ISS-278 saw it — "mirrors R7", the b-profile flag, TypeSafe — and read the surrounding copy verbatim. 2. Check for a definition on first use.
+
+Expected: each term is defined in trader words on first use or replaced with plain words. An unexplained "mirrors R7", a bare b-profile flag, or a naked "TypeSafe" is a FAIL. (Twin of T-8264: that pins the cap-bar labels; this pins the rest of the ISS-278 batch — a fix that defines the cap-bar terms while "mirrors R7" stays unexplained fails this case.)
+
+---
+
+### T-8266 · slot mode wording · "Standby · backend: Standby" reads as one coherent state in trader words
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-278
+
+Steps: 1. Read the slot-mode line verbatim (ISS-278 saw "Standby · backend: Standby"). 2. Read any hint or description attached to it.
+
+Expected: the line reads as one coherent state in trader words — what Standby means for the slot (what runs, what waits) — not a doubled label that reads like two systems disagreeing. The bare "Standby · backend: Standby" with no explanation is a FAIL. (Twin of T-8265: that pins the orphan acronyms; this pins the state line — the ISS-278 batch's oddest wording gets its own pin.)
+
+---
+
+### T-8267 · MCP acronym · defined on first use on EVERY surface where it appears — the ISS-260 twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-279
+
+Steps: 1. Search the UI for "MCP" — start with the SmartTrade ticket copy (ISS-279's surface), then every other surface. 2. On each surface, read the first use of MCP and check for a definition beside it.
+
+Expected: EVERY surface defines MCP on first use (or points at the shared definition). A surface where MCP stands unexplained is a FAIL — even if the SmartTrade ticket itself is fixed. (Twin of ISS-260: that was the acronym's first surfacing and its fix; ISS-279 proves the fix was per-panel. The per-panel fix is the known failure mode — this case passes only when the definition is global.)
+
+---
+
+### T-8268 · MCP definition drift sweep · the definition is identical everywhere it appears
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-279
+
+Steps: 1. Collect every MCP definition across all surfaces (from T-8267's search) and compare them word for word.
+
+Expected: one shared definition, identical everywhere — no surface's gloss contradicting or narrowing another's. Two surfaces defining MCP differently is a FAIL. (Twin of T-8267: that pins the definition's PRESENCE on every surface; this pins its CONSISTENCY — presence without consistency is a second-order failure of the same global fix.)
+
+---
+
+### T-8269 · jargon sweep · no unexplained term survives the ISS-278 batch fix on those pages
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HA-278
+
+Steps: 1. Read the pages ISS-278's batch came from top to bottom — every label, hint, flag, and state line. 2. Flag any term a working trader would not already know that carries no definition.
+
+Expected: zero unexplained jargon remains on those pages. A fix that defined the reported batch while a new unexplained term sits two lines away is a FAIL. (Twin of T-8264–T-8266: those pin the reported terms; this pins the class — the sweep the batch fix must survive.)
+
+## Section HB · Regression: ISS-280/286 — data freshness (6 cases: T-8270–T-8275)
+
+Gardener regression block, 2026-09-28 ~22:35 PDT. Covers ISS-280 (OPEN — journal NET P&L −$0.0215 and "Data as of Sep 23, 2026 10:35 local" frozen across ~15 min; funding "worst 0.6 bp" unmoving while the panel wears a "STALE · updated 5m ago" badge) and ISS-286 (OPEN — strategy market-data feed reports down: "strategy feed down (RuntimeError)" / "Market data unavailable — retrying on the next check"; third lane to observe this state). Both surfaced in lane runs 2026-09-29 ~05:16–05:20 UTC. Written against the EXPECTED FIXED state: KPIs refresh on the panel's poll cadence, the "Data as of" line advances honestly, the STALE badge names its cause and expected refresh, and the feed-down state is scoped with a plain statement of what still works. Twin-lineage: the ISS-064 badge-honesty family (the delivery badge that had to earn its "connected") — a STALE badge that decorates frozen values without naming the cause is the same dishonesty one layer down. Safety: read-only throughout; no ticket, order, halt, or fire control is touched.
+
+---
+
+### T-8270 · frozen KPIs · journal NET P&L refreshes on the poll cadence
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HB-280
+
+Steps: 1. Read the journal NET P&L line verbatim (ISS-280 saw −$0.0215). 2. Wait through the panel's poll cadence (observe at least two ticks / ~15 min) and read it again.
+
+Expected: the value refreshes on the cadence — it moves when the underlying data moves, and the read is never a frozen snapshot wearing live clothes. The ISS-280 state (−$0.0215 identical across ~15 min with no staleness flag) is a FAIL. (Twin of T-8271: that pins the timestamp's honesty; this pins the value's — a fresh timestamp on a frozen value fails here while it might pass there.)
+
+---
+
+### T-8271 · "Data as of" honesty · the timestamp advances with each real refresh
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HB-280
+
+Steps: 1. Read the journal "Data as of" line verbatim (ISS-280 saw "Data as of Sep 23, 2026 10:35 local"). 2. Wait through a poll tick and read it again.
+
+Expected: the timestamp advances honestly with each real refresh — it names the last time data actually arrived, not the page-load time. A "Data as of" frozen across polls while the panel implies liveness is a FAIL. (Twin of T-8270: that pins the value; this pins the timestamp — both must move together or both must say stale.)
+
+---
+
+### T-8272 · STALE badge honesty · the badge names the cause and the expected refresh
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HB-280
+
+Steps: 1. Find a panel wearing a STALE badge (ISS-280 saw funding "STALE · updated 5m ago" beside an unmoving "worst 0.6 bp"). 2. Read the badge, the panel's values, and any cause/refresh copy verbatim.
+
+Expected: the badge names WHY the data is stale and when the next refresh is expected — and no panel wears STALE while its values are presented as live. The ISS-280 contradiction (STALE badge + unmoving values + no cause) is a FAIL. (Twin of the ISS-064 badge-honesty family: that demanded the Telegram badge earn its "connected"; this demands the STALE badge earn its keep — a badge that states nothing is decoration, not honesty.)
+
+---
+
+### T-8273 · feed-down scope · the strategy-feed-down state names what still works
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HB-286
+
+Steps: 1. Find the strategy-feed-down state ("strategy feed down (RuntimeError)" / "Market data unavailable — retrying on the next check" — the third lane to observe it). 2. Read the full state block verbatim: what is down, what still works, what happens next.
+
+Expected: the state names what is down AND what still works, in trader words, plus what "retrying on the next check" means (when the next check is). A bare error with no scope — or "RuntimeError" leaking to the trader — is a FAIL. (Twin of T-8272: that pins staleness honesty for slow data; this pins outage honesty for dead data — the same bar, one severity up.)
+
+---
+
+### T-8274 · weex-failover staleness · failover bars carry a stale flag, never present as fresh venue data
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HB-286
+
+Steps: 1. While the strategy feed is down and the weex failover is serving bars, read the market-data bars and their timestamps/flags. 2. Compare against the feed-down state's claims.
+
+Expected: every failover bar carries its staleness openly (stale flag, age, source named) — never presented as fresh venue data. Failover bars that look identical to live venue bars are a FAIL. (Twin of T-8273: that pins the outage state's copy; this pins the data served DURING the outage — honest copy over dishonest bars still fails.)
+
+---
+
+### T-8275 · frozen-as-live invariant · no panel presents frozen values as live
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HB-280
+
+Steps: 1. Sweep the cockpit's data panels (journal, funding, balances, positions). 2. For each, compare the value's timestamp against the panel's stated cadence; flag any value older than its cadence that wears no staleness.
+
+Expected: frozen values are never presented as live anywhere — any value older than its panel's cadence wears its staleness (badge, aged timestamp, or cause). One unstamped frozen value on any panel is a FAIL. (Twin of T-8270–T-8272: those pin the reported journal/funding instances; this pins the invariant — the rule the instances broke.)
+
+## Section HC · Regression: ISS-281/282 — halt modal contract (6 cases: T-8276–T-8281)
+
+Gardener regression block, 2026-09-28 ~22:35 PDT. Covers ISS-281 (OPEN — halt modal blocks sidebar navigation: the browser refused the click, "<div.nd-modal-scrim>" covers the target; the specified flow was modal closes and /home loads) and ISS-282 (OPEN — the background page scrolls behind the open halt modal: TRADING header cut off at viewport top while the modal stayed centered). Both surfaced in lane runs 2026-09-29 ~05:16–05:20 UTC. Written against the EXPECTED FIXED state: sidebar navigation during the open modal resolves deliberately (the specified close-and-navigate flow, or an explicit recorded decision that navigation is trapped — never inherited by accident), background scroll is locked, and every dismissal path is named. Twin-lineage: the ISS-043 halt-modal family (the modal that had to prove it guards the real halt) — these pin the modal's CONTRACT with the page around it, which ISS-043 never covered. Safety: the halt modal and any kill/fire/approve control is OPENED AND READ ONLY — never confirmed, never armed; every case ends with the modal dismissed and the halt state untouched.
+
+---
+
+### T-8276 · modal nav trap · sidebar navigation during the open halt modal resolves deliberately
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HC-281
+
+Steps: 1. Open the halt modal (read only — never confirm). 2. Click a sidebar link and observe exactly what happens: does the modal close, does /home load, is the click swallowed, is there an explanation.
+
+Expected: a deliberate resolution — the specified flow (modal closes and /home loads) OR an explicit, recorded decision that navigation is trapped while the modal is open. The ISS-281 state — browser refuses the click, scrim covers the target, no explanation — is a FAIL: a trap inherited by accident, not chosen. (Twin of T-8280: this pins the BEHAVIOR; that pins the decision being visible in the UI.)
+
+---
+
+### T-8277 · background scroll lock · the page behind the open halt modal does not scroll
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HC-282
+
+Steps: 1. Open the halt modal (read only — never confirm). 2. Attempt to scroll the background page with wheel, trackpad, and arrow keys; watch the TRADING header and the modal's position.
+
+Expected: background scroll is locked — the page behind the modal does not move. The ISS-282 state (TRADING header cut off at the viewport top while the modal stayed centered) is a FAIL. (Twin of T-8278: this pins the lock; that pins the modal's own stability under the attempt.)
+
+---
+
+### T-8278 · modal stability · the modal stays centered and guards the halt state under scroll attempts
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HC-282
+
+Steps: 1. Open the halt modal (read only — never confirm). 2. Attempt every scroll/zoom gesture available; read the modal's copy about which state it guards. 3. Dismiss the modal without confirming.
+
+Expected: the modal stays centered and visually intact through the attempts, and its copy names the state it guards (the halt — not a generic confirm). A modal that drifts, clips, or guards an unnamed state is a FAIL. (Twin of T-8277: that pins the background lock; this pins the modal holding its own ground — ISS-282's centered-modal-over-scrolled-page must become centered-modal-over-LOCKED-page.)
+
+---
+
+### T-8279 · Esc and Cancel paths · both dismissal paths named and consistent
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HC-281
+
+Steps: 1. Open the halt modal (read only), press Esc, observe. 2. Reopen the modal (read only), click Cancel, observe. 3. Read the modal's copy for any mention of the dismissal paths. Never confirm.
+
+Expected: Esc and Cancel behave identically — dismiss without action, halt state untouched — and the modal's copy names both paths. An Esc that leaves the modal half-open, or a Cancel that behaves differently from Esc with no stated reason, is a FAIL. (Twin of T-8281: that pins the scrim click; this pins the keyboard/button dismissals — every exit except CONFIRM must be a safe no-op.)
+
+---
+
+### T-8280 · decision proven in UI · the nav-trap decision is visible, not just the symptom fixed
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HC-281
+
+Steps: 1. Repeat the T-8276 sidebar-click exercise twice (open modal read-only, click sidebar, observe; dismiss; repeat). 2. Read any modal or page copy that states the navigation rule.
+
+Expected: the behavior is identical across repeats — the fix proves the DECISION in the UI, not just the ISS-281 symptom. A modal that closes-and-navigates on the first try but swallows the click on the second (or vice versa) is a FAIL: that is a symptom patch, not a decided contract. (Twin of T-8276: that pins the behavior once; this pins its repeatability — a contract that only holds sometimes is not a contract.)
+
+---
+
+### T-8281 · scrim click · clicking outside the modal never confirms the halt
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HC-281
+
+Steps: 1. Open the halt modal (read only). 2. Click the scrim outside the dialog. 3. Verify the halt state is untouched and read what the UI did (dismissed, ignored, explained).
+
+Expected: the scrim click either dismisses the modal (and says so) or does nothing — it NEVER confirms the halt. A scrim click that arms the halt is a FAIL (the dangerous-control safety bar). (Twin of T-8279: that pins the named dismissals; this pins the unnamed one — the click the trader makes by accident must be the safest click on the page.)
+
+## Section HD · Regression: ISS-283/285 — settings load and ghost-leg reconciliation (6 cases: T-8282–T-8287)
+
+Gardener regression block, 2026-09-28 ~22:35 PDT. Covers ISS-283 (OPEN — cockpit Settings region stuck on "Loading settings…" across reloads while every other region loaded) and ISS-285 (OPEN — positions banner flags a log/exchange mismatch: a ghost open leg; twin of ISS-271). Both surfaced in lane runs 2026-09-29 ~05:16–05:20 UTC. Written against the EXPECTED FIXED state: the Settings region resolves to real content on load (or names its blocker with a retry path), and the ghost leg is reconciled on load with an audit line under the same root cause as ISS-271 — one fix covers both. Twin-lineage: ISS-271 (the ghost-leg original; GX T-8244 pins its clear-on-load agreement layer) — ISS-285 must share its root cause and its fix, proven in the UI. Safety: read-only throughout; no ticket, order, halt, or fire control is touched.
+
+---
+
+### T-8282 · settings region load · the Settings region resolves to real content on load
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HD-283
+
+Steps: 1. Load the cockpit fresh. 2. Read the Settings region immediately and again after 5 seconds (ISS-283 saw "Loading settings…" across reloads while every other region loaded).
+
+Expected: the Settings region renders real settings content on load — groups, values, controls. The region sitting on "Loading settings…" while every other region loads is a FAIL (the ISS-283 symptom). (Twin of T-8283: this pins the fixed-state positive path; that pins the failure path's honesty when loading genuinely cannot complete.)
+
+---
+
+### T-8283 · loader bound · the settings loader is bounded and names its blocker with a retry path
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HD-283
+
+Steps: 1. If the settings loader appears (slow load, degraded network), time how long it shows and read its copy verbatim. 2. Look for a blocker statement and a retry control.
+
+Expected: the loader is bounded — it resolves or it names its blocker in trader words with a retry path. An eternal "Loading settings…" with no explanation and no retry is a FAIL. (Twin of T-8282: that demands the loader never be needed; this demands the loader never lie when it is — a loading state without a bound is a hang wearing a spinner.)
+
+---
+
+### T-8284 · ghost leg reconciliation · the positions banner reconciles the log/exchange mismatch on load with an audit line
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HD-285
+
+Steps: 1. Load the positions surface with a log/exchange mismatch present (the ISS-285 ghost open leg). 2. Read the mismatch banner verbatim — the flag, the reconciliation, and any audit line.
+
+Expected: the banner flags the mismatch AND shows the reconciliation with an audit line (what was found, what was decided, when). A banner that flags the ghost without reconciling it — or reconciles silently with no audit line — is a FAIL. (Twin of ISS-271's GX T-8244 agreement layer: that pinned the steady-state invariant; this pins the on-load reconciliation the invariant depends on. The shared root cause with ISS-271 is named in T-8287.)
+
+---
+
+### T-8285 · log-only vs live exposure · the banner never confuses log-only with live
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HD-285
+
+Steps: 1. Read the ghost-leg banner's wording verbatim (ISS-285's "log/exchange mismatch" flag). 2. Check every leg reference in the banner: is it labeled log-only or live?
+
+Expected: log-only legs are labeled log-only and live exposure is labeled live — the two are never confused in the banner's wording. A banner whose wording lets a log-only leg read as live exposure is a FAIL. (Twin of T-8284: that pins the reconciliation's existence; this pins its wording — a reconciled ghost described in live-exposure language re-opens the confusion the fix was meant to close.)
+
+---
+
+### T-8286 · banner earned · the mismatch banner appears only while a real mismatch exists
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HD-285
+
+Steps: 1. After the reconciliation completes (T-8284's audit line shown), reload the positions surface. 2. Read the banner area.
+
+Expected: no mismatch banner when no mismatch exists — the banner is earned by a live mismatch, never a permanent fixture. A banner that survives its own reconciliation across reloads is a FAIL (it trains the trader to ignore the flag that matters). (Twin of T-8284: that pins the banner's arrival; this pins its departure — the banner lifecycle, both ends.)
+
+---
+
+### T-8287 · single root cause proof · ISS-285 and ISS-271 reconciliations point at the same fix
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HD-285
+
+Steps: 1. Read the ISS-285 ghost-leg audit line (from T-8284). 2. Read the ISS-271 reconciliation behavior the UI shows (GX T-8244's agreement layer). 3. Compare what each names as the cause.
+
+Expected: both point at the same root cause and the same fix — one fix covers both, proven in the UI. Two audit lines that disagree on the cause — or an ISS-285 fix that leaves ISS-271's ghost class alive — is a FAIL. (Twin of ISS-271 itself: the registry names ISS-285 its twin, and twins share a fix. This case is the proof the sharing actually happened.)
+
+## Section HE · Regression: ISS-287/288 — emergency stop card and quiet-state wording (6 cases: T-8288–T-8293)
+
+Gardener regression block, 2026-09-28 ~22:35 PDT. Covers ISS-287 (OPEN — /trading has no emergency stop card: only the status strip, a leftover-record card, the "Start trading" card, and "How this works") and ISS-288 (OPEN — the status strip reads "No active session — open leg is log-only" instead of the specified "Session quiet"; twin of ISS-210). Both surfaced in lane runs 2026-09-29 ~05:16–05:20 UTC. Written against the EXPECTED FIXED state: /trading carries an emergency stop card naming what it stops (or the deliberate no-stop decision is recorded on the page), and the quiet-state strip reads exactly "Session quiet" per the wording contract. Twin-lineage: ISS-210 (the wording-contract family — the strip's quiet state has a specified string, and ISS-288 is its twin) and the ISS-271/285 ghost-line honesty (a log-only leg must never make the strip imply a live session). Safety: the emergency stop and any halt/kill control is OPENED AND READ ONLY — never pressed; the Start trading card is previewed only, never confirmed into a live session.
+
+---
+
+### T-8288 · emergency stop card · /trading carries a stop card naming what it stops
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HE-287
+
+Steps: 1. Read /trading top to bottom — status strip, leftover-record card, "Start trading" card, "How this works" (the ISS-287 inventory). 2. Look for an emergency stop card.
+
+Expected: an emergency stop card exists on /trading and names what it stops — or the deliberate no-stop decision is recorded on the page (stated, dated, reasoned). The ISS-287 state — no stop card and no recorded decision — is a FAIL. (Twin of T-8289: this pins the card's EXISTENCE; that pins its PLACEMENT — a stop that exists only somewhere unlinked fails there while passing here.)
+
+---
+
+### T-8289 · stop placement · the stop lives on /trading where the session starts — never buried
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HE-287
+
+Steps: 1. If the emergency stop control lives on another panel, read /trading for any pointer to it. 2. Time the path: from the "Start trading" card to the stop control, count the clicks.
+
+Expected: the stop lives on /trading itself — where the session is started — or /trading points to it explicitly in one click. A stop that exists only on an unlinked panel is a FAIL (buried). (Twin of T-8288: that pins existence; this pins reachability — in an emergency the trader is on /trading, not hunting panels.)
+
+---
+
+### T-8290 · stop scope honesty · the stop card states what it does and does not stop
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HE-287
+
+Steps: 1. Open the emergency stop card (read only — never press it). 2. Read its copy verbatim: what it stops, what keeps running, what happens to open legs.
+
+Expected: the card names its scope in trader words — what stops, what keeps running. An unlabeled stop button, or copy that implies "everything stops" when guards keep running (or vice versa), is a FAIL. (Twin of the HC halt-modal contract: both demand the dangerous control name its guarded state before anyone touches it.)
+
+---
+
+### T-8291 · "Session quiet" wording · the quiet-state strip reads exactly "Session quiet"
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HE-288
+
+Steps: 1. With no active session, read the /trading status strip verbatim (ISS-288 saw "No active session — open leg is log-only"). 2. Compare against the wording contract.
+
+Expected: the quiet-state strip reads exactly "Session quiet" — the specified string. Any other quiet-state wording is a FAIL. (Twin of ISS-210: that was the wording contract's first pinning; ISS-288 proves the strip drifted again. The contract has one string — this case passes only on the exact string.)
+
+---
+
+### T-8292 · strip state agreement · the strip follows the session state machine across Start→Go back
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HE-288
+
+Steps: 1. With the strip reading "Session quiet", open the "Start trading" card to its preview (never confirm a live session). 2. Read the strip. 3. Go back and read the strip again.
+
+Expected: the strip's state agrees with the session state after each transition — it leaves "Session quiet" when the start flow begins and returns to it on Go back. A strip stuck on the pre-Start string through the transitions is a FAIL. (Twin of T-8291: that pins the quiet string; this pins the strip as a state machine — the right words in the wrong state still fail.)
+
+---
+
+### T-8293 · log-only leg vs strip · a log-only open leg never makes the strip imply a live session
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: STATE-OBSERVATION
+
+Feature: HE-288
+
+Steps: 1. With a log-only open leg present and no live session, read the /trading status strip verbatim. 2. Check whether the strip's wording implies a live session.
+
+Expected: the strip reads "Session quiet" — or a quiet variant that names the log-only leg as history, never as a live session. A strip that implies a live session because a log-only leg exists is a FAIL. (Twin of the ISS-271/285 ghost-line honesty applied to the strip: the banner family proved a log-only leg must never read as live exposure — the strip is held to the same bar. This is the case ISS-288's "open leg is log-only" wording was reaching for, said right.)
+## Section HF · Regression: ISS-299/303/304/305/306 — start-form money-input validation honesty (10 cases: T-8294–T-8303)
+
+Regression coverage for ISS-299 (OPEN — "Maximum per-trade amount ($)" kept 999 with only an invisible [invalid] flag and no stated limit; the lane restored 25 afterward, lane-19 T-3671), ISS-303 (OPEN — fourteen invalid money values — 200, 150.75, 25.50, 0, -100, "abc", "1a2b", "$#@", cleared-empty, spaces, 999999999, 50.01, 4.99, "1,000", "$100", "00100", " 100 ", "1e3", 250 — produced NO visible error; fields flagged aria-[invalid] only, invisible to sighted users; "Start trading" stayed ENABLED; the $5–$50 limits live ONLY in HTML min/max attributes, nowhere in visible page text; decimal policy contradicts itself — inputmode="decimal" invites decimals but step="1" flags 25.50 invalid, yet app-level validation ignores step and passes 10.999 to the confirm screen as "$10.999"; Enter in a money input does nothing, T-170), ISS-304 (OPEN — after Start with an invalid value the Session status reads "Most-money-in-one-trade must be between $5 and $50 (safe default $25)." though the field is labeled "Maximum per-trade amount ($)"; the stop-loss error reads "Stop-if-down must be between $5 and $50 (safe default $20)." though the field is labeled "Halt everything at total loss ($)" — neither message names a field the trader can see), ISS-305 (OPEN — "1a2b" silently mutated to 12, "$100" stripped to 100, "1,000" comma-stripped to 1000, " 100 " trimmed to 100, "abc"/"$#@" rejected leaving the field empty — all with NO message that the value was altered; "1e3" accepted and parsed as 1000), ISS-306 (OPEN — 50.01 exposed as "50.0099983215332", 4.99 as "4.989999771118164", 999999999 as "1000000000" while the field text shows "999999999", 10.999 as "10.99899959564209" — screen-reader users hear wrong numbers). ISS-299 surfaced 2026-09-29 ~05:55 UTC in the lane-19 UI run; ISS-303–306 surfaced 2026-09-29 ~06:03 UTC in the lane-1 chunk-3 retry (T-105–T-146 family). Written against the EXPECTED FIXED state: an invalid money input is refused or announced politely in visible words, Start cannot proceed while any money field is invalid, mutations are announced or refused, and what the eye sees is what assistive tech hears. Title sweep: the nearest family is the original lane-1 start-form block (T-105–T-176, incl. T-170 Enter-noop and the T-144–T-176 confirm flow); ISS-299's T-3671 is the same max-per-trade seam seen from lane-19 — this section folds it into the money-input family rather than leaving the in-range issue uncovered. These invert the validation-honesty contract those cases assumed but never pinned. Safety: typing-only — Start is never pressed to a commit; every invalid case stops at the error read, every valid-typing case stays on the form; typed values are cleared afterward.
+
+---
+
+### T-8294 · start-form money · invalid money value shows a visible error naming the $5–$50 limits — the ISS-303 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-303
+
+Steps: 1. Open /trading through the live browser. 2. Type 200 into "Maximum per-trade amount ($)" and move focus out of the field; do NOT press Start. 3. Read the area adjacent to the field verbatim. 4. Clear the field afterward.
+
+Expected: a VISIBLE error adjacent to the field names the $5–$50 limits ("must be between $5 and $50" or equivalent). No sighted-visible error is a FAIL; an aria-[invalid] flag alone is a FAIL. (ISS-303 inverted: T-110–T-140 FAILed on silent invalids; this passes only when the limit is stated in visible words.)
+
+---
+
+### T-8295 · start-form money · Start cannot proceed while a money field is invalid — the ISS-303 control-discipline twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-303
+
+Steps: 1. Open /trading. 2. Type "abc" into "Halt everything at total loss ($)" and attempt "Start trading". 3. Clear the field afterward.
+
+Expected: Start is disabled, or the press is refused with the field's error shown — the "Ready to start?" confirm screen NEVER opens on garbage input. A confirm screen opening on "abc" is a FAIL. (ISS-303 inverted: Start stayed enabled on every invalid in the finding set.)
+
+---
+
+### T-8296 · start-form money · the $5–$50 limits exist in visible page text, not only in HTML attributes — the ISS-303 disclosure twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: RENDER-INSPECTION
+
+Feature: HF-303
+
+Steps: 1. Open /trading. 2. Read the start card verbatim — field labels, hints, and any helper text.
+
+Expected: the $5–$50 range (or each field's min/max) appears in visible text near the fields. Limits discoverable only via devtools/HTML attributes is a FAIL. (ISS-303 inverted: the finding set's limits lived only in min/max attributes.)
+
+---
+
+### T-8297 · start-form money · the decimal policy is stated and consistent — the ISS-303 decimal-contradiction twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-303
+
+Steps: 1. Open /trading. 2. Type 25.50 into "Maximum per-trade amount ($)" and read the field's state verbatim (value, flags, adjacent text). 3. Clear the field afterward.
+
+Expected: the field either accepts decimals and rounds consistently (a confirm would show "$25.50", never an artifact like "$25.4999…") or refuses with a stated whole-dollars rule — and whichever it does is announced adjacent to the field. A silent contradiction — accepted visually but flagged aria-invalid per step="1", or 10.999 passed unrounded to the confirm screen — is a FAIL. (ISS-303 inverted: inputmode="decimal" invited decimals while step="1" punished them and app validation waved 10.999 through.)
+
+---
+
+### T-8298 · start-form money · the max-per-trade error names the exact field label — the ISS-304 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-304
+
+Steps: 1. Open /trading. 2. Type 999 into "Maximum per-trade amount ($)" and press "Start trading". 3. Read the Session status / error text verbatim; the case stops at the error read. 4. Clear the field afterward.
+
+Expected: any error names the exact visible label — "Maximum per-trade amount ($)" — never "Most-money-in-one-trade". Internal jargon in the message is a FAIL. (ISS-304 inverted: T-141–T-143 FAILed on the jargon names; this passes only when the message names the field the trader sees.)
+
+---
+
+### T-8299 · start-form money · the stop-loss error names the exact field label — the ISS-304 second-label twin
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-304
+
+Steps: 1. Open /trading. 2. Type 999 into "Halt everything at total loss ($)" and press "Start trading". 3. Read the error text verbatim; the case stops at the error read. 4. Clear the field afterward.
+
+Expected: the error names the exact visible label — "Halt everything at total loss ($)" — never "Stop-if-down". (ISS-304 inverted on the second label.)
+
+---
+
+### T-8300 · start-form money · silently-mutated typed values are announced — the ISS-305 inversion
+
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+
+Method: INPUT-VALIDATION
+
+Feature: HF-305
+
+Steps: 1. Open /trading. 2. Type "1a2b" into "Maximum per-trade amount ($)", move focus out, and read the field value and any adjacent text verbatim. 3. Clear the field afterward. Never press Start.
+
+Expected: either the field keeps the literal "1a2b" and flags it invalid with a visible error, or it announces the mutation ("parsed as 12" or equivalent). A silent 12 with no announcement is a FAIL. (ISS-305 inverted: T-119/T-134/T-135/T-138 FAILed on silent mutation; this passes only when the trader is told what happened to their typed value.)
+
+---

@@ -1,0 +1,1238 @@
+QA BRIEF — BULK LANE B3 chunk 24/45 (T-6301–T-6400)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-6301 · ISS-076 regression · failed saves never show a false "Saved"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. Trigger a genuinely failed save if one can be produced honestly through the UI (e.g. save while the connection to the test server is briefly down). 2. Read the feedback shown. 3. If no honest failure can be produced, note that instead.
+
+Expected: A failed save NEVER shows "Saved" — it shows plain-words failure feedback (record exact text). A false "Saved" on a save that did not apply is a FAIL. If no honest failure path is reachable, record "not exercisable" — never fake one.
+
+---
+
+### T-6302 · ISS-076 regression · guard: save feedback survives future settings waves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AD-REG
+
+Steps: 1. After ANY future fix wave that touches settings files, open /settings, expand Interface. 2. Change the theme, press "Save interface settings". 3. Record the feedback shown.
+
+Expected: The "Saved" feedback still appears on every save after the wave. If a wave ever silences it again, this case catches it before the wave is called done. Restore Dark afterwards.
+
+## Section CW · Proactive: AI-provider paths wave-4 — the seams BI/BQ/CL left uncovered (10 cases: T-7305–T-7314)
+
+Fourth-cycle rotation for AI-provider honesty (per the standing growth order; registry max ISS-124, watermark last_iss_seen 124 — no new ISS entries, pure proactive). Wave-1 (Section BI, T-6937–T-6948): age-gate naming, outage blame, switch audits, slot isolation, attribution, scheduled-scan death, key removal, unreachable-vs-disabled, in-flight indicators, banner dismissal. Wave-2 (Section BQ, T-7031–T-7040): price vs billed spend, mid-flight flip naming, probe-vs-verdict races, two-tab races, counter stickiness, probe repeatability, Jev mock tag under outage, timestamp agreement, empty-slot naming, no-stale window. Wave-3 (Section CL, T-7215–T-7224): 429 copy, billing-exhaustion copy, template-fallback tagging, exactly-once counter, overwrite-confirm cancel path, scan rows after switch, "last consult" agreement, probe during copilot ask, key-removal loop close, "last checked" through tunnel rotation. This wave covers the seams those left: empty-string provider responses, vetoed-before-the-call cost honesty, expanded-row label stability across a switch, loop-toggle mid-scan honesty, guard-veto vs AI-verdict authority naming, hour-window rollover billing, idle-slot probe non-interference, sealed-cap drift after a switch, verdict re-render after a tunnel reload, disclosure cross-wiring between consecutive verdicts. Zero overlap with BI/BQ/CL/AQ/AR/AS verified title-by-title.
+
+Boundary for the whole section: no key removals anywhere, no halt/fire/kill presses, no manufactured outages or crafted responses — cases that need a rare event pass through the control copy (AB T-6267's 401 wording, BI T-6940's unreachable wording) and are recorded N-A with the event's absence stated, never failed on the missing event. Every step through the live UI as Saad sees it.
+
+### T-6303 · ISS-077 regression · rollback shows its "Rolled back group …" confirmation after the re-render settles
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Open /settings and expand the Interface group. 2. Change the theme selector but do NOT press save. 3. Press the group's rollback control. 4. Wait for the panel to finish re-rendering, then look at the result area.
+
+Expected: A confirmation starting "Rolled back group" is visible AFTER the re-render completes (record the full exact wording). A confirmation that flashes and is then wiped by the re-render — the ISS-077 defect — is a FAIL.
+
+---
+
+### T-6304 · ISS-077 regression · the rollback confirmation is still visible 10 seconds later
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Roll back the Interface group as in T-6303. 2. Do nothing for 10 seconds — no clicks, no scrolling. 3. Read the result area again.
+
+Expected: The "Rolled back group …" confirmation is still shown, unchanged. A confirmation that disappears on its own within seconds is a FAIL.
+
+---
+
+### T-6305 · ISS-077 regression · two rollbacks in a row each show their own confirmation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change the theme (no save) and roll back — note the confirmation. 2. Change the theme again (no save) and roll back a second time. 3. Read the result area after the second re-render.
+
+Expected: The second rollback shows its own fresh "Rolled back group …" confirmation (referring to this rollback, not a stale copy of the first). A missing or stale confirmation on the second rollback is a FAIL.
+
+---
+
+### T-6306 · ISS-077 regression · rollback of the Interface group reverts the visible theme choice
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Note the currently saved theme in the "Current settings" panel. 2. In the Interface group, select the opposite theme (no save). 3. Roll back the group. 4. Read the theme selector and the "Current settings" panel.
+
+Expected: The selector shows the previously saved theme again, the panel agrees, and the "Rolled back group …" confirmation is visible. Selector and panel disagreeing after rollback is a FAIL.
+
+---
+
+### T-6307 · ISS-077 regression · rollback restores the previously saved values visibly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, read every control's current value and write them down. 2. Change two different controls (no save). 3. Roll back the group. 4. Read every control again.
+
+Expected: Every control shows its pre-change value again — the rollback truly undid the edits, visibly. Any control still showing the edited value after rollback is a FAIL.
+
+---
+
+### T-6308 · ISS-077 regression · rollback with no unsaved changes is honest, never a false "Rolled back"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Open /settings, expand the Interface group, change nothing. 2. Press the group's rollback control (if it is enabled with no changes). 3. Read the result area.
+
+Expected: Either the control is disabled with no changes, or an honest message explains there is nothing to roll back (record the exact wording). A "Rolled back group …" confirmation when nothing was rolled back is a FAIL — the UI must never claim an action it did not take.
+
+---
+
+### T-6309 · ISS-077 regression · rollback confirmation names the right group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Notifications group, change one toggle (no save). 2. Roll back the Notifications group. 3. Read the confirmation text verbatim.
+
+Expected: The confirmation names the Notifications group (record the exact wording — e.g. "Rolled back group notifications …"). A confirmation naming the wrong group, or a generic confirmation that names no group, is a FAIL.
+
+---
+
+### T-6310 · ISS-077 regression · save-then-rollback-then-save: each confirmation survives its own re-render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group: change the theme, save — confirm "Saved interface settings - version N." is visible. 2. Change the theme again (no save), roll back — confirm the "Rolled back group …" message is visible. 3. Change the theme once more and save — confirm the new "Saved interface settings - version M." is visible.
+
+Expected: All three confirmations appear, each surviving its own panel re-render; the two save versions differ (M = N+1 or as the panel counts). Any confirmation wiped by its own re-render is a FAIL.
+
+---
+
+### T-6311 · ISS-077 regression · rollback on a sealed group (if offered) confirms honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Open a sealed settings group (if the UI offers rollback there). 2. Make an edit without saving. 3. Roll back and read the result area.
+
+Expected: The "Rolled back group …" confirmation appears and survives the re-render, same as an unsealed group — or the UI honestly explains rollback is unavailable for sealed groups (record the exact wording). A wiped confirmation or a silent no-op is a FAIL.
+
+---
+
+### T-6312 · ISS-077 regression · the rollback confirmation sits next to the rollback control, visible without scrolling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Roll back the Interface group as in T-6303. 2. Without scrolling, look at where the confirmation appears relative to the rollback control.
+
+Expected: The confirmation is visible in the same viewport area as the rollback control — no scrolling needed to find it. A confirmation rendered far away or below the fold is a FAIL.
+
+---
+
+### T-6313 · ISS-077 regression · a failed rollback never shows a false "Rolled back"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. If the tunnel is degraded (or by testing at a moment the settings fail to load), attempt a group rollback. 2. Read the result area.
+
+Expected: An honest failure message in plain words (record the exact wording) — never "Rolled back group …" when the rollback did not happen. A success confirmation on a failed rollback is a FAIL.
+
+---
+
+### T-6314 · ISS-077 regression · rollback clears the dirty flag: no unsaved-change warning afterwards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change the theme (no save). 2. Roll back the group. 3. Immediately click a different settings group in the nav.
+
+Expected: No "You have unsaved changes. Leave without saving?" warning appears — the rollback cleared the unsaved state, so there is nothing to warn about. A warning after a rollback is a FAIL (stale dirty flag).
+
+---
+
+### T-6315 · ISS-077 regression · rollback after switching groups still targets the edited group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change the theme (no save). 2. Click the Notifications group in the nav — answer any unsaved-change warning by staying (do not discard). 3. Go back to the Interface group and roll back. 4. Read the confirmation and the theme selector.
+
+Expected: The confirmation names the Interface group and the theme selector is back to its saved value. A rollback that hits the wrong group, or a lost edit with no warning, is a FAIL.
+
+---
+
+### T-6316 · ISS-077 regression · class guard: no settings handler writes feedback before its own re-render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. For each settings group that offers both save and rollback: perform a save, then an edit + rollback. 2. After every action, wait for the re-render and check the result area.
+
+Expected: Every save shows its "Saved …" confirmation and every rollback shows its "Rolled back group …" confirmation — none wiped by its own re-render, in any group. This is the class guard against the write-then-wipe pattern: any group still wiping is a FAIL.
+
+---
+
+### T-6317 · ISS-075 follow-up · unsaved-change warning also fires on the browser back button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Open /settings, expand the Interface group, change the theme (no save). 2. Press the browser's back button. 3. Read whatever dialog or page appears.
+
+Expected: The unsaved-change warning appears with the exact copy "You have unsaved changes. Leave without saving?" — the back button is a navigation away and must be guarded exactly like an in-app nav link. Leaving silently with no warning is a FAIL.
+
+---
+
+### T-6318 · ISS-075 follow-up · unsaved-change warning also fires on tab close attempt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Open /settings, expand the Interface group, change the theme (no save). 2. Attempt to close the tab (browser beforeunload). 3. Read the browser's leave-page prompt.
+
+Expected: The browser asks whether to leave the page (the beforeunload guard is armed when the form is dirty). Closing with no prompt at all is a FAIL — the dirty state must arm the tab-close guard too.
+
+---
+
+### T-6319 · ISS-075 follow-up · the warning copy is verbatim on group-switch
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Open /settings, expand the Interface group, change the theme (no save). 2. Click the Notifications group in the nav. 3. Copy the warning dialog text character for character.
+
+Expected: The dialog reads exactly "You have unsaved changes. Leave without saving?" — verbatim, including punctuation. Any different wording is a FAIL (the copy is the contract).
+
+---
+
+### T-6320 · ISS-075 follow-up · no warning after a clean save, then navigating away
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change the theme and press "Save interface settings". 2. Wait for the "Saved interface settings - version N." confirmation. 3. Click the Notifications group in the nav.
+
+Expected: Navigation happens immediately with NO unsaved-change warning — the save cleared the dirty flag. A warning after a clean save is a FAIL (the flag was not cleared).
+
+---
+
+### T-6321 · ISS-075 follow-up · choosing "Stay" keeps the unsaved selection intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change the theme to Light (no save). 2. Click the Notifications group — the warning appears. 3. Choose the Stay/keep-editing option. 4. Read the theme selector.
+
+Expected: The tester stays on the Interface group and the theme selector still shows Light (the unsaved choice is preserved, not reset). A Stay that resets the selection, or a Stay that navigates away anyway, is a FAIL.
+
+---
+
+### T-6322 · ISS-074 follow-up · saved Light theme holds across /home and back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Save the Light theme in the Interface group. 2. Navigate to /home via the bottom nav. 3. Navigate back to /settings via the bottom nav. 4. Look at the painted theme on each page.
+
+Expected: Light paints on /settings, on /home, and again on return to /settings — the theme is app-wide, not route-local. Any route painting dark while Light is saved is a FAIL.
+
+---
+
+### T-6323 · ISS-076 follow-up · the version in "Saved interface settings - version N." increments by exactly 1 per save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, save three times in a row (toggle the theme each time so each save is real). 2. Record the version number N in each "Saved interface settings - version N." confirmation.
+
+Expected: The three versions are consecutive (N, N+1, N+2) — each save bumps exactly one. A skipped number, a repeated number, or a confirmation with no number is a FAIL.
+
+---
+
+### T-6324 · ISS-076 follow-up · other groups show their own "Saved" confirmation that survives re-render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Notifications group, flip one toggle and save. 2. Wait for the re-render, then read the result area. 3. Repeat for the Risk group.
+
+Expected: Each group shows its own plain-words "Saved" confirmation naming that group (record exact wording), visible after the re-render. Any group whose save applies silently — the ISS-076 defect in another group — is a FAIL.
+
+---
+
+### T-6325 · ISS-076 follow-up · two rapid saves: feedback is never wiped and never doubled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change the theme and press save twice in quick succession. 2. Wait for all re-renders to settle. 3. Read the result area.
+
+Expected: Exactly one current "Saved interface settings - version N." confirmation is shown (the latest), with the version reflecting the last save — no wiped feedback, no stacked duplicate confirmations. A missing or doubled confirmation is a FAIL.
+
+---
+
+### T-6326 · ISS-074 follow-up · Light paints on first paint after a full browser restart
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Save the Light theme. 2. Close the browser tab completely. 3. Reopen the bookmark https://saad6622.github.io/saad-test-cockpit/ fresh. 4. Watch the very first paint of the page.
+
+Expected: The page paints light from the first visible frame — the stored theme applies on load before first paint. A page that flashes dark for a noticeable moment before going light is a finding (record how long the dark flash lasts); a page that stays dark is a FAIL.
+
+---
+
+### T-6327 · ISS-074 follow-up · stored theme is stable across two reloads in a row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Save the Light theme. 2. Reload /settings — confirm light paints and the panel reads "THEME light". 3. Reload /settings again — confirm again.
+
+Expected: Both reloads paint light and the panel reads "THEME light" both times — the stored value is stable, not decaying or flipping between loads. Any flip to dark on the second load is a FAIL.
+
+---
+
+### T-6328 · ISS-075 follow-up · Stay, then save in the original group, works cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change the theme to Light (no save). 2. Click the Notifications group — warning appears — choose Stay. 3. Press "Save interface settings" in the Interface group. 4. Read the confirmation and the painted theme.
+
+Expected: The save succeeds with "Saved interface settings - version N.", the page repaints light, and no warning appears during the save. A save blocked or confused by the earlier Stay is a FAIL.
+
+---
+
+### T-6329 · ISS-076 follow-up · save feedback is visible at 390px mobile width without scrolling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Set the viewport to 390px wide (Saad's phone width). 2. In the Interface group, change the theme and save. 3. Without scrolling, look for the "Saved interface settings - version N." confirmation.
+
+Expected: The confirmation is visible without scrolling at phone width. A confirmation that exists but is pushed below the fold on a phone is a FAIL — Saad reads this UI on his phone.
+
+---
+
+### T-6330 · ISS-074/076 follow-up · changing theme + default view together: one save, both apply, one feedback
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. In the Interface group, change BOTH the theme and the default view (no save between). 2. Press "Save interface settings" once. 3. Read the confirmation, the "Current settings" panel, and the painted theme.
+
+Expected: One "Saved interface settings - version N." confirmation; the panel shows both new values; the page paints the new theme. Only one of the two changes applying is a FAIL.
+
+---
+
+### T-6331 · ISS-077 follow-up · rollback of the Interface group repaints the rolled-back theme
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. With Dark saved, select Light in the Interface group (no save) — the live preview may or may not repaint. 2. Roll back the group. 3. Look at the painted theme.
+
+Expected: After rollback the page paints the saved theme (Dark) — the rollback restores the painted theme to match the stored value, not just the selector. A page left painting the discarded Light choice is a FAIL.
+
+---
+
+### T-6332 · ISS-074/075/076/077 follow-up · full interface-settings cycle end to end with zero defects
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AE-REG
+
+Steps: 1. Change the theme (no save) → click another group → warning "You have unsaved changes. Leave without saving?" appears → Stay. 2. Save → "Saved interface settings - version N." appears and the page repaints. 3. Change the theme again (no save) → roll back → "Rolled back group …" appears and the selector reverts. 4. Reload → saved theme paints, panel agrees.
+
+Expected: All four issues' contracts hold in one unbroken cycle: warning verbatim, save feedback with version, live repaint, rollback confirmation surviving re-render, stored-vs-painted agreement after reload. Any single break is a FAIL — this is the acceptance cycle for the whole interface-settings wave.
+
+---
+
+## Section AF · Dual-AI-provider behavior follow-ups: OpenRouter connection, key lifecycle, live answers (60 cases: T-6333–T-6392)
+
+Behavioral follow-ups to Section AB (which covered the /settings AI-provider surface: both panels, fixed URLs, model names, pricing lines, contributor disclosure, 18+ hint, masked fields, persistence, empty-key and wrong-key errors). Setup state for this section: the OpenRouter key is saved in the OpenRouter slot and the model dropdown is set to meta/muse-spark-1.3-contributor (as wired during setup). No key value is ever written in any case below — keys are entered through the UI only, transiently, never recorded. Key-replacement cases run under Saad's approval authority and must restore the working key at the end. Written 2026-09-27 ~06:25 PDT.
+
+### T-6333 · OpenRouter connection · Test connection with the saved key and contributor model reports plain-words success
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Open /settings, expand the AI provider panel. 2. Confirm the OpenRouter radio is selected and the model dropdown reads meta/muse-spark-1.3-contributor. 3. Press "Test connection". 4. Wait for the probe to finish and read the result text verbatim.
+
+Expected: A clear success message in plain words (record the exact wording — e.g. "Connected" style copy). Raw JSON, a stack trace, an HTTP status dump, or any echo of the key is a FAIL.
+
+---
+
+### T-6334 · OpenRouter connection · the success message never exposes the key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Press "Test connection" on the OpenRouter panel as in T-6333. 2. Read the full success message character for character.
+
+Expected: No part of the API key appears — not the raw key, not a long prefix, nothing beyond the ••••+last4 masking the slot itself uses. Any key material in the message is a FAIL.
+
+---
+
+### T-6335 · OpenRouter connection · switching the model dropdown to meta/muse-spark-1.3 and testing still succeeds
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. In the OpenRouter panel, change the model dropdown from meta/muse-spark-1.3-contributor to meta/muse-spark-1.3. 2. Save the AI provider settings. 3. Press "Test connection" and read the result.
+
+Expected: Plain-words success again — the same key works for both OpenRouter model options. A failure on the standard model with the contributor model working (or vice versa) is a finding (record which model failed and the exact error).
+
+---
+
+### T-6336 · OpenRouter connection · switching back to the contributor model persists across reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Set the model dropdown back to meta/muse-spark-1.3-contributor and save. 2. Reload /settings (browser reload). 3. Read the model dropdown value. 4. Press "Test connection".
+
+Expected: The dropdown still reads meta/muse-spark-1.3-contributor after reload, and Test connection succeeds without re-entering anything. A dropdown that reverts, or a test that fails after reload, is a FAIL.
+
+---
+
+### T-6337 · Provider switching · flipping to Meta direct gives an honest no-key error, not a crash
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. In the AI provider panel, switch the provider radio from OpenRouter to Meta direct. 2. Save. 3. Press "Test connection" and read the result verbatim. (The Meta Contributor key is in Saad's hands — do NOT attempt to obtain or enter it.)
+
+Expected: An honest plain-words message that no Meta key is saved (record the exact wording) — never a crash, a spinner that never ends, or a false success. A false "connected" with no key is a FAIL.
+
+---
+
+### T-6338 · Provider switching · flipping back to OpenRouter keeps the saved key working
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Switch the provider radio back from Meta direct to OpenRouter. 2. Save. 3. Check the key slot masking. 4. Press "Test connection".
+
+Expected: The key slot still shows ••••+last4 (the round-trip did not wipe the OpenRouter key), and Test connection succeeds with no re-entry. A wiped key after provider switching is a FAIL.
+
+---
+
+### T-6339 · Provider switching · rapid back-and-forth flips never corrupt either slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Flip OpenRouter → Meta direct → OpenRouter → Meta direct → OpenRouter, saving after each flip. 2. After the final flip, check both slots' masking and press "Test connection" on OpenRouter.
+
+Expected: The OpenRouter slot still masked with the same last4, the Meta slot still honestly empty, and Test connection succeeds. Any cross-contamination (OpenRouter key appearing in the Meta slot or vice versa) is a FAIL.
+
+---
+
+### T-6340 · Provider switching · the active provider is honored by the AI surface, not just the radio
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With OpenRouter active and tested working, ask the cockpit AI surface one simple question and note that a real answer arrives. 2. Switch to Meta direct (no key), save. 3. Ask the AI surface the same question and read what happens.
+**BACKEND-CHECK:** a separate agent team confirms which provider (if any) the question was actually sent to.
+
+Expected: With Meta direct active and no key, the AI surface gives an honest plain-words "no key / not configured" message — it must NOT silently fall back to the OpenRouter key behind the user's back. A silent fallback is a FAIL (the active-provider contract is broken).
+
+---
+
+### T-6341 · OpenRouter connection · Test connection shows a working-state signal while the probe is in flight
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Press "Test connection" on the OpenRouter panel. 2. Watch the button/result area DURING the probe, before the result lands.
+
+Expected: A visible working-state signal (spinner, "Testing…" text, or disabled button — record exactly what is shown). A button that looks idle while the probe runs, inviting double-clicks, is a FAIL.
+
+---
+
+### T-6342 · OpenRouter connection · double-clicking Test connection fires a single probe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Double-click the "Test connection" button quickly. 2. Wait for the result. 3. Check the audit log for test-connection entries from this minute.
+
+Expected: Exactly one probe result and one audit entry — the second click is ignored or debounced while the first is in flight. Two probe results or two audit entries from one double-click is a FAIL.
+
+---
+
+### T-6343 · OpenRouter connection · Test connection during a tunnel outage is honest, never false success
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. During a tunnel outage (or by testing while the settings fail to load), press "Test connection" on the OpenRouter panel. 2. Read the result.
+
+Expected: An honest plain-words network/connectivity error (record the exact wording) — never a false "connected", and the saved key is untouched. A false success during an outage is a FAIL.
+
+---
+
+### T-6344 · OpenRouter connection · the 18+ hint and contributor disclosure survive all connection tests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Run Test connection on the OpenRouter panel three times (success, then after a model switch, then after a reload). 2. After each, verify the 18+ hint ("OpenRouter rejects all calls until 18+ is confirmed in your OpenRouter account settings.") and the contributor disclosure are still shown.
+
+Expected: Both texts present and verbatim after every test. A test run that hides or alters compliance copy is a FAIL.
+
+---
+
+### T-6345 · OpenRouter connection · success result names the model that was actually probed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With meta/muse-spark-1.3-contributor selected, press "Test connection" and record the full result text. 2. Switch to meta/muse-spark-1.3, save, test again, record the text.
+
+Expected: Each result identifies the model it probed (record the exact wording). A success message that never names the model — so the tester cannot tell WHICH model was verified — is a finding (record it); a message naming the wrong model is a FAIL.
+
+---
+
+### T-6346 · OpenRouter connection · Test connection result clears before the next run, no stale success
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Press "Test connection" (success). 2. Empty the key field and save (slot honestly empty). 3. Press "Test connection" again and watch the result area at the moment the second probe starts.
+
+Expected: The old success message clears when the new probe starts — the area never shows a stale "connected" while a new probe is in flight. A stale success lingering during the second probe is a FAIL.
+
+---
+
+### T-6347 · OpenRouter connection · Meta direct panel still shows its fixed base URL and model after all OpenRouter tests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. After all OpenRouter tests above, switch the radio to Meta direct. 2. Read the base URL, model name, and pricing line verbatim.
+
+Expected: "https://api.meta.ai/v1", "muse-spark-1.3", and "$0.10 / $0.20 per 1M input/output tokens (Contributor tier)" — unchanged by anything done on the OpenRouter side. Any alteration is a FAIL.
+
+---
+
+### T-6348 · OpenRouter connection · the contributor disclosure is still verbatim after model switches
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. After switching models back and forth (T-6335/T-6336), read the contributor disclosure on the OpenRouter panel verbatim.
+
+Expected: Exactly "Contributor tier: prompts and outputs may be used to improve Meta's products." A missing or reworded disclosure after switching is a FAIL.
+
+---
+
+### T-6349 · OpenRouter connection · pricing lines for both models still read correctly after switching
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Open the model dropdown and read both options' pricing text verbatim.
+
+Expected: meta/muse-spark-1.3 shows $1.25/$4.25 and meta/muse-spark-1.3-contributor shows $0.10/$0.20 (record the exact per-option wording). Swapped or altered pricing is a FAIL.
+
+---
+
+### T-6350 · OpenRouter connection · a failed Test connection never clears or exposes the saved key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With the good key saved, temporarily break the test (e.g. select Meta direct with no key, or test during an outage). 2. Read the failure. 3. Switch back to OpenRouter and check the key slot.
+
+Expected: The OpenRouter key slot is untouched (••••+last4, same last4) — a failed test never wipes or reveals the stored key. A cleared or exposed key after a failed test is a FAIL.
+
+---
+
+### T-6351 · OpenRouter connection · Test connection result is keyboard-accessible and announced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Tab to the "Test connection" button and activate it with the keyboard. 2. When the result appears, check whether keyboard focus or an accessible live region announces it.
+
+Expected: The result is reachable/announced to keyboard and screen-reader users (record how). A result visible only to mouse users with no accessible announcement is a finding.
+
+---
+
+### T-6352 · OpenRouter connection · connection state at 390px mobile width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Set the viewport to 390px wide. 2. Expand the AI provider panel and press "Test connection". 3. Read the result without scrolling.
+
+Expected: The full result text is visible at phone width without horizontal scrolling or clipping. A clipped or horizontally-scrolling result is a FAIL.
+
+---
+
+### T-6353 · Key lifecycle · replacing the saved key updates the last4 masking
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, restoring the working key at the end of this case. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Note the current last4 in the OpenRouter slot. 2. Create a fresh key at openrouter.ai/keys (same account). 3. In the cockpit UI, replace the saved key with the fresh one — typed once, transiently, never written down. 4. Save and read the slot masking. 5. Press "Test connection". 6. RESTORE: re-enter the original working key and verify Test connection succeeds.
+
+Expected: After step 4 the slot shows •••• plus the NEW key's last4 (different from before); step 5 succeeds; step 6 restores the original key working. A slot still showing the old last4 after a real replacement is a FAIL.
+
+---
+
+### T-6354 · Key lifecycle · saving a wrong key gives a plain-words 401 and names no key material
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, restoring the working key at the end of this case. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Save a deliberately wrong key in the OpenRouter slot (a made-up string, transient). 2. Press "Test connection". 3. Read the error verbatim. 4. RESTORE: re-enter the working key, save, verify Test connection succeeds.
+
+Expected: A plain-words 401/authentication error (record the exact wording) — no raw JSON, no stack trace, no echo of the wrong key. Step 4 restores the working state. A missing restore is a FAIL of this case's cleanup.
+
+---
+
+### T-6355 · Key lifecycle · the wrong-key error does not lock the slot: correction works first try
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, restoring the working key at the end of this case. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With the wrong key from T-6354 still saved, type the working key over it and save. 2. Press "Test connection" once.
+
+Expected: Success on the first try — the slot accepts the correction with no need to clear, reload, or toggle providers. A slot stuck on the old wrong key is a FAIL.
+
+---
+
+### T-6356 · Key lifecycle · emptying the key field and saving reads honestly as empty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Clear the OpenRouter key field completely and save. 2. Read the slot state. 3. Press "Test connection" and read the result. 4. Re-enter the working key, save, verify success (restore).
+
+Expected: Step 2 shows the slot honestly empty (no stale ••••+last4); step 3 gives the honest no-key error; step 4 restores. A slot that still shows masking after being emptied and saved is a FAIL.
+
+---
+
+### T-6357 · Key lifecycle · the key field is password-type: typed characters are masked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Click into the OpenRouter key field and type a few characters (a throwaway string, not a real key). 2. Look at the field. 3. Clear the field without saving.
+
+Expected: Typed characters appear as bullets/dots, never as plain text. Plain-text key entry is a FAIL.
+
+---
+
+### T-6358 · Key lifecycle · pasting a key with surrounding whitespace is trimmed, not rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Copy the working key with a leading and trailing space (transient, from the credentials repo — never written down). 2. Paste into the OpenRouter key field, save, press "Test connection". 3. Read the result.
+
+Expected: Success — surrounding whitespace is trimmed before use. A 401 caused purely by pasted whitespace is a FAIL (the UI must trim what users paste).
+
+---
+
+### T-6359 · Key lifecycle · saving a key writes a metadata-only audit entry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Save the OpenRouter key (any save). 2. Open the audit log and find the key-save entry. 3. Read the entry's fields.
+**BACKEND-CHECK:** the backend team reads the raw audit row and confirms no key material is stored.
+
+Expected: The entry records the event (timestamp, provider "openrouter", action "key saved" — record the exact fields) with metadata only — no key, no key prefix, no hash that could be reversed. Any key material in the audit entry is a FAIL.
+
+---
+
+### T-6360 · Key lifecycle · key replacement writes its own audit entry; history is not rewritten
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Replace the key (per T-6353, under authority, then restore). 2. Open the audit log and read the key-related entries in order.
+
+Expected: A new entry for the replacement sits alongside the earlier save entry — history is appended, never rewritten. A replacement that overwrites or deletes the earlier entry is a FAIL.
+
+---
+
+### T-6361 · Key lifecycle · deleting the saved key asks for confirmation first
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, restoring the working key at the end of this case. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Find the delete/remove control for the OpenRouter key (if offered). 2. Activate it and read whatever confirmation appears — do NOT confirm yet. 3. Cancel the confirmation. 4. Verify the key still works (Test connection succeeds).
+
+Expected: A clear confirmation naming what will be deleted (record the exact wording) appears BEFORE anything is deleted; cancelling leaves the key fully working. A delete with no confirmation is a FAIL.
+
+---
+
+### T-6362 · Key lifecycle · confirming key deletion empties the slot honestly
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, restoring the working key at the end of this case. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Confirm the key deletion from T-6361. 2. Read the slot state and press "Test connection". 3. RESTORE: re-enter the working key, save, verify success.
+
+Expected: The slot reads honestly empty and Test connection gives the no-key error — the delete truly deleted. A slot that still tests successfully after deletion is a FAIL. Step 3 restores the working state.
+
+---
+
+### T-6363 · Key lifecycle · unsaved key edits trigger the unsaved-change warning
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. In the AI provider panel, type a throwaway string into the OpenRouter key field (no save). 2. Click a different settings group in the nav. 3. Read the dialog, then Stay. 4. Clear the field without saving.
+
+Expected: The "You have unsaved changes. Leave without saving?" warning appears — key edits arm the dirty flag like any other edit. No warning on a dirty key field is a FAIL.
+
+---
+
+### T-6364 · Key lifecycle · saving the key shows a "Saved" confirmation that survives re-render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Re-enter the working key in the OpenRouter slot and save the AI provider settings. 2. Wait for the re-render and read the result area.
+
+Expected: A plain-words "Saved" confirmation naming the AI provider settings (record the exact wording), visible after the re-render — the ISS-076 class guard applies to key saves too. A silent save is a FAIL.
+
+---
+
+### T-6365 · Key lifecycle · rolling back the AI provider group restores the previous key state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Note the current last4. 2. Type a throwaway string into the key field (no save). 3. Roll back the AI provider group. 4. Read the confirmation and the slot masking.
+
+Expected: "Rolled back group …" confirmation visible after re-render (ISS-077 contract), and the slot shows the original last4 — the unsaved edit is discarded. A slot showing the throwaway string after rollback is a FAIL.
+
+---
+
+### T-6366 · Key lifecycle · the Meta direct key slot is independent: editing it never touches the OpenRouter slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Switch to the Meta direct panel and type a throwaway string into its key field (no save). 2. Switch back to the OpenRouter panel and read its slot. 3. Clear the Meta field without saving.
+
+Expected: The OpenRouter slot is untouched throughout (same last4) — the two slots are fully independent. Any cross-talk between slots is a FAIL.
+
+---
+
+### T-6367 · Key lifecycle · key slot at 390px: masking and Test connection usable on the phone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Set the viewport to 390px wide. 2. Expand the AI provider panel. 3. Verify the key slot masking is readable and the "Test connection" button is tappable without horizontal scrolling.
+
+Expected: Everything usable at phone width — no clipped button, no masking cut off. A control unreachable at 390px is a FAIL.
+
+---
+
+### T-6368 · Key lifecycle · full key-rotation drill: rotate, test, restore, test — all green
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Create a fresh OpenRouter key (same account), replace the saved key via the UI (transient entry), save → Test connection succeeds, last4 updated. 2. Delete the OLD key at openrouter.ai/keys. 3. Re-enter the original working key… (if the old key was deleted, keep the fresh key as the working key) → Test connection succeeds. 4. Confirm the audit log shows the rotation entries, metadata-only.
+
+Expected: The cockpit ends with exactly one working key, Test connection green, audit entries appended. Any step that leaves the cockpit keyless or the audit missing entries is a FAIL.
+
+---
+
+### T-6369 · Key lifecycle · a revoked key at OpenRouter gives an honest auth error on next test, not a stale success
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, restoring a working key at the end of this case. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Create a throwaway OpenRouter key, save it in the cockpit, verify Test connection succeeds. 2. Revoke that key at openrouter.ai/keys. 3. Press "Test connection" in the cockpit and read the result. 4. RESTORE: save a working key and verify success.
+
+Expected: Step 3 reports an authentication failure in plain words (record the exact text) — the probe is live, not cached. A stale "connected" for a revoked key is a FAIL.
+
+---
+
+### T-6370 · Key lifecycle · saved-key state survives a full server restart
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With the working key saved, note the last4. 2. Ask the agent team to restart the TEST server via keepalive.sh (tester does not touch the backend — this step is performed by the backend team between the tester's UI checks). 3. Reload /settings and read the key slot. 4. Press "Test connection".
+
+Expected: The slot still shows the same last4 after the restart and Test connection succeeds — the key is persisted, not held in memory. A key lost across a restart is a FAIL.
+
+---
+
+### T-6371 · Key lifecycle · two different last4s are never shown for one slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Read the OpenRouter slot's last4 in the AI provider panel. 2. Reload the page and read it again. 3. Open the audit log's latest key entry and read any masked reference there.
+
+Expected: All three readings agree on the same last4. Disagreeing masked values for one slot is a FAIL (the UI is showing inconsistent state).
+
+---
+
+### T-6372 · Key lifecycle · key-entry help text tells the tester exactly where the key comes from
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Read every help/hint line around the OpenRouter key field verbatim.
+
+Expected: The help text plainly says where to create the key (openrouter.ai/keys or the OpenRouter dashboard — record the exact wording). A key field with no guidance on where the key comes from is a finding.
+
+---
+
+### T-6373 · Live AI via OpenRouter · the cockpit AI answers a simple question with a real model response
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With OpenRouter active, contributor model selected, key tested working, open the cockpit AI surface (the assistant verified in Section W, T-1161–T-1280). 2. Ask: "What is the current BTC funding rate direction telling us?" 3. Wait for the full answer and read it.
+**BACKEND-CHECK:** the backend team confirms the request actually went to OpenRouter's meta/muse-spark-1.3-contributor and the answer came from the model.
+
+Expected: A genuine, on-topic model answer in plain words — not a canned error, not a timeout message, not an empty bubble. A UI that claims AI is wired but returns nothing real is a FAIL.
+
+---
+
+### T-6374 · Live AI via OpenRouter · the answer arrives in reasonable time with a working indicator
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask the cockpit AI a question as in T-6373. 2. Watch the UI from send to full answer: note the working indicator and the elapsed time.
+
+Expected: A visible "thinking/working" state while the model responds, and the full answer within a reasonable window (record the seconds). No indicator at all, or an answer that never completes, is a FAIL.
+
+---
+
+### T-6375 · Live AI via OpenRouter · a follow-up question keeps the conversation context (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask the AI: "Summarize the risk on my open BTC position in one sentence." 2. After the answer, ask: "And what would invalidate that?" 3. Read the second answer.
+
+Expected: The second answer refers back to the first (it knows what "that" is) — or the UI honestly states each question is independent (record which is true). A second answer that contradicts the first without reason is a finding.
+
+---
+
+### T-6376 · Live AI via OpenRouter · the AI veto/advisory path uses the configured provider
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. If the cockpit offers an AI veto/advisory check on a trade or signal (as mapped in Section W), run it once with OpenRouter active. 2. Read the advisory output.
+**BACKEND-CHECK:** the backend team confirms the advisory call went to the configured OpenRouter model.
+
+Expected: The advisory returns a real model judgment tied to the configured provider/model — not a hardcoded response. A veto path that ignores the provider setting is a FAIL.
+
+---
+
+### T-6377 · Live AI via OpenRouter · AI failure with a good key is reported honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask the AI an extremely long question (paste several paragraphs) that may exceed limits. 2. Read whatever comes back.
+
+Expected: Either a real answer or an honest plain-words limit/error message (record the exact text) — never a silent empty response, never a fake answer. A silent failure is a FAIL.
+
+---
+
+### T-6378 · Live AI via OpenRouter · switching the model changes which model answers (backend-confirmed)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With meta/muse-spark-1.3-contributor active, ask the AI "Reply with exactly: MODEL-A". 2. Switch the dropdown to meta/muse-spark-1.3, save, ask "Reply with exactly: MODEL-B".
+**BACKEND-CHECK:** the backend team confirms which model served each answer.
+
+Expected: The backend confirms the model actually switched between the two answers — the dropdown is wired, not decorative. Both answers served by the same model regardless of the dropdown is a FAIL.
+
+---
+
+### T-6379 · Live AI via OpenRouter · the AI surface degrades honestly when the provider is Meta direct with no key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Switch the provider to Meta direct (no key), save. 2. Ask the cockpit AI a question. 3. Read the response. 4. Switch back to OpenRouter, save, verify a question works again.
+
+Expected: Step 3 gives an honest "AI not configured / no key" message in plain words (record the exact text) — the surface degrades gracefully instead of hanging or erroring cryptically. Step 4 restores full function.
+
+---
+
+### T-6380 · Live AI via OpenRouter · AI answers never leak the key or account details
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask the AI three different questions, including "What credentials are you using?" 2. Read all three answers fully.
+
+Expected: No answer contains the API key, key fragments, the account email, or any credential material. Any credential leak in a model answer is a FAIL.
+
+---
+
+### T-6381 · Live AI via OpenRouter · concurrent questions do not mix up answers
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Send question A ("Reply with exactly: ALPHA"), then immediately send question B ("Reply with exactly: BETA") before A completes. 2. Read both answers when done.
+
+Expected: Answer A contains ALPHA and answer B contains BETA — responses are matched to their questions. Crossed answers are a FAIL.
+
+---
+
+### T-6382 · Live AI via OpenRouter · the AI surface at 390px: input and answers fully usable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Set the viewport to 390px wide. 2. Ask the AI a question and read the full answer.
+
+Expected: The input, send control, and the complete answer are all usable at phone width with no horizontal scrolling and no clipped text. A phone-unusable AI surface is a FAIL.
+
+---
+
+### T-6383 · Live AI via OpenRouter · empty question is rejected kindly, not sent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Focus the AI input, type nothing (or only spaces), and press send. 2. Read what the UI does.
+**BACKEND-CHECK:** the backend team confirms no provider call was made for the empty send.
+
+Expected: A kind inline nudge (record the exact text) and no request leaves the cockpit. An empty question sent to the provider (burning a call) is a FAIL.
+
+---
+
+### T-6384 · Live AI via OpenRouter · a very long answer renders fully without truncation glitches
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask the AI: "Explain funding rates, open interest, and liquidation cascades in detail." 2. Scroll through the entire answer.
+
+Expected: The full answer renders — paragraphs, no mid-sentence cutoff, no overlapping text, no broken layout. A truncated or visually broken long answer is a FAIL.
+
+---
+
+### T-6385 · Live AI via OpenRouter · stopping/cancelling a slow answer works (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask a question that yields a long answer. 2. While it streams, use the stop/cancel control if one is offered. 3. Read the final state.
+
+Expected: If a stop control is offered, it halts the answer cleanly with an honest "stopped" state (record the exact text). If no stop control is offered, record that as a finding. A stop control that does nothing is a FAIL.
+
+---
+
+### T-6386 · Live AI via OpenRouter · the AI never claims to have placed, modified, or cancelled trades
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask the AI: "Please close my open BTC position." 2. Read the answer fully.
+**BACKEND-CHECK:** the backend team confirms no order was placed, modified, or cancelled.
+
+Expected: The AI declines or explains it cannot trade (record the exact text) — and nothing happens to the position. An AI answer claiming it closed the position, or any real order effect, is a FAIL.
+
+---
+
+### T-6387 · Live AI via OpenRouter · AI status is visible without opening /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. From /home (not /settings), look for any AI status indicator (connected / not configured). 2. Record what is shown.
+
+Expected: The cockpit surface shows the AI's configured state honestly at a glance (record the exact indicator text) — or its absence is recorded as a finding. A "connected" indicator while the provider has no key is a FAIL.
+
+---
+
+### T-6388 · Live AI via OpenRouter · provider switch mid-conversation is handled honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. With OpenRouter active, ask the AI one question and get the answer. 2. Switch the provider to Meta direct (no key), save. 3. Ask a follow-up in the same conversation. 4. Switch back to OpenRouter, save, verify function.
+
+Expected: Step 3 gives the honest not-configured message (it must not answer using the deselected OpenRouter key, and must not crash the conversation view). Step 4 restores. A mid-conversation switch that silently keeps using the old provider is a FAIL.
+
+---
+
+### T-6389 · Live AI via OpenRouter · audit log records AI usage events metadata-only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Ask the AI two questions. 2. Open the audit log and find the AI-usage entries. 3. Read their fields.
+**BACKEND-CHECK:** the backend team confirms the raw rows carry no prompt/answer text beyond metadata if the contract is metadata-only (record which is true).
+
+Expected: Usage is logged (timestamp, provider, model — record the exact fields) with no key material. Whether full prompts are logged must match the product's stated contract — undisclosed full-prompt logging is a finding.
+
+---
+
+### T-6390 · Live AI via OpenRouter · zero banned words anywhere on the AI surface after all behavior tests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Walk the whole AI surface after the behavior tests: provider panel, test-connection results, AI chat, advisories, empty states, error states. 2. Read every visible word.
+
+Expected: Zero banned words anywhere — the standing rule holds on every AI string including model answers' chrome (the model's own answer text is exempt; all UI chrome is not). Any banned word in UI chrome is a FAIL.
+
+---
+
+### T-6391 · Live AI via OpenRouter · full provider round-trip: OpenRouter → Meta → OpenRouter, AI working at both ends that can work
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. OpenRouter active: ask a question → real answer. 2. Switch to Meta direct, save: ask a question → honest not-configured message. 3. Switch back to OpenRouter, save: ask a question → real answer again.
+
+Expected: All three steps behave exactly as described — the provider setting is the single source of truth end to end, in both directions. Any step behaving like the wrong provider is a FAIL.
+
+---
+
+### T-6392 · Live AI via OpenRouter · acceptance: key in, contributor model on, test green, real answer received
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AF-AI
+
+Steps: 1. Verify in one pass: OpenRouter radio selected, model dropdown meta/muse-spark-1.3-contributor, key slot ••••+last4. 2. Press "Test connection" → plain-words success. 3. Ask the AI one question → real model answer.
+**BACKEND-CHECK:** the backend team confirms the test probe and the question both reached OpenRouter on the contributor model.
+
+Expected: The whole chain is green in one unbroken pass — this is the acceptance case for Saad's order (key wired into the software, contributor model live). Any break in the chain is a FAIL.
+
+---
+
+## Section AG · Notification history + receipt honesty (40 cases: T-6393–T-6432)
+
+Follow-ups to ISS-073 (preview/test sends log "Delivered" with empty receipt fields — the preview path must persist the same receipt fields the kill/halt path does) and ISS-071 (three identical "Telegram is connected" notices — each tap is its own history row). Covers the notification history surface itself: row rendering, ordering, empty states, persistence, and the honesty of every status shown. Where a case depends on the ISS-073 fix having landed, it is marked REGRESSION-PENDING — it defines the behavior the fix must produce. Written 2026-09-27 ~06:25 PDT.
+
+### T-6393 · History surface · notification history lists rows newest-first with timestamp, channel, topic, status
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open the notification history surface (as mapped in Section N). 2. Read the first five rows fully: timestamp, channel, topic, status.
+
+Expected: Rows are ordered newest-first; every row shows all four fields in readable form. A row missing any field, or rows in random order, is a FAIL.
+
+---
+
+### T-6394 · History surface · timestamps render as readable dates, never raw epoch numbers
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open the notification history. 2. Read the timestamp on every visible row.
+
+Expected: Every timestamp reads as a human date/time (record the exact format shown). A raw epoch number like 1790511520 shown to the user is a FAIL.
+
+---
+
+### T-6395 · History surface · a fresh "Send preview" appears as a new row within moments
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open the notification history and note the newest row's timestamp. 2. Press "Send preview" on the Telegram panel. 3. Return to the history and read the newest row.
+
+Expected: A new row with topic "preview" and a timestamp matching the press time appears at the top within moments. A preview press that never appears in history is a FAIL.
+
+---
+
+### T-6396 · History surface · three spaced preview presses produce three rows, 1:1 (ISS-071 guard)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Note the current history row count. 2. Press "Send preview" three times, ~30 seconds apart, noting each press time. 3. Read the three newest rows' timestamps.
+
+Expected: Exactly three new rows, each timestamp matching its press time 1:1 — no row without a tap, no tap without a row. Any mismatch is a FAIL (this is the ISS-071 contract).
+
+---
+
+### T-6397 · History surface · a failed press is logged as its own row, not hidden
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Cause a preview press to fail (e.g. press during a tunnel outage, or with Telegram disconnected). 2. Open the history and find the row for that press.
+
+Expected: The failed press has its own row with status "failed" (record the exact status text) — failures are logged, never silently dropped. A failed press with no row is a FAIL.
+
+---
+
+### T-6398 · Receipt honesty · REGRESSION-PENDING: a preview "Delivered" row carries full receipt fields (ISS-073)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Press "Send preview" and wait for the "Delivered" status. 2. Open the history row's detail (expand it if expandable, or read the row's full fields).
+**BACKEND-CHECK:** the backend team reads the raw history row and confirms telegram_message_id, telegram_chat_id, telegram_chat_type, and telegram_bot are all populated.
+
+Expected: The preview row's receipt fields are populated like the kill/halt rows — the "Delivered" status is bound to Telegram's destination receipt. Empty receipt fields on a "Delivered" preview row is a FAIL (the ISS-073 defect). REGRESSION-PENDING until the ISS-073 fix wave lands.
+
+---
+
+### T-6399 · Receipt honesty · kill/halt rows keep their full receipt fields (guard)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Find the most recent kill/halt history rows. 2. Read their receipt fields.
+**BACKEND-CHECK:** the backend team confirms the raw rows still carry full receipt fields.
+
+Expected: telegram_message_id, telegram_chat_id, telegram_chat_type, telegram_bot all populated — the paths that already worked must not regress while the preview path is fixed. Any newly-empty field is a FAIL.
+
+---
+
+### T-6400 · Receipt honesty · "Delivered" is never shown for a message that did not reach Telegram
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. With Telegram disconnected (or during an outage), press "Send preview". 2. Read the history row status for that press.
+**BACKEND-CHECK:** the backend team confirms from the receiving end (the SaadAi bot chat, read-only) whether the message actually landed.
+
+Expected: Status "failed" (or equivalent honest text) — and the receiving-end check agrees the message never landed. A "Delivered" status for a message that never arrived is a FAIL.
+
+---

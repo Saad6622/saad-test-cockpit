@@ -1,0 +1,794 @@
+QA BRIEF — LANE 2 REMAINDER c1 (T-203–T-300)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+ALREADY DONE: T-201/T-202 (FAIL → ISS-197). Do not re-run.
+Your 22 STATE-CHANGING cases (T-203, T-207, T-208, T-211, T-212, T-217, T-218, T-224, T-225, T-226, T-229, T-232, T-240, T-244, T-245, T-246, T-254, T-261, T-264, T-267, T-268, T-271) are covered by WINDOW SWEEP A — mark them BLOCKED-pending-window here and keep going read-only.
+
+### T-203 · Strategies · STRATEGY_ID with digits and dashes is accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_ID = "my-strat-2", valid STRATEGY_META, and evaluate(bars). 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-204 · Strategies · missing STRATEGY_META name is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_ID and a STRATEGY_META that has a symbol but no name. 2. Upload it.
+Expected: The file is refused and the reason names the missing name.
+
+### T-205 · Strategies · STRATEGY_META missing entirely is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_ID and evaluate(bars) but no STRATEGY_META. 2. Upload it.
+Expected: The file is refused and the reason names the missing STRATEGY_META.
+
+### T-206 · Strategies · empty-string name is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_META name set to an empty string. 2. Upload it.
+Expected: The file is refused with a reason about the missing name.
+
+### T-207 · Strategies · optional family omitted is accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a .py file with name and symbol but no family in STRATEGY_META. 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-208 · Strategies · optional timeframe omitted is accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a .py file with name and symbol but no timeframe in STRATEGY_META. 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-209 · Strategies · missing symbol is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_ID, a name, but no symbol in STRATEGY_META. 2. Upload it.
+Expected: The file is refused and the reason names the missing symbol.
+
+### T-210 · Strategies · disallowed symbol is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with symbol set to "BINANCE:BTCUSDT". 2. Upload it.
+Expected: The file is refused and the reason states only the two allowed symbols are accepted.
+
+### T-211 · Strategies · symbol GATEIO:BTCUSDT.P is accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a .py file with symbol "GATEIO:BTCUSDT.P" and all other fields valid. 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-212 · Strategies · symbol GATEIO:ETHUSDT.P is accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a .py file with symbol "GATEIO:ETHUSDT.P" and all other fields valid. 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-213 · Strategies · lowercase symbol is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with symbol "gateio:btcusdt.p". 2. Upload it.
+Expected: The file is refused with a reason about the invalid symbol.
+
+### T-214 · Strategies · missing evaluate function is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_ID and valid STRATEGY_META but no evaluate function. 2. Upload it.
+Expected: The file is refused and the reason names the missing evaluate function.
+
+### T-215 · Strategies · evaluate with wrong signature is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with an evaluate() function that takes no arguments. 2. Upload it.
+Expected: The file is refused with a reason about the evaluate signature.
+
+### T-216 · Strategies · file that crashes at import is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file that raises an exception at import time (e.g. 1/0 at module level) with otherwise valid fields. 2. Upload it.
+Expected: The file is refused with a reason describing the import failure.
+
+### T-217 · Strategies · evaluate raising at runtime is surfaced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a .py file whose evaluate(bars) raises an exception when called. 2. Enable the strategy. 3. Wait for a runner check and look at the strategy row.
+Expected: The failure is surfaced on the strategy row and the rest of the list keeps working.
+
+### T-218 · Strategies · DataUnavailable shows "awaiting market data"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+Steps: 1. Upload a .py file whose evaluate(bars) raises the DataUnavailable exception. 2. Enable the strategy. 3. Wait for a runner check and look at the strategy row.
+Expected: The strategy row shows "awaiting market data" rather than an error.
+
+### T-219 · Strategies · "awaiting market data" clears when data returns
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Set up a strategy stuck on "awaiting market data". 2. Wait until market data becomes available again. 3. Look at the strategy row.
+Expected: The "awaiting market data" notice clears and the strategy resumes normal checks.
+
+### T-220 · Strategies · refusal reason text is visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload an invalid .py file (e.g. missing STRATEGY_ID). 2. Look near the "Add a strategy" section.
+Expected: The reason for refusal is displayed in plain text near the upload area.
+
+### T-221 · Strategies · refusal reason names the failing contract item
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a .py file missing the evaluate function. 2. Read the refusal reason.
+Expected: The reason specifically names the missing evaluate function.
+
+### T-222 · Strategies · refusal reason is plain language
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload an invalid .py file. 2. Read the refusal reason.
+Expected: The reason is in plain language with no stack trace or code internals.
+
+### T-223 · Strategies · duplicate STRATEGY_ID is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Upload a valid .py file with STRATEGY_ID "dup-strat". 2. Upload a second, different .py file also using STRATEGY_ID "dup-strat".
+Expected: The second file is refused with a reason about the duplicate id.
+
+### T-224 · Strategies · same name with different id is allowed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a valid .py file with name "Same Name" and STRATEGY_ID "name-one". 2. Upload another valid .py file with name "Same Name" and STRATEGY_ID "name-two".
+Expected: Both files are accepted and both appear in the list.
+
+### T-225 · Strategies · enable toggle turns a strategy ON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Upload a valid .py file (starts OFF). 2. Click its enable toggle. 3. Look at the toggle.
+Expected: The toggle switches to the ON position and the strategy is marked enabled.
+
+### T-226 · Strategies · disable toggle turns a strategy OFF
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Enable a strategy. 2. Click its toggle again. 3. Look at the toggle.
+Expected: The toggle switches to the OFF position and the strategy is marked disabled.
+
+### T-227 · Strategies · toggle state is visually clear
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Look at the "Your strategies" list with some strategies on and some off.
+Expected: Each toggle unambiguously shows whether its strategy is on or off.
+
+### T-228 · Strategies · toggle works from the keyboard
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Press Tab until a strategy's enable toggle has focus. 2. Press Space.
+Expected: The toggle changes state just as if it had been clicked.
+
+### T-229 · Strategies · toggle state survives a page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Enable a strategy. 2. Press F5 to refresh the page. 3. Find the strategy in the list.
+Expected: The strategy is still enabled after the reload.
+
+### T-230 · Strategies · signal-count chips present per strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-34
+Steps: 1. Open /strategies with at least one uploaded strategy. 2. Look at each strategy row.
+Expected: Every strategy row shows a signal-count chip.
+
+### T-231 · Strategies · chip shows 0 for a new strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-34
+Steps: 1. Upload a valid .py file. 2. Look at its signal-count chip.
+Expected: The chip shows 0 signals sent.
+
+### T-232 · Strategies · chip count increments after a signal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-34
+Steps: 1. Enable a strategy that produces signals. 2. Note its chip count. 3. Wait for the runner to send a signal. 4. Read the chip again.
+Expected: The chip count has increased.
+
+### T-233 · Strategies · list refreshes automatically within a minute
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+Steps: 1. Open /strategies and note the list contents and time. 2. Change a strategy's state from another session (or wait for a runner-driven change). 3. Watch the list for 60 seconds without reloading.
+Expected: The list updates on its own within a minute, with no manual refresh.
+
+### T-234 · Strategies · new strategy appears without manual refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+Steps: 1. Open /strategies. 2. Upload a valid .py file. 3. Watch the "Your strategies" list without reloading.
+Expected: The new strategy appears in the list on its own.
+
+### T-235 · Strategies · list renders with 15 strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload valid .py files until 15 strategies are listed. 2. Scroll through the "Your strategies" list.
+Expected: All 15 strategies render, each with its toggle and signal-count chip.
+
+### T-236 · Strategies · 15-strategy list stays usable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Load 15 strategies in the list. 2. Scroll and click toggles and expand controls.
+Expected: The layout holds together with no overlapping rows and every control remains clickable.
+
+### T-237 · Strategies · empty list state with no strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Open /strategies with no strategies uploaded. 2. Read the "Your strategies" area.
+Expected: A clear empty-state message is shown (e.g. that no strategies have been added yet).
+
+### T-238 · Strategies · delete control asks for confirmation if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-37
+Steps: 1. Find a strategy row with a delete or remove control. 2. Click it.
+Expected: A confirmation prompt appears before anything is deleted. (If no delete control exists, note its absence.)
+
+### T-239 · Strategies · cancelling a delete keeps the strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-37
+Steps: 1. Click a strategy's delete control. 2. Click Cancel on the confirmation. 3. Look at the list.
+Expected: The strategy is still in the list.
+
+### T-240 · Strategies · confirmed delete removes the strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-37
+Steps: 1. Click a strategy's delete control. 2. Confirm the deletion. 3. Look at the list.
+Expected: The strategy is removed from the list. (If no delete control exists, note its absence.)
+
+### T-241 · Strategies · upload button disabled while a file is being checked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Start uploading a valid .py file. 2. Watch the upload button during the check.
+Expected: The upload button is disabled until the check completes.
+
+### T-242 · Strategies · upload with no file chosen shows an error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-89
+Steps: 1. Open the file dialog and close it without choosing a file. 2. Click the upload button.
+Expected: An error message asks to choose a file first.
+
+### T-243 · Strategies · cancelling the file dialog is clean
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Click the upload control to open the file dialog. 2. Press Esc to cancel. 3. Look at the page.
+Expected: No upload starts and no error message appears.
+
+### T-244 · Strategies · file name with spaces uploads fine
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-89
+Steps: 1. Save a valid strategy as "my strategy file.py". 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-245 · Strategies · Windows line endings accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Save a valid strategy with CRLF line endings. 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-246 · Strategies · oversize .py file handled gracefully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a very large .py file (several megabytes) with valid fields. 2. Upload it.
+Expected: The file is either accepted, or refused with a clear size-related reason; the page stays responsive.
+
+### T-247 · Strategies · strategy detail shows meta on expand
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+Steps: 1. Upload a valid .py file with name, family, symbol, and timeframe set. 2. Expand the strategy row (click it or its expand control). 3. Read the detail.
+Expected: The detail shows the strategy's name, family, symbol, and timeframe.
+
+### T-248 · Strategies · detail shows the description
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a valid .py file with a description in STRATEGY_META. 2. Expand the strategy row.
+Expected: The description text is shown in the detail.
+
+### T-249 · Strategies · detail shows family when set
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a valid .py file with family "trend" in STRATEGY_META. 2. Expand the strategy row.
+Expected: The family value is shown in the detail.
+
+### T-250 · Strategies · collapsing the detail works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Expand a strategy row. 2. Click the collapse control (or the row again).
+Expected: The detail collapses back to the compact row.
+
+### T-251 · Strategies · very long name truncates gracefully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a valid .py file with an extremely long name (200+ characters). 2. Look at its row.
+Expected: The name is truncated or wrapped without breaking the row layout.
+
+### T-252 · Strategies · long description wraps in the detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a valid .py file with a very long description. 2. Expand the strategy row.
+Expected: The description wraps within the detail area without breaking the layout.
+
+### T-253 · Strategies · clicking the upload area opens the file dialog
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-89
+Steps: 1. Open /strategies. 2. Click the "Add a strategy" upload area.
+Expected: The operating system's file dialog opens.
+
+### T-254 · Strategies · retry works after a failed upload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-89
+Steps: 1. Upload an invalid .py file and read the refusal reason. 2. Fix the file. 3. Upload it again.
+Expected: The corrected file is accepted and appears in the list.
+
+### T-255 · Strategies · runner status block readable on mobile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-32
+Steps: 1. Resize the browser to a phone-width viewport. 2. Open /strategies. 3. Read the runner status block.
+Expected: Runner, Last check, Next check, and Signals sent are all readable with no overlap.
+
+### T-256 · Strategies · signal-count chips readable on mobile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-34
+Steps: 1. Resize the browser to a phone-width viewport. 2. Open /strategies with strategies listed.
+Expected: Every signal-count chip is readable with no overlap.
+
+### T-257 · Strategies · toggles reachable by keyboard in the list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Press Tab repeatedly through the "Your strategies" list.
+Expected: Each strategy's enable toggle receives focus in turn.
+
+### T-258 · Strategies · Last check in a readable time format
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-32
+Steps: 1. Open /strategies. 2. Read the Last check value.
+Expected: The value is a readable date and time, not a raw timestamp number.
+
+### T-259 · Strategies · Next check never goes negative
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-32
+Steps: 1. Open /strategies. 2. Watch the Next check value across a check boundary.
+Expected: The value counts down and resets; it never shows a negative time.
+
+### T-260 · Strategies · signals sent only grows for enabled strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-32
+Steps: 1. Note the Signals sent value. 2. Disable all strategies. 3. Wait through two runner checks. 4. Read Signals sent again.
+Expected: The count does not grow while no strategy is enabled.
+
+### T-261 · Strategies · disabled strategy sends no new signals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Note a strategy's signal-count chip. 2. Disable the strategy. 3. Wait through two runner checks. 4. Read the chip again.
+Expected: The chip count is unchanged.
+
+### T-262 · Strategies · strategy row shows family
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a valid .py file with family set. 2. Look at its row in the list.
+Expected: The family value is visible on the row or in its detail.
+
+### T-263 · Strategies · strategy row shows symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a valid .py file with symbol GATEIO:ETHUSDT.P. 2. Look at its row in the list.
+Expected: The symbol is visible on the row or in its detail.
+
+### T-264 · Strategies · uploading the same file twice
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-89
+Steps: 1. Upload a valid .py file. 2. Upload the exact same file again.
+Expected: The second upload is either refused as a duplicate with a reason, or replaces the first with a clear notice.
+
+### T-265 · Strategies · all 15 strategies enabled keeps runner healthy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-32
+Steps: 1. Load 15 strategies. 2. Enable all of them. 3. Watch the runner status block through two checks.
+Expected: The Runner value stays healthy and Last check keeps updating.
+
+### T-266 · Strategies · runner status survives a page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Open /strategies and note the runner values. 2. Press F5. 3. Read the runner status block.
+Expected: The block reloads and shows current Runner, Last check, Next check, and Signals sent values.
+
+### T-267 · Strategies · uploaded strategy still listed after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+Steps: 1. Upload a valid .py file. 2. Press F5. 3. Look at the "Your strategies" list.
+Expected: The strategy is still listed.
+
+### T-268 · Strategies · optional fetch_bars present is accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a valid .py file that also defines fetch_bars(). 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-269 · Strategies · crash in one strategy does not break the list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Upload a strategy whose evaluate raises at runtime alongside a healthy strategy. 2. Wait for a runner check. 3. Look at the list.
+Expected: The healthy strategy keeps working and its row shows normal status.
+
+### T-270 · Strategies · runner status failure shows an error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-32
+Steps: 1. Open /strategies while the runner status cannot be fetched. 2. Look at the runner status block.
+Expected: The block shows an error message instead of stale or blank values.
+
+### T-271 · Strategies · strategy with no description accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Create a valid .py file with no description in STRATEGY_META. 2. Upload it.
+Expected: The file is accepted and appears in the list.
+
+### T-272 · Strategies · detail expand control reachable by keyboard
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+Steps: 1. Press Tab until a strategy row's expand control has focus. 2. Press Enter.
+Expected: The strategy detail expands.
+
+### T-273 · Strategies · Tab reaches the upload button and Enter opens the dialog
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-89
+Steps: 1. Press Tab until the "Add a strategy" upload button has focus. 2. Press Enter.
+Expected: The file dialog opens.
+
+### T-274 · Strategies · toggle has an accessible name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Inspect a strategy's enable toggle with a screen reader or the browser accessibility tree.
+Expected: The toggle exposes an accessible name identifying which strategy it controls.
+
+### T-275 · Strategies · strategy list order stays consistent after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-39
+Steps: 1. Upload several strategies and note their order in the list. 2. Press F5. 3. Read the list order again.
+Expected: The strategies appear in the same order as before the refresh.
+
+## Section C — Backtests, History, Keys
+
+### T-276 · Backtests · Page loads with title
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open the TEST cockpit in the browser. 2. Click the "Backtests" link in the navigation. 3. Wait for the page to finish loading.
+Expected: The /backtests page opens and shows the heading "Watch the sweeps run, and see the winners so far."
+
+### T-277 · Backtests · Tab labels visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Look at the top area of the page. 3. Read each tab-like label.
+Expected: The labels "Cockpit", "Trading", "engine", and "Session" are all visible near the top of the page.
+
+### T-278 · Backtests · Click the "Cockpit" label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests. 2. Click the "Cockpit" label. 3. Observe the main content area of the page.
+Expected: The page stays on /backtests with no error; if the label switches a view, the Cockpit content is shown.
+
+### T-279 · Backtests · Click the "Trading" label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests. 2. Click the "Trading" label. 3. Observe the main content area of the page.
+Expected: The page stays on /backtests with no error; if the label switches a view, the Trading content is shown.
+
+### T-280 · Backtests · Click the "engine" label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests. 2. Click the "engine" label. 3. Observe the main content area of the page.
+Expected: The page stays on /backtests with no error; if the label switches a view, the engine content is shown.
+
+### T-281 · Backtests · Click the "Session" label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests. 2. Click the "Session" label. 3. Observe the main content area of the page.
+Expected: The page stays on /backtests with no error; if the label switches a view, the Session content is shown.
+
+### T-282 · Backtests · Winners auto-save note visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scan the page text near the top. 3. Find the sentence about winners being saved.
+Expected: The text "Winners are saved automatically when the run finishes." is visible on the page.
+
+### T-283 · Backtests · "Nothing to do here" note visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scan the page text. 3. Find the watch-only note.
+Expected: The text "Nothing to do here — just watch." is visible on the page.
+
+### T-284 · Backtests · Honesty note about FX and gold visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scroll through the full page. 3. Find the honesty note about tested markets.
+Expected: The text "These sweeps tested FX and gold markets only. They did not test crypto." is visible on the page.
+
+### T-285 · Backtests · Honesty note about crypto validation visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scroll through the full page. 3. Find the disclaimer about crypto strategies.
+Expected: The text "The strategies running on this cockpit trade crypto (BTC/ETH). Their rules were validated on FX and gold, not on crypto. So these results do not prove how they will do on crypto." is visible on the page.
+
+### T-286 · Backtests · Sweep results list appears
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Wait for loading to finish. 3. Look for the sweep results list.
+Expected: A list of sweep result entries is shown on the page.
+
+### T-287 · Backtests · Loading indicator before results
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-43
+Steps: 1. Open /backtests in a fresh tab. 2. Watch the results area during the first seconds of loading. 3. Note what is shown before entries appear.
+Expected: A loading indicator or placeholder (such as a spinner or "Loading…") is shown until the first sweep entries arrive.
+
+### T-288 · Backtests · Results load progressively without reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests while a sweep is running. 2. Watch the results list for one minute without refreshing or clicking. 3. Observe whether new entries appear.
+Expected: New sweep entries appear in the list on their own; no page refresh is needed to see progress.
+
+### T-289 · Backtests · Sweep entry shows strategy name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Wait for results to load. 3. Read the first sweep entry.
+Expected: The entry clearly names the strategy or sweep that was run.
+
+### T-290 · Backtests · Sweep entry shows tested market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Wait for results to load. 3. Read a sweep entry's market information.
+Expected: The entry shows which market was tested (FX pair or gold), matching the honesty note's claim.
+
+### T-291 · Backtests · Sweep entry shows progress or status
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Wait for results to load. 3. Read the status of a running sweep entry.
+Expected: A running sweep entry shows its progress or a "running" status; finished ones are not shown as running.
+
+### T-292 · Backtests · Sweep entry shows result metrics
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Wait for results to load. 3. Read a finished sweep entry's numbers.
+Expected: The entry shows result metrics (such as return, number of trades, or win rate) in readable form.
+
+### T-293 · Backtests · Finished sweep clearly marked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Wait for results to load. 3. Find a sweep that has completed.
+Expected: The finished sweep is marked as complete or finished, visually distinct from running ones.
+
+### T-294 · Backtests · Running sweep clearly marked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests while a sweep is running. 2. Wait for results to load. 3. Find the active sweep entry.
+Expected: The running sweep is marked as running or in progress, visually distinct from finished ones.
+
+### T-295 · Backtests · Winners section heading visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scroll through the full page. 3. Look for the winners area.
+Expected: A clearly labeled "winners" section is present on the page.
+
+### T-296 · Backtests · Winner entry shows strategy name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scroll to the winners section. 3. Read a winner entry once at least one winner is saved.
+Expected: The winner entry names the winning strategy.
+
+### T-297 · Backtests · Winner entry shows validation summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scroll to the winners section. 3. Read a winner entry's details.
+Expected: The winner entry shows a summary of why it won (for example validation metrics or the sweep it came from).
+
+### T-298 · Backtests · Winners persist after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests and note the saved winners. 2. Press F5 to refresh the page. 3. Scroll to the winners section again.
+Expected: The same winners are still listed after the refresh; nothing is lost.
+
+### T-299 · Backtests · Empty state when no sweeps have run
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-43
+Steps: 1. Open /backtests on a cockpit where no sweep has run yet (or imagine the first-ever visit). 2. Wait for loading to finish. 3. Read the results area.
+Expected: A clear empty-state message explains there are no sweep results yet, instead of a blank area or an error.
+
+### T-300 · Backtests · Empty winners state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-43
+Steps: 1. Open /backtests on a cockpit where no winner has been saved yet. 2. Scroll to the winners section. 3. Read the section content.
+Expected: A clear message explains no winners have been saved yet, instead of a blank area or an error.

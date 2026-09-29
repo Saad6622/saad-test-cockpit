@@ -1,0 +1,1177 @@
+QA BRIEF — BULK LANE B4 chunk 26/45 (T-6501–T-6600)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-6501 · Wording · wording acceptance: all groups read clean in one pass
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read every settings group end to end in one pass, as a new user would.
+
+Expected: The whole surface reads clean — plain words, honest states, consistent labels, zero banned words, zero dead text. This is the acceptance pass for the wording re-sweep; any issue found anywhere in it is a FAIL of this case.
+
+---
+
+### T-6502 · Wording · new copy introduced by recent fixes is covered (save/rollback/outage/AI)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. List every new user-visible string introduced by the recent fix waves: "Saved interface settings - version N.", "Rolled back group …", "You have unsaved changes. Leave without saving?", "Could not load the settings — try again in a moment.", the AI provider panel copy. 2. Verify each is verbatim as contracted and banned-word-free.
+
+Expected: All five strings verbatim and clean — the newest copy gets the same scrutiny as the oldest. Any drift is a FAIL.
+
+---
+
+## Section AJ · Regression: ISS-078 (theme consistency across pages) (6 cases: T-6503–T-6508)
+
+Regression coverage for ISS-078 (UNCONFIRMED — `/` served `data-theme="light"` while `/home` served `data-theme="dark"` in the same window after the ISS-074 stored-theme fix; spotted 2026-09-27 ~06:27 PDT; possibly a mid-fix ghost from the in-flight ISS-074 wave). These cases lock the contract: the SAVED theme must render identically on every page, with no per-page disagreement. Written 2026-09-27 ~06:40 PDT.
+
+### T-6503 · ISS-078 regression · save Light: `/`, `/home`, `/settings` all render visibly light
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AJ-REG
+
+Steps: 1. Open /settings, expand the Interface group, select Light, press "Save interface settings", confirm the save feedback. 2. Open `/` and look at it. 3. Open `/home` and look at it. 4. Re-open `/settings` and read the "Current settings" panel.
+
+Expected: All three pages visibly light — no page stays dark, no half-repainted page. The panel reads THEME light on every visit. Any page rendering dark against the saved Light is a FAIL (this is the ISS-078 symptom).
+
+---
+
+### T-6504 · ISS-078 regression · save Dark: `/`, `/home`, `/settings` all render visibly dark
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AJ-REG
+
+Steps: 1. Open /settings, expand the Interface group, select Dark, press "Save interface settings", confirm the save feedback. 2. Open `/` and look at it. 3. Open `/home` and look at it. 4. Re-open `/settings`.
+
+Expected: All three pages visibly dark — no page stays light, no mixed-theme render. The panel reads THEME dark everywhere. Any page rendering light against the saved Dark is a FAIL.
+
+---
+
+### T-6505 · ISS-078 regression · the served `data-theme` attribute agrees with the saved theme on all three pages
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AJ-REG
+
+Steps: 1. Save theme Light in /settings. 2. View the page source of `/` (browser "View page source") and find the root element's `data-theme` value. 3. Do the same for `/home` and for `/settings`. 4. Save theme Dark and repeat steps 2–3.
+
+Expected: With Light saved, all three pages serve `data-theme="light"`; with Dark saved, all three serve `data-theme="dark"` — zero per-page disagreement. The served attribute, the saved value, and the visible render all agree. A split like `light` on `/` and `dark` on `/home` (the ISS-078 observation) is a FAIL.
+
+---
+
+### T-6506 · ISS-078 regression · the stored theme holds after a full reload of each page — no flash of the wrong theme
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AJ-REG
+
+Steps: 1. Save theme Light. 2. Reload `/` and watch the paint closely. 3. Reload `/home` and watch. 4. Reload `/settings` and watch. 5. Repeat with Dark.
+
+Expected: Each page paints in the saved theme from the first visible frame — no dark flash before Light applies, no light flash before Dark applies, and the final render matches the saved theme on every page. A visible wrong-theme flash or a wrong final render is a FAIL.
+
+---
+
+### T-6507 · ISS-078 regression · walking routes without reload keeps the theme consistent page to page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AJ-REG
+
+Steps: 1. Save theme Light. 2. Using the sidebar/bottom nav only (no reloads, no address-bar edits), walk `/` → `/home` → `/settings` → `/` and look at each page. 3. Repeat with Dark.
+
+Expected: The theme stays visually consistent across every route walk — every page shows the saved theme, no route reverts to the other theme mid-walk. A route flip (e.g. `/` light, `/home` dark) is a FAIL — ISS-078 confirmed as a real defect.
+
+---
+
+### T-6508 · ISS-078 regression · ISS-078 confirmation rule: unanimous agreement closes it, any disagreement confirms it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AJ-REG
+
+Steps: 1. Run T-6503 through T-6507 in full and collect the per-page per-theme results. 2. Note whether any step showed a disagreement.
+
+Expected: If T-6503–T-6507 show unanimous agreement (saved = served = visible on `/`, `/home`, `/settings` for both Light and Dark), ISS-078 is CLOSED as NOT-A-BUG with this pass as the evidence (the 06:27 PDT split was the mid-fix ghost). If ANY step shows a disagreement, ISS-078 CONFIRMS as a real defect: this case is a FAIL and a fresh fix ticket goes to the agents naming the disagreeing page(s). Zero-ignore — a suspicion is never quietly dropped.
+
+---
+
+## Section AK · Proactive: error & empty states honesty sweep (10 cases: T-6509–T-6518)
+
+A thin-area proactive sweep (gardener rotation: error/empty states) — every control that can fail or come up empty must fail or come up empty in plain words, name a next step, and never go silent, crash, or leak raw internals. Written 2026-09-27 ~06:40 PDT.
+
+### T-6509 · Error/empty states · /backtests with no saved results shows an honest empty state, not a broken page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AK-PRO
+
+Steps: 1. Open /backtests. 2. Read the results area when no backtest has been run/saved yet. 3. Read the "Backtest filters" button's visible surroundings.
+
+Expected: The page says, in plain words, that there are no results yet and how to get one (run the form above) — not a blank hole, not a spinner forever, not a raw error. The filters button's scope is obvious. An empty area with zero explanation, or a permanently spinning loader, is a FAIL.
+
+---
+
+### T-6510 · Error/empty states · /journal with zero notes shows an inviting empty state, not a blank hole
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AK-PRO
+
+Steps: 1. Open /journal when no notes have been written yet. 2. Read the notes list area verbatim. 3. Read the calendar/leaderboard area.
+
+Expected: Plain-words empty copy ("no notes yet" style) that points at the note form above — the empty state invites the action, not just reports absence. KPIs agree with the empty state (0 notes, not blank tiles). A blank list with no explanation is a FAIL.
+
+---
+
+### T-6511 · Error/empty states · history filters matching nothing say so plainly and offer to clear the filters
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AK-PRO
+
+Steps: 1. Open /history. 2. Set the filters to a combination that matches nothing (e.g. a venue/type pair with no rows). 3. Read the receipt/alert/rejection log areas.
+
+Expected: Each affected log says, in plain words, that no rows match these filters — and there is a visible way back (clear-filters control or similar). No silent blank tables, no stale rows from the previous filter showing as if they matched. Silent blanks or stale rows are a FAIL.
+
+---
+
+### T-6512 · Error/empty states · Check-now failure lands next to the button in plain words — never silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AK-PRO
+
+Steps: 1. Open /strategies. 2. Press a strategy's "Check now" at a moment the backend is failing or slow (natural degraded window or tunnel blip). 3. Watch the area around the button.
+
+Expected: A plain-words failure line appears near the button naming what happened and the next step (try again later) — no raw "Internal Server Error", no stack trace, and crucially NO silence (the ISS-061 regression: the click must always answer). A silent press is a FAIL.
+
+---
+
+### T-6513 · Error/empty states · AI provider Test with an empty key asks for the key in plain words — no raw 500
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AK-PRO
+
+Steps: 1. Open /settings, expand the AI provider group. 2. Leave the key field empty and press Test connection (or the equivalent test control). 3. Read the result verbatim.
+
+Expected: Plain-words copy like "paste an API key first, then test" — naming the field, naming the action. No raw "Internal Server Error", no traceback, no misleading green success. A raw error or a false success on an empty key is a FAIL.
+
+---
+
+### T-6514 · Error/empty states · OpenRouter wrong key fails with a plain-words auth error — no stack trace, no false green
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AK-PRO
+
+Steps: 1. Open /settings, expand the AI provider group. 2. Select OpenRouter, enter a deliberately invalid key (a test value only — never a real key), press Test connection. 3. Read the result verbatim. 4. Clear the field afterward.
+
+Expected: A plain-words authentication failure naming the key as the problem ("key not accepted by OpenRouter" style) — never a raw 401/500, never a traceback, never a green success badge. A false green on a bad key is a FAIL; raw internals are a FAIL.
+
+---
+
+### T-6515 · Error/empty states · /notifications history when nothing was ever sent is honest about it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AK-PRO
+
+Steps: 1. Open /notifications and read the Message history area in the state before any preview/test send has been made (or note the copy for that state). 2. Compare with the state after a send.
+
+Expected: The pre-send state says plainly that no messages exist yet and how to create one (press the preview control) — never a row claiming "Delivered" when nothing was sent, never a blank area with zero explanation. A phantom delivered row, or a blank hole, is a FAIL.
+
+---
+
+### T-6516 · Error/empty states · SmartTrade Load with no draft selected asks for a draft — no crash, no silent noop
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AK-PRO
+
+Steps: 1. Open the SmartTrade panel with the drafts combobox showing "No drafts" (the normal empty state per ISS-049). 2. Press Load without selecting a draft (or press the closest equivalent action while the combobox is empty). 3. Watch what happens.
+
+Expected: The control is disabled with its reason visible, OR a press produces a plain-words "pick a draft first" line — never a crash, never a silent no-op, never a raw error. A raw error or total silence on the press is a FAIL.
+
+---
+
+### T-6517 · Error/empty states · risk-cap bars for a strategy with zero activity render 0 honestly — never NaN, dash, or blank
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AK-PRO
+
+Steps: 1. Open the risk-panel/Overview DAILY/SYMBOL cap bars. 2. Find a strategy (or the whole bar) with zero activity for the day. 3. Read the bar's label and value verbatim.
+
+Expected: The bar shows an honest zero ("0 of limit" style) with its unit — never "NaN", never "—", never a blank label where a value should be (the ISS-062 display-gap class), never a value that contradicts Overview. A NaN, dash, or blank value is a FAIL.
+
+---
+
+### T-6518 · Error/empty states · every error card in the sweep names a next step — the universal no-dead-end rule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AK-PRO
+
+Steps: 1. Revisit every error/empty state from T-6509–T-6517 and every other error card seen during execution (settings load failure, tunnel outage, stale balances, receipt "could not load"). 2. For each, quote the card's next step verbatim.
+
+Expected: EVERY error card names a concrete next step a trader can take (Retry / Reload / try again later / check the field named) — zero dead ends, zero blame-only copy, zero raw engine strings. Any error card that states a problem and offers no way forward is a FAIL (and becomes its own ISS entry per the zero-ignore rule).
+
+---
+
+## Section AL · Proactive: mobile-viewport wording (10 cases: T-6519–T-6528)
+
+A thin-area proactive sweep (gardener rotation: mobile-viewport wording) — Saad does real cockpit work on his phone, so every word in the UI must survive a narrow screen: no desktop-geometry instructions ("left panel", "see the table below"), no hover-only language, no clipped prices or cut disclosures, no label that only makes sense at desktop width. These are wording checks — the copy is identical in the DOM at any width, so no viewport tooling is needed; each case reads the words and judges them through the narrow-screen lens. Written 2026-09-27 ~06:59 PDT.
+
+### T-6519 · Mobile-viewport wording · no instruction copy references desktop-only geometry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Read every instruction, hint, and explainer sentence on /, /home, /strategies, /history, /journal, /backtests, /notifications, /settings, and /keys. 2. Flag any sentence that assumes desktop geometry: "left panel", "right sidebar", "the panel on the right", "see below", "the table below", "click the X on the left".
+
+Expected: Zero geometry-assuming sentences anywhere. On the phone the sidebar is the bottom nav and panels stack vertically, so "see the panel on the right" is actively wrong there. Any instruction that only makes sense at desktop width is a FAIL (and becomes its own ISS entry per the zero-ignore rule).
+
+---
+
+### T-6520 · Mobile-viewport wording · no "hover" language anywhere — touch screens have no hover
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Sweep the same nine pages for the words "hover", "mouse over", "on mouseover", or any hint that only reveals on hover (tooltips with no tap equivalent). 2. For each hit, check whether a touch user can reach the same information by tapping.
+
+Expected: Zero hover-only instructions and zero hover-only information. "Hover to see details" is a dead end on a phone — the same detail must be reachable by tap, or the hover wording must go. Any information a phone user cannot reach is a FAIL.
+
+---
+
+### T-6521 · Mobile-viewport wording · halt modal copy is complete and legible at phone width — open, read, cancel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AL-PRO
+
+Steps: 1. Open the halt control to show the "Halt all trading?" modal — do NOT confirm; cancel out of it (this case stops at the modal). 2. Read the modal's title, its explanatory sentence, and every button label verbatim. 3. Read the resume/disarm control's label and hint the same way.
+
+Expected: The modal's meaning is complete in its words alone — a trader reading only the modal knows exactly what halting does and how to undo it. No button label is clipped to meaninglessness ("Halt tra…"), no essential word hides where a wrapped line pushes it out of view, and the primary action's label names the consequence. A modal whose buttons read as fragments, or whose explanation needs the desktop layout to make sense, is a FAIL.
+
+---
+
+### T-6522 · Mobile-viewport wording · notification history excerpts stay meaningful at narrow width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Open /notifications Message history. 2. Read 3+ history rows: the excerpt text plus the kind/status labels. 3. Compare the excerpt against the message it summarizes where the full text is reachable.
+
+Expected: Every excerpt still names what the message was about and its status — the designed 140-char excerpt (ISS-055 follow-up, NOT-A-BUG) holds because the kind + status labels carry the meaning the excerpt trims. Any row where the excerpt is the ONLY identifier and it reads as gibberish at the visible width is a FAIL.
+
+---
+
+### T-6523 · Mobile-viewport wording · the redirect loader page speaks plain words on the phone bookmark path
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Open Saad's stable bookmark URL (https://saad6622.github.io/saad-test-cockpit/) in a phone-width view. 2. Read the loader page's full visible text before the redirect fires. 3. If the tunnel is rotating and the page stalls, read what it says in the stalled state.
+
+Expected: Plain-words copy — what is happening ("taking you to the cockpit") and what to do if it stalls (wait / reload), in words a non-technical reader understands. No raw tunnel URL as the only message, no blank page, no jargon-only spinner. A loader that says nothing, or shows only a raw address, is a FAIL.
+
+---
+
+### T-6524 · Mobile-viewport wording · bottom-nav labels agree with page titles — one name per destination
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Read every bottom-nav label on /home. 2. Open each destination and read its page header/title verbatim. 3. Note any naming drift between the nav label and the page's own title.
+
+Expected: Each destination is named the same in the nav and on its own page ("Journal" → "Journal", not "Trade journal" in one place and "Notes" in another). On the phone the nav label is the only name visible before tapping, so drift misleads. Any nav/page naming mismatch is a FAIL.
+
+---
+
+### T-6525 · Mobile-viewport wording · error banners keep their next-step verb and Retry adjacent when lines wrap
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Find the tunnel-outage / engine-unreachable copy ("Lost connection to the test server — the tunnel may have rotated. Reload the page to reconnect." and the "Couldn't reach the trading engine" card + Retry). 2. Read each at phone width, noting where the lines wrap. 3. Note the Retry control's position relative to the copy.
+
+Expected: The next-step verb survives wrapping — "Reload the page to reconnect" still reads as one instruction — and the Retry control sits adjacent to the copy, not orphaned below the fold or separated by unrelated content. A banner whose action is detached from its words at narrow width is a FAIL.
+
+---
+
+### T-6526 · Mobile-viewport wording · strategy card truncation keeps titles identifiable and controls attached
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Open /strategies. 2. Read the longest strategy names/IDs and the Enable / Check now / Delete controls on each card. 3. Check that every truncated title still identifies its strategy and every control is visibly attached to the right card.
+
+Expected: Truncated titles end in ellipsis but keep the identifying part (the strategy family + timeframe survive, not just a prefix stub); no two cards' controls visually merge; the right control always belongs to the right card. A title truncated into unidentifiability, or controls that look attached to the wrong card, is a FAIL.
+
+---
+
+### T-6527 · Mobile-viewport wording · settings group descriptions read correctly when groups stack vertically
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Open /settings and expand several groups (Interface, AI providers, AI profile, Schedules, Persistence). 2. Read each group's description sentence verbatim. 3. Judge each through the stacked-layout lens — on the phone each group sits alone in a vertical stack.
+
+Expected: Descriptions read correctly with no neighboring layout to lean on — no "the table below", no "the panel on the right", no "as shown on the left". Any description that assumes a neighboring layout position is a FAIL.
+
+---
+
+### T-6528 · Mobile-viewport wording · AI provider pricing and disclosure never clip at narrow width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AL-PRO
+
+Steps: 1. Open /settings, expand the AI provider group. 2. Read the Meta direct pricing line and the Contributor-tier training-data disclosure verbatim. 3. Read the OpenRouter dropdown options and the 18+ hint the same way.
+
+Expected: Prices never clip ("$0.10 / $0…" is a FAIL), the disclosure never cuts mid-sentence, and each dropdown option's price pair stays readable. On the phone these are the money words — a clipped price is a trust defect, not a cosmetic one. Any clipped price or cut disclosure is a FAIL.
+
+---
+
+## Section AM · Proactive: cross-page persistence (10 cases: T-6529–T-6538)
+
+### T-6529 · Cross-page persistence · saved default view honored on every page's first paint
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AM-PRO
+
+Steps: 1. On /settings, read the currently stored default view verbatim and record it. 2. Change it to the other option, save, and read the exact confirmation line. 3. Visit each of the 9 pages fresh (new navigation each time, never the browser back button) and read what view each page's first paint shows. 4. Restore the original value and confirm the exact confirmation line on re-save.
+
+Expected: Every page's first paint honors the stored default view — one stored value, nine consistent pages. Any page that ignores the stored default on first paint while the others obey it is a FAIL. The restore step must leave the stored value byte-identical to the recorded original, proven by the confirmation line on re-save.
+
+---
+
+### T-6530 · Cross-page persistence · halt indicator agrees on every page while trading is halted
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (e.g. resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AM-PRO
+
+Steps: 1. Open the halt control, read the modal's exact text, confirm the halt. 2. Visit every page of the cockpit (/, /home, /strategies, /journal, /history, /settings, /keys, /backtests, /notifications) and read the halt indicator on each — banner, pill, button label, whatever each page shows. 3. Resume/disarm immediately, then re-verify on 3 pages that the halted indicator is gone everywhere.
+
+Expected: Every page reflects the same halted state while the halt is active — no page looks trade-able while the others say halted, and no page says halted after the resume. A page whose halt indicator disagrees with the others in either direction is a FAIL. Halt must be OFF at the end of the case, confirmed on the page where it was raised.
+
+---
+
+### T-6531 · Cross-page persistence · Telegram connection pill agrees across /notifications and the sidebar footer
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AM-PRO
+
+Steps: 1. On /notifications, read the connection pill/status line verbatim (connected text, chat-id masked tail). 2. On each of the other 8 pages, read the sidebar footer or any page-level Telegram status indicator verbatim. 3. Compare all nine readings.
+
+Expected: All nine readings agree — the same connected/unconfigured state and the same masked chat tail everywhere. A page whose footer claims "connected" while /notifications says otherwise (or a masked tail that differs between pages) is a FAIL. Nothing here sends any message.
+
+---
+
+### T-6532 · Cross-page persistence · strategy Enable state survives a full /strategies reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AM-PRO
+
+Steps: 1. On /strategies, pick one clearly low-risk strategy and record the exact Enable/disable state of all 15 cards. 2. Toggle the chosen strategy's Enable state and read the confirmation line verbatim. 3. Reload /strategies fully (page reload, not in-page refresh) and read all 15 Enable states again. 4. Toggle the chosen strategy back to its original state and confirm the confirmation line.
+
+Expected: The toggled state survives the reload exactly — the card still shows the state it was saved to, and all 14 untouched cards are unchanged. A reload that reverts the toggled card (or flips an untouched one) is a FAIL. End state must equal the recorded original on all 15 cards.
+
+---
+
+### T-6533 · Cross-page persistence · journal note survives navigating away and back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AM-PRO
+
+Steps: 1. On /journal, write a throwaway note with a unique marker word and save it; read the save confirmation verbatim. 2. Navigate to /strategies, then /home, then /settings. 3. Return to /journal and read the note list. 4. Remove the throwaway note and confirm the removal line.
+
+Expected: The note is present, complete, and unchanged after the round trip — no truncation, no duplication, no disappearance. A note that vanishes or duplicates across page navigation is a FAIL. The throwaway note must be gone at the end of the case.
+
+---
+
+### T-6534 · Cross-page persistence · half-edited settings group keeps its edits (or warns) when another group opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AM-PRO
+
+Steps: 1. On /settings, open the Interface group and change the theme field WITHOUT saving (leave the edit dirty). 2. Open a different settings group (e.g. Schedules) and read whatever the page says about the unsaved edit — warning, guard, auto-discard notice, or nothing. 3. Close the second group and return to Interface: read whether the dirty edit is still there. 4. Discard the edit without saving and confirm the Interface group shows the stored value.
+
+Expected: Exactly one honest outcome — the edit is preserved across the group switch, OR an explicit unsaved-change warning fires (ISS-075's guard), OR an explicit discard notice says the edit was dropped. A silent wipe with no notice, or a guard that fires once and never again on repeat switches, is a FAIL. Nothing unsaved may be persisted at the end of the case.
+
+---
+
+### T-6535 · Cross-page persistence · message history rows survive navigating away and back unchanged
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AM-PRO
+
+Steps: 1. On /notifications, read the Message history: count the rows and copy the top 3 rows verbatim (excerpt + kind + status). 2. Navigate to /strategies, then /home. 3. Return to /notifications and read the history again: recount the rows and re-copy the same top 3 rows. 4. If a new alert arrived mid-run, identify it and exclude it from the comparison.
+
+Expected: Row count and the copied rows are identical before and after navigation — no rows dropped, no statuses flipped, no excerpts altered by the round trip. A history that loses or mutates rows on plain page navigation is a FAIL. Nothing here sends any message.
+
+---
+
+### T-6536 · Cross-page persistence · runner countdown stays honest after a /strategies reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AM-PRO
+
+Steps: 1. On /strategies, read the runner countdown / "next check" readout verbatim and note the exact wall-clock time. 2. Reload the page fully and immediately read the countdown again with the new wall-clock time. 3. Repeat once more after a 30-second pause.
+
+Expected: The countdown after each reload is consistent with the elapsed wall-clock time — it resumes the true schedule, it does not restart from the full interval (which would mislead a trader watching it) and it does not jump to "due now" without cause. A reload that silently resets the countdown to a fresh full interval is a FAIL.
+
+---
+
+### T-6537 · Cross-page persistence · /history filters never apply stale to fresh data across navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AM-PRO
+
+Steps: 1. On /history, set a distinctive filter combination (e.g. a specific symbol + receipts only) and read the applied-filter readout verbatim. 2. Navigate to /strategies, then return to /history. 3. Read the applied-filter readout and the visible rows. 4. Clear all filters and confirm the unfiltered view returns.
+
+Expected: Exactly one honest outcome — the filters persist AND the rows shown are still filtered by them, OR the filters visibly reset to unfiltered on return. A page that still displays the filter chips while showing unfiltered rows (or vice versa) is a FAIL — stale filter state applied to fresh data misleads the reader. Filters must be clear at the end of the case.
+
+---
+
+### T-6538 · Cross-page persistence · AI provider edit box never shows stale values after navigating away and back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AM-PRO
+
+Steps: 1. On /settings, open the AI provider group and read every visible field value verbatim (masked secrets stay masked — read the mask, never expose values). 2. Visit /keys, then /notifications. 3. Return to /settings, re-open the AI provider group, and read every visible field value again. 4. Close the group.
+
+Expected: Every field value is identical across the round trip — no stale defaults, no emptied fields, no value from a different provider leaking into the box. An edit box that renders values that disagree with what it showed five minutes earlier, with no save in between, is a FAIL. No secret value is ever exposed at any step of this case.
+
+---
+
+## Section AN · Proactive: error & empty states wave-2 (10 cases: T-6539–T-6548)
+
+### T-6539 · Error/empty states · /history receipt timeline with zero receipts says so plainly — no blank hole
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AN-PRO
+
+Steps: 1. Open /history. 2. Locate the receipt timeline section. 3. When the ledger holds zero receipts, read the timeline area verbatim. 4. Read any adjacent count label.
+
+Expected: Plain-words copy that says there are no receipts yet — not a blank hole, not a forever spinner, not a raw error. The count label agrees with the empty state (0, not blank). A missing explanation for an empty timeline is a FAIL.
+
+---
+
+### T-6540 · Error/empty states · /strategies alerts strip with no alerts ever sent is honest about it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AN-PRO
+
+Steps: 1. Open /strategies. 2. Find the alerts strip/panel ("signals sent" area). 3. When no alerts have ever been sent, read the strip verbatim.
+
+Expected: The strip states in plain words that no alerts have been sent yet — not a collapsed widget, not a spinner forever, not a misleading zero-only readout with no words. An alert strip that is empty with zero explanation is a FAIL.
+
+---
+
+### T-6541 · Error/empty states · /strategies rejections strip with no rejections says so plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AN-PRO
+
+Steps: 1. Open /strategies. 2. Find the rejected-signals/rejections strip. 3. When no signals have been rejected, read the strip verbatim.
+
+Expected: Plain-words empty copy ("no rejected signals" style) — the reader knows the strip is working and empty, not broken. It must never look like a failed load. A blank strip with no explanation is a FAIL.
+
+---
+
+### T-6542 · Error/empty states · saving an empty journal note asks for text first — never saves a blank row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AN-PRO
+
+Steps: 1. Open /journal. 2. With the note form completely empty, press Save/Add. 3. Read the response next to the button verbatim. 4. Confirm no blank row appeared in the notes list. 5. Leave the form empty (do not save real content).
+
+Expected: The form asks for text first in plain words (or disables the save until text is typed) — it never silently saves a blank note, never throws a raw error, and never clears the form destructively. A blank row saved to the journal, or a raw 500-style failure, is a FAIL.
+
+---
+
+### T-6543 · Error/empty states · envelope validator with an empty payload names what's missing — no raw 500, nothing trades
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AN-PRO
+
+Steps: 1. Open the webhook envelope validator. 2. With the payload box completely empty, press the validate/test control. 3. Read the verdict area verbatim.
+
+Expected: The verdict names the missing envelope in plain words ("paste the envelope first" style) — never a raw stack trace, never a pydantic-style complaint, and absolutely nothing is sent or trades as a result. A silent press, a raw 500, or anything suggesting an order went out is a FAIL.
+
+---
+
+### T-6544 · Error/empty states · add-strategy upload of a wrong file type is refused in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AN-PRO
+
+Steps: 1. Open /strategies add-strategy area. 2. Choose a file that is NOT a valid strategy adapter (e.g. a plain .txt file). 3. Read the refusal/next-step copy verbatim. 4. Confirm no strategy row was created. 5. Cancel/clear the picker without uploading anything real.
+
+Expected: The refusal names the expected file type in plain words ("choose a strategy adapter file" style) — never a raw error, never a silent ignore, and no half-created strategy row lingers on the page. Nothing is uploaded during this case. A half-created row or a silent failure is a FAIL.
+
+---
+
+### T-6545 · Error/empty states · pressing Halt while already halted is an honest already-halted message — no double halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AN-PRO
+
+Steps: 1. On /, confirm the halt indicator reads OFF. 2. Open the Halt trading modal, read its copy verbatim, and confirm the halt (under granted approval authority). 3. With halt ON, press Halt trading again and read the second-press copy verbatim. 4. Cancel the modal without taking a second action. 5. Resume trading and confirm the indicator reads OFF.
+
+Expected: The second press tells the truth — "trading is already halted" in plain words, or the modal declines gracefully — never a copy claiming a fresh halt just happened, never a double confirmation stack. After resume, the indicator is OFF exactly once, with no stuck halted banner. End state: halt OFF. A misleading second confirmation or a stuck indicator is a FAIL.
+
+---
+
+### T-6546 · Error/empty states · delete-strategy confirm cancel leaves the strategy fully intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AN-PRO
+
+Steps: 1. On /strategies, pick any strategy row and read its name and enabled state verbatim. 2. Open its Delete control and read the confirm copy verbatim (it must name the strategy). 3. Cancel the confirm. 4. Re-read the row's name and enabled state.
+
+Expected: The confirm names the exact strategy before any irreversible action. After cancel, the row is fully intact — same name, same enabled state, same row position — and no toast claims a deletion happened. A confirm that names no strategy, or a cancel that still alters the row, is a FAIL. Nothing is deleted in this case.
+
+---
+
+### T-6547 · Error/empty states · SmartTrade submit with no symbol filled asks for the symbol in plain words — no phantom draft
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AN-PRO
+
+Steps: 1. Open the SmartTrade form. 2. With the symbol field empty, press the arm/submit control. 3. Read the response next to the button verbatim. 4. Confirm no draft, order, or confirmation appeared.
+
+Expected: The form asks for the symbol in plain words next to the button ("pick a symbol first" style) — it never arms a phantom order, never saves an empty draft, never throws a raw error. Nothing is armed or sent in this case. A phantom draft/order, or a raw error, is a FAIL.
+
+---
+
+### T-6548 · Error/empty states · receipts export on an empty ledger is graceful — no crashing or broken download
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AN-PRO
+
+Steps: 1. Open /history when the ledger holds zero receipts. 2. Find the receipts export control (CSV/JSONL) and read its label. 3. Press it. 4. Read what happens next verbatim — copy, download, or disabled state.
+
+Expected: Exactly one graceful outcome — the control is disabled with a reason shown ("nothing to export yet"), or it responds in plain words that there is nothing to export. It never starts a broken download, never throws a raw error, and never claims success with an empty/corrupt file. A crashing export or a fake-success download is a FAIL.
+
+---
+
+## Section AO · Proactive: settings groups wave-2 — group behaviors, not words (10 cases: T-6549–T-6558)
+
+Second-cycle rotation for the settings groups (wave-1, Section AI, swept wording). This wave sweeps behaviors per group: input validation honesty, cross-field consistency, sealed-group handling, unexpected-group rendering, per-group save state, and masked-secret safety. Each case touches one group on /settings through the live UI. Written 2026-09-27 ~08:05 PDT.
+
+### T-6549 · Settings groups · AI group rejects a non-numeric MAX PER DAY in plain words — value stays unchanged
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AO-PRO
+
+Steps: 1. Open /settings, expand the AI group. 2. Read the current MAX PER DAY verbatim. 3. Type "abc" into MAX PER DAY and press Save for the group. 4. Read the response next to the button verbatim. 5. Reload the page and re-read MAX PER DAY.
+
+Expected: The group refuses the value in plain words ("numbers only" style) — never a raw validation error, never a silent clamp to some number. After reload, MAX PER DAY is exactly the original value. A stored "abc"/NaN, or a silent change, is a FAIL.
+
+---
+
+### T-6550 · Settings groups · AI group rejects a negative MAX PER HOUR — no negative budget stored
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AO-PRO
+
+Steps: 1. Open /settings, expand the AI group. 2. Type "-5" into MAX PER HOUR and press Save for the group. 3. Read the response next to the button verbatim. 4. Reload the page and re-read MAX PER HOUR.
+
+Expected: The group rejects the negative value in plain words — never stores −5, never flips it to 5 silently. After reload the field shows a valid non-negative value. A negative stored value, or silence, is a FAIL.
+
+---
+
+### T-6551 · Settings groups · MAX PER HOUR larger than MAX PER DAY is caught — cross-field honesty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AO-PRO
+
+Steps: 1. Open /settings, expand the AI group. 2. Set MAX PER DAY to 2 and MAX PER HOUR to 10 — then press Save for the group. 3. Read the response verbatim. 4. Reload the page and re-read both values.
+
+Expected: Exactly one honest outcome — the group refuses the pair in plain words (hourly can't exceed daily), or it clamps/adjusts and SAYS so in plain words next to the button. Never a silent save of an impossible pair, never a raw error. A silently stored hourly > daily pair is a FAIL.
+
+---
+
+### T-6552 · Settings groups · COOLDOWN emptied stays honest — no NaN or blank persistence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AO-PRO
+
+Steps: 1. Open /settings, expand the AI group. 2. Clear the COOLDOWN field to an empty string and press Save for the group. 3. Read the response next to the button verbatim. 4. Reload the page and re-read COOLDOWN.
+
+Expected: The group either rejects the empty field in plain words (value unchanged), or restores the default and SAYS so ("reset to default"). It never persists a blank/NaN cooldown, and never throws a raw error. A blank or NaN COOLDOWN after reload is a FAIL.
+
+---
+
+### T-6553 · Settings groups · editing one field in a group never wipes the group's other fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AO-PRO
+
+Steps: 1. Open /settings, expand the AI group. 2. Read MAX PER DAY, MAX PER HOUR, COOLDOWN verbatim. 3. Change ONLY MAX PER HOUR to a valid different value, press Save for the group. 4. After the save feedback, re-read all three values before any reload.
+
+Expected: The two untouched fields are byte-identical to before — a partial edit never wipes or defaults the rest of the group. The save feedback confirms what was saved. Any untouched field that changed or blanked is a FAIL.
+
+---
+
+### T-6554 · Settings groups · sealed group edit attempts explain the seal — never a dead control
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AO-PRO
+
+Steps: 1. Open /settings. 2. Find any group shown as sealed/locked (e.g. AI profile "Sealed"). 3. Attempt to edit or unseal it through whatever control is offered. 4. Read the response or hint verbatim.
+
+Expected: The group either offers a real unseal path with plain-words steps, or it says in plain words why it's sealed and what to do — never a control that clicks into nothing, never a raw state string. A dead control with no explanation is a FAIL.
+
+---
+
+### T-6555 · Settings groups · AI group accepts a huge MAX PER DAY safely — no overflow copy or silent weirdness
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AO-PRO
+
+Steps: 1. Open /settings, expand the AI group. 2. Type "999999999" into MAX PER DAY and press Save for the group. 3. Read the response verbatim. 4. Reload the page and re-read MAX PER DAY, then restore it to its original value.
+
+Expected: The group either rejects the absurd value in plain words (value unchanged), or accepts a stated cap and SAYS the cap in plain words. Never raw errors, never scientific-notation copy leaking into the field, never an absurd stored value the AI loop would choke on. Leaving the group at an absurd value is a FAIL — restore it in this case.
+
+---
+
+### T-6556 · Settings groups · collapsed group stays collapsed on reload — no surprise re-expansion
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AO-PRO
+
+Steps: 1. Open /settings with several groups expanded. 2. Collapse two groups, expand one. 3. Reload the page. 4. Re-read which groups are expanded and which are collapsed.
+
+Expected: Exactly one consistent behavior — the collapse states survive the reload exactly as left, or the page returns to a stated default ("all collapsed" or "all expanded") with no half-states. Never a surprise where a group with edited values silently re-collapses to hide them. Collapse that hides unsaved edits without a warning is a FAIL.
+
+---
+
+### T-6557 · Settings groups · masked secret in a settings group shows last-4 only — no accidental exposure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AO-PRO
+
+Steps: 1. Open /settings. 2. In any group holding a saved secret (API key, webhook secret), read the masked field's visible form verbatim. 3. Look for any show/reveal toggle; if one exists, note what confirmation it requires. 4. View page source text is NOT needed — only what the UI shows.
+
+Expected: The field shows a masked placeholder ("••••NNNN" style) — never the full secret. If a reveal toggle exists, it requires a deliberate confirmation or explicit re-auth, never a single accidental click. A full secret visible on screen is an immediate FAIL and the case stops.
+
+---
+
+### T-6558 · Settings groups · group save under approval authority — a group with no changes says "nothing to save"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AO-PRO
+
+Steps: 1. Open /settings, expand any group. 2. Change nothing. 3. Press the group's Save control. 4. Read the response verbatim.
+
+Expected: The group answers honestly — "nothing changed" style copy — not a fake "Saved" for values that never moved. No version bump, no history row for a non-change. A celebratory "Saved" on a no-op is a FAIL.
+
+
+
+## Section AP · Proactive: notification/history paths wave-2 — behaviors, not surfaces (10 cases: T-6559–T-6568)
+
+Second-cycle rotation for the notification/history paths (wave-1, Section AG, swept the surface + receipt honesty + receiving-end agreement). This wave sweeps behaviors: history ordering honesty, delivery-state stability across reload, uncertain-state copy, pre-outage row survival, no-coalescing of rapid presses, excerpt truncation honesty, pill-vs-history agreement, no-save no-send honesty, end-of-history honesty, and halt/resume delivery-state agreement at the receiving end. Each case touches /notifications through the live UI. Written 2026-09-27 ~08:19 PDT.
+
+### T-6559 · Notification history · newest-first ordering survives a reload — no reshuffling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AP-PRO
+
+Steps: 1. Open /notifications and read the Message history rows top to bottom, copying the first three timestamps verbatim. 2. Reload the page. 3. Read the first three rows again verbatim.
+
+Expected: The order is identical — newest entry on top both times. No row changes position on reload, no timestamp rewrites. A reshuffled list or a re-dated row is a FAIL.
+
+---
+
+### T-6560 · Notification history · a failed preview row never upgrades itself to Delivered after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AP-PRO
+
+Steps: 1. Open /notifications, find any Message history row with a failed status. 2. Copy its status and topic verbatim. 3. Reload the page three times, spaced ~30 seconds apart. 4. Re-read the same row each time.
+
+Expected: The row keeps saying failed with the same plain-words reason on every read — the history never optimistically upgrades a failure to Delivered. A row that flips to Delivered without a new send is a FAIL.
+
+---
+
+### T-6561 · Notification history · an "uncertain" delivery state shows honest intermediate copy — never silent success or silent failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AP-PRO
+
+Steps: 1. Open /notifications, scan the Message history for any row whose delivery state is neither delivered nor failed (e.g. "uncertain", "unknown", "pending"). 2. If one exists, copy its status line verbatim. 3. If none exists, note the absence.
+
+Expected: Any non-binary state renders in plain words that explain what it means ("delivery could not be confirmed — …"), not a bare technical token and not a silently green row. A bare "uncertain" token with no explanation, or an uncertain row styled as a success, is a FAIL. (If the history contains no such row, record N-A with the absence noted.)
+
+---
+
+### T-6562 · Notification history · rows from before a tunnel drop survive the reload — no ghost duplicates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AP-PRO
+
+Steps: 1. Open /notifications and count the Message history rows; copy the newest row's timestamp verbatim. 2. During a tunnel outage (or a keepalive rotation window), reload the page; after the tunnel recovers, reload again. 3. Re-count the rows and re-read the newest row's timestamp.
+
+Expected: The same rows, the same count, the same newest timestamp — a reload during degraded connectivity neither duplicates rows nor drops them. A duplicated row or a vanished row is a FAIL.
+
+---
+
+### T-6563 · Notification history · two rapid preview presses produce two distinct rows — no coalescing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AP-PRO
+
+Steps: 1. Open /notifications and note the current newest Message history row's timestamp. 2. Press "Send a real preview message" twice, ~5 seconds apart. 3. Read the two newest history rows: timestamps, statuses, topics.
+
+Expected: Exactly two new rows, one per press, each with its own timestamp — the second press never merges into the first row and never overwrites it. A single row for two presses, or two rows sharing one timestamp, is a FAIL.
+
+---
+
+### T-6564 · Notification history · the 140-char excerpt ends honestly — mid-word cuts carry an ellipsis
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AP-PRO
+
+Steps: 1. Open /notifications, read every Message history row's excerpt verbatim. 2. For each excerpt that ends mid-word, note whether it ends with "…" (or equivalent) and whether the full text is reachable (tooltip, expand, link). 3. If no excerpt is truncated, note the absence.
+
+Expected: Any mid-word truncation ends with an ellipsis and offers a way to see the full text — never a hard cut that reads like a broken sentence with no continuation. A mid-word hard cut with no ellipsis or no full-text path is a FAIL. (No truncation present → record PASS with the absence noted.)
+
+---
+
+### T-6565 · Notifications · the Telegram pill and the Message history agree on the last outcome
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AP-PRO
+
+Steps: 1. Open /notifications, copy the connection pill/status line verbatim. 2. Copy the newest Message history row's status verbatim. 3. Press "Send a real preview message" once and read both again after the attempt settles.
+
+Expected: The pill and the newest history row always tell the same story — if the last attempt failed honestly, the pill does not still claim "Connected — alerts will reach your Telegram"; if it delivered, the pill does not claim failure. A pill/history contradiction is a FAIL.
+
+---
+
+### T-6566 · Notifications · clearing the chat-id box without saving is a no-send — honest refusal, no phantom attempt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AP-PRO
+
+Steps: 1. Open /notifications, copy the chat-id field's masked form verbatim. 2. Clear the field (DO NOT press save). 3. Press "Send a real preview message". 4. Read the feedback verbatim and check the Message history for a new row.
+
+Expected: The press is refused in plain words before any send (no saved value to send to), and no history row appears for the unsaved cleared value. A send attempt against the cleared unsaved field — or a success claim — is a FAIL. Restore nothing (nothing was saved).
+
+---
+
+### T-6567 · Notification history · scrolling past the last row is honest — no endless spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AP-PRO
+
+Steps: 1. Open /notifications and scroll the Message history to its very bottom. 2. Wait 10 seconds, watching for any loading indicator. 3. Read whatever end-of-list marker exists verbatim (or note its absence).
+
+Expected: The list ends cleanly — either a stated end ("no more", "that's everything") or simply the last row with no loader. An endless spinner, or rows that keep "loading" forever, is a FAIL.
+
+---
+
+### T-6568 · Notification history · halt/resume rows agree with the receiving end — halt fires, resume fires, both arrive
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, one at a time, restoring safe state after (resume/disarm after halt). Exclusions: real money (no spending/top-ups), credentials in his hands (Meta Contributor API key).
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no checking the server directly.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AP-PRO
+
+Steps: 1. On / (TEST cockpit), turn halt ON under approval authority; confirm halt is active. 2. Open /notifications and note the halt notification's Message history row (timestamp, status). 3. Turn halt OFF (resume); note the resume row. 4. Read-only check of Saad's Telegram bot chat (session signed in 2026-09-19): confirm both the halt and the resume messages arrived with their plain-words copy. 5. Verify halt is OFF at the end.
+
+Expected: Two new history rows (halt + resume), both marked Delivered with receipt-backed detail, and both messages visibly present in the bot chat with the exact plain-words copy — the history and the receiving end agree. A history row that says Delivered while the message never arrived (or vice versa) is a FAIL. Halt must be OFF when the case ends.
+
+
+## Section AQ · AI as a brain: provider setup & connection — regression-hardened (16 cases: T-6569–T-6584)
+
+Saad's order 2026-09-27: detailed testing of "using AI as a brain in the trading app", from every angle, UI-only. This section hardens the provider setup and connection surface against the real findings of 2026-09-27: an OpenRouter key that the dashboard called Active while the API answered 401 "User not found" (server-side key death), and probe ReadTimeouts that hung with no HTTP response. Section AF (T-6333–T-6392) swept the happy paths and basic key lifecycle; this wave goes deeper — death honesty, timeout honesty, slot staleness, pill truthfulness, and race handling. Each case touches /settings → AI providers through the live UI. Written 2026-09-27 ~08:25 PDT.
+
+### T-6569 · AI providers · a server-side-dead key (401 "User not found") reports honest unauthorized copy on Test — no stale success, no key material
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; confirm OpenRouter is Active with the saved key indicator. 2. Press "Test connection" once. 3. If the saved key is healthy the result is success — record that and stop. 4. If the result is a 401-style failure ("User not found" / unauthorized), copy the exact result text verbatim and note whether any part of the key is visible.
+
+Expected: A dead key produces plain-words unauthorized copy ("key not recognized", "unauthorized" style) within a bounded wait — never a stale green success, never a hang, never any key material in the message. A success claim against a 401, or leaked key characters, is a FAIL. (If the key is healthy, record PASS with the success text quoted.)
+
+### T-6570 · AI providers · after a 401 the saved slot stays intact — recovery is one new key away, never a wipe-and-start-over
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers. 2. Run only if T-6569 produced a 401 (otherwise record N-A with the reason noted). 3. After the 401, read the saved-key indicator and the provider Active state verbatim. 4. Reload the page and re-read both.
+
+Expected: The slot keeps the saved (dead) key and its last-4 indicator; the provider row still shows its configured state — nothing is auto-wiped, no settings are lost, and the tester is told in plain words to replace the key. A 401 that silently clears the slot or flips the provider to unconfigured is a FAIL.
+
+### T-6571 · AI providers · a probe that stalls reports a plain-words timeout within a bounded wait — never an infinite spinner
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers. 2. Press "Test connection" once and start a timer. 3. Watch for a working indicator while the probe is in flight. 4. If the probe stalls, keep watching up to 120 seconds; copy whatever the UI shows at the end verbatim.
+
+Expected: Exactly one honest outcome — a success, a failure, or a plain-words timeout ("no response from provider — try again") inside the bounded wait. The UI never spins forever with no verdict, and a timed-out probe never leaves a fake success or a fake failure behind. An endless spinner past 120 seconds is a FAIL. (If the probe answers quickly, record PASS with the timing noted.)
+
+### T-6572 · AI providers · Test with the key field cleared-but-unsaved still uses the saved key — unsaved edits never change the slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; note the saved-key indicator. 2. Clear the key field WITHOUT pressing save. 3. Press "Test connection" once. 4. Copy the result verbatim, then reload the page and re-read the indicator.
+
+Expected: The Test runs against the SAVED key (the unsaved clear changes nothing), or it refuses honestly in plain words — either way the cleared-but-unsaved text is never probed and never saved. After reload the indicator is the original last-4. A probe sent with the empty unsaved field, or a saved empty slot, is a FAIL.
+
+### T-6573 · AI providers · the last-4 indicator is identical after a tunnel rotation + reload — no phantom change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; copy the saved-key indicator verbatim. 2. During a tunnel rotation window (or after the keepalive rotates the tunnel), reload the page via the bookmark and re-open /settings → AI providers. 3. Copy the indicator verbatim again.
+
+Expected: Byte-identical indicator — a tunnel rotation never changes, blanks, or duplicates the saved-key display. A changed or vanished indicator with no key action by the tester is a FAIL.
+
+### T-6574 · AI providers · the Active pill reflects the last real check — after a failed Test it downgrades, never stays green on a dead key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; copy the provider pill/status verbatim. 2. Produce a real failed check: run Test only if the key is currently failing (per T-6569), otherwise use a deliberately wrong key in the field WITHOUT saving (clear it after) — no, simpler: observe the pill right after any failed Test this session. 3. Copy the pill verbatim after the failure.
+
+Expected: After a failed check the pill stops claiming healthy — it shows a degraded/failing state or an honest "last check failed" note in plain words. A pill that keeps saying Active-and-working immediately after the UI itself reported a 401/timeout is a FAIL. (If no failure is observable this session, record N-A with the reason noted.)
+
+### T-6575 · AI providers · the model dropdown still lists the configured models when the provider API is unreachable — static list, no empty dropdown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers. 2. Open the model dropdown for OpenRouter and copy every option verbatim. 3. If the provider API is currently unreachable (failed Test this session), repeat the dropdown read; otherwise note the models shown under healthy conditions.
+
+Expected: The dropdown always shows the configured model list (meta/muse-spark-1.3-contributor and siblings) — it never renders empty, never shows raw fetch errors as options, and never silently drops the currently selected model. An empty or error-filled dropdown is a FAIL.
+
+### T-6576 · AI providers · changing provider and model in one motion keeps both choices — no silent revert of either
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; note the active provider and selected model. 2. Flip the provider to Meta direct AND change the model choice in the same editing motion, then save the group. 3. Read the save feedback verbatim. 4. Reload and re-read the active provider and model.
+
+Expected: Both choices survive — the reloaded page shows exactly the provider and model chosen, and the feedback confirmed both. A save that keeps one choice but silently reverts the other is a FAIL. (Flip back to OpenRouter + contributor model before the case ends so the working state is restored.)
+
+### T-6577 · AI providers · flipping provider mid-probe: the late result is discarded or attributed — never applied to the wrong provider
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers. 2. Press "Test connection" for OpenRouter, then within ~2 seconds flip the active provider to Meta direct. 3. Wait for the probe to settle; copy the result area and both provider rows verbatim.
+
+Expected: Exactly one honest outcome — the late OpenRouter result is discarded, or it is clearly labeled as belonging to OpenRouter and does not change Meta direct's state. A late result that overwrites the newly active provider's status, or a result that appears under the wrong provider's row, is a FAIL. (Restore OpenRouter as the active provider before the case ends.)
+
+### T-6578 · AI providers · the key field resists browser autofill of unrelated credentials — no cross-field contamination
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers. 2. Focus the OpenRouter key field and check whether the browser offers autofill (usernames, passwords, addresses). 3. If an autofill suggestion appears, note what it offers; do NOT accept it. 4. Inspect the field's autocomplete attribute behavior by observing the suggestion list only.
+
+Expected: The key field does not invite unrelated credential autofill — ideally autocomplete is off/new-password style, and no saved login is offered. A field that eagerly offers the user's unrelated passwords is a FAIL (key-slot contamination risk). (Read-only: never accept an autofill entry, never save.)
+
+### T-6579 · AI providers · Test result wording is identical for the same outcome on repeat — no drifting copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers. 2. Press "Test connection" three times, waiting for each result to fully settle before the next press. 3. Copy each result's wording verbatim.
+
+Expected: All three results use byte-identical wording for the same outcome (timestamps or dynamic values aside, noted explicitly). Copy that drifts between identical runs — different phrasing for the same success — is a FAIL.
+
+### T-6580 · AI providers · editing the inactive provider's key never disturbs the active slot — slots are independent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; confirm OpenRouter is active and note its indicator. 2. In the Meta direct key field, type a short dummy value WITHOUT saving. 3. Press "Test connection" for OpenRouter. 4. Clear the dummy text from the Meta field (still no save) and reload.
+
+Expected: The OpenRouter Test behaves exactly as with a pristine page, and after reload the Meta slot shows its original unconfigured state — an unsaved edit in one slot never leaks into the other slot's behavior. Any cross-slot effect is a FAIL.
+
+### T-6581 · AI providers · pricing and contributor disclosure stay verbatim after any key event — rekey, failed test, provider switch
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; copy the pricing lines and the contributor disclosure verbatim. 2. Run a Test connection (any outcome). 3. Flip provider to Meta direct and back to OpenRouter. 4. Re-copy the pricing lines and disclosure verbatim.
+
+Expected: Byte-identical copy after every event — key activity never rewrites, truncates, or drops the pricing or disclosure text. Any drift is a FAIL. (Restore OpenRouter as active before the case ends.)
+
+### T-6582 · AI providers · a rejected key save leaves the old last-4 indicator untouched — no mask for a key that didn't stick
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; copy the saved-key indicator verbatim. 2. Type a deliberately wrong key into the key field and press save. 3. Copy the save response verbatim. 4. Re-read the saved-key indicator.
+
+Expected: The save is refused in plain words (unauthorized), and the indicator still shows the ORIGINAL last-4 — the slot never displays a mask for a key the server rejected. An indicator that updates to the rejected key's last-4 is a FAIL. (Type nothing real; the wrong key is never stored.)
+
+### T-6583 · AI providers · the saved-key indicator never shows more than last-4 — mask discipline after every action
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers. 2. Walk the key slot through: initial read, Test connection, provider flip and back, page reload — copying the indicator's visible form after each step. 3. Count the visible key characters each time.
+
+Expected: Every read shows the masked form (bullets + last-4) and nothing more — no step ever reveals a longer key fragment, a prefix, or the full key. Any exposure beyond last-4 is an immediate FAIL and the case stops.
+
+### T-6584 · AI providers · acceptance: saved key in, contributor model on, Test green, indicator stable across reload and rotation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AQ-PRO
+
+Steps: 1. Open /settings → AI providers; verify OpenRouter Active, model meta/muse-spark-1.3-contributor, indicator in masked form. 2. Press "Test connection" once; copy the success text verbatim. 3. Reload the page; verify all three states unchanged. 4. After the next tunnel rotation, verify once more.
+
+Expected: Green Test with plain-words success, and the provider/model/indicator trio is identical across reload and rotation — the working configuration is stable and honestly reported everywhere. Any instability or drift is a FAIL.
+
+
+## Section AR · AI as a brain: decision surfaces — verdicts, guards, analysis, profile (18 cases: T-6585–T-6602)
+
+Saad's order 2026-09-27: detailed testing of "using AI as a brain in the trading app", from every angle, UI-only. This section sweeps every surface where the AI's brain-work appears or can be invoked: signal verdicts, AI input to guard decisions, market analysis views, the AI profile, AI-generated suggestions and summaries. Section AF proved the AI answers questions; this wave asks harder questions — is the verdict explained, attributed, honest when pending, graceful when malformed, and never confused with a guard decision. Each case runs through the live UI. Written 2026-09-27 ~08:26 PDT.
+
+### T-6585 · AI brain · a signal row shows its AI verdict in plain words — take / skip / abstain, never a bare code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open the signals/alerts view where AI verdicts appear. 2. Find a signal with an AI verdict; copy the verdict's exact wording. 3. Check three different signals and copy each verdict.
+
+Expected: Every verdict reads as plain words a trader understands ("take", "skip", "abstain"/"no trade" style) — never a bare code, number, or raw enum. A verdict shown as a code with no plain-words meaning is a FAIL.
+
+### T-6586 · AI brain · every verdict carries its reasoning — the why is visible next to the what
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open a signal with an AI verdict. 2. Look for the reasoning/explanation attached to the verdict (expand, tooltip, detail panel — whatever the UI offers). 3. Copy the reasoning verbatim. 4. Repeat for two more signals.
+
+Expected: Each verdict has human-readable reasoning beside it — what the AI saw and why it decided. A verdict word with no accessible reasoning anywhere is a FAIL. (If reasoning exists only behind a control, that control must be discoverable and working.)
+
+### T-6587 · AI brain · a verdict still being computed renders as "waiting on AI" — never blank, never a premature verdict
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open the signals view right as a fresh signal arrives (or trigger a fresh AI question). 2. Watch the verdict area while the AI is working; copy what it shows verbatim. 3. Note whether a working indicator is present.
+
+Expected: While the brain is thinking, the UI says so in plain words ("waiting on AI", "analyzing" style) with a working indicator — never a blank verdict cell, and never a verdict that appears before the AI answered. A blank or premature verdict is a FAIL.
+
+### T-6588 · AI brain · a verdict that never arrives gets an honest stale note — never stuck "waiting" forever
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Find a signal whose AI verdict has been "waiting" for an unusually long time (or observe a slow AI answer past 120 seconds). 2. Copy the verdict area's current text verbatim. 3. If no stuck verdict exists this session, record N-A with the reason noted.
+
+Expected: A verdict that never lands is eventually labeled honestly ("AI did not respond in time", "verdict unavailable" style) — the UI never leaves a permanent "waiting" with no resolution path. A forever-waiting verdict with no timeout copy is a FAIL.
+
+### T-6589 · AI brain · AI input beside a guard decision: both visible, and a disagreement is stated outright
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open a signal or alert detail that shows both the AI verdict and the guard decision. 2. Copy both verbatim. 3. Find one where they disagree (AI says take, guard blocks — or the reverse); copy how the UI presents the conflict.
+
+Expected: Both inputs are shown side by side, and a disagreement is stated in plain words — the UI never hides one input to fake agreement, and never merges them into one ambiguous line. A hidden disagreement is a FAIL.
+
+### T-6590 · AI brain · a guard-blocked signal with an AI "take" still reads blocked — the AI never overrules the guard in the UI story
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Find a signal the guard blocked while the AI verdict was "take" (scan recent signals; if none exists, record N-A with the reason noted). 2. Copy the signal's final status and both the guard reason and the AI verdict verbatim.
+
+Expected: The final status is unambiguously blocked, the guard reason leads, and the AI "take" is shown as overruled input — the UI never lets the AI verdict visually outrank the guard's final say. A blocked signal that reads as "take" is a FAIL.
+
+### T-6591 · AI brain · AI-generated analysis text is labeled as AI-generated — no unattributed machine text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open every view that shows AI-written analysis or summaries (market scan, signal analysis, journal insights — wherever found). 2. For each, copy the attribution label verbatim ("AI analysis", "generated by" style). 3. Note any AI-written text with no label.
+
+Expected: All AI-generated text carries a visible AI attribution — the tester can always tell which words came from the model and which are the app's own. Unlabeled machine text presented as the app's voice is a FAIL.
+
+### T-6592 · AI brain · AI confidence renders as an honest range — never fake precision
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Find AI verdicts or analysis that show confidence/scores. 2. Copy the confidence display verbatim for three cases. 3. Note the precision shown (whole words, bands, percentages with decimals).
+
+Expected: Confidence reads as an honest range or band ("high", "medium", "low", or a rounded score) — never fake precision like "73.42% confident" presented as a measured fact. Absurd precision is a FAIL. (If no confidence display exists, record N-A with the absence noted.)
+
+### T-6593 · AI brain · a malformed AI response renders gracefully — plain-words note, never raw JSON on screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Scan AI verdict and analysis surfaces for any response that arrived malformed (half-JSON, raw braces, escaped quotes visible). 2. If one exists, copy the rendering verbatim. 3. If none exists this session, record N-A with the reason noted.
+
+Expected: A malformed response is caught and rendered as a plain-words note ("the AI's answer couldn't be displayed properly") — raw JSON, braces, or escape sequences are never dumped on screen. Raw model output on screen is a FAIL.
+
+### T-6594 · AI brain · an empty signals list gives an honest empty AI section — no verdict for nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open the signals view at a quiet time when no signals are listed (or filter to a range with none). 2. Read the AI verdict/analysis section verbatim.
+
+Expected: The AI section is honestly empty ("no signals to analyze yet" style) — never a leftover verdict from an old signal, never a verdict rendered against nothing. A stale verdict shown with no signal is a FAIL.
+
+### T-6595 · AI brain · an AI suggestion is a real control — accept acts, dismiss removes, both confirm
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AR-PRO
+
+Steps: 1. Find an AI-generated suggestion in the UI (if one exists; otherwise record N-A with the reason noted). 2. Read its accept and dismiss controls verbatim. 3. Dismiss it; confirm it is gone and stays gone after reload. 4. If a second suggestion exists, accept it; confirm the promised action happened.
+
+Expected: Suggestions are fully functional — accept performs the stated action with confirmation, dismiss removes it permanently (no resurrection on reload). A decorative suggestion with dead controls is a FAIL.
+
+### T-6596 · AI brain · the AI profile section names the active provider + model — agrees with /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open /settings → AI providers; copy the active provider and model verbatim. 2. Open the AI profile section (wherever it lives); copy the provider + model it names verbatim. 3. Switch the provider on /settings, then re-read the AI profile section.
+
+Expected: The AI profile always names the same provider and model as /settings — before and after the switch. A profile that names a different provider than the one configured is a FAIL. (Restore the original provider before the case ends.)
+
+### T-6597 · AI brain · verdict history per signal is reachable — what the brain said and when
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open a signal detail. 2. Find the AI verdict history/trail (all verdicts the AI gave for this signal, with timestamps). 3. Copy the entries verbatim. 4. Repeat for a second signal.
+
+Expected: The full verdict trail is reachable in the UI — each verdict with its time, none silently overwritten by a later one. A signal that shows only the latest verdict with earlier ones unreachable is a FAIL.
+
+### T-6598 · AI brain · AI-driven notifications carry AI attribution — the message says it came from the AI path
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open /notifications → Message history. 2. Find rows for notifications triggered by AI decisions (verdicts, AI-driven alerts). 3. Copy the row text verbatim and note any AI attribution. 4. If no AI-driven notification exists, record N-A with the reason noted.
+
+Expected: AI-driven notifications say so in plain words — the tester can tell an AI-triggered alert from a rule-triggered one. An AI-driven alert with no attribution is a FAIL.
+
+### T-6599 · AI brain · a verdict from an older model version keeps its version label — never silently presented as current
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. In the signals view, find verdicts rendered under a previous model selection (after switching models per T-6576's pattern). 2. Copy how the older verdict is labeled verbatim. 3. If no model switch has left older verdicts behind, record N-A with the reason noted.
+
+Expected: Older verdicts keep their model attribution — they are never re-labeled as the current model's output. A verdict silently wearing the wrong model's name is a FAIL.
+
+### T-6600 · AI brain · the analysis view at phone width keeps verdict and reasoning together — no orphaned verdicts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: READ
+Feature: AR-PRO
+
+Steps: 1. Open the AI analysis/verdict view at phone width (390px). 2. Scroll through a full verdict with its reasoning. 3. Note whether verdict and reasoning stay visually paired (same card, same section).
+
+Expected: Verdict and its reasoning stay together at phone width — no verdict orphaned from its explanation by wrapping, clipping, or column collapse. An orphaned verdict is a FAIL.

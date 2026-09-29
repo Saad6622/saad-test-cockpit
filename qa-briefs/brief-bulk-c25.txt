@@ -1,0 +1,1225 @@
+QA BRIEF — BULK LANE B4 chunk 25/45 (T-6401–T-6500)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-6401 · Receipt honesty · a "Delivered" row agrees with the receiving end (Telegram read-only check)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Press "Send preview" and note the exact preview text and time. 2. Read the history row status.
+**BACKEND-CHECK:** the backend team opens the SaadAi (@Saad_6622bot) chat read-only and confirms the message landed with the exact text (per the standing Telegram receiving-end rule).
+
+Expected: History says "Delivered" AND the message is actually in the bot chat with the exact text. History claiming "Delivered" while the chat has nothing is a FAIL.
+
+---
+
+### T-6402 · History surface · history survives a page reload with all rows intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Count the history rows and note the newest row's timestamp. 2. Reload the page. 3. Count again and compare.
+
+Expected: Same row count, same newest row — history is persisted, not held in memory. Rows lost across a reload is a FAIL.
+
+---
+
+### T-6403 · History surface · history survives a server restart with all rows intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Count the history rows. 2. Ask the agent team to restart the TEST server via keepalive.sh (tester does not touch the backend — this step is performed by the backend team between the tester's UI checks). 3. Reload and count again.
+
+Expected: Same rows after the restart — notification history is durable. A restart that wipes history is a finding (record it; persistence may be a design decision, but the UI must then say so).
+
+---
+
+### T-6404 · History surface · long history scrolls cleanly with no duplicated rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Scroll the notification history top to bottom slowly. 2. Watch for repeated rows or jumps.
+
+Expected: Every row appears exactly once; scrolling is smooth with no duplicates or teleporting. Duplicated rows while scrolling is a FAIL.
+
+---
+
+### T-6405 · History surface · empty history (fresh state) is honest, never a blank page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. If the history offers a clear control, use it (under approval authority); otherwise test on a fresh TEST reset if available. 2. Open the history with zero rows. 3. Read the empty state verbatim.
+
+Expected: An honest empty-state message in plain words (record the exact text) — never a blank page, never a spinner forever. A blank page with no rows and no message is a FAIL.
+
+---
+
+### T-6406 · History surface · each row's topic label is plain words, not a code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open the notification history. 2. Read the topic/status labels on rows of every kind seen (preview, kill, halt, trade, fill, guard).
+
+Expected: Labels read as plain words a trader understands (record each exact label). Raw codes like "topic:preview" or "evt_fill" shown to the user are a FAIL.
+
+---
+
+### T-6407 · History surface · the history auto-refreshes when a new notification is sent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open the notification history and keep it open. 2. In another tab (or via the Telegram panel), press "Send preview". 3. Watch the history tab without reloading.
+
+Expected: The new row appears in the open history within a reasonable moment, without a manual reload. A history that never updates until reload is a finding (record it).
+
+---
+
+### T-6408 · History surface · history at 390px: rows readable without horizontal scrolling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Set the viewport to 390px wide. 2. Open the notification history and read several rows.
+
+Expected: All four fields readable at phone width with no horizontal scrolling and no clipped text. A row that needs sideways scrolling on a phone is a FAIL.
+
+---
+
+### T-6409 · Notification settings · event-type toggles save with "Saved" feedback that survives re-render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open /settings, expand the Notifications group. 2. Flip one event-type toggle and save. 3. Wait for the re-render and read the result area.
+
+Expected: A plain-words "Saved" confirmation naming the notifications group (record the exact wording), visible after the re-render — the ISS-076 class guard applies here too. A silent toggle save is a FAIL.
+
+---
+
+### T-6410 · Notification settings · disabling an event type actually stops its notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. In the Notifications group, disable one event type (e.g. fills) and save. 2. Trigger that event type on TEST (or wait for one). 3. Check the history and the bot chat.
+**BACKEND-CHECK:** the backend team confirms no notification was sent for the disabled type (receiving-end check, read-only).
+
+Expected: No notification for the disabled type — the toggle is wired, not decorative. A notification arriving for a disabled type is a FAIL. Re-enable the type afterwards.
+
+---
+
+### T-6411 · Notification settings · re-enabling restores notifications for that type
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Re-enable the event type disabled in T-6410 and save. 2. Press "Send preview" (or trigger the type). 3. Check the history and the bot chat.
+
+Expected: Notifications flow again for the re-enabled type. A type that stays silent after re-enabling is a FAIL.
+
+---
+
+### T-6412 · Notification settings · unsaved toggle edits trigger the unsaved-change warning
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Flip a notification toggle (no save). 2. Click a different settings group. 3. Read the dialog, then Stay and revert the toggle.
+
+Expected: The "You have unsaved changes. Leave without saving?" warning appears — toggle edits arm the dirty flag. No warning is a FAIL.
+
+---
+
+### T-6413 · Notification settings · rollback in the Notifications group restores toggles and confirms
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Flip two notification toggles (no save). 2. Roll back the Notifications group. 3. Read the confirmation and both toggles.
+
+Expected: "Rolled back group …" confirmation visible after re-render (ISS-077 contract) and both toggles back to their saved positions. A wiped confirmation or an unrestored toggle is a FAIL.
+
+---
+
+### T-6414 · Telegram connect · the connect panel states the bot name and what enabling does
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open the Telegram/notification connect panel. 2. Read every line of explanatory copy verbatim.
+
+Expected: The panel names the bot (SaadAi / @Saad_6622bot — record the exact naming) and plainly says which events will arrive when enabled. A connect panel with no explanation of what enabling does is a finding.
+
+---
+
+### T-6415 · Telegram connect · disconnect asks for confirmation and is honest afterwards
+**APPROVED-UNDER-AUTHORITY:** Saad granted approval authority 2026-09-27 ~03:21 PDT ("I give you authority of approval. The work should not stop.") — execute under his authority when reached in strict order, reconnecting at the end of this case. Exclusions: real money (no spending/top-ups), credentials in his hands.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Disconnect Telegram (confirm the confirmation dialog first — record its exact wording). 2. Read the panel state after disconnect. 3. Press "Send preview" and read the result. 4. Reconnect and verify a preview lands.
+
+Expected: Disconnect confirms first, then the panel honestly reads disconnected; preview while disconnected fails honestly (no false "Delivered"); step 4 restores. A disconnect with no confirmation is a FAIL.
+
+---
+
+### T-6416 · Telegram connect · "Send preview" while connected shows a sending state, then the result
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. With Telegram connected, press "Send preview". 2. Watch the button/result area DURING the send.
+
+Expected: A visible sending state (record exactly what is shown) followed by the plain-words result. A button that looks idle during the send is a FAIL.
+
+---
+
+### T-6417 · Telegram connect · the preview text shown in the UI matches what lands in the chat
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Read the preview text shown in the Telegram panel verbatim. 2. Press "Send preview".
+**BACKEND-CHECK:** the backend team reads the SaadAi bot chat (read-only) and compares the landed message byte-for-byte.
+
+Expected: The landed message matches the panel's preview text exactly. Any silent alteration between panel and chat is a FAIL.
+
+---
+
+### T-6418 · Telegram connect · double-clicking "Send preview" sends exactly one message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Note the history row count. 2. Double-click "Send preview" quickly. 3. Count the new rows.
+**BACKEND-CHECK:** the backend team confirms how many messages landed in the bot chat (read-only).
+
+Expected: Exactly one new history row and one landed message — the second click is debounced. Two messages from one double-click is a FAIL.
+
+---
+
+### T-6419 · History surface · rows for different topics are visually distinguishable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Open the notification history with rows of at least three different topics/statuses. 2. Compare how they look.
+
+Expected: Different topics or statuses are distinguishable at a glance (tone, icon, or label — record how). A history where "failed" looks identical to "delivered" is a finding.
+
+---
+
+### T-6420 · History surface · clicking a row reveals its full detail (receipt fields included)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Click (or expand) a "Delivered" history row. 2. Read every field in the detail view.
+
+Expected: The detail shows the full receipt (message id, chat, timestamps — record the exact fields). A row that cannot be expanded and shows no receipt detail is a finding.
+
+---
+
+### T-6421 · History surface · failed rows show the failure reason in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Find a failed history row (create one via T-6397 if none exists). 2. Read its failure reason.
+
+Expected: A plain-words reason (record the exact text) — never a raw exception, never a blank. A failed row with no reason shown is a FAIL.
+
+---
+
+### T-6422 · History surface · the history never shows another user's data (single-user sanity)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Scan the full notification history for any chat, user, or account identifier that is not Saad's.
+
+Expected: Every row belongs to Saad's own bot/chat — no foreign identifiers anywhere. Any foreign data is a FAIL (and a stop-the-line privacy finding).
+
+---
+
+### T-6423 · Notification settings · per-event-type test buttons (if offered) send only that type
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. If any event type offers its own "test" button, press it. 2. Check the history row's topic and the bot chat.
+**BACKEND-CHECK:** the backend team confirms only that event type was sent (read-only).
+
+Expected: Exactly one notification of exactly that type — a per-type test that sends the wrong type, or all types, is a FAIL.
+
+---
+
+### T-6424 · Notification settings · notification copy contains zero banned words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Read every word on the notification settings group, the Telegram panel, the history surface, and the empty/error states.
+
+Expected: Zero banned words anywhere on the notification surface. Any banned word is a FAIL.
+
+---
+
+### T-6425 · Receipt honesty · retrying a failed notification creates a new row, never rewrites the failed one
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Create a failed preview (per T-6397). 2. If a retry control is offered, use it after reconnecting. 3. Read the history rows for both attempts.
+
+Expected: Two rows — the original "failed" row untouched, plus a new row for the retry. A retry that rewrites the failed row's status is a FAIL (history must be append-only).
+
+---
+
+### T-6426 · History surface · history row count agrees with the bot chat's message count (spot check)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Count today's "Delivered" preview rows in the history.
+**BACKEND-CHECK:** the backend team counts today's matching messages in the SaadAi bot chat (read-only).
+
+Expected: The two counts agree. History rows with no matching chat message (or chat messages with no history row) are a FAIL.
+
+---
+
+### T-6427 · Notification settings · quiet-hours / do-not-disturb (if offered) is honored
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. If the notifications group offers quiet hours, enable a window covering the current time and save. 2. Press "Send preview". 3. Check history and the bot chat. 4. Disable quiet hours afterwards.
+
+Expected: If offered, the preview is held or the UI honestly says it was suppressed by quiet hours (record the exact behavior). If not offered, record that as a finding. A quiet-hours setting that changes nothing is a FAIL.
+
+---
+
+### T-6428 · History surface · filtering history by topic/status (if offered) filters correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. If the history offers a topic or status filter, filter to "failed". 2. Read every visible row's status.
+
+Expected: Every visible row reads "failed" — the filter is exact, not approximate. If no filter is offered, record that as a finding. A filter showing wrong-status rows is a FAIL.
+
+---
+
+### T-6429 · History surface · history search (if offered) finds a row by its text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. If the history offers search, search for "preview". 2. Read the results.
+
+Expected: All and only rows matching "preview" are shown. If no search is offered, record that as a finding. A search that misses matching rows is a FAIL.
+
+---
+
+### T-6430 · Receipt honesty · REGRESSION-PENDING: preview receipt fields backfill honestly if async
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Press "Send preview". 2. Immediately read the history row's receipt fields, then again after 30 seconds.
+**BACKEND-CHECK:** the backend team reads the raw row at both moments.
+
+Expected: If the fields backfill asynchronously, the row must show an honest interim state ("sending/confirming" — record the exact text), never "Delivered" with empty receipt fields. "Delivered" with permanently empty fields is the ISS-073 FAIL. REGRESSION-PENDING until the ISS-073 fix wave lands.
+
+---
+
+### T-6431 · Notification settings · acceptance: preview → history row → receiving-end message, all agreeing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Press "Send preview" and note the time. 2. Read the new history row: topic "preview", status, timestamp, receipt fields. 3. Confirm the row's timestamp matches the press time.
+**BACKEND-CHECK:** the backend team confirms the message landed in the SaadAi bot chat with the exact preview text (read-only).
+
+Expected: One press → one history row → one landed message, all three agreeing on time, text, and status — the full notification contract in one pass. Any disagreement is a FAIL.
+
+---
+
+### T-6432 · Notification settings · full notification cycle with zero defects
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AG-NOTIF
+
+Steps: 1. Disable one event type → save → "Saved" confirmation survives re-render. 2. Flip it back unsaved → warning "You have unsaved changes. Leave without saving?" on nav → Stay. 3. Roll back → "Rolled back group …" survives re-render, toggle restored. 4. Save → confirmation. 5. Send preview → "Delivered" with full receipt fields (post-ISS-073-fix) → message in the bot chat.
+
+Expected: Every contract holds in one unbroken cycle — save feedback, unsaved warning, rollback confirmation, receipt honesty, receiving-end agreement. Any single break is a FAIL — this is the acceptance cycle for the notification surface.
+
+---
+
+## Section AH · Tunnel-outage & degraded-state UI (30 cases: T-6433–T-6462)
+
+The TEST cockpit is reached through a rotating tunnel, and the tunnel does go down (seen 2026-09-27 ~05:23, ~05:39, ~05:42, ~06:08 PDT). A trader must never be lied to during an outage: every degraded state needs honest copy, a working Retry, no false successes, and no spinner that never ends. These cases are run during a real outage (or a simulated one arranged by the backend team with keepalive.sh) and define the degraded-state contract. Written 2026-09-27 ~06:25 PDT.
+
+### T-6433 · Outage · settings that fail to load show the honest error with a Retry control
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During a tunnel outage, open /settings. 2. Wait for the load to settle. 3. Read the page verbatim.
+
+Expected: The exact message "Could not load the settings — try again in a moment." with a visible Retry control next to it. A blank page, an endless spinner, or a raw network error dump is a FAIL.
+
+---
+
+### T-6434 · Outage · Retry during the outage fails honestly again, no false success
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. With the "Could not load the settings — try again in a moment." state showing, press Retry while the outage continues. 2. Wait and read the page.
+
+Expected: The same honest message returns (or an equivalent plain-words retry-failed message — record the exact text). A Retry that reports success while the outage continues is a FAIL.
+
+---
+
+### T-6435 · Outage · Retry after recovery loads the settings and clears the error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. With the outage error showing, wait for the tunnel to recover (keepalive rotation). 2. Press Retry. 3. Read the page.
+
+Expected: The settings load fully and the error message is completely gone — no stale error banner left behind. A recovered page still showing the old error is a FAIL.
+
+---
+
+### T-6436 · Outage · saving settings during an outage fails honestly, never a false "Saved"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, open /settings (if it loads from cache) or the AI provider panel. 2. Change a value and press save. 3. Read the result area.
+
+Expected: An honest plain-words save-failed message (record the exact text) — never "Saved interface settings - version N." when nothing was saved. A false "Saved" during an outage is a FAIL.
+
+---
+
+### T-6437 · Outage · a save attempted during the outage is not silently queued as a later surprise
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, attempt a settings save (it fails honestly per T-6436). 2. Wait for recovery. 3. Reload /settings and read the saved values.
+
+Expected: The failed save did NOT apply later — the values are the pre-outage ones, or the UI asked before applying anything queued. A save that "failed" but secretly applied after recovery is a FAIL.
+
+---
+
+### T-6438 · Outage · Test connection during an outage reports a connectivity error honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, press "Test connection" on the AI provider panel. 2. Read the result.
+
+Expected: A plain-words connectivity error (record the exact text) — clearly a network problem, not an authentication verdict on the key. A 401-style auth error caused purely by the outage is a FAIL (it misleads the tester about the key).
+
+---
+
+### T-6439 · Outage · the failed Test connection during an outage leaves the saved key untouched
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. After the outage test in T-6438, check the OpenRouter key slot masking. 2. After recovery, press "Test connection" again.
+
+Expected: The slot still shows the same last4, and the post-recovery test succeeds with no re-entry. An outage that wipes or corrupts the saved key is a FAIL.
+
+---
+
+### T-6440 · Outage · the cockpit home page degrades honestly during an outage
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, load /home. 2. Read every tile and panel.
+
+Expected: Honest degraded states — stale data is labeled stale (or as of a timestamp), failed loads say so in plain words (record the exact copy). Tiles showing yesterday's numbers as if they were live, with no stale marker, is a FAIL.
+
+---
+
+### T-6441 · Outage · no tile shows a confident number that is actually stale
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, read the Overview tiles (equity, positions, strategy errors) and note whether any carry a "stale" or "as of" marker.
+
+Expected: Every number that could not be refreshed is marked stale or timestamped (record the exact marker wording). A confidently-presented number that is actually hours old is a FAIL — stale data presented as live is a lie.
+
+---
+
+### T-6442 · Outage · the bookmark redirect page shows a waiting state, not a broken page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, open the bookmark https://saad6622.github.io/saad-test-cockpit/ fresh. 2. Read what is shown.
+
+Expected: A clear waiting/retrying state in plain words (record the exact copy) — never a browser error page, never a redirect loop, never a silent hang. A raw browser connection-error page with no guidance is a FAIL.
+
+---
+
+### T-6443 · Outage · the redirect page recovers on its own when the tunnel returns
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. Leave the bookmark's waiting state open during the outage. 2. Wait for the tunnel to recover. 3. Watch what the page does without manual reload.
+
+Expected: The page reaches the live cockpit on its own within a reasonable window (record how long) — or it plainly tells the tester to reload (record the exact instruction). A waiting page that never notices the recovery is a finding.
+
+---
+
+### T-6444 · Outage · actions queued by the tester during the outage are confirmed or discarded explicitly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, attempt two actions (e.g. a settings save and a preview send). 2. After recovery, check whether either took effect, and whether the UI says anything about them.
+
+Expected: Each attempted action has a known outcome — applied, failed, or awaiting explicit re-confirmation. An action whose fate is unknowable after recovery is a FAIL.
+
+---
+
+### T-6445 · Outage · dangerous controls are unreachable or clearly disabled during an outage
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, find the "Halt trading" control and the Smart Trade fire control. 2. Read their states.
+
+Expected: Each dangerous control is either unreachable (page failed to load) or visibly disabled with an honest reason (record the exact copy) — never armed and clickable while its effect cannot be verified. An armed Halt button during an outage is a FAIL.
+
+---
+
+### T-6446 · Outage · no spinner or progress indicator runs forever
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, trigger loads on /settings, /home, and the AI panel. 2. Watch each for 60 seconds.
+
+Expected: Every load resolves to content or to an honest error within the minute — nothing spins forever. Any spinner still running at 60 seconds with no error is a FAIL.
+
+---
+
+### T-6447 · Outage · error copy across the app is consistent in tone and wording
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, collect the error copy from /settings, /home, the AI panel, and the history surface.
+
+Expected: All four speak with one voice — plain words, same "try again in a moment" style guidance (record each exact message). Four different error styles for the same outage is a finding.
+
+---
+
+### T-6448 · Outage · the outage never exposes raw technical errors to the tester
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, screenshot every error state found in this section. 2. Read them for technical leakage.
+
+Expected: Zero stack traces, zero raw JSON, zero "ERR_CONNECTION_REFUSED" style browser text presented as the app's message. Any raw technical leakage is a FAIL.
+
+---
+
+### T-6449 · Outage · after recovery, one reload returns the whole app to normal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. After the tunnel recovers, reload /home once. 2. Walk /home, /settings, /strategies, and the AI panel.
+
+Expected: Everything normal after a single reload — no lingering error banners, no half-loaded panels, no need for cache-clearing. A state that needs more than one reload to clear is a FAIL.
+
+---
+
+### T-6450 · Outage · zero banned words in any degraded-state copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, read every word of every degraded state: settings error, home tiles, AI panel, history, redirect waiting page.
+
+Expected: Zero banned words in any degraded copy. A banned word appearing only during outages is still a FAIL.
+
+---
+
+### T-6451 · Degraded · slow tunnel (not down): loads show progress, not a frozen page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During a period of high tunnel latency (slow but not dead), load /settings. 2. Watch the load.
+
+Expected: A visible progress/loading state (record exactly what is shown) that resolves to content — never a frozen-looking page with no indication anything is happening. A page that looks dead for 20+ seconds then suddenly renders is a finding.
+
+---
+
+### T-6452 · Degraded · partial load: a panel that loads while its neighbor fails is honest about both
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. Find or arrange a moment where one /settings group loads and another fails (flaky tunnel). 2. Read both panels.
+
+Expected: The loaded panel works normally; the failed panel shows its own honest error — the failure is scoped to the panel, never a whole-page error that hides the working panel. A single failed panel taking down the whole page is a FAIL.
+
+---
+
+### T-6453 · Degraded · the "Current settings" panel never shows values newer than the last successful load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. Note the "Current settings" panel content while healthy. 2. During an outage, reload /settings (if anything renders) and read the panel.
+
+Expected: The panel shows the last-known values labeled as such, or the honest load error — never silently-blank values presented as current, and never values that imply a newer load happened. Unlabeled stale values in the panel is a FAIL.
+
+---
+
+### T-6454 · Degraded · notification history during an outage: cached rows labeled, or honest error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, open the notification history. 2. Read what is shown.
+
+Expected: Either cached rows clearly labeled as cached/as-of (record the exact label) or the honest load error. Cached rows presented as live during an outage is a FAIL.
+
+---
+
+### T-6455 · Degraded · AI answers during high latency: the working indicator stays until the answer lands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During high tunnel latency, ask the AI a question. 2. Watch the working indicator until the answer completes or fails.
+
+Expected: The working state persists honestly until the outcome — it never vanishes early leaving a blank answer area, and it never freezes mid-animation. An indicator that disappears while the answer is still pending is a FAIL.
+
+---
+
+### T-6456 · Degraded · a save that times out reports "unknown outcome" honestly, not success
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During high latency, save the interface settings and wait past the normal save time. 2. Read the result.
+**BACKEND-CHECK:** the backend team confirms whether the save actually applied.
+
+Expected: If the outcome is genuinely unknown, the UI says so in plain words (record the exact text — e.g. "couldn't confirm") and tells the tester how to check — never a confident "Saved" for an unconfirmed save. A confident success on a timed-out save is a FAIL.
+
+---
+
+### T-6457 · Degraded · after a timed-out save, reloading shows the true saved values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. After the timed-out save in T-6456, reload /settings. 2. Read the "Current settings" panel and compare with what was attempted.
+
+Expected: The panel shows the true stored values — the reload is the source of truth and it agrees with the backend. A panel that shows the attempted-but-unconfirmed values as saved is a FAIL.
+
+---
+
+### T-6458 · Degraded · rapid Retry presses do not stack duplicate loads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. With the "Could not load the settings — try again in a moment." state showing, press Retry five times rapidly. 2. Watch the page.
+
+Expected: One load cycle runs (or they queue cleanly) — no stacked spinners, no duplicated panels, no five error banners. Stacked duplicate load states are a FAIL.
+
+---
+
+### T-6459 · Degraded · the tester can always tell whether the app is live, degraded, or down
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. In each of three states — healthy, outage, recovering — look for a connection/status indicator in the app chrome. 2. Record what each state shows.
+
+Expected: The three states are distinguishable from the chrome alone (record the exact indicators). No indicator at all — the tester having to guess from broken behavior — is a finding.
+
+---
+
+### T-6460 · Degraded · degraded-state acceptance: outage → honest errors → recovery → one reload → normal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage: /settings shows "Could not load the settings — try again in a moment." with Retry; no false successes anywhere; no endless spinners. 2. After recovery: press Retry → settings load, error gone. 3. One reload of /home → whole app normal.
+
+Expected: The full degraded-state contract holds end to end — this is the acceptance cycle for outage honesty. Any lie, false success, endless spinner, or lingering error is a FAIL.
+
+---
+
+### T-6461 · Degraded · outage copy is consistent between the bookmark page and the app
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. During an outage, read the bookmark waiting-page copy. 2. Read the in-app error copy ("Could not load the settings — try again in a moment." and tile states).
+
+Expected: Both speak with one voice about the same outage (record both exact texts) — the tester gets one coherent story, not two conflicting ones. Contradictory copy is a finding.
+
+---
+
+### T-6462 · Degraded · post-outage: no phantom "Saved" or "Rolled back" confirmations from the outage window
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AH-DEGRADED
+
+Steps: 1. After recovery from an outage during which saves were attempted, reload /settings and read the result area and the "Current settings" panel version.
+
+Expected: No stale "Saved …" or "Rolled back group …" confirmation from the outage window is shown as current — the result area is clean or reflects only post-recovery actions, and the version matches the true stored state. A phantom confirmation for an outage-window action is a FAIL.
+
+---
+
+## Section AI · Settings-group wording re-sweep: fresh eyes on every group's copy (40 cases: T-6463–T-6502)
+
+A fresh-eyes wording pass over the settings groups: every visible string — labels, help text, tooltips, empty states, error copy, confirmations — is read for banned words, dead text (words not connected to any working control), and plain-words honesty. Section T swept dead text once; this is the re-sweep with the newest groups (AI providers) and the newest copy (save/rollback confirmations, outage states) included. Written 2026-09-27 ~06:25 PDT.
+
+### T-6463 · Wording · Interface group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the Interface group. 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words a trader understands. Any banned word, or jargon with no explanation, is a FAIL.
+
+---
+
+### T-6464 · Wording · Interface group: every control named in the copy actually exists and works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. For every control named in the Interface group's copy, find the control and operate it once.
+
+Expected: Every named control exists and does what the copy says. Copy naming a control that does not exist, or describing behavior the control does not have, is a FAIL (dead text).
+
+---
+
+### T-6465 · Wording · Interface group: save/rollback confirmations re-read verbatim
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. In the Interface group: change a value, save, record the confirmation verbatim; change again, roll back, record that confirmation verbatim.
+
+Expected: "Saved interface settings - version N." and the "Rolled back group …" text, both verbatim and both free of banned words. Any deviation from the contracted copy is a FAIL.
+
+---
+
+### T-6466 · Wording · Notifications group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the Notifications group. 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words. Any banned word is a FAIL.
+
+---
+
+### T-6467 · Wording · Notifications group: every toggle's label says what the toggle actually gates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read each notification toggle's label. 2. For two toggles, verify the gated behavior matches the label (disable → event produces no notification; re-enable after).
+
+Expected: Labels describe the gated event accurately — no label promising more or less than the toggle does. A misleading toggle label is a FAIL.
+
+---
+
+### T-6468 · Wording · Trading group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the Trading group. 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words. Any banned word is a FAIL.
+
+---
+
+### T-6469 · Wording · Trading group: risk/limit copy states real numbers and units
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read every risk/limit label in the Trading group. 2. Check each states its unit (%, USD, contracts — record each).
+
+Expected: Every numeric limit names its unit — no bare numbers the tester must guess the meaning of. A unit-less limit label is a FAIL.
+
+---
+
+### T-6470 · Wording · Risk group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the Risk group. 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words. Any banned word is a FAIL.
+
+---
+
+### T-6471 · Wording · Risk group: guard descriptions match guard behavior
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read each guard's description in the Risk group. 2. For one guard, verify the described behavior is what the guard does (per the guard's own test cases).
+
+Expected: Descriptions match behavior — no guard described as active that is not wired. A described-but-dead guard is a FAIL.
+
+---
+
+### T-6472 · Wording · Strategies group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the Strategies group. 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words. Any banned word is a FAIL.
+
+---
+
+### T-6473 · Wording · Strategies group: enable/disable copy is honest about what happens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the enable/disable copy for strategies in the Strategies group verbatim. 2. Toggle one strategy off and on (under approval authority), observing what the copy promised.
+
+Expected: The copy plainly says what disabling does (stops signals? keeps history? — record the exact promise) and the behavior matches. Copy promising what the toggle does not do is a FAIL.
+
+---
+
+### T-6474 · Wording · Keys group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the Keys group. 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words. Any banned word is a FAIL.
+
+---
+
+### T-6475 · Wording · Keys group: permission/scope copy states what each key can do
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the permission/scope descriptions for each key slot in the Keys group verbatim.
+
+Expected: Each slot plainly states the key's permissions (trade, read-only — record each exact description). A key slot with no permission description is a finding.
+
+---
+
+### T-6476 · Wording · AI providers group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the AI provider panel. 2. Read every label, help line, hint, and disclosure verbatim.
+
+Expected: Zero banned words; the 18+ hint and contributor disclosure verbatim as contracted. Any banned word, or a missing/altered disclosure, is a FAIL.
+
+---
+
+### T-6477 · Wording · AI providers group: pricing lines re-read verbatim for both models
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the Meta direct pricing line verbatim. 2. Read both OpenRouter model option pricing lines verbatim.
+
+Expected: "$0.10 / $0.20 per 1M input/output tokens (Contributor tier)" (Meta direct), $1.25/$4.25 for meta/muse-spark-1.3, $0.10/$0.20 for meta/muse-spark-1.3-contributor — all verbatim. Any altered pricing text is a FAIL.
+
+---
+
+### T-6478 · Wording · AI providers group: error strings re-read (no-key, 401, connectivity)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Produce each error state (empty key test, wrong-key test, outage test per Sections AB/AF/AH). 2. Record each error string verbatim.
+
+Expected: All three errors in plain words, zero banned words, zero raw JSON, zero key material. Any error failing this is a FAIL.
+
+---
+
+### T-6479 · Wording · Time-travel group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the time-travel/replay group. 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words. Any banned word is a FAIL.
+
+---
+
+### T-6480 · Wording · Time-travel group: replay copy is honest that replay replays history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the replay/time-travel descriptions verbatim. 2. Check the copy never implies live trading.
+
+Expected: The copy plainly presents replay as historical (record the exact wording) — never ambiguous with live trading. Any wording that could read as live trading is a FAIL.
+
+---
+
+### T-6481 · Wording · General group: every label and help line re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open /settings, expand the General group (or the top-level settings not in another group). 2. Read every label, help line, and tooltip verbatim.
+
+Expected: Zero banned words; every string in plain words. Any banned word is a FAIL.
+
+---
+
+### T-6482 · Wording · General group: timezone/language/region copy states the effective values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the timezone/language/region controls and their current values in the General group.
+
+Expected: Each shows its effective value plainly (record each) — no control showing one value while another is effective. A lying locale control is a FAIL.
+
+---
+
+### T-6483 · Wording · sealed groups: sealed-state copy explains what "sealed" means
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open every sealed settings group. 2. Read the sealed-state copy verbatim.
+
+Expected: The copy plainly explains what sealed means and why (record the exact wording) — never just a lock icon with no explanation. An unexplained sealed state is a finding.
+
+---
+
+### T-6484 · Wording · sealed groups: zero banned words in sealed copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read every word of every sealed group's copy, including unseal confirmations.
+
+Expected: Zero banned words. Any banned word is a FAIL.
+
+---
+
+### T-6485 · Wording · group navigation list: group names match the groups they open
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. In /settings, read each group name in the nav list. 2. Open each group and read its heading.
+
+Expected: Every nav name matches its group's heading exactly. A nav name that opens a differently-titled group is a FAIL.
+
+---
+
+### T-6486 · Wording · every settings group has a visible Save control with a consistent label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open each settings group in turn. 2. Find its save control and record the exact label.
+
+Expected: Every group has a save control and the labels are consistent (record each — e.g. "Save interface settings" style per group). A group with no save control, or a group whose save label breaks the pattern confusingly, is a FAIL.
+
+---
+
+### T-6487 · Wording · every settings group has a visible rollback control with a consistent label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open each settings group in turn. 2. Find its rollback control and record the exact label.
+
+Expected: Every group that offers rollback labels it consistently (record each). A group where rollback exists but is unlabeled or hidden is a FAIL.
+
+---
+
+### T-6488 · Wording · "Current settings" panel: field names are plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the entire "Current settings" panel verbatim.
+
+Expected: Every field name reads as plain words (record any that do not). Raw config keys like "ui.theme" or "venue_routing" shown to the user are a FAIL.
+
+---
+
+### T-6489 · Wording · "Current settings" panel: zero banned words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the entire "Current settings" panel including all values.
+
+Expected: Zero banned words in names or values. Any banned word is a FAIL.
+
+---
+
+### T-6490 · Wording · tooltips: every tooltip in /settings re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Hover or tap every tooltip trigger in /settings across all groups. 2. Read each tooltip verbatim.
+
+Expected: Zero banned words in any tooltip; every tooltip adds real information (record any tooltip that merely repeats its label — a finding). A tooltip with a banned word is a FAIL.
+
+---
+
+### T-6491 · Wording · tooltips are reachable on touch (tap shows them)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. At 390px width with touch emulation, tap five tooltip triggers across the settings groups.
+
+Expected: Each tap reveals its tooltip — tooltips are not hover-only. A tooltip unreachable on touch is a FAIL (Saad is on his phone).
+
+---
+
+### T-6492 · Wording · empty states: every group with nothing configured is honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Visit every settings group and every list surface (keys, history, strategies) looking for empty states. 2. Read each empty-state message verbatim.
+
+Expected: Every empty state is an honest plain-words message (record each) — never a blank area, never a spinner. A blank empty state is a FAIL.
+
+---
+
+### T-6493 · Wording · validation errors: every inline validation message re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. In /settings, enter invalid values in several fields (bad number, empty required field, over-long text) and try to save. 2. Read each validation message verbatim.
+
+Expected: Every validation message in plain words saying what is wrong and how to fix it (record each). A cryptic or missing validation message is a FAIL.
+
+---
+
+### T-6494 · Wording · confirmation dialogs: every confirm reads as a real question
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Trigger each confirmation dialog in /settings (unsaved-change warning, key delete, disconnect). 2. Read each dialog verbatim — then cancel.
+
+Expected: Every dialog asks a real question with clear choices (record each exact text). A dialog that states instead of asks, or whose choices are ambiguous, is a FAIL.
+
+---
+
+### T-6495 · Wording · button labels: no "Submit", no "OK"-only, every button says what it does
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Walk all of /settings and record every button label.
+
+Expected: Every button label says what the button does ("Save interface settings", "Test connection", "Send preview" style) — no bare "Submit", no "OK" where a choice is being made. A vague button label is a FAIL.
+
+---
+
+### T-6496 · Wording · the settings page title and headings hierarchy re-read
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Read the /settings page title, every group heading, and every sub-heading.
+
+Expected: One clear page title, logical heading hierarchy, zero banned words. Duplicate or missing headings is a finding.
+
+---
+
+### T-6497 · Wording · help links: every "learn more" style link says where it goes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Find every help/documentation link in /settings. 2. Read each link's text (do not follow external links — record the destination shown).
+
+Expected: Every link's text says where it goes (record each). A bare "click here" link is a FAIL.
+
+---
+
+### T-6498 · Wording · full /settings pass at 390px: no clipped or overlapping copy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. At 390px width, scroll through every settings group top to bottom. 2. Look for clipped, overlapping, or truncated text.
+
+Expected: All copy fully readable at phone width — no clipped labels, no text running under controls. Any clipped or overlapping copy is a FAIL.
+
+---
+
+### T-6499 · Wording · full /settings banned-word sweep, all groups, one pass
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. Open every settings group, every dialog, every tooltip, every empty state and error state reachable in /settings. 2. Read every visible word.
+
+Expected: Zero banned words across the entire settings surface in one comprehensive pass. Any banned word is a FAIL — this is the standing-rule sweep.
+
+---
+
+### T-6500 · Wording · dead-text re-sweep: every string earns its place
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: AI-WORD
+
+Steps: 1. For every informational string in /settings (descriptions, hints, notes), ask: is this connected to a working control or a real behavior? 2. List any string that is not.
+
+Expected: Every string is connected to something real — zero dead text. Any orphan string describing nothing that works becomes a fix ticket (wire it up or remove it, per the standing rule).
+
+---

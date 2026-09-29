@@ -1,0 +1,1207 @@
+QA BRIEF — BULK LANE B2 chunk 13/45 (T-5201–T-5300)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-5201 · Fix-wave · Stale values get a stale label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. If the data feed is down, read the KPI block.
+
+Expected: The line labels the numbers as stale -- old numbers are never presented as fresh.
+
+---
+
+### T-5202 · Fix-wave · Overnight-old values read as stale, not fresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. If the last data is from a previous day, read the freshness line.
+
+Expected: It says plainly the data is from yesterday -- no 'just now' fiction.
+
+---
+
+### T-5203 · Fix-wave · Freshness survives a panel refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Run the cockpit panel refresh. 2. Re-read the freshness line.
+
+Expected: The line re-renders with a current time -- refresh never drops it or freezes it.
+
+---
+
+### T-5204 · Fix-wave · Missing data reads as no fresh data, never blank
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. If no KPI data exists, read the KPI block.
+
+Expected: A calm 'no fresh data' style line -- never an empty space where the line should be.
+
+---
+
+### T-5205 · Fix-wave · Line never claims fresher than the newest fill
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness time, then the newest fill time in the receipt timeline.
+
+Expected: The line is never newer than the newest fill -- it cannot promise data that does not exist.
+
+---
+
+### T-5206 · Fix-wave · Error state keeps the freshness line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. If a KPI panel errors, read the whole block.
+
+Expected: The error reads calmly and the freshness line still tells how old the last good numbers are.
+
+---
+
+### T-5207 · Fix-wave · Idle cockpit still shows a truthful line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. With no run active, read the KPI freshness line.
+
+Expected: It tells when the numbers were computed -- idle does not mean the line disappears.
+
+---
+
+### T-5208 · Fix-wave · Freshness time matches the newest fill time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness line, then the latest fill timestamp in the receipt timeline.
+
+Expected: Both times agree -- the line is anchored to real data, not a separate clock.
+
+---
+
+### T-5209 · Fix-wave · Cockpit line matches journal line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the cockpit KPI freshness line. 1. Open /journal. 2. Read the journal KPI freshness line.
+
+Expected: The two lines agree -- one source of truth for KPI freshness.
+
+---
+
+### T-5210 · Fix-wave · Line agrees with the receipt timeline latest time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness line and the receipt timeline's newest entry.
+
+Expected: The timeline's newest entry is never newer than the freshness claim.
+
+---
+
+### T-5211 · Fix-wave · Net still equals gross plus fees beside the line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read NET, GROSS and FEES next to the freshness line and do the arithmetic.
+
+Expected: Net equals gross plus fees -- the fix added a line, it did not disturb the numbers.
+
+---
+
+### T-5212 · Fix-wave · Line has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness line aloud.
+
+Expected: Everyday words -- no 'staleness', 'TTL', or cache jargon.
+
+---
+
+### T-5213 · Fix-wave · Line never shows a raw timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness line character for character.
+
+Expected: A human time with its zone -- never 1699999999 or an ISO blob without words.
+
+---
+
+### T-5214 · Fix-wave · Line explains what as-of means
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-09
+
+Steps: 1. Open the full cockpit page (/). 2. Read the freshness line and any helper text with it.
+
+Expected: It is clear the time is when the numbers were computed -- a trader knows what the line promises.
+
+---
+
+### T-5215 · Fix-wave · Journal freshness line renders with journal KPIs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Scroll to the KPI block. 3. Read under the KPI numbers.
+
+Expected: The freshness line renders on /journal too -- same promise as the cockpit.
+
+---
+
+### T-5216 · Fix-wave · Journal line names its data time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the freshness line character for character.
+
+Expected: A named time in words -- no codes, no ids.
+
+---
+
+### T-5217 · Fix-wave · Journal line holds beside the calendar context
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the KPI block with the calendar visible.
+
+Expected: The line stays with the KPIs -- the calendar does not push it away or overlap it.
+
+---
+
+### T-5218 · Fix-wave · Journal line reads at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Load /journal at phone width and scroll to the KPIs.
+
+Expected: Fully readable -- nothing truncated, nothing hidden off-screen.
+
+---
+
+### T-5219 · Fix-wave · Journal line advances with new data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Note the freshness time. 2. Wait for new fills, then re-read.
+
+Expected: The time moves forward -- the journal line is live, not a one-time paint.
+
+---
+
+### T-5220 · Fix-wave · Journal line ticks without reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the line, wait two minutes, read it again.
+
+Expected: Still current on its own -- no manual reload needed.
+
+---
+
+### T-5221 · Fix-wave · Journal stale values get a stale label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. If the feed is down, read the journal KPI block.
+
+Expected: Old numbers are labeled stale -- never dressed as fresh.
+
+---
+
+### T-5222 · Fix-wave · Journal line survives month navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Navigate the journal calendar to another month and back, then read the KPI line.
+
+Expected: The line is still there and still truthful after navigation.
+
+---
+
+### T-5223 · Fix-wave · Journal empty state keeps a truthful line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-82
+
+Steps: 1. Open /journal. 2. If the journal has no data, read the KPI block.
+
+Expected: A calm line says there is nothing fresh yet -- never a blank hole.
+
+---
+
+### T-5224 · Fix-wave · Journal line never outruns the calendar
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the freshness line, then the newest calendar day with P&L.
+
+Expected: The line is never newer than the newest real day -- no fiction.
+
+---
+
+### T-5225 · Fix-wave · Journal error keeps the line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-82
+
+Steps: 1. Open /journal. 2. If a journal panel errors, read the whole KPI block.
+
+Expected: Calm error plus a line telling how old the last good numbers are.
+
+---
+
+### T-5226 · Fix-wave · Journal line honest when cockpit differs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-82
+
+Steps: 1. Open /journal. 2. If the cockpit and journal ever disagree, read both lines.
+
+Expected: Each line reports its own truth -- neither hides the mismatch.
+
+---
+
+### T-5227 · Fix-wave · Journal line present on first load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Hard-reload /journal and read the KPI block immediately.
+
+Expected: The line is there on first paint -- not something that appears only after waiting.
+
+---
+
+### T-5228 · Fix-wave · Journal line matches cockpit line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the journal freshness line. 1. Open the full cockpit page (/). 2. Read the cockpit freshness line.
+
+Expected: The two agree -- one freshness truth across routes.
+
+---
+
+### T-5229 · Fix-wave · Journal line matches newest calendar P&L day
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the freshness line and the latest day cell with P&L.
+
+Expected: The line's time covers the newest day -- nothing newer unaccounted.
+
+---
+
+### T-5230 · Fix-wave · Journal KPIs still match cockpit KPIs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the journal KPI numbers. 1. Open the full cockpit page (/). 2. Read the cockpit KPI numbers.
+
+Expected: Values match -- the freshness fix changed labeling, not the numbers.
+
+---
+
+### T-5231 · Fix-wave · Journal line agrees with history summaries
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the journal line. 2. Open /history and read the P&L summaries.
+
+Expected: The summaries' data window fits inside what the line claims is fresh.
+
+---
+
+### T-5232 · Fix-wave · Journal line has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the freshness line aloud.
+
+Expected: Everyday words only.
+
+---
+
+### T-5233 · Fix-wave · Journal line never shows a raw timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the line character for character.
+
+Expected: Human time with its zone -- no raw numbers.
+
+---
+
+### T-5234 · Fix-wave · Journal line reads as one sentence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-82
+
+Steps: 1. Open /journal. 2. Read the full line once.
+
+Expected: One clear sentence a trader understands at a glance.
+
+---
+
+### T-5235 · Fix-wave · Balance block renders on every load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the balance block.
+
+Expected: Balances render -- no 'unavailable' on a healthy load.
+
+---
+
+### T-5236 · Fix-wave · Balance block renders three loads in a row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload the page twice, reading the balance block each time.
+
+Expected: All three loads show balances -- the old intermittency is gone.
+
+---
+
+### T-5237 · Fix-wave · Data-as-of timestamp renders with balances
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the balance block fully.
+
+Expected: A 'Data as of' timestamp sits with the balances -- always, not sometimes.
+
+---
+
+### T-5238 · Fix-wave · Timestamp names its timezone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the 'Data as of' timestamp character for character.
+
+Expected: The zone is named -- the tester knows which clock the time belongs to.
+
+---
+
+### T-5239 · Fix-wave · Balance labels read plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read every label in the balance block.
+
+Expected: Each balance is labeled in plain words -- no abbreviations a trader would not know.
+
+---
+
+### T-5240 · Fix-wave · Balance block holds at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. Load /history at phone width and read the balance block.
+
+Expected: Nothing overlaps or truncates -- balances and timestamp each keep their space.
+
+---
+
+### T-5241 · Fix-wave · Zero balances render as zero, not blank
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. If a balance is zero, read its cell.
+
+Expected: It reads 0 -- never an empty cell that looks like a failed load.
+
+---
+
+### T-5242 · Fix-wave · Balance block position is stable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload /history and watch where the balance block lands.
+
+Expected: Same place every load -- it does not jump around the page.
+
+---
+
+### T-5243 · Fix-wave · Timestamp advances on reload (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Note the 'Data as of' time in the Money & open positions block. 3. Reload the page. 4. Re-read the time.
+
+Expected: The time is current after reload -- the block re-fetched, not just repainted.
+
+---
+
+### T-5244 · Fix-wave · Balances update when holdings change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Note the balances. 2. Wait for a fill or refresh. 3. Re-read.
+
+Expected: Changed holdings show up -- the block tracks reality.
+
+---
+
+### T-5245 · Fix-wave · Five consecutive reloads all return data (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload /history five times with pauses, reading the balance block each time.
+
+Expected: Every load returns balances -- the flaky two-in-three pattern is gone.
+
+---
+
+### T-5246 · Fix-wave · Timestamp never freezes across reloads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload /history three times, reading the timestamp each time.
+
+Expected: Each load shows a live time -- never the same frozen stamp twice in a row on a live feed.
+
+---
+
+### T-5247 · Fix-wave · Slow load still resolves to balances
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Load /history on a slow connection and watch the balance block for 30 seconds.
+
+Expected: It resolves to balances with a timestamp -- never a permanent loading shimmer.
+
+---
+
+### T-5248 · Fix-wave · Refresh during a fill keeps working
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Refresh the balances right as a fill lands.
+
+Expected: The refresh completes and the new fill is reflected -- no wedged state.
+
+---
+
+### T-5249 · Fix-wave · Timestamp ticks without manual refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the timestamp, wait three minutes, read it again.
+
+Expected: The block keeps itself current on its schedule.
+
+---
+
+### T-5250 · Fix-wave · Balances survive a timezone toggle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Toggle the timezone control, then read the balance block.
+
+Expected: Balances intact; the timestamp re-renders in the chosen zone.
+
+---
+
+### T-5251 · Fix-wave · Reload re-fetches visibly (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload /history and watch the balance block.
+
+Expected: A loading state shows, then fresh balances -- the reload is never silent.
+
+---
+
+### T-5252 · Fix-wave · Rapid reloads never wedge the block (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload /history twice in quick succession.
+
+Expected: The block settles on fresh balances -- no duplicate rows, no wedged state.
+
+---
+
+### T-5253 · Fix-wave · Reload is keyboard reachable (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload using the keyboard only (Ctrl+R / Cmd+R).
+
+Expected: The page reloads from the keyboard and the balance block re-fetches.
+
+---
+
+### T-5254 · Fix-wave · Reload during load is safe (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-50
+
+Steps: 1. Open /history. 2. Reload /history, then reload again mid-load.
+
+Expected: The second reload is handled gracefully -- no error, no wedged block.
+
+---
+
+### T-5255 · Fix-wave · Balance block labeled plainly (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the Money & open positions block heading and its timestamp label.
+
+Expected: It says what it is -- balances with a 'Data as of' time -- in plain words.
+
+---
+
+### T-5256 · Fix-wave · Reload works after a failure (rewritten 2026-09-27 — the "balance refresh control" in the original steps never existed; ISS-054)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-50
+
+Steps: 1. Open /history. 2. If a load ever shows the calm failure message, reload the page.
+
+Expected: The retry loads -- one failure does not wedge the block.
+
+---
+
+### T-5257 · Fix-wave · Outage still reads calmly with last-known label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. If balances are truly unavailable, read the block.
+
+Expected: Calm words, a last-known label, and the last good timestamp -- honest, not alarming.
+
+---
+
+### T-5258 · Fix-wave · Failure never shows a bare error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. If the balance fetch fails, read the whole block.
+
+Expected: A human sentence explains it -- no raw status, no empty block.
+
+---
+
+### T-5259 · Fix-wave · Last-known values never pose as live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. If last-known values show, read their labeling.
+
+Expected: Clearly marked as last-known with their age -- never presented as current.
+
+---
+
+### T-5260 · Fix-wave · Timestamp never from the future
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the 'Data as of' timestamp and compare with the desk clock.
+
+Expected: Never ahead of now -- a future stamp would be a lie.
+
+---
+
+### T-5261 · Fix-wave · Empty venue reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. If a venue has no balances, read its row.
+
+Expected: An honest empty note -- not a zero that implies money, not a blank that implies failure.
+
+---
+
+### T-5262 · Fix-wave · Partial failure names the venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. If one venue fails while others load, read the block.
+
+Expected: The failed venue is named -- working venues still show their balances.
+
+---
+
+### T-5263 · Fix-wave · Stale timestamp is labeled stale
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. If the data is old, read the timestamp area.
+
+Expected: Old data is labeled as old -- the block never lets a stale time pass as fresh.
+
+---
+
+### T-5264 · Fix-wave · Block never shows a spinner forever
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+
+Steps: 1. Open /history. 2. Watch a fresh /history load for 30 seconds.
+
+Expected: Loading resolves to balances or a calm failure -- never an eternal spinner.
+
+---
+
+### T-5265 · Fix-wave · Two reads in a row agree
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the balances. 2. Refresh. 3. Read them again.
+
+Expected: Same holdings, same numbers -- refresh does not invent drift.
+
+---
+
+### T-5266 · Fix-wave · Timestamp advances only forward
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-50
+
+Steps: 1. Open /history. 2. Record the timestamp across three refreshes.
+
+Expected: Each time is at or after the previous -- time never runs backward.
+
+---
+
+### T-5267 · Fix-wave · Balance totals tie out
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-50
+
+Steps: 1. Open /history. 2. Add the per-venue balances and compare with any total shown.
+
+Expected: The total equals the sum of its parts.
+
+---
+
+### T-5268 · Fix-wave · Timestamp matches the refresh moment
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-50
+
+Steps: 1. Open /history. 2. Note the clock time, refresh, then read the 'Data as of' time.
+
+Expected: The stamp matches when the fetch happened -- not an older cached time.
+
+---
+
+### T-5269 · Fix-wave · Balances agree with the fills table
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the balances, then scan the fills table for open exposure.
+
+Expected: Nothing contradicts -- the balances and the trade record tell one story.
+
+---
+
+### T-5270 · Fix-wave · Last-known label matches its timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-50
+
+Steps: 1. Open /history. 2. If last-known values show, compare the label's age with the timestamp.
+
+Expected: The stated age matches the stamp -- the label and the time agree.
+
+---
+
+### T-5271 · Fix-wave · Unavailable copy has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-50
+
+Steps: 1. Open /history. 2. If balances are unavailable, read the message aloud.
+
+Expected: Everyday words -- no 'endpoint', 'fetch', or 'upstream' on screen.
+
+---
+
+### T-5272 · Fix-wave · Timestamp reads as words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the 'Data as of' line aloud.
+
+Expected: 'Data as of' plus a human time -- no raw field names.
+
+---
+
+### T-5273 · Fix-wave · No raw numbers without labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-50
+
+Steps: 1. Open /history. 2. Read the whole balance block.
+
+Expected: Every number has a label -- no mystery figures.
+
+---
+
+### T-5274 · Fix-wave · Failure message ends with a next step
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-50
+
+Steps: 1. Open /history. 2. If the fetch fails, read to the end of the message.
+
+Expected: It says what to do -- retry, wait, or check the feed -- not just what broke.
+
+---
+
+### T-5275 · Fix-wave · Refresh button label renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Find the refresh control.
+
+Expected: The button reads 'Refresh the list now' -- spelled out, no truncation.
+
+---
+
+### T-5276 · Fix-wave · Hint text renders with the button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the hint beside the refresh button.
+
+Expected: A hint explains what the button does -- present and readable.
+
+---
+
+### T-5277 · Fix-wave · Button and hint hold at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Load /strategies at phone width and read the refresh area.
+
+Expected: Label and hint fully readable -- nothing cut off.
+
+---
+
+### T-5278 · Fix-wave · Button state renders idle before press
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the refresh button before touching it.
+
+Expected: It reads as ready -- not disabled-looking, not stuck mid-spin.
+
+---
+
+### T-5279 · Fix-wave · Result banner area renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Look at where a refresh result would appear.
+
+Expected: A place for the result exists in the layout -- feedback has somewhere to go.
+
+---
+
+### T-5280 · Fix-wave · Countdown renders beside the button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the runner strip's 'Next check' countdown near the button.
+
+Expected: The countdown is visible so the tester can see what the press does to it.
+
+---
+
+### T-5281 · Fix-wave · Click reloads the list live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click the refresh button and watch the strategy list.
+
+Expected: The list reloads with current data -- names, statuses, chips all fresh.
+
+---
+
+### T-5282 · Fix-wave · Runner strip updates on refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Note the runner strip, click refresh, re-read the strip.
+
+Expected: The strip reflects the reload -- 'Last check' and counts stay truthful.
+
+---
+
+### T-5283 · Fix-wave · Refresh shows a working state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh and watch the button for 5 seconds.
+
+Expected: A brief working state shows during the reload -- the press is never silent.
+
+---
+
+### T-5284 · Fix-wave · Working state resolves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh and keep watching for 30 seconds.
+
+Expected: The working state resolves to a done state -- never a stuck spinner.
+
+---
+
+### T-5285 · Fix-wave · New signals appear after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Note the signal chips, wait for activity, then click refresh.
+
+Expected: New signals show up -- the list is live, not a cached snapshot.
+
+---
+
+### T-5286 · Fix-wave · Refresh after toggle shows the toggle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Toggle a strategy off and on, then click refresh.
+
+Expected: The list shows the current toggle states -- refresh does not resurrect stale ones.
+
+---
+
+### T-5287 · Fix-wave · Clicking refresh is a single safe action
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click the refresh button once.
+
+Expected: One reload happens -- the click does exactly what the label says.
+
+---
+
+### T-5288 · Fix-wave · Rapid double-click does not double-fire
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Double-click the refresh button quickly.
+
+Expected: One reload runs -- the second click is absorbed, no duplicate cycle.
+
+---
+
+### T-5289 · Fix-wave · Refresh button keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Tab to the refresh button and press Enter.
+
+Expected: It activates from the keyboard exactly like a click.
+
+---
+
+### T-5290 · Fix-wave · Refresh works repeatedly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh three times with pauses.
+
+Expected: Each click reloads cleanly -- the control never wedges.
+
+---
+
+### T-5291 · Fix-wave · Refresh during a runner cycle is safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh while the runner is mid-cycle.
+
+Expected: The reload happens without disturbing the running cycle.
+
+---
+
+### T-5292 · Fix-wave · Result banner reports the outcome
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh and read the result banner.
+
+Expected: It reports what happened -- reloaded, or a calm reason it could not.
+
+---
+
+### T-5293 · Fix-wave · Banner dismisses cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh, read the banner, dismiss it if a control exists.
+
+Expected: The banner clears without leaving residue.
+
+---
+
+### T-5294 · Fix-wave · Hint text matches observed behavior
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Read the hint, click refresh, watch the 'Next check' countdown.
+
+Expected: What the hint promises is what happens -- if it says the countdown is untouched, the countdown is untouched; if it says a check runs, a check runs.
+
+---
+
+### T-5295 · Fix-wave · Countdown truthful after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Note the countdown, click refresh, re-read the countdown.
+
+Expected: The countdown reads truthfully -- it either kept its place or re-anchored, and the hint said which.
+
+---
+
+### T-5296 · Fix-wave · No early full cycle unless promised
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh and watch the runner strip for a full cycle.
+
+Expected: A full early cycle fires only if the hint says it does -- never as a surprise.
+
+---
+
+### T-5297 · Fix-wave · Refresh failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. If the reload fails, read the result area.
+
+Expected: A calm reason -- not a silent button, not a raw error.
+
+---
+
+### T-5298 · Fix-wave · Empty list refresh stays honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. If no strategies are installed, click refresh.
+
+Expected: The empty state stays honest -- refresh does not invent rows.
+
+---
+
+### T-5299 · Fix-wave · Stale list labeled after failed refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. If a refresh fails, read the list area.
+
+Expected: The old list is labeled as possibly stale -- never presented as fresh.
+
+---
+
+### T-5300 · Fix-wave · Checking-now state only during a real check
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-39
+
+Steps: 1. Open /strategies. 2. Click refresh and read any 'Checking now' text.
+
+Expected: 'Checking now' appears only while a check truly runs -- never as decoration.
+
+---

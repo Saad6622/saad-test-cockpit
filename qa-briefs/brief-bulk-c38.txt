@@ -1,0 +1,1142 @@
+QA BRIEF — BULK LANE B5 chunk 38/45 (T-7701–T-7800)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-7701 · validator regression · a rejected envelope lists every ingress rule with its own PASS/FAIL status
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EP-ISS199
+
+Steps: 1. Paste a test envelope failing exactly one rule (e.g. the T-7700 seq=0 envelope). 2. Read the full verdict output verbatim (ISS-199: only "Schema REJECTED" with a "Fix ..." message — no per-rule list).
+Expected: The verdict lists every ingress rule — secret, symbol, timestamp, idempotencyKey, seq, mode, and the rest — each with its own PASS/FAIL. ISS-199's exact failure (rejection with no per-rule breakdown) is a FAIL. (T-1356 pinned the evidence; this pins the fixed contract.)
+
+---
+
+### T-7702 · validator regression · an accepted envelope lists every rule as PASS — the all-pass twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EP-ISS199
+
+Steps: 1. Paste a fully valid test envelope (correct secret format aside — use the lane-7 known-valid shape). 2. Read the full verdict output.
+Expected: The per-rule list appears on acceptance too — every rule PASS — not only on rejection. A "Schema PASS" line with no per-rule list is a FAIL under the ISS-199 contract (the user cannot see WHICH rules were evaluated). (T-7701 pinned the rejection list; the acceptance twin is new.)
+
+---
+
+### T-7703 · validator regression · an envelope failing two rules at once names BOTH rules — the precision twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EP-ISS184
+
+Steps: 1. Paste a test envelope with TWO violations (wrong secret AND stale timestamp). 2. Read the full verdict and the per-rule list.
+Expected: Both violated rules are named FAIL in the list — the verdict never reports only the first failure and hides the second. A single-rule-only report on a two-violation envelope is a FAIL. (T-7696 pinned the single-rule refusal; the multi-violation precision contract is new.)
+
+---
+
+### T-7704 · validator regression · the per-rule list never fabricates failures — only truly-violated rules show FAIL
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EP-ISS185
+
+Steps: 1. Paste a test envelope with exactly one violation (non-allowlisted symbol). 2. Read every row of the per-rule list.
+Expected: Exactly one rule shows FAIL — the symbol rule — and every other rule shows PASS. A list that marks innocent rules FAIL alongside the real one is a FAIL. (T-7703 pinned multi-violation naming; the no-false-failure twin is new.)
+
+---
+
+### T-7705 · validator regression · a just-fresh timestamp passes while a stale one fails — the boundary twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EP-ISS186
+
+Steps: 1. Paste the test envelope with a timestamp from 1 minute ago — read the freshness rule's status. 2. Paste it with an 11-minute-old timestamp (ISS-186's case) — read the status again.
+Expected: The 1-minute envelope shows the freshness rule PASS; the 11-minute envelope shows it FAIL — the boundary is exercised, not just the extremes. A validator that fails both or passes both is a FAIL. (T-7698 pinned the stale failure; the boundary contract is new.)
+
+---
+
+### T-7706 · validator regression · a fresh idempotencyKey passes the replay rule — the fresh-key twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EP-ISS187
+
+Steps: 1. Paste a test envelope with a never-used idempotencyKey (e.g. "lane9-fresh-002"). 2. Read the idempotency rule's status in the per-rule list.
+Expected: The replay rule shows PASS for a fresh key — the fix for ISS-187 must flag replays without failing first-time keys. A fresh key marked FAIL is a FAIL. (T-7699 pinned the replay failure; the fresh-key twin is new.)
+
+---
+
+### T-7707 · validator regression · two envelopes with increasing seq pass both; an equal seq fails — the ordering-pair twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EP-ISS198
+
+Steps: 1. Validate two test envelopes for the same symbol and strategy_version with seq=5 then seq=6 — read both verdicts. 2. Validate a third with seq=6 again — read its verdict.
+Expected: seq=5 and seq=6 both show the seq rule PASS; the repeated seq=6 shows it FAIL (not strictly increasing). A validator that passes the repeat is a FAIL. (T-7700 pinned seq=0; the increasing-pair and equal-repeat contract is new.)
+
+---
+## Section EQ · Regression SmartTrade ticket safety — ISS-169/170/171/200 (10 cases: T-7708–T-7717)
+
+Gardener regression block, 2026-09-28 ~02:20 PDT. Regression coverage for ISS-169/170/171/200 (found 2026-09-28 ~09:12–09:22 PDT, lane 4 T-612/T-629/T-636 and lane 7 T-1376/T-1377 — the CRITICAL unreachable PIN gate, the silently-reshaped draft across refresh, the [invalid] leverage 5 with the preview JSON dropping the key, the LIVE FIRE button overlapping the NOTIONAL/CONTRACTS radios). All four are OPEN; their fix waves are sequenced after the 10 lanes — the cases below pin the fixed contracts, so the PIN-less fire button, the unpreserved draft, the unexplained leverage rejection, and the overlapping fire button are each a FAIL. The seams below are the ones the lane cases didn't cover: the PIN screen's Cancel twin, the T-613–T-620 unlock verdict, the invalid-ticket pairing contract, the explicit-reset honesty twin, the preview-JSON key-presence twin, and the misclick-safety incident contract. SAFETY: the ISS-169 case may click FIRE LIVE TICKET on a valid ARMED ticket and must STOP at the PIN screen — never type the PIN, never confirm. ISS-200's radio-click attempt is valid ONLY after the overlap is fixed — if the overlap persists, record the observed-interception FAIL from the visual evidence and stop. No Telegram sends, no key deletions.
+
+---
+
+### T-7708 · smarttrade regression · FIRE LIVE TICKET on a valid ARMED ticket opens the PIN entry screen — the PIN-gate contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EQ-ISS169
+
+Steps: 1. Arm a SmartTrade ticket with the lane-4 standard values (Long, Market, 0.75% risk, lev 1, TP1 1%/0.5, Stop 1%). 2. Click the red "FIRE LIVE TICKET" button. 3. Note what appears — STOP at the PIN screen: never type the PIN, never confirm, then back out.
+Expected: A PIN entry screen opens before anything else — ISS-169's exact failure (the click did nothing visible: no PIN screen, no order, ticket stayed armed) is a FAIL. (T-612 pinned the evidence; this pins the fixed contract. EB T-7580–T-7589 pinned ticket estimates/banners — the PIN gate is a different seam.)
+
+---
+
+### T-7709 · smarttrade regression · the PIN screen offers a Cancel path that returns to the unchanged ARMED ticket — the cancel twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EQ-ISS169
+
+Steps: 1. Reach the PIN screen (T-7708). 2. Press Cancel (or Escape) without typing anything. 3. Read the ticket state.
+Expected: Cancel returns to the ticket exactly as it was — still ARMED, all fields unchanged, nothing fired, no partial state. A PIN screen with no cancel path, or a cancel that leaves the ticket altered, is a FAIL. (T-7708 pinned the PIN screen's appearance; its safe-exit contract is new. SAFETY: never type the PIN, never confirm.)
+
+---
+
+### T-7710 · smarttrade regression · the ISS-169 fix unlocks T-613–T-620 — the PIN-flow unlock verdict
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EQ-ISS169
+
+Steps: 1. Confirm the PIN screen now opens (T-7708 PASS). 2. List the PIN-flow cases T-613–T-618 and T-620 (all BLOCKED on ISS-169) and note each one's stated expectation. 3. Record which become exercisable and whether their first verdicts follow the stated expectations.
+Expected: With the PIN gate reachable, the blocked cases become exercisable and their verdicts are judged against their own stated expectations — the block is lifted by the fix, not by rewriting the cases. A PIN screen that opens but leaves T-613–T-620 unexercisable (e.g. no PIN field to type into) is a FAIL. (The BLOCKED list is ISS-169's own downstream; the unlock verdict is new.)
+
+---
+
+### T-7711 · smarttrade regression · an invalid ticket's FIRE press shows the validation refusal — never the PIN screen — the pairing twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EQ-ISS169
+
+Steps: 1. Build an invalid ticket (e.g. missing a required leg — the lane-4 T-619 shape). 2. Click FIRE LIVE TICKET. 3. Note what appears.
+Expected: The invalid ticket shows its validation refusal and stops BEFORE any PIN screen — the PIN gate is the second gate, not the first. An invalid ticket reaching the PIN screen is a FAIL. (T-619 pinned the invalid-stop contract; this pins the valid→PIN / invalid→refusal pairing after the ISS-169 fix.)
+
+---
+
+### T-7712 · smarttrade regression · the full ticket draft survives a page refresh verbatim — leverage, stop, TP2 included
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EQ-ISS170
+
+Steps: 1. Fill side=Long, leverage=3, stop %=2, TP1 1/0.5, TP2 1/0.5, amount 0.75 (the lane-4 T-629 values). 2. Refresh the page. 3. Read every field back.
+Expected: Every field is identical after reload — leverage still 3, stop % still 2, TP2 still present. ISS-170's exact failure (leverage 3→1, stop % 2→1, TP2 cleared — a silent risk-profile change) is a FAIL. (T-629 pinned the evidence; this pins the fixed contract. DJ T-7443 proved draft-stall indicators for the AI draft — the SmartTrade ticket persistence is a different seam.)
+
+---
+
+### T-7713 · smarttrade regression · if a draft reset is by design, the reload says so — never silent — the honesty twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EQ-ISS170
+
+Steps: 1. Fill the ticket as in T-7712. 2. Refresh. 3. If any field changed, read the page for a statement that the draft was reset.
+Expected: Either the draft survives verbatim (T-7712) or the page explicitly marks the reset — e.g. "draft reset on reload" — before the user can act on it. A silently-reshaped ticket with no reset notice is a FAIL. (T-7712 pinned verbatim survival; the explicit-reset honesty contract is new.)
+
+---
+
+### T-7714 · smarttrade regression · the LEVERAGE field states the allowed range — leverage 5 accepted or refused with the range named
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EQ-ISS171
+
+Steps: 1. Read the LEVERAGE field's label/hint for the allowed range (ISS-171: none surfaced). 2. Type 5 and read the field state and the preview JSON (ISS-171: "[invalid]: 5", preview JSON excluded the leverage key).
+Expected: The field states the allowed range — e.g. "1–3" — and leverage 5 is either accepted per the venue's range or refused WITH the range named; the preview JSON never silently drops the leverage key. ISS-171's exact failure (unexplained [invalid] + dropped key) is a FAIL. (T-636 pinned the evidence; this pins the fixed contract.)
+
+---
+
+### T-7715 · smarttrade regression · the preview JSON carries the leverage key for every accepted value — the key-presence twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EQ-ISS171
+
+Steps: 1. Set leverage to 1, then 3, then the range maximum (per T-7714's surfaced range) — read the preview JSON each time. 2. Check for the leverage key in each.
+Expected: The preview JSON carries "leverage" for every accepted value — the user can always verify what would fire. A preview that drops the key for any accepted value is a FAIL. (T-7714 pinned the range surfacing; the key-presence contract across values is new.)
+
+---
+
+### T-7716 · smarttrade regression · the SIZE radios are all clickable — the fire button overlaps nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EQ-ISS200
+
+Steps: 1. Visually inspect the SIZE group: NOTIONAL, CONTRACTS, and the third size radio vs the "CONFIRM ABOVE — THEN FIRE LIVE" button (ISS-200: the button overlapped the group; NOTIONAL clicks were intercepted, actionability_reason "obscured"). 2. ONLY if the radios are visually unobstructed, click each radio and confirm it selects.
+Expected: No overlap — all three SIZE radios are clickable and the fire button touches none of them. ISS-200's exact failure (fire button obscuring the radios) is a FAIL. (T-1376/T-1377 pinned the evidence; this pins the fixed contract. SAFETY: click the radios only when unobstructed — never click through the overlap.)
+
+---
+
+### T-7717 · smarttrade regression · a NOTIONAL-aimed click intercepted by the LIVE FIRE button is recorded as a safety incident — the misclick-safety twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: EQ-ISS200
+
+Steps: 1. If the ISS-200 overlap persists: record the geometry from the visual evidence (which control covers which radio) and STOP — do not press further. 2. If the overlap is fixed: click the NOTIONAL and CONTRACTS radios directly and confirm each selects without the fire button receiving the click.
+Expected: With the overlap persisting, the case FAILS on the observed interception alone — a click aimed at NOTIONAL reaching the LIVE FIRE button is a safety incident, not a layout nit, and is recorded as such. With the fix in place, no radio click is ever intercepted by the fire button. (T-7716 pinned the overlap's removal; the misclick-safety classification is new — ISS-200's real hazard.)
+
+---
+
+## Section ER · Regression failed-message queue and deliveries — ISS-181/182/183 (8 cases: T-7718–T-7725)
+
+Gardener regression block, 2026-09-28 ~02:20 PDT. Regression coverage for ISS-181/182/183 (found 2026-09-28 ~09:15 PDT, lane 7 T-1319/T-1329/T-1330/T-1338 — the Deliveries table showing 2 of 5 expected alerts, the confirm-less Discard that immediately dropped 2 rows, the queue living inside the "Alerts" region with no landmark of its own). All three are OPEN (ISS-181 triage); their fix waves are sequenced after the 10 lanes — the cases below pin the fixed contracts, so the unexplained 2-of-5, the confirm-less Discard, and the landmark-less queue are each a FAIL. The seams below are the ones the lane-7 cases didn't cover: the triage-closure verdict, the drain-declaration twin, the confirm's scope-naming, the landmark's keyboard reachability, and the Discard↔region belonging contract. SAFETY: read-only — never press Discard on real rows (confirm inspection is arm-and-read-only; Cancel afterwards).
+
+---
+
+### T-7718 · failed-queue regression · the ISS-181 triage decision is recorded — persist the 5 alerts or declare the drain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ER-ISS181
+
+Steps: 1. Read the Appendix I entry ISS-181 (Deliveries lists alr-d4b5f3c9b35d and alr-aede758c9eac; alr-8ae92fe20305, alr-33152a5da376, alr-1754f7d018c1 absent; T-1301–T-1305, T-1316, T-1318 N-A on the same ids). 2. Check whether its Status records the decision: fixture drain (cases realigned) or dropped deliveries (fixed).
+Expected: The triage is CLOSED with the decision recorded — either all 5 alerts persist in the table or the drain is declared and the cases realigned. An open triage with the table still showing 2-of-5 unexplained is a FAIL. (T-1319 pinned the evidence; the triage-closure verdict is new.)
+
+---
+
+### T-7719 · failed-queue regression · if the drain is by design, the Deliveries table states its retention rule on the page — the declared-drain twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ER-ISS181
+
+Steps: 1. Read the Deliveries table's header/copy verbatim. 2. Look for a retention or expiry statement (how long alerts persist, when they drain).
+Expected: If the drain is the design, the table states its retention rule on the page — e.g. "alerts expire after N hours" — so 2-of-5 reads as "expired", never "dropped". A drain with no stated rule is a FAIL. (T-7718 pinned the decision; the on-page retention declaration is new.)
+
+---
+
+### T-7720 · failed-queue regression · the three absent alert ids are findable or declared expired — nowhere-at-all is a FAIL
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ER-ISS181
+
+Steps: 1. Search the alerts table and the Deliveries table for alr-8ae92fe20305, alr-33152a5da376, and alr-1754f7d018c1. 2. Note where each appears — or that it appears nowhere.
+Expected: Each absent id is either found somewhere in the UI or covered by the declared expiry rule (T-7719) — an id that exists nowhere with no expiry explanation is a FAIL, because "drained" and "dropped" are indistinguishable without it. (T-7718 pinned the decision; the per-id audit is new.)
+
+---
+
+### T-7721 · failed-queue regression · Discard opens a confirm step with Cancel before removing any rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ER-ISS182
+
+Steps: 1. On the failed-message queue, arm the Discard control with a single press (do NOT confirm — Cancel afterwards). 2. Note whether a confirm dialog appears (ISS-182: none — "Discarded 2 row(s) for keystrategy-trend1361-1790560800000-short" immediately, 1 row left, T-1339 N-A).
+Expected: A confirm step with Cancel appears BEFORE any row is removed — ISS-182's exact failure (immediate discard, no confirm, no cancel path) is a FAIL. (T-1329/T-1330 pinned the evidence; this pins the fixed contract. SAFETY: arm-and-cancel inspection only — never discard real rows.)
+
+---
+
+### T-7722 · failed-queue regression · the Discard confirm names the row count and the key — Cancel keeps every row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ER-ISS182
+
+Steps: 1. Arm Discard (single press, do NOT confirm). 2. Read the confirm's text verbatim. 3. Press Cancel and count the rows.
+Expected: The confirm names what will be discarded — the row count and the key (e.g. "Discard 2 row(s) for key…?") — and Cancel leaves every row in place. A confirm that names no count/key, or a Cancel that still drops rows, is a FAIL. (T-7721 pinned the confirm's existence; the scope-naming and cancel-keeps contracts are new.)
+
+---
+
+### T-7723 · failed-queue regression · the failed-message queue has its own labelled region landmark
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ER-ISS183
+
+Steps: 1. Inspect the landmarks/region structure around the failed-message queue (ISS-183: no region carries the "Failed-message queue" name — it lives inside the "Alerts" region). 2. Read the region's accessible name.
+Expected: A dedicated labelled region landmark named "Failed-message queue" (or the triage-chosen name) exists — the queue is not just a heading inside "Alerts". ISS-183's exact failure (no own landmark) is a FAIL. (T-1338 pinned the evidence; this pins the fixed contract. EM T-7675 pinned the blackout regions — a different feature's region, not a duplicate.)
+
+---
+
+### T-7724 · failed-queue regression · the queue's region landmark is reachable by keyboard/landmark navigation — the reachability twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ER-ISS183
+
+Steps: 1. Open the landmarks/rotor list via the keyboard. 2. Jump to the "Failed-message queue" landmark. 3. Confirm focus lands at the queue.
+Expected: The landmark appears in the landmarks list under its accessible name and jumping to it moves focus to the queue — a landmark that exists in the tree but is unreachable by keyboard is a FAIL. (T-7723 pinned the landmark's existence; its keyboard reachability is new.)
+
+---
+
+### T-7725 · failed-queue regression · the Discard control lives inside the failed-queue region — the belonging twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ER-ISS182
+
+Steps: 1. Locate the Discard control in the landmark/region structure. 2. Note which labelled region contains it. 3. Read its accessible name for the queue reference.
+Expected: Discard sits inside the failed-message queue's own region (or its confirm names the queue) — a Discard floating in the parent "Alerts" region, acting on the queue without belonging to it, is a FAIL. (T-7721/T-7723 pinned the confirm and the region; the control↔region belonging contract is new.)
+
+---
+
+## Section ES · Regression strategy delete/staleness/counts — ISS-201/202/203/204 (28 cases: T-7726–T-7753)
+
+Gardener regression block, 2026-09-28 ~02:41 PDT. Regression coverage for ISS-201/202/203/204 (found 2026-09-28 ~09:22 UTC, lane 9 UI run T-1607/T-1616/T-1625/T-1609 — the enabled-delete confirm that never called out "enabled", the "Signals sent" 21 vs the visible 16 with 7 rows showing no count at all, the absent stale marking after 125s past the staleness window, the audit log visible only as a jsonl download). All four are OPEN (ISS-204 triage); their fix waves are sequenced after the 10 lanes — the cases below pin the fixed contracts, so an armed delete that hides the enabled state, a header total that cannot be reconciled, an unstale stale row, and an unverifiable audit trail are each a FAIL. The seams below are the ones the lane-9 cases didn't cover: the enabled-confirm's exact contract (id + enabled + history warning, with the disabled twin), the verbatim confirm capture, the zero-count-vs-absent distinction, the explanation-copy twin, the refresh-stability twin, the staleness boundary pair, the window's own stated line, the reload-keeps-stale contract, and the triage-closure verdict on the audit path. SAFETY: delete-confirm inspection is arm-and-Cancel only — never confirm a real delete on any strategy, enabled or disabled.
+
+---
+
+### T-7726 · strategies regression · the armed delete on an ENABLED strategy names the strategy id — the contract pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ES-ISS201
+
+Steps: 1. On /strategies, pick an ENABLED strategy and arm its delete with a single press (do NOT confirm — Cancel afterwards). 2. Read the confirm text verbatim. 3. Cancel.
+Expected: The confirm names the exact strategy id (e.g. FVG-21041). A confirm that never names which strategy is about to be deleted is a FAIL. (T-1602 pinned the pre-fix evidence of the nameless confirm; this pins the fixed contract. T-1607 pinned the missing enabled warning; the id-naming contract is new.)
+
+---
+
+### T-7727 · strategies regression · the armed delete on an ENABLED strategy states that it is enabled — the callout twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ES-ISS201
+
+Steps: 1. On /strategies, arm delete on an ENABLED strategy (single press, do NOT confirm — Cancel afterwards). 2. Read the confirm text verbatim. 3. Cancel.
+Expected: The confirm states in plain words that the strategy is currently enabled (e.g. "This strategy is enabled and checking for signals"). ISS-201's exact failure — the armed confirm with no enabled callout — is a FAIL. (T-1607 pinned the evidence; this pins the fixed contract.)
+
+---
+
+### T-7728 · strategies regression · the enabled-delete confirm warns about signal history — the warning twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ES-ISS201
+
+Steps: 1. Arm delete on an ENABLED strategy (single press, do NOT confirm — Cancel afterwards). 2. Read the confirm text verbatim. 3. Cancel.
+Expected: The confirm warns about the signal-history consequence of deleting (what happens to the history the strategy generated). A confirm that calls out "enabled" but never mentions the signal-history cost is a FAIL. (T-1603 pinned the pre-fix absence; T-7726/T-7727 pinned the id and enabled callouts; the history-warning contract on the enabled confirm is new.)
+
+---
+
+### T-7729 · strategies regression · the disabled-strategy delete confirm reads differently — no enabled claim, honest state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ES-ISS201
+
+Steps: 1. Arm delete on a DISABLED strategy (single press, do NOT confirm — Cancel afterwards). 2. Read the confirm text verbatim. 3. Cancel.
+Expected: The disabled confirm names the strategy id and states it is disabled (or says nothing about enablement) — it never claims the strategy is enabled. A disabled strategy whose confirm carries the enabled-delete copy is a FAIL. (T-7726–T-7728 pinned the enabled contract; the disabled twin is new.)
+
+---
+
+### T-7730 · strategies regression · armed-delete confirm captured verbatim for the gate pack — enabled and disabled side by side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ES-ISS201
+
+Steps: 1. Arm delete on an ENABLED strategy, copy the confirm text verbatim (Cancel afterwards, never confirm). 2. Arm delete on a DISABLED strategy, copy its confirm text verbatim (Cancel afterwards, never confirm). 3. Compare the two side by side.
+Expected: The two confirms are recorded verbatim and differ on the enabled/disabled callout — the enabled copy has the enabled + history warning, the disabled copy has neither. The capture itself is the gate evidence; identical copies for both states is a FAIL. (T-7726–T-7729 pinned the contracts; the verbatim side-by-side capture is new.)
+
+---
+
+### T-7731 · strategies regression · Cancel after arming leaves the ENABLED strategy enabled and intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ES-ISS201
+
+Steps: 1. Note an ENABLED strategy's row state. 2. Arm its delete (single press). 3. Press Cancel. 4. Re-read the row.
+Expected: The strategy is still enabled and the row is unchanged — arming then Canceling is a pure no-op. An armed-then-canceled delete that disables the strategy, removes it, or leaves a pending-delete state is a FAIL. (T-1604 proved Cancel keeps the strategy in the pre-fix UI; this pins the contract under the fixed confirm with the enabled callout present.)
+
+---
+
+### T-7732 · strategies regression · armed delete on a strategy with zero signals still names the id and state — no blank-confirm twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ES-ISS201
+
+Steps: 1. Find a strategy row with zero signals sent. 2. Arm its delete (single press, do NOT confirm — Cancel afterwards). 3. Read the confirm text. 4. Cancel.
+Expected: The confirm still names the strategy id and states its enabled/disabled state; the history warning may adapt to zero history but the id/state callouts never vanish. A zero-history row whose confirm drops the id or state callouts is a FAIL. (T-7726/T-7727/T-7729 pinned the nonzero-row contracts; the zero-signal edge is new.)
+
+---
+
+### T-7733 · strategies regression · the "Signals sent" header total equals the sum of the visible per-row counts — the reconciliation pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS202
+
+Steps: 1. Read the header "Signals sent" total verbatim. 2. Sum the per-row counts shown on every visible strategy row (ISS-202: header 21, rows summed 16, 7 of 15 rows showed no count). 3. Compare.
+Expected: The header total equals the sum of the visible per-row counts. A header number that cannot be reconciled from the rows is a FAIL. (T-1616 pinned the pre-fix chips-region version; ISS-202's folded-in evidence showed no chips region exists — counts are plain row text — so this pins the fixed contract on the row text, not on chips.)
+
+---
+
+### T-7734 · strategies regression · every strategy row shows its signal count — no silent missing count
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS202
+
+Steps: 1. Walk all 15 strategy rows. 2. Note which rows render a signal count and which render none.
+Expected: Every row shows its count. A row with silently no count — the exact 7-row gap from ISS-202 — is a FAIL unless the UI explains the row (T-7735). (T-7733 pinned the sum; the per-row presence sweep is new.)
+
+---
+
+### T-7735 · strategies regression · if the UI declares why totals can differ, quote the explanation — the declared-difference twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ES-ISS202
+
+Steps: 1. Read the strategies page copy around the "Signals sent" header verbatim. 2. Look for any stated reason the header could differ from the visible rows (e.g. counts covering disabled/deleted strategies, a time window).
+Expected: If a difference is declared, the explanation is quoted verbatim and is checkable (the rows it covers are nameable) — a vague "may differ" with no checkable content is a FAIL. If no difference is declared, T-7733's exact equality stands as the contract. (T-7733 pinned the equality contract; the explanation-quote twin covers the declared-difference branch.)
+
+---
+
+### T-7736 · strategies regression · a genuine zero-count row reads "0", not blank — the zero-vs-absent distinction
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS202
+
+Steps: 1. Find a strategy with genuinely zero signals sent (or disable one and check). 2. Read its row's count cell. 3. Find a row where the count was absent in ISS-202's run and compare.
+Expected: Zero reads as an explicit "0" (or "0 signals"), visually distinct from a missing count — the user can tell "never fired" from "no data". A blank cell that could mean either is a FAIL. (T-7734 pinned presence; the zero-vs-blank distinction is new.)
+
+---
+
+### T-7737 · strategies regression · counts don't flicker between renders — the after-refresh stability twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS202
+
+Steps: 1. Record the header total and every per-row count. 2. Reload the page. 3. Record them again. 4. Compare.
+Expected: All numbers agree across the reload — no count flickers up, down, or vanishes between renders. Flicker between renders is a FAIL. (T-1624 proved chip-count survival under the old chips design; the row-text flicker contract is new.)
+
+---
+
+### T-7738 · strategies regression · per-row counts are labeled text the tester can point at — the no-focusable-text audit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS202
+
+Steps: 1. Note how each per-row count is presented (ISS-202's folded-in evidence: counts are plain non-focusable text, not announced — T-1618's chip announcement never applied). 2. Read the count's label context (does it say "signals sent" next to the number, or is the number bare?).
+Expected: Each count is readable with its label in plain words — a bare number with no nearby "signals sent" label that only makes sense if you already know the column is a FAIL. (T-1618 pinned chip announcements; the plain-text label audit on the row counts is new.)
+
+---
+
+### T-7739 · strategies regression · the fixed contract holds after a new signal arrives — counts move together
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS202
+
+Steps: 1. Record the header total and per-row counts. 2. Wait for one new signal to be attributed to a strategy (or note the runner strip's next signal; never force one). 3. Re-read the header total and that strategy's row count.
+Expected: The strategy's row count and the header total each moved by the same increment — the two stay in agreement as signals arrive. A row that moves while the header doesn't (or vice versa) is a FAIL. (T-7733 pinned static agreement; the arrival-time agreement is new.)
+
+---
+
+### T-7740 · strategies regression · data older than the staleness window reads "stale" in plain words — the contract pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS203
+
+Steps: 1. Find a strategy row whose data is older than the staleness window (ISS-203: rows read "last evaluated 2m ago"/"10m ago" with no stale marking after 125s past the window). 2. Read the row's age line verbatim.
+Expected: The row carries a plain-words "stale" marking alongside its age. A row older than the window with no stale marking is a FAIL. (T-1625 pinned the stale chip under the old chips design; this pins the fixed contract on the strategy rows.)
+
+---
+
+### T-7741 · strategies regression · the staleness boundary behaves — just-under reads fresh, just-over reads stale
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS203
+
+Steps: 1. Read two rows: one evaluated just under the staleness window, one just over it. 2. Note which carries the "stale" marking.
+Expected: Just-under reads fresh (no stale marking), just-over reads stale — the boundary is a real line, not a gradual drift. A just-over row without the marking, or a just-under row wrongly marked, is a FAIL. (T-7740 pinned the over-window contract; the boundary pair is new.)
+
+---
+
+### T-7742 · strategies regression · the staleness window itself is stated in the UI — the window-line twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ES-ISS203
+
+Steps: 1. Search the /strategies page copy for a stated staleness window (how long data counts as fresh, e.g. "stale after N seconds"). 2. Quote it verbatim.
+Expected: The window is stated in plain words on the page. A "stale" marking with no stated window anywhere the user can read it is a FAIL — the user cannot know what "stale" means. (T-7740 pinned the marking; the stated-window twin is new.)
+
+---
+
+### T-7743 · strategies regression · reload keeps the stale marking — the persistence twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS203
+
+Steps: 1. Note which rows carry the "stale" marking. 2. Reload the page. 3. Note which rows carry it now.
+Expected: The same rows (plus any that newly crossed the window) carry the marking — a reload never wipes the stale state. A reload that clears the marking is a FAIL. (T-7740 pinned the marking; the reload-persistence contract is new.)
+
+---
+
+### T-7744 · strategies regression · the stale marking is not color-only — text or an accessible name carries it
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS203
+
+Steps: 1. Read a stale row in the browser-rendered text. 2. Check whether "stale" appears as words (not just a colored dot or a badge with no name).
+Expected: "Stale" is present as text the tester can read and quote — not conveyed by color alone. A color-only stale indicator is a FAIL. (T-7740 pinned the plain-words contract; the color-only anti-pattern check is new.)
+
+---
+
+### T-7745 · strategies regression · a fresh evaluation clears the stale marking — the recovery twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS203
+
+Steps: 1. Note a row carrying the "stale" marking. 2. Wait for the strategy to be re-evaluated (or press its Check-now control; never force the engine). 3. Re-read the row.
+Expected: The fresh row no longer carries the stale marking and its age line reads current. A row that stays marked "stale" after a fresh evaluation is a FAIL. (T-7740–T-7743 pinned marking contracts; the marking's removal on recovery is new.)
+
+---
+
+### T-7746 · strategies regression · "last evaluated" age and the stale marking agree on the same row — the agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS203
+
+Steps: 1. Read several rows' "last evaluated" ages and their stale markings. 2. Check the two agree: every row older than the window is marked, no row under the window is marked.
+Expected: Age and marking agree on every row — a marked-fresh or unmarked-stale row is a FAIL. (T-7740 pinned the marking, T-7742 the window; the per-row age↔marking agreement is new.)
+
+---
+
+### T-7747 · strategies regression · the ISS-204 triage decision is recorded — in-UI audit view or declared download path
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS204
+
+Steps: 1. Read the Appendix I entry ISS-204. 2. Check whether its Status records the decision: an in-UI audit view now exists, or the jsonl download is documented as the intended path.
+Expected: The triage is CLOSED with the decision recorded — either deletions are inspectable in the UI, or the download is documented as the intended path. An open triage with deletions still unverifiable through the UI is a FAIL. (T-1609 pinned the audit evidence; the triage-closure verdict is new.)
+
+---
+
+### T-7748 · strategies regression · the UI's own export button produces the audit jsonl — the export-path twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ES-ISS204
+
+Steps: 1. Use the UI's own audit export control (the /v1/audit/export download path, pressed from the page — no address-bar fetching). 2. Confirm a jsonl file downloads.
+Expected: The export fires from the UI's own button and delivers a jsonl file — a download that only works by pasting the URL, or a button that produces nothing, is a FAIL. (T-7747 pinned the triage decision; the UI-path export contract is new. SAFETY: read-only download, no deletions.)
+
+---
+
+### T-7749 · strategies regression · the exported audit jsonl lists a deletion entry — the content twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ES-ISS204
+
+Steps: 1. Export the audit jsonl through the UI's own button. 2. Open it and find a strategy-deletion entry (prior QA-wave test deletions exist in the store). 3. Quote one entry verbatim.
+Expected: At least one deletion entry is present and quoted — an audit export with no deletion entries at all (while test deletions occurred) is a FAIL. (T-1609 noted the audit exists; the entry-presence contract is new. SAFETY: no new deletions — use entries already in the store.)
+
+---
+
+### T-7750 · strategies regression · the deletion entry carries a timestamp and the strategy id — the entry-fields twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ES-ISS204
+
+Steps: 1. Export the audit jsonl through the UI's own button. 2. Read one deletion entry's fields.
+Expected: The entry carries both a timestamp and the deleted strategy's id — an entry missing either is a FAIL. (T-7749 pinned the entry's presence; the fields contract is new.)
+
+---
+
+### T-7751 · strategies regression · every deletion entry in the export names its actor — the accountability twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ES-ISS204
+
+Steps: 1. Export the audit jsonl through the UI's own button. 2. Scan all deletion entries for an actor/source field (who or what deleted — the UI delete flow, the seeded fixture, etc.).
+Expected: Each deletion entry names its actor or source — entries with no actor are a FAIL, because "who deleted it" is the audit trail's job. (T-7750 pinned id + timestamp; the actor contract is new.)
+
+---
+
+### T-7752 · strategies regression · the audit view (if built) shows the same entries as the jsonl — the agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ES-ISS204
+
+Steps: 1. If the ISS-204 decision built an in-UI audit view, open it and count its deletion entries. 2. Export the jsonl and count its deletion entries. 3. Compare. If no in-UI view exists (download declared the intended path), record N-A with the ISS-204 decision quoted.
+Expected: The in-UI view and the jsonl agree on the entries — a view that shows fewer entries than the export is a FAIL. (T-7747 pinned the triage branch; the surface-agreement contract is new.)
+
+---
+
+### T-7753 · strategies regression · the audit export never leaks secrets — the scrub twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ES-ISS204
+
+Steps: 1. Export the audit jsonl through the UI's own button. 2. Scan every entry for key material (bot tokens, webhook secrets, full chat ids, API keys).
+Expected: The export carries no secrets — any credential material in the audit trail is a FAIL. (T-7748–T-7752 pinned the audit content contracts; the scrub contract is new.)
+
+---
+
+## Section ET · Regression notifications honesty — ISS-205/206/207/208 (28 cases: T-7754–T-7781)
+
+Gardener regression block, 2026-09-28 ~02:41 PDT. Regression coverage for ISS-205/206/207/208 (found 2026-09-28 ~09:22 UTC, lane 10 UI run T-1955/T-1959–T-1961/T-1964/T-1965 — the Save button that reads "Save these settings" vs the plan's "Save", the absent ntfy/Apprise/push-link settings behind a redirect sentence, the keyboard toggle flip that never announced its new state, the silent discard of unsaved flips on navigation). All four are OPEN (ISS-205 and ISS-206 triage); their fix waves are sequenced after the 10 lanes — the cases below pin the fixed contracts, so a copy mismatch, a dead-end push region, an unannounced flip, and a silently-discarded toggle are each a FAIL. The seams below are the ones the lane-10 cases didn't cover: the verbatim-copy record, the triage-closure verdicts, the Open-push-settings link target, the topic+named-state announcement contract, the mouse↔keyboard parity, the no-load-announcement rule, and the full unsaved-warning contract (fire, name, stay, leave, no-false-positive). SAFETY: no real Telegram preview sends — these are topic toggles and Save-button reads only; nothing here sends a message.
+
+---
+
+### T-7754 · notifications regression · the ISS-205 triage decision is recorded — the plan now matches the button verbatim
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ET-ISS205
+
+Steps: 1. Read the Appendix I entry ISS-205. 2. Check whether its Status records the decision: button copy stays and the plan cases were realigned, or the button was relabeled and the plan kept.
+Expected: The triage is CLOSED with the decision recorded — either the plan cases quote the button's actual label verbatim, or the button was changed to the plan's wording. An open triage with the plan quoting a label the button doesn't carry is a FAIL. (T-1955 pinned the copy mismatch; the triage-closure verdict is new.)
+
+---
+
+### T-7755 · notifications regression · the Save button copy is recorded verbatim — the quote twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ET-ISS205
+
+Steps: 1. On /notifications, read the Save button's visible label verbatim (ISS-205: "Save these settings"). 2. Read its accessible name (what assistive tech reports).
+Expected: The visible label and the accessible name agree, and both are recorded verbatim in the case log. A label/announced-name split is a FAIL. (T-1955 pinned the mismatch; the verbatim accessible-name agreement is new.)
+
+---
+
+### T-7756 · notifications regression · no case quotes the losing wording — the winner-only contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS205
+
+Steps: 1. Take the ISS-205 triage winner (whichever wording the decision kept). 2. Search the live /notifications page for the LOSING wording.
+Expected: The losing wording appears nowhere on the page — no stale label, no tooltip, no helper text quoting the old copy. The loser still on the page is a FAIL. (T-7754 pinned the decision; the loser-sweep is new.)
+
+---
+
+### T-7757 · notifications regression · the Save button copy survives a reload — the copy-stability twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS205
+
+Steps: 1. Read the Save button copy. 2. Reload the page. 3. Read it again.
+Expected: The copy is byte-identical across the reload — the decision is not a first-render-only artifact. Drift between renders is a FAIL. (T-7755 pinned the copy; the reload-stability contract is new.)
+
+---
+
+### T-7758 · notifications regression · the button copy is a single text node — no wrapped-clipping twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS205
+
+Steps: 1. Read the Save button as rendered (ISS-205's longer label: "Save these settings"). 2. Check the label is fully visible and unclipped in its button.
+Expected: The full label renders without clipping or wrapping mid-word. A clipped longer label is a FAIL. (T-7755 pinned the copy; the render-integrity twin is new.)
+
+---
+
+### T-7759 · notifications regression · the plan's "Save"-family expectations were realigned to the winning copy — the case-text audit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS205
+
+Steps: 1. Take the ISS-205 triage winner. 2. Check the notification Save-family cases (T-1954–T-1958, T-1966–T-1968) against the live button.
+Expected: Every Save-family expectation still passes against the winning copy — no case in the plan expects a label the button doesn't carry. A stale expectation is a FAIL. (T-7754 pinned the decision; the family-wide audit is new.)
+
+---
+
+### T-7760 · notifications regression · the button's action matches its longer label — "these settings" means exactly the page's settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS205
+
+Steps: 1. Read what the longer label promises ("these settings" = the /notifications page's settings). 2. Check the push-settings redirect sentence ("Those settings live under Settings → Push notifications").
+Expected: The longer label never misleads — if push settings live only under Settings, the "these settings" label does not promise to save them (T-7762's contract). A label whose promise the button can't keep is a FAIL. (T-7754–T-7759 pinned the copy; the promise-scope contract is new.)
+
+---
+
+### T-7761 · notifications regression · the ISS-206 triage decision is recorded — push under Settings only, or surfaced on /notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS206
+
+Steps: 1. Read the Appendix I entry ISS-206. 2. Check whether its Status records the decision: push settings live only under Settings (redirect copy is the contract), or /notifications now surfaces them.
+Expected: The triage is CLOSED with the decision recorded — either the redirect sentence is the documented contract and the plan cases were realigned, or the ntfy/Apprise/push-link settings render on /notifications. An open triage with the plan still expecting settings that aren't there is a FAIL. (T-1959–T-1961 pinned the absent settings; the triage-closure verdict is new.)
+
+---
+
+### T-7762 · notifications regression · the redirect sentence is quoted verbatim — the contract copy twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: ET-ISS206
+
+Steps: 1. On /notifications, read the push region's redirect sentence verbatim (ISS-206: "Those settings live under Settings → Push notifications"). 2. Note the exact arrow/separator character used.
+Expected: The sentence is recorded verbatim and states the path plainly — a redirect sentence that names no destination is a FAIL. (T-7761 pinned the decision; the verbatim redirect copy is new.)
+
+---
+
+### T-7763 · notifications regression · "Open push settings" lands on the Push notifications group — the link-target twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS206
+
+Steps: 1. On /notifications, click "Open push settings". 2. Note the page and group that opens. 3. Navigate back.
+Expected: The link opens /settings on the Push notifications group (or the ISS-206 decision's declared target) — the group heading reads "Push notifications", not just /settings top. A link landing on the wrong group is a FAIL. (T-7762 pinned the sentence; the link-target contract is new.)
+
+---
+
+### T-7764 · notifications regression · the redirect sentence survives a reload — the contract-stability twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS206
+
+Steps: 1. Read the push region's redirect sentence. 2. Reload the page. 3. Read it again.
+Expected: The sentence and the link are identical across the reload — the contract is not a first-render-only artifact. Drift is a FAIL. (T-7762 pinned the copy; the reload-stability contract is new.)
+
+---
+
+### T-7765 · notifications regression · the push region names ntfy and Apprise — the two-channel contract
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS206
+
+Steps: 1. If the ISS-206 decision surfaced push settings on /notifications, check both ntfy and Apprise are present. 2. If the decision kept them under Settings only, check the redirect sentence names or implies both channels (or record the declared scope).
+Expected: Whichever branch won, both channels are accounted for — a decision that surfaces only one of ntfy/Apprise with the other unreachable is a FAIL. (T-7761 pinned the decision; the two-channel coverage contract is new.)
+
+---
+
+### T-7766 · notifications regression · the ?group=push deep link opens the right group — the deep-link twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS206
+
+Steps: 1. Open the Settings URL the push link targets (the ?group=push deep link), directly in the browser address bar. 2. Note which group opens. 3. Navigate back to /notifications.
+Expected: The deep link lands on the Push notifications group every time — a link that works from the page but 404s/falls-back when opened directly is a FAIL. (T-7763 pinned the link target; the direct-open contract is new.)
+
+---
+
+### T-7767 · notifications regression · the plan's push-on-/notifications expectations were realigned — the case-text audit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS206
+
+Steps: 1. Take the ISS-206 triage winner. 2. Check the notification push-family cases (T-1959–T-1961 and the push-suite cases) against the live page.
+Expected: Every push-family expectation still passes against the decided layout — no case expects ntfy/Apprise controls on /notifications if the decision moved them to Settings. A stale expectation is a FAIL. (T-7761 pinned the decision; the family-wide audit is new.)
+
+---
+
+### T-7768 · notifications regression · Space-flipping a topic toggle announces the new state in words — the contract pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS207
+
+Steps: 1. On /notifications, focus a topic toggle. 2. Press Space to flip it. 3. Listen (via the screen-reader/live-region text) for the announcement. 4. Restore the toggle to its original state afterwards.
+Expected: The flip announces the new state in words (ISS-207's exact failure: nothing announced — only the check changed). A Space flip with no spoken state is a FAIL. (T-1964 pinned the pre-fix behavior; this pins the fixed contract. SAFETY: toggles restored; no Save pressed; no preview sent.)
+
+---
+
+### T-7769 · notifications regression · the announcement names the topic and the new state — the naming twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS207
+
+Steps: 1. Focus a topic toggle. 2. Press Space. 3. Capture the announcement text verbatim. 4. Restore the toggle.
+Expected: The announcement names both the topic (which alert stream) and the new state ("on"/"off") — a bare "checked"/"unchecked" with no topic name is a FAIL, because three toggles share the same bare words. (T-7768 pinned the announcement's existence; the topic+naming contract is new. SAFETY: toggles restored; no Save pressed.)
+
+---
+
+### T-7770 · notifications regression · mouse-click flip and Space flip announce the same — the parity twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS207
+
+Steps: 1. Focus a topic toggle, press Space, capture the announcement. 2. Restore. 3. Click the same toggle with the mouse, capture the announcement. 4. Restore. 5. Compare.
+Expected: Both input paths announce the same topic+state text — the Space flip is never the silent one. A flip path that stays silent is a FAIL. (T-7768/T-7769 pinned the Space contract; the mouse parity is new. SAFETY: toggles restored; no Save pressed.)
+
+---
+
+### T-7771 · notifications regression · the toggle announcement does not fire on page load — the no-false-announcement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS207
+
+Steps: 1. Load /notifications fresh. 2. Watch the live region for 10 seconds with no interaction. 3. Note any announcement.
+Expected: No toggle announcement fires on load — the live region stays silent until a flip happens. A page-load announcement is a FAIL (false positive). (T-7768 pinned the on-flip contract; the no-announcement-on-load contract is new.)
+
+---
+
+### T-7772 · notifications regression · consecutive flips announce consecutively — the replace-never-stack twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS207
+
+Steps: 1. Focus a topic toggle. 2. Press Space twice (flip, flip back). 3. Capture both announcements. 4. Leave the toggle in its original state.
+Expected: Two announcements, one per flip, in order — the second replaces the first; a backlog of queued/stacked announcements is a FAIL. (T-7768–T-7770 pinned the single-flip contracts; the consecutive-flip ordering is new. SAFETY: toggle restored; no Save pressed.)
+
+---
+
+### T-7773 · notifications regression · the announcement names the state change, never the raw input state — the plain-words twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS207
+
+Steps: 1. Focus a topic toggle. 2. Press Space. 3. Read the announcement text. 4. Restore the toggle.
+Expected: The announcement uses the topic's own vocabulary ("alerts on/off", "topic enabled/disabled" — plain words), never raw input-attribute language like "checkbox checked" or "aria-checked true". Raw-attribute announcements are a FAIL. (T-7769 pinned the topic+naming; the plain-words vocabulary contract is new. SAFETY: toggle restored; no Save pressed.)
+
+---
+
+### T-7774 · notifications regression · the toggle's visual state and the announced state agree — the agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS207
+
+Steps: 1. Focus a topic toggle, note its visual state. 2. Press Space. 3. Compare the announcement's claimed state with the visual check. 4. Restore.
+Expected: The announced state matches the visible check — an announcement claiming "on" while the toggle reads off is a FAIL. (T-7768 pinned the announcement; the announce↔visual agreement is new. SAFETY: toggle restored; no Save pressed.)
+
+---
+
+### T-7775 · notifications regression · flipping a toggle then navigating fires a warning — the contract pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS208
+
+Steps: 1. On /notifications, flip one topic toggle off. 2. Click the Home navigation (ISS-208: navigated with no warning, flip silently discarded). 3. Note whether a warning appears; choose Stay/keep editing to return.
+Expected: A warning fires before the navigation completes. ISS-208's exact failure — silent navigation with the flip discarded — is a FAIL. (T-1965 pinned the pre-fix absence; this pins the fixed contract. SAFETY: restore the toggle and never Save; no preview sent.)
+
+---
+
+### T-7776 · notifications regression · the warning names the unsaved changes — the naming twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS208
+
+Steps: 1. Flip two topic toggles. 2. Attempt to navigate away. 3. Read the warning text verbatim. 4. Stay on the page.
+Expected: The warning names the unsaved changes (the topic names, the count) — a generic "you have unsaved changes" that never says what is unsaved is a FAIL. (T-7775 pinned the warning's existence; the change-naming contract is new. SAFETY: toggles restored; no Save pressed.)
+
+---
+
+### T-7777 · notifications regression · staying keeps the flips intact — the stay twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS208
+
+Steps: 1. Flip a topic toggle off. 2. Attempt to navigate; when the warning appears, choose Stay (or the keep-editing option). 3. Read the toggle's state. 4. Restore the toggle afterwards.
+Expected: The toggle is still flipped — the warning's Stay path never discards the edit. A Stay that resets the toggle is a FAIL. (T-7775 pinned the warning; the stay-keeps-flips contract is new. SAFETY: toggle restored; no Save pressed.)
+
+---
+
+### T-7778 · notifications regression · leaving discards honestly with a named consequence — the leave twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS208
+
+Steps: 1. Flip a topic toggle off. 2. Attempt to navigate; when the warning appears, choose to leave without saving. 3. Navigate back to /notifications. 4. Read the toggle's state.
+Expected: The toggle is back to its saved state, and the warning had named the consequence ("your changes will be discarded") before leaving — a Leave that silently keeps the flip, or a warning that never names the discard, is a FAIL. (T-7775 pinned the warning; the leave-discards-honestly contract is new. SAFETY: no Save pressed; the discard is the warning's own path, not an unguarded loss.)
+
+---
+
+### T-7779 · notifications regression · no warning when nothing changed — the no-false-positive twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: ET-ISS208
+
+Steps: 1. Load /notifications with no edits. 2. Click the Home navigation. 3. Note whether any warning appears.
+Expected: Navigation completes with no warning — the warning fires only on real unsaved changes. A warning on a clean page is a FAIL (false positive). (T-7775 pinned the warning contract; the no-changes twin is new.)
+
+---
+
+### T-7780 · notifications regression · the warning fires on sidebar navigation too — the second-path twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS208
+
+Steps: 1. Flip a topic toggle off. 2. Navigate via the sidebar (a different target than Home, e.g. /settings). 3. Note whether the warning fires; choose Stay. 4. Restore the toggle.
+Expected: The warning fires on the sidebar path too — the guard covers every exit, not just the Home link. A second path that navigates silently is a FAIL. (T-7775 pinned the Home path; the second-exit contract is new. SAFETY: toggle restored; no Save pressed.)
+
+---
+
+### T-7781 · notifications regression · browser Back with unsaved flips is guarded — the Back-button twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: ET-ISS208
+
+Steps: 1. Flip a topic toggle off. 2. Press the browser Back button. 3. Note whether the page blocks or warns before leaving. 4. Stay and restore the toggle.
+Expected: The Back-button exit is guarded too — a silent Back that discards the flips is a FAIL. (T-7775 pinned the link path, T-7780 the sidebar path; the browser-Back path is new. SAFETY: toggle restored; no Save pressed.)
+
+---
+
+## Section EU · Regression push-settings fallback explanation — ISS-209 (6 cases: T-7782–T-7787)
+
+Gardener regression block, 2026-09-28 ~02:59 PDT. Regression coverage for ISS-209 (found 2026-09-28 ~09:50 UTC, lane 5 UI run T-898 — the Settings push group showed no fallback-channel explanation after both push URLs were cleared and saved ("Saved group push — version 5."): the fallback ("console fallback (no push URL)") was visible only in the Notifications message history, never on the Settings page). ISS-209 is OPEN; its fix wave is sequenced after the lanes — the cases below pin the fixed contract. T-898 pins the direct contract (clear both, save, page explains the fallback); the seams below are the ones T-898 doesn't cover: the fallback name agreeing between the Settings page and the message history, the explanation surviving a reload, the explanation clearing when a URL is restored, the single-URL partial state never showing the fallback, the empty-URL save being a real versioned save, and the explanation speaking plain words instead of internal config terms. SAFETY: every clear-save step records the current URL values first and restores them at the end — the block must never leave the push group in the fallback state. No real Telegram previews are sent by these cases; only Saves and reads.
+
+---
+
+### T-7782 · push fallback regression · the settings fallback explanation names the same channel as the message history — the naming-agreement twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EU-ISS209
+
+Steps: 1. Record the current ntfy and Apprise values. 2. Clear both fields, Save, and read the push group's fallback explanation verbatim. 3. On /notifications, read the message history's fallback wording verbatim (ISS-209 observed "console fallback (no push URL)"). 4. Restore the recorded values, Save.
+Expected: The Settings explanation and the history line name the same fallback channel — the two surfaces agree on where notifications go now. A settings explanation that names a different channel than the history, or two different names for one fallback, is a FAIL. (T-898 pinned the direct contract; the cross-surface naming agreement is new.)
+
+---
+
+### T-7783 · push fallback regression · the fallback explanation survives a reload — the persistence twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: EU-ISS209
+
+Steps: 1. Record the current ntfy and Apprise values. 2. Clear both fields, Save, confirm the fallback explanation is shown. 3. Reload the /settings page and reopen the Push notifications group. 4. Read the group. 5. Restore the recorded values, Save.
+Expected: After the reload, the push group still shows the fallback explanation in plain words — it is not reduced to two empty fields that look like an unconfigured state. A fallback explanation that vanishes on reload is a FAIL. (T-900 proved field persistence for the filled state; the explanation's persistence in the fallback state is new.)
+
+---
+
+### T-7784 · push fallback regression · restoring a URL clears the fallback explanation — the recovery twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EU-ISS209
+
+Steps: 1. Record the current ntfy and Apprise values. 2. Clear both fields, Save, confirm the fallback explanation is shown. 3. Paste back one of the recorded values, Save. 4. Read the push group.
+Expected: The fallback explanation is gone and the group names the restored channel as the live one — no stale fallback note lingers after a URL is restored. A fallback explanation that persists with a URL configured is a FAIL. (SAFETY: both original values restored and saved by the end of the case.)
+
+---
+
+### T-7785 · push fallback regression · one URL configured, one empty — no fallback shown, the live channel named — the partial-state twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EU-ISS209
+
+Steps: 1. Record the current ntfy and Apprise values. 2. Clear only ONE of the two fields (leave the other filled), Save. 3. Read the push group. 4. Restore the cleared value, Save.
+Expected: With one channel still configured, the group names that live channel and does NOT show the fallback explanation — the fallback contract is "both empty", not "any empty". A fallback explanation shown while a URL is configured is a FAIL. (SAFETY: original values restored by the end of the case.)
+
+---
+
+### T-7786 · push fallback regression · the empty-URL save is a real versioned save — no silent swallow
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EU-ISS209
+
+Steps: 1. Record the current ntfy and Apprise values. 2. Read the group's saved-version line. 3. Clear both fields, Save. 4. Read the saved-version line again (ISS-209 observed "Saved group push — version 5."). 5. Restore the recorded values, Save.
+Expected: The Save is acknowledged as a real save — the version counter advances (e.g. "Saved group push — version 6.") and the saved state reads back empty. A version that doesn't advance, or a save line that silently keeps the old version number, is a FAIL. (SAFETY: original values restored and saved by the end of the case.)
+
+---
+
+### T-7787 · push fallback regression · the fallback explanation speaks plain words — no internal config terms
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: EU-ISS209
+
+Steps: 1. Record the current ntfy and Apprise values. 2. Clear both fields, Save. 3. Read the push group's fallback explanation verbatim. 4. Restore the recorded values, Save.
+Expected: The explanation reads in plain words — it says where notifications go now in human terms (ISS-209's history wording "console fallback (no push URL)" is the plain-words bar). An explanation that exposes internal config terminology, raw channel keys, or code-shaped identifiers instead of plain words is a FAIL. (SAFETY: original values restored and saved by the end of the case.)
+
+---
+
+## Section EV · Regression settings validation + push-field honesty — ISS-211–ISS-218 (32 cases: T-7788–T-7819)
+
+Gardener regression block, 2026-09-28 ~03:20 PDT. Regression coverage for ISS-211–ISS-218 (found 2026-09-28 by parallel UI lanes — all eight are OPEN: the Settings validation surface lets empty/whitespace JSON bodies through with no refusal, refuses apply-without-approval with a coherence complaint instead of naming approval, shows raw "409: confirm not pending" for expired codes, shows no protected badges in the group list, keeps the push group JSON-only with no separate ntfy/Apprise/budget fields, accepts a non-URL ntfy value, accepts a daily budget of 99999999999 with no upper bound, and ships the budget field with no USD label). Each issue gets four cases: a direct verbatim pin of the shipped copy/behavior, the fixed-contract twin, and two genuinely uncovered seams. SAFETY: every case that saves or applies records the current values first and restores them by the end — no case may leave a settings group in a destructive or unapproved state; dangerous controls are never pressed, only observed.
+
+---
+
+### T-7788 · settings validation regression · saving an empty JSON body pins the shipped behavior — the direct pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS211
+
+Steps: 1. Open the settings group, record the current config body and the current version number. 2. Replace the body with exactly `{}` and press Save. 3. Capture the response line verbatim. 4. Restore the recorded body and Save again.
+Expected: The response is captured verbatim. ISS-211's exact behavior — `{}` accepted silently as a new version — is a FAIL: the fixed contract is a plain-words refusal ("nothing to save" / "empty config not saved") or an explicit deliberate-clear confirmation naming what is being cleared. (SAFETY: config recorded first, restored after; the restore itself is read back to confirm the group is back on its real config.)
+
+---
+
+### T-7789 · settings validation regression · a refused save never advances the version counter — the version-stays twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS211
+
+Steps: 1. Record the current version number of a settings group. 2. Attempt to save `{}`. 3. Read the version number again. 4. Confirm no other group on the page changed its version.
+Expected: If the save is refused, the version counter stays exactly where it was — a refusal that silently creates a new version is a FAIL. (T-7788 pinned the refusal/confirm copy; the version-counter discipline on a refused save is new. SAFETY: no destructive save stands; restore and verify.)
+
+---
+
+### T-7790 · settings validation regression · a whitespace-only body is refused exactly like an empty one — the whitespace twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS211
+
+Steps: 1. Record the current config body and version. 2. Replace the body with whitespace only (spaces + a newline, no keys) and press Save. 3. Capture the response verbatim. 4. Restore the recorded body and Save.
+Expected: A whitespace-only body is treated as empty: refused with the same plain-words refusal as `{}`, or given the same explicit deliberate-clear confirmation. A whitespace body that slips through as a real version while `{}` is refused is a FAIL (validation keyed on literal text rather than content). (T-7788 pinned the `{}` contract; the whitespace-only seam is new. SAFETY: restore and read back.)
+
+---
+
+### T-7791 · settings validation regression · the group config is byte-identical after a refused save — the no-side-effect twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS211
+
+Steps: 1. Record the current config body exactly. 2. Attempt to save `{}`; note the response. 3. Reopen the group's editor and read the body back. 4. Compare against the recorded body.
+Expected: After a refused save, the group's config is byte-identical to what it was before the attempt — a refusal that leaves a partial or reformatted body behind is a FAIL. (T-7788–T-7790 pinned the refusal family; the config-integrity-after-refusal contract is new. SAFETY: restore if anything changed, then verify again.)
+
+---
+
+### T-7792 · settings validation regression · apply-without-approval pins the shipped refusal copy — the direct pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EV-ISS212
+
+Steps: 1. On a settings group, prepare a benign change (e.g. toggle a display-level field) but do NOT run the approval step. 2. Press Apply. 3. Capture the refusal copy verbatim. 4. Discard the change.
+Expected: The refusal copy is captured verbatim. ISS-212's exact behavior — a coherence complaint that never names approval — is a FAIL: the fixed contract is plain words saying approval is required first, naming the approval step. (SAFETY: the change is discarded; nothing is saved or applied.)
+
+---
+
+### T-7793 · settings validation regression · approve-then-apply succeeds — the happy-path twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EV-ISS212
+
+Steps: 1. Record the current value of a benign display-level setting. 2. Change it, run the approval step to completion, then press Apply. 3. Read the confirmation. 4. Restore the recorded value (approve + apply), confirm the restore.
+Expected: After approval completes, Apply succeeds with a plain confirmation naming what was applied — the refusal from T-7792 must not fire on the approved path. (T-7792 pinned the refusal; the approved-path success is new. SAFETY: benign setting only; restored and read back at the end.)
+
+---
+
+### T-7794 · settings validation regression · the refusal names the missing approval step — the naming twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EV-ISS212
+
+Steps: 1. Prepare a benign change without approving. 2. Press Apply. 3. Read the refusal word by word. 4. Discard the change.
+Expected: The refusal names the missing step in plain words ("approval required", "approve first") and points at how to do it — a copy that complains about coherence, state, or codes without ever naming approval is a FAIL. (T-7792 pinned the refusal's existence; the missing-step naming contract is new. SAFETY: nothing saved or applied.)
+
+---
+
+### T-7795 · settings validation regression · a refused apply leaves the pending change in place — the no-silent-drop twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: EV-ISS212
+
+Steps: 1. Prepare a benign change without approving. 2. Press Apply and note the refusal. 3. Read the group's editor — is the change still there? 4. Discard the change.
+Expected: The refused Apply keeps the pending change intact in the editor so the tester can approve and apply — the refusal never silently discards the work. A refused apply that wipes the pending change is a FAIL. (T-7792 pinned the refusal; the pending-change preservation is new. SAFETY: change discarded at the end; nothing saved.)
+
+---
+
+### T-7796 · settings validation regression · an expired confirm code pins the shipped copy — the direct pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS213
+
+Steps: 1. Open the settings group that requires a confirm code. 2. Start a confirm flow, let the code expire (or use a code from an earlier expired flow). 3. Submit the expired code. 4. Capture the response verbatim.
+Expected: The response is captured verbatim. ISS-213's exact behavior — a raw "409: confirm not pending" for an old/reused code — is a FAIL: the fixed contract is plain words saying the code expired and naming the next step (request a new code). (SAFETY: no destructive confirm is completed; the group stays unapproved.)
+
+---
+
+### T-7797 · settings validation regression · a reused code is distinguished from a wrong code — the naming twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS213
+
+Steps: 1. Start a confirm flow and complete it once with a fresh code (on a benign reversible action, or abandon before any state change). 2. Re-submit the same code a second time. 3. Also submit a clearly wrong code. 4. Compare the two responses verbatim.
+Expected: A reused-but-once-valid code gets a different message than a wrong code ("already used" / "expired" vs "incorrect") — one message for all three cases (right, wrong, reused) is a FAIL. (T-7796 pinned the expired copy; the reused-vs-wrong distinction is new. SAFETY: no destructive confirm completed.)
+
+---
+
+### T-7798 · settings validation regression · no raw status-code strings reach the confirm UI — the no-raw-codes twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS213
+
+Steps: 1. Trigger confirm-code failures: expired code, wrong code, reused code. 2. Read every refusal line shown in the UI. 3. Scan for status-code strings ("409", "4xx", "500") or engine internals.
+Expected: Every confirm refusal speaks plain words — no "409", no numeric status codes, no engine phrasing in any failure line. A raw code string in any refusal is a FAIL. (T-7796–T-7797 pinned the per-case copy; the whole-flow raw-code sweep is new.)
+
+---
+
+### T-7799 · settings validation regression · an expired code offers the re-request path — the next-step twin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: EV-ISS213
+
+Steps: 1. Submit an expired confirm code. 2. Read the refusal fully. 3. Check whether it offers or links the way to get a fresh code.
+Expected: The expired-code refusal names the next step ("request a new code", a visible re-request control) — a dead-end refusal with no way forward is a FAIL. (T-7796 pinned the refusal's existence; the next-step guidance is new. SAFETY: the flow is abandoned; nothing is confirmed.)
+
+---
+
+### T-7800 · settings validation regression · protected groups carry a visible badge in the group list — the direct pin
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: EV-ISS214
+
+Steps: 1. On /settings, read the full group list. 2. Identify the protected groups (the ones whose contents need extra confirmation to change). 3. Note what — if anything — marks them as protected in the list.
+Expected: Every protected group shows a visible protected badge in the list row itself, readable before opening the group. ISS-214's exact behavior — no badge anywhere in the list — is a FAIL. (Read-only: nothing changed or saved.)
+
+---

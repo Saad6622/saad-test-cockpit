@@ -1,0 +1,1222 @@
+QA BRIEF — BULK LANE B2 chunk 16/45 (T-5501–T-5600)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-5501 · Fix-wave · Group order sensible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read the group top to bottom.
+
+Expected: Theme first, then the rest -- a sensible order, not a dump.
+
+---
+
+### T-5502 · Fix-wave · Changing theme previews honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme and watch the page.
+
+Expected: The page repaints in the new theme -- the preview is real.
+
+---
+
+### T-5503 · Fix-wave · Tester restores the default theme
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme, then change it back.
+
+Expected: The original theme returns -- the tester leaves no trace.
+
+---
+
+### T-5504 · Fix-wave · Theme change needs no save hunt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme and look for a save control.
+
+Expected: The behavior is clear -- applied immediately or with an obvious save.
+
+---
+
+### T-5505 · Fix-wave · Default page control changes the landing page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the default page, reload, observe the landing route.
+
+Expected: The chosen page loads -- then restore the original.
+
+---
+
+### T-5506 · Fix-wave · Controls keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Tab through the interface group.
+
+Expected: Every control receives focus and operates from the keyboard.
+
+---
+
+### T-5507 · Fix-wave · Theme options selectable one by one
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Select each theme option in turn.
+
+Expected: Each applies -- no dead options.
+
+---
+
+### T-5508 · Fix-wave · Rapid theme switching stays healthy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Switch themes five times quickly.
+
+Expected: The page stays healthy -- no half-painted state.
+
+---
+
+### T-5509 · Fix-wave · Cancel path exists where needed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Begin a change and look for a way back.
+
+Expected: A cancel or restore path exists -- the tester is never trapped.
+
+---
+
+### T-5510 · Fix-wave · Unsaved-change warning if any
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change a value and try to leave the group.
+
+Expected: If the group needs saving, a warning appears -- no silent loss.
+
+---
+
+### T-5511 · Fix-wave · Theme change announced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme with a screen reader mindset -- watch for announcements.
+
+Expected: The change is announced in text -- the new theme name appears.
+
+---
+
+### T-5512 · Fix-wave · Other groups untouched by theme change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme, then open the risk-caps group.
+
+Expected: Other groups unaffected -- the change is scoped to the interface.
+
+---
+
+### T-5513 · Fix-wave · Restore defaults control works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If a restore-defaults control exists, use it.
+
+Expected: Defaults return -- the group can be reset cleanly.
+
+---
+
+### T-5514 · Fix-wave · Group honest when theme fails to apply
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If a theme fails to apply, read the group.
+
+Expected: A calm note -- the group does not pretend the change worked.
+
+---
+
+### T-5515 · Fix-wave · Current value always shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read each control's current value.
+
+Expected: Every control shows its value -- no blank controls hiding state.
+
+---
+
+### T-5516 · Fix-wave · Unsupported theme reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If a saved theme is no longer offered, read the control.
+
+Expected: It says so plainly -- no silent fallback confusion.
+
+---
+
+### T-5517 · Fix-wave · Group loads without probe flash
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Hard-reload /settings?group=interface and watch the first paint.
+
+Expected: Theme controls paint immediately -- no flash of probe keys first.
+
+---
+
+### T-5518 · Fix-wave · Loading state resolves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Watch the group load for 10 seconds.
+
+Expected: Resolves to controls -- never a stuck loader.
+
+---
+
+### T-5519 · Fix-wave · Error state reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If the group fails to load, read it.
+
+Expected: A calm error -- not a blank group, not a raw failure.
+
+---
+
+### T-5520 · Fix-wave · No phantom controls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Try each control in the group.
+
+Expected: Every visible control does something -- no decorative dead controls.
+
+---
+
+### T-5521 · Fix-wave · Probe keys absent after reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Reload the page and search for probe text again.
+
+Expected: Still gone -- the fix persists across loads.
+
+---
+
+### T-5522 · Fix-wave · Group honest on slow tunnel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Load the group on a slow connection.
+
+Expected: Controls or a calm loader -- never probe keys as placeholders.
+
+---
+
+### T-5523 · Fix-wave · Default page honest when unset
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If no default page is set, read the control.
+
+Expected: An honest unset state -- not a fake selection.
+
+---
+
+### T-5524 · Fix-wave · Theme names read plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read each theme name aloud.
+
+Expected: Plain names -- 'Dark', 'Light', or equivalent words.
+
+---
+
+### T-5525 · Fix-wave · No internal keys as labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read every label in the group.
+
+Expected: No SCREAMING_SNAKE labels -- human words.
+
+---
+
+### T-5526 · Fix-wave · Helper copy has no jargon
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read all helper copy in the group.
+
+Expected: Everyday words -- no 'render', 'CSS', or 'viewport' on screen.
+
+---
+
+### T-5527 · Fix-wave · Group heading is a word
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read the heading.
+
+Expected: 'Interface' -- not 'ui-config'.
+
+---
+
+### T-5528 · Fix-wave · Option descriptions plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read each option's description.
+
+Expected: Plain sentences about what changes.
+
+---
+
+### T-5529 · Fix-wave · No 'undefined' in the group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Scan the group for 'undefined'.
+
+Expected: None -- unset values read as words.
+
+---
+
+### T-5530 · Fix-wave · No raw values without labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read the whole group.
+
+Expected: Every value has its label.
+
+---
+
+### T-5531 · Fix-wave · Save feedback reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If the group saves, change a value and read the feedback.
+
+Expected: 'Saved' in plain words -- no codes.
+
+---
+
+### T-5532 · Fix-wave · Error text reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If a save fails, read the error.
+
+Expected: Human words -- no raw response.
+
+---
+
+### T-5533 · Fix-wave · Restore feedback reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If restoring defaults, read the confirmation.
+
+Expected: Plain confirmation of what was restored.
+
+---
+
+### T-5534 · Fix-wave · Default-page options named
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Read the default-page options.
+
+Expected: Named pages -- not route paths.
+
+---
+
+### T-5535 · Fix-wave · No probe vocabulary remains
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Scan for 'probe', 'flag', 'W47'.
+
+Expected: None -- the probe vocabulary is fully gone from the UI.
+
+---
+
+### T-5536 · Fix-wave · Invalid theme value refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If the theme control accepts text, type nonsense and apply.
+
+Expected: Refused with a plain-words reason -- the group does not break.
+
+---
+
+### T-5537 · Fix-wave · Empty default page handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Clear the default-page value if possible.
+
+Expected: An honest unset state -- no crash.
+
+---
+
+### T-5538 · Fix-wave · Rapid changes absorbed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change values ten times quickly.
+
+Expected: The group stays healthy -- changes absorbed in order.
+
+---
+
+### T-5539 · Fix-wave · Group usable with no saved settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If settings are ever missing, read the group.
+
+Expected: Sensible defaults shown -- not a blank group.
+
+---
+
+### T-5540 · Fix-wave · Overlong input handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If any text field exists, paste 4000 characters.
+
+Expected: Handled -- a limit message or truncation, never a crash.
+
+---
+
+### T-5541 · Fix-wave · Settings save failure reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. If a save fails, read the message.
+
+Expected: Plain words -- and the old values are kept.
+
+---
+
+### T-5542 · Fix-wave · Theme applies live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme and watch.
+
+Expected: The repaint happens immediately -- no reload needed.
+
+---
+
+### T-5543 · Fix-wave · Theme persists across routes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme, visit /strategies, return to /settings.
+
+Expected: The theme holds -- the choice is live everywhere.
+
+---
+
+### T-5544 · Fix-wave · Theme persists across reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-70
+
+Steps: 1. Open /settings?group=interface. 2. Change the theme, reload the page.
+
+Expected: Still the chosen theme -- the preference is stored.
+
+---
+## Section Y · AI-wired regression (456 cases: T-5545–T-6000)
+
+Full re-execution sweep of Section W (T-1161–T-1280) and Section W2 (T-5121–T-5144), run AFTER the AI is wired live against the TEST cockpit: every prediction, veto, failure, cost, cooldown, and key-entry case re-run against the live wiring, plus cross-checks that AI predictions and strategy signals stay consistent and that every disagreement stays labeled. The tester re-runs these with the AI connected -- cases that need a live AI say so; where the AI is not yet wired, the case records that honestly instead of passing on stale assumptions.
+
+### T-5545 · AI-wired · Gateway state badge renders after wiring
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the gateway connection state line.
+
+Expected: A badge reads exactly 'Connected' or 'Not connected' -- never a raw status code.
+
+---
+
+### T-5546 · AI-wired · Gateway state text is exact, not a code
+**SUPERSEDED — duplicate of T-1162** (dedupe 2026-09-27): same test as T-1162 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the gateway state text character for character.
+
+Expected: Plain words only -- no HTTP codes, no provider error slugs.
+
+---
+
+### T-5547 · AI-wired · Paid-credits indicator renders
+**SUPERSEDED — duplicate of T-1163** (dedupe 2026-09-27): same test as T-1163 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the billing indicator near the gateway state.
+
+Expected: It shows paid credits are active -- never a 'free tier' label.
+
+---
+
+### T-5548 · AI-wired · Saved key indicator shows no key material
+**SUPERSEDED — duplicate of T-5122** (dedupe 2026-09-27): same test as T-5122 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. With a key saved through the UI field, read the saved-state indicator.
+
+Expected: A plain state such as 'Key saved' -- never characters of the key.
+
+---
+
+### T-5549 · AI-wired · Gateway details render
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the gateway details area: endpoint, model, region.
+
+Expected: Each renders in plain words -- the wiring is inspectable.
+
+---
+
+### T-5550 · AI-wired · Last-checked line renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the 'last checked' line under the gateway state.
+
+Expected: Present with a human time -- the state has a provable age.
+
+---
+
+### T-5551 · AI-wired · Gateway section holds at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Load at phone width and read the gateway section.
+
+Expected: Nothing overlaps -- badge, indicator, and controls each keep their space.
+
+---
+
+### T-5552 · AI-wired · Recheck updates the state line
+**SUPERSEDED — duplicate of T-1164** (dedupe 2026-09-27): same test as T-1164 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the gateway recheck control. Read the state line and its timestamp twice.
+
+Expected: The check runs visibly and the 'last checked' timestamp advances -- the state is live, not painted once.
+
+---
+
+### T-5553 · AI-wired · Last-checked timestamp ticks
+**SUPERSEDED — duplicate of T-1165** (dedupe 2026-09-27): same test as T-1165 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the gateway 'last checked' time, wait a minute, read it again.
+
+Expected: The timestamp moves forward on its own schedule.
+
+---
+
+### T-5554 · AI-wired · Connected state holds across reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. With the gateway connected, reload the page and read the state.
+
+Expected: Still 'Connected' -- the wiring survives a reload.
+
+---
+
+### T-5555 · AI-wired · State follows the key: key saved, connected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Save a key through the UI field, then read the gateway state.
+
+Expected: The state reflects the saved key -- connected follows a good key.
+
+---
+
+### T-5556 · AI-wired · State follows the key: key cleared, not connected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Clear the saved key (tester-authorized), then read the gateway state.
+
+Expected: The state drops to not connected -- honestly, without a reload.
+
+---
+
+### T-5557 · AI-wired · Gateway auto-checks on its schedule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch the 'last checked' time for several minutes without touching anything.
+
+Expected: It advances on its own -- the gateway is watched, not checked once.
+
+---
+
+### T-5558 · AI-wired · Recheck during an outage updates honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway is down, click recheck and watch.
+
+Expected: The state updates to the failure -- the line never claims a stale 'Connected'.
+
+---
+
+### T-5559 · AI-wired · Recheck control runs a live check
+**SUPERSEDED — duplicate of T-1166** (dedupe 2026-09-27): same test as T-1166 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the gateway recheck control and watch for 10 seconds.
+
+Expected: A checking state appears, then a fresh result -- the button is never silent.
+
+---
+
+### T-5560 · AI-wired · Gateway details expand
+**SUPERSEDED — duplicate of T-1167** (dedupe 2026-09-27): same test as T-1167 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the gateway details disclosure, if offered.
+
+Expected: Endpoint, model name and region render in plain words; clicking again collapses.
+
+---
+
+### T-5561 · AI-wired · Recheck keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Tab to the recheck control and press Enter.
+
+Expected: Runs the check exactly like a click.
+
+---
+
+### T-5562 · AI-wired · Recheck spam absorbed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click recheck five times quickly.
+
+Expected: Handled gracefully -- one check at a time, no wedged state.
+
+---
+
+### T-5563 · AI-wired · Details toggle does not disturb state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand and collapse the gateway details three times.
+
+Expected: The connection state is untouched by viewing details.
+
+---
+
+### T-5564 · AI-wired · Recheck after key change re-verifies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Change the saved key, then click recheck.
+
+Expected: The check runs against the new key -- the result matches the new key, not the old.
+
+---
+
+### T-5565 · AI-wired · Recheck works after a failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a check fails, click recheck again.
+
+Expected: The retry runs -- one failure does not wedge the control.
+
+---
+
+### T-5566 · AI-wired · Not-connected state reads calmly
+**SUPERSEDED — duplicate of T-1168** (dedupe 2026-09-27): same test as T-1168 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway currently reads Not connected, read the whole state block.
+
+Expected: Calm plain-words explanation of what is wrong and what to do -- no alarm language, no blame.
+
+---
+
+### T-5567 · AI-wired · Checking state never sticks
+**SUPERSEDED — duplicate of T-1169** (dedupe 2026-09-27): same test as T-1169 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click recheck and watch the checking indicator for 30 seconds.
+
+Expected: It resolves to Connected or to a named error -- never a permanent spinner.
+
+---
+
+### T-5568 · AI-wired · Error state names the problem
+**SUPERSEDED — duplicate of T-1170** (dedupe 2026-09-27): same test as T-1170 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a gateway error is currently shown, read it fully.
+
+Expected: It names the problem in words -- bad key, timeout, out of credits -- never a blank failure.
+
+---
+
+### T-5569 · AI-wired · Out-of-credits reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If credits run out, read the gateway state.
+
+Expected: It says the credits are spent and what that means for predictions -- no silent stop.
+
+---
+
+### T-5570 · AI-wired · Bad key fails in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. With a wrong key saved, read the gateway state.
+
+Expected: 'Not connected' with a plain-words reason -- never a raw auth error.
+
+---
+
+### T-5571 · AI-wired · Timeout reads as a timeout
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway times out, read the state.
+
+Expected: It says the check timed out -- not 'failed' without a reason.
+
+---
+
+### T-5572 · AI-wired · State never claims connected without proof
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the Connected badge and its last-checked time.
+
+Expected: The badge is backed by a recent check -- never a bare claim.
+
+---
+
+### T-5573 · AI-wired · Reload during outage stays honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway is down, reload the page and read the state.
+
+Expected: Still honestly not connected -- reload does not fake a recovery.
+
+---
+
+### T-5574 · AI-wired · Error text has no raw JSON
+**SUPERSEDED — duplicate of T-1172** (dedupe 2026-09-27): same test as T-1172 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a gateway error is currently shown, read it fully.
+
+Expected: No raw JSON, no stack trace, no 'undefined' -- words a trader can act on.
+
+---
+
+### T-5575 · AI-wired · State words are trader words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the whole gateway section aloud.
+
+Expected: Everyday words -- no 'handshake', 'token', or 'endpoint' jargon on screen.
+
+---
+
+### T-5576 · AI-wired · Out-of-credits copy explains the impact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If credits are out, read the full message.
+
+Expected: It says what stops working -- predictions pause -- in plain words.
+
+---
+
+### T-5577 · AI-wired · Bad-key copy says what to do
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. With a wrong key, read the full message.
+
+Expected: It points at the key field -- the next step is named.
+
+---
+
+### T-5578 · AI-wired · No provider slugs on screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan the gateway section for provider error slugs.
+
+Expected: None -- Meta-side errors arrive as human sentences.
+
+---
+
+### T-5579 · AI-wired · Checking text reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click recheck and read the in-progress text.
+
+Expected: 'Checking...' or equivalent -- not 'polling'.
+
+---
+
+### T-5580 · AI-wired · Timestamp reads as words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the 'last checked' line aloud.
+
+Expected: A human time with its zone -- no raw epoch.
+
+---
+
+### T-5581 · AI-wired · Key field stays masked
+**SUPERSEDED — duplicate of T-1173** (dedupe 2026-09-27): same test as T-1173 — do not execute.
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the gateway key field. Try selecting its content.
+
+Expected: Dots or blank only -- the value can never be revealed or copied from the UI.
+
+---
+
+### T-5582 · AI-wired · Tester never pastes a key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Walk the AI panel looking for any credential prompt aimed at the tester.
+
+Expected: No control asks the tester for an API key -- the key is Saad's own.
+
+---
+
+### T-5583 · AI-wired · Key never appears in details
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand the gateway details fully.
+
+Expected: Endpoint, model, region -- but never the key value.
+
+---
+
+### T-5584 · AI-wired · Recheck never leaks the key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click recheck and watch every state it passes through.
+
+Expected: No state shows key material -- checking, result, and error are all clean.
+
+---
+
+### T-5585 · AI-wired · Prediction cards render after wiring
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Wait for a scan cycle, then read the prediction cards.
+
+Expected: Cards render with direction, confidence %, symbol/timeframe, and scan time.
+
+---
+
+### T-5586 · AI-wired · Direction label renders on every card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read each prediction card's direction.
+
+Expected: Every card names its direction in words -- no card without one.
+
+---
+
+### T-5587 · AI-wired · Confidence renders as a percent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read each card's confidence.
+
+Expected: A percent with the % sign -- never a bare decimal.
+
+---
+
+### T-5588 · AI-wired · Symbol and timeframe render on every card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read each card's symbol and timeframe.
+
+Expected: Both present -- the tester knows what the prediction is about.
+
+---
+
+### T-5589 · AI-wired · Scan time renders on every card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read each card's scan time.
+
+Expected: A human time -- the card shows its age.
+
+---
+
+### T-5590 · AI-wired · Cards render at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Load at phone width and read the prediction cards.
+
+Expected: Nothing overlaps -- direction, confidence, symbol, and time each keep their space.
+
+---
+
+### T-5591 · AI-wired · Newest card appears at the top
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch two scan cycles and note card order.
+
+Expected: The newest prediction lands on top -- order is newest-first.
+
+---
+
+### T-5592 · AI-wired · Card count reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the prediction count line.
+
+Expected: 'N predictions' in words -- no bare number.
+
+---
+
+### T-5593 · AI-wired · Prediction rationale renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a card's rationale or reason line.
+
+Expected: A short human reason -- the card says why, not just what.
+
+---
+
+### T-5594 · AI-wired · Cards hold under many predictions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If many cards exist, scroll the list.
+
+Expected: The list scrolls cleanly -- no overlap, no dropped cards.
+
+---
+
+### T-5595 · AI-wired · Empty prediction list renders honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If no predictions exist, read the panel.
+
+Expected: The honest 'no edge found' state -- not a blank panel.
+
+---
+
+### T-5596 · AI-wired · Prediction badge colors consistent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare direction badges across cards.
+
+Expected: One color per direction -- consistent, not random.
+
+---
+
+### T-5597 · AI-wired · Cards advance each scan cycle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Note the cards, wait a full scan cycle, re-read.
+
+Expected: New cards arrive -- the panel is live, not a one-time paint.
+
+---
+
+### T-5598 · AI-wired · Scan times tick
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a card's scan time, wait, read it again after the next cycle.
+
+Expected: New cards carry new times -- the feed moves.
+
+---
+
+### T-5599 · AI-wired · Stale cards labeled stale
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the AI feed pauses, read the cards.
+
+Expected: Old cards labeled as stale -- never presented as fresh.
+
+---
+
+### T-5600 · AI-wired · Cards survive a panel refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Run the cockpit panel refresh and re-read the cards.
+
+Expected: Cards re-render -- refresh never blanks the panel.
+
+---

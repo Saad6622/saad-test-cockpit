@@ -1,0 +1,1207 @@
+QA BRIEF — BULK LANE B3 chunk 18/45 (T-5701–T-5800)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+BULK LANE — plan sections T-4001 and above (gardener proactive waves + ISS regression sections). Many ISS-regression sections are written against the EXPECTED FIXED state — where the fix has not landed, verdict FAIL honestly and write it up; do not force a PASS. Where a case's steps save/flip/toggle/edit/delete/discard/change anything, mark BLOCKED-pending-window (a follow-up window sweep will cover bulk state cases) and continue read-only.
+
+### T-5701 · AI-wired · Empty veto state reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the empty vetoed view aloud.
+
+Expected: 'No vetoed predictions' -- plain.
+
+---
+
+### T-5702 · AI-wired · Veto ages read as words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read three veto ages.
+
+Expected: '5 min ago' -- not raw seconds.
+
+---
+
+### T-5703 · AI-wired · No 'null' on vetoed cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan vetoed cards for 'null'.
+
+Expected: None -- missing fields read as words.
+
+---
+
+### T-5704 · AI-wired · Veto copy never alarms
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read five veto reasons for tone.
+
+Expected: Calm and factual -- a veto is routine, not an emergency.
+
+---
+
+### T-5705 · AI-wired · Gateway failure banner reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, read the failure banner.
+
+Expected: A calm banner -- what failed and what it means for the AI panel.
+
+---
+
+### T-5706 · AI-wired · Failure never leaves a stale Connected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, read the state badge.
+
+Expected: It drops from Connected -- the badge never claims a dead connection.
+
+---
+
+### T-5707 · AI-wired · Failure timestamped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a failure shows, read its time.
+
+Expected: The failure carries its time -- the tester knows when it happened.
+
+---
+
+### T-5708 · AI-wired · Repeated failures each reported
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails repeatedly, watch the state block.
+
+Expected: Each failure reported -- the panel does not show only the first and go quiet.
+
+---
+
+### T-5709 · AI-wired · Recovery announced
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway recovers, read the state block.
+
+Expected: The recovery shows -- Connected returns with a fresh check time.
+
+---
+
+### T-5710 · AI-wired · Partial failure named
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If checks succeed but predictions fail, read the state.
+
+Expected: It names what works and what does not -- no blanket 'fine'.
+
+---
+
+### T-5711 · AI-wired · Failure does not wedge recheck
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. After a failure, click the recheck control.
+
+Expected: The check runs -- failure does not wedge the control.
+
+---
+
+### T-5712 · AI-wired · Failure visible at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a failure shows, load at phone width and read it.
+
+Expected: Fully readable -- the failure is not hidden on small screens.
+
+---
+
+### T-5713 · AI-wired · Failure survives reload honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway is down, reload and read the state.
+
+Expected: Still honestly failed -- reload does not fake a recovery.
+
+---
+
+### T-5714 · AI-wired · No failure hidden behind details
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, read the collapsed state.
+
+Expected: The failure shows without expanding anything -- bad news is not buried.
+
+---
+
+### T-5715 · AI-wired · Failure copy has no raw errors
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, read the message fully.
+
+Expected: Human words -- no raw provider errors, no codes.
+
+---
+
+### T-5716 · AI-wired · Failure copy names the impact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, read what it says about predictions.
+
+Expected: It says predictions pause -- the impact is named.
+
+---
+
+### T-5717 · AI-wired · Failure copy names the next step
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a gateway failure message to its end.
+
+Expected: A next step -- recheck, check the key, or wait.
+
+---
+
+### T-5718 · AI-wired · Failure copy calm in tone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a gateway failure message aloud.
+
+Expected: Calm -- no alarm words, no blame.
+
+---
+
+### T-5719 · AI-wired · No 'error' without explanation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan the gateway section for bare 'error' labels.
+
+Expected: Every error carries its explanation -- no naked 'Error'.
+
+---
+
+### T-5720 · AI-wired · Timeout copy reads as words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a timeout shows, read it aloud.
+
+Expected: 'Timed out' in words -- with what to do next.
+
+---
+
+### T-5721 · AI-wired · Failure banner renders visibly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, look at the gateway section.
+
+Expected: The failure banner is visible -- not hidden, not collapsed away.
+
+---
+
+### T-5722 · AI-wired · Failure icon consistent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare the failure indicator with other failure indicators in the app.
+
+Expected: One visual language for failure -- consistent.
+
+---
+
+### T-5723 · AI-wired · Failure banner holds at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a failure shows, load at phone width.
+
+Expected: Fully readable -- nothing cut off.
+
+---
+
+### T-5724 · AI-wired · State badge renders the failure state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, read the badge.
+
+Expected: The badge itself shows the failure -- not just the banner below.
+
+---
+
+### T-5725 · AI-wired · Failure appears live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails mid-session, watch the state block.
+
+Expected: The failure appears on its own -- no reload needed to see it.
+
+---
+
+### T-5726 · AI-wired · Failure clears live on recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway recovers, watch the state block.
+
+Expected: The failure clears on its own with a fresh Connected.
+
+---
+
+### T-5727 · AI-wired · Failure age advances
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a failure persists, read its age twice with a pause.
+
+Expected: The age advances -- the panel tracks how long it has been failing.
+
+---
+
+### T-5728 · AI-wired · Recheck during failure updates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. During a failure, click recheck and watch.
+
+Expected: The attempt runs and reports -- the panel keeps trying visibly.
+
+---
+
+### T-5729 · AI-wired · Failure banner dismissible safely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a failure banner shows, dismiss it if a control exists.
+
+Expected: Dismisses -- and the state badge still shows the failure honestly.
+
+---
+
+### T-5730 · AI-wired · Failure details expandable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a failure shows, expand its detail.
+
+Expected: The detail opens -- what failed, when, and what it means.
+
+---
+
+### T-5731 · AI-wired · Recheck from the failure banner works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the banner offers recheck, press it.
+
+Expected: The check runs -- the banner's action works.
+
+---
+
+### T-5732 · AI-wired · Failure banner does not block the panel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a failure shows, use the rest of the AI panel.
+
+Expected: The banner informs without trapping -- the panel stays usable.
+
+---
+
+### T-5733 · AI-wired · Failure never exposes the key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, scan the failure text for key material.
+
+Expected: No key characters -- failures are clean.
+
+---
+
+### T-5734 · AI-wired · Failure detail never dumps credentials
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Expand a gateway failure fully.
+
+Expected: Endpoint and reason -- never secrets.
+
+---
+
+### T-5735 · AI-wired · AI panel shows pause when gateway fails
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway fails, read the AI panel header.
+
+Expected: It says predictions are paused and why -- the panel does not show stale cards as live.
+
+---
+
+### T-5736 · AI-wired · Stale cards labeled during outage
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway is down, read the existing cards.
+
+Expected: Labeled as stale -- old predictions never pose as fresh.
+
+---
+
+### T-5737 · AI-wired · Scan cycle failure reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a scan cycle fails, read the panel.
+
+Expected: A calm note -- the cycle failed, the panel will try again.
+
+---
+
+### T-5738 · AI-wired · Prediction error never silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a single prediction errors, read its card.
+
+Expected: The card shows the error -- no blank card.
+
+---
+
+### T-5739 · AI-wired · Model error named in words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the model errors, read the message.
+
+Expected: Named in words -- 'the model did not answer', not a code.
+
+---
+
+### T-5740 · AI-wired · Empty result after error honest
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If an error yields no cards, read the panel.
+
+Expected: It says the cycle failed -- not 'no edge found', which would be a lie.
+
+---
+
+### T-5741 · AI-wired · Retry offered after failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a cycle fails, look for a retry.
+
+Expected: A retry control is offered -- the panel does not strand the tester.
+
+---
+
+### T-5742 · AI-wired · Failure does not clear good cards silently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a cycle fails, read the existing cards.
+
+Expected: Old cards stay, labeled stale -- failure does not wipe history.
+
+---
+
+### T-5743 · AI-wired · Consecutive failures each shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If cycles fail repeatedly, watch the panel.
+
+Expected: Each failure noted -- the panel does not report only the first.
+
+---
+
+### T-5744 · AI-wired · Recovery brings fresh cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. After an outage, watch the panel.
+
+Expected: Fresh cards arrive and the pause lifts -- recovery is visible.
+
+---
+
+### T-5745 · AI-wired · Failure ages read truthfully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If failures persist, read their ages.
+
+Expected: Real ages -- the panel does not reset the clock.
+
+---
+
+### T-5746 · AI-wired · No phantom success after failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. After a failed cycle, read the panel.
+
+Expected: No success indicators appear for a cycle that failed.
+
+---
+
+### T-5747 · AI-wired · Cycle failure copy plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a cycle fails, read the message aloud.
+
+Expected: Human words -- no raw errors.
+
+---
+
+### T-5748 · AI-wired · Pause copy plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If predictions pause, read the pause note aloud.
+
+Expected: 'Predictions paused' plus why -- plain.
+
+---
+
+### T-5749 · AI-wired · Retry label plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the retry control's label.
+
+Expected: 'Retry' or equivalent -- not 'reinvoke'.
+
+---
+
+### T-5750 · AI-wired · Stale-during-outage copy plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If cards are stale during an outage, read the stale note aloud.
+
+Expected: Plain words for why they are stale.
+
+---
+
+### T-5751 · AI-wired · No provider errors on cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan cards during an outage for provider errors.
+
+Expected: None -- cards show panel-level words, not provider dumps.
+
+---
+
+### T-5752 · AI-wired · Recovery copy plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. After recovery, read any recovery note aloud.
+
+Expected: Plain words -- 'predictions resumed'.
+
+---
+
+### T-5753 · AI-wired · Pause banner renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If predictions pause, look at the panel.
+
+Expected: A visible pause banner -- not a silent empty list.
+
+---
+
+### T-5754 · AI-wired · Failure note renders on the card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a prediction errors, read its card.
+
+Expected: The failure note renders on the card itself.
+
+---
+
+### T-5755 · AI-wired · Retry control renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a cycle fails, find the retry control.
+
+Expected: Visible and labeled.
+
+---
+
+### T-5756 · AI-wired · Stale labels render on old cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. During an outage, read the old cards.
+
+Expected: Stale labels render on each -- visible at a glance.
+
+---
+
+### T-5757 · AI-wired · Failure state holds at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. During a failure, load at phone width.
+
+Expected: Fully readable.
+
+---
+
+### T-5758 · AI-wired · Pause banner distinct from no-edge
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare the pause banner with the no-edge state.
+
+Expected: Two distinct states -- paused is not confused with 'no edge found'.
+
+---
+
+### T-5759 · AI-wired · Pause agrees with gateway state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If predictions pause, read the gateway state.
+
+Expected: The gateway says what the panel says -- one story.
+
+---
+
+### T-5760 · AI-wired · Stale labels agree with gateway downtime
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. During an outage, compare card stale labels with the gateway failure time.
+
+Expected: Cards newer than the failure are not labeled stale -- labels match reality.
+
+---
+
+### T-5761 · AI-wired · Failure count matches failed cycles
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Count failure notes and compare with the panel's cycle history if shown.
+
+Expected: They agree.
+
+---
+
+### T-5762 · AI-wired · Recovery time matches gateway recovery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. After recovery, compare the panel's resume time with the gateway's.
+
+Expected: Both agree on when service returned.
+
+---
+
+### T-5763 · AI-wired · Retry outcome matches the panel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Press retry after a failure and read the panel.
+
+Expected: The panel shows what the retry reported.
+
+---
+
+### T-5764 · AI-wired · No cards newer than the failure
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. During an outage, check every card's scan time against the failure time.
+
+Expected: No card claims a scan from during the outage.
+
+---
+
+### T-5765 · AI-wired · Cost-per-call line renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the cost-per-call line.
+
+Expected: It renders -- e.g. cost per AI call -- labeled in plain words.
+
+---
+
+### T-5766 · AI-wired · Cost shows its currency
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the cost line character for character.
+
+Expected: A currency shown -- dollars, not a bare number.
+
+---
+
+### T-5767 · AI-wired · Spend total renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the total AI spend line.
+
+Expected: It renders with its period -- e.g. today, this session.
+
+---
+
+### T-5768 · AI-wired · Cost line holds at phone width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Load at phone width and read the cost lines.
+
+Expected: Fully readable -- nothing truncated.
+
+---
+
+### T-5769 · AI-wired · Cost per model labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If multiple models show costs, read each line.
+
+Expected: Each line names its model -- costs are attributable.
+
+---
+
+### T-5770 · AI-wired · Zero spend renders as zero
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If nothing was spent, read the spend line.
+
+Expected: It reads 0 -- not blank, not missing.
+
+---
+
+### T-5771 · AI-wired · Cost line sits with the AI panel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the AI panel layout.
+
+Expected: Costs sit with the predictions they belong to -- not stranded elsewhere.
+
+---
+
+### T-5772 · AI-wired · Budget line renders if any
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a budget is set, find its line.
+
+Expected: It renders with the budget amount and period.
+
+---
+
+### T-5773 · AI-wired · Spend total advances with calls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Note the spend total, wait for AI calls, re-read.
+
+Expected: The total moves -- spending is tracked live.
+
+---
+
+### T-5774 · AI-wired · Cost per call updates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Note the per-call cost across several cycles.
+
+Expected: It reflects reality -- updated when pricing or usage changes.
+
+---
+
+### T-5775 · AI-wired · Spend survives reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Reload the page and read the spend total.
+
+Expected: Still there -- spending history persists.
+
+---
+
+### T-5776 · AI-wired · New calls add to the total live
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch the spend total across one scan cycle.
+
+Expected: It increments as the cycle's calls land -- live accounting.
+
+---
+
+### T-5777 · AI-wired · Cost line ticks without reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the cost line, wait, read it again.
+
+Expected: Stays current on its own.
+
+---
+
+### T-5778 · AI-wired · Budget usage advances
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a budget shows usage, note it, wait for calls, re-read.
+
+Expected: Usage advances -- the budget meter is live.
+
+---
+
+### T-5779 · AI-wired · Cost unknown reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a cost cannot be computed, read the line.
+
+Expected: An honest 'cost unavailable' note -- never a zero that implies free.
+
+---
+
+### T-5780 · AI-wired · Free calls never pose as paid
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If some calls are free, read their cost lines.
+
+Expected: Free reads as free -- the panel does not invent charges.
+
+---
+
+### T-5781 · AI-wired · Estimated costs labeled estimated
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a cost is estimated, read its label.
+
+Expected: Marked as an estimate -- never presented as exact.
+
+---
+
+### T-5782 · AI-wired · Spend honest during outage
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway is down, read the spend total.
+
+Expected: The last known total with its age -- not a frozen number posing as live.
+
+---
+
+### T-5783 · AI-wired · Budget exceeded reads plainly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If spend passes the budget, read the budget line.
+
+Expected: It says so plainly -- the overage is not hidden.
+
+---
+
+### T-5784 · AI-wired · No hidden cost lines
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan the AI panel for costs not broken out.
+
+Expected: Every charge is itemized -- no lump sums hiding detail.
+
+---
+
+### T-5785 · AI-wired · Spend total equals the sum of calls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Add up visible per-call costs and compare with the total.
+
+Expected: The total equals the sum -- the arithmetic holds.
+
+---
+
+### T-5786 · AI-wired · Per-call cost matches the receipt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a call receipt shows cost, compare with the per-call line.
+
+Expected: They agree.
+
+---
+
+### T-5787 · AI-wired · Spend matches the prediction count
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Multiply the per-call cost by the call count; compare with the total.
+
+Expected: Roughly agrees -- the total is consistent with the activity.
+
+---
+
+### T-5788 · AI-wired · Cost per model sums to the total
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If per-model costs show, add them and compare with the total.
+
+Expected: The sum matches the total.
+
+---
+
+### T-5789 · AI-wired · Budget remaining equals budget minus spend
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a budget shows remaining, do the arithmetic.
+
+Expected: Remaining equals budget minus spend.
+
+---
+
+### T-5790 · AI-wired · Spend total consistent across reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the total, reload, read it again.
+
+Expected: Same number -- reload does not reset or double it.
+
+---
+
+### T-5791 · AI-wired · Cost line agrees with gateway billing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare the panel's spend with the gateway billing indicator.
+
+Expected: Both tell the same story about paid usage.
+
+---
+
+### T-5792 · AI-wired · Zero-activity day shows zero
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. On a day with no AI calls, read the daily spend.
+
+Expected: Zero -- the panel does not carry yesterday's spend forward silently.
+
+---
+
+### T-5793 · AI-wired · Estimated totals labeled consistently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If estimates show, check every total derived from them.
+
+Expected: Each derived total carries the estimate label -- honesty propagates.
+
+---
+
+### T-5794 · AI-wired · Per-call cost stable across identical calls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Compare per-call costs for identical calls.
+
+Expected: Same price for the same call -- no mystery variation.
+
+---
+
+### T-5795 · AI-wired · Spend history sums correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a spend history shows, add its entries.
+
+Expected: The entries sum to the shown total.
+
+---
+
+### T-5796 · AI-wired · Currency consistent everywhere
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read every cost line's currency.
+
+Expected: One currency throughout -- no mixed $ and unnamed numbers.
+
+---
+
+### T-5797 · AI-wired · Cost words are trader words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read every cost line aloud.
+
+Expected: 'Cost per call', 'spent today' -- plain words.
+
+---
+
+### T-5798 · AI-wired · No raw price units
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan cost lines for raw unit codes.
+
+Expected: None -- 'per 1M tokens' is explained or absent.
+
+---
+
+### T-5799 · AI-wired · Estimate label plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read an estimated cost aloud.
+
+Expected: 'Estimated' in plain words -- not '~' alone.
+
+---
+
+### T-5800 · AI-wired · Budget words plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the budget line aloud.
+
+Expected: Plain words for budget, spent, and remaining.
+
+---

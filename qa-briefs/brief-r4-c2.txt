@@ -1,0 +1,529 @@
+QA BRIEF — LANE 4 REMAINDER c2 (T-601–T-700)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+ALREADY DONE (do not re-run): read-only T-601, T-604, T-610, T-621, T-622, T-626, T-627, T-628, T-631, T-643, T-645, T-646, T-648; window cases T-602, T-603, T-606, T-607, T-608, T-609, T-612, T-619, T-620, T-625, T-630, T-632, T-634, T-635, T-639, T-640; T-613–T-620 logged. Skip these; run the rest.
+T-633 was BLOCKED (mobile viewport tooling) — retry once; if tooling still blocks, re-file BLOCKED with the exact reason.
+No remaining state-changing cases in lane 4's range — read-only throughout.
+
+### T-605 · Smart Trade · Preview without arming is blocked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Fill in a valid ticket. 2. Leave the arm box unticked. 3. Try the Preview button.
+Expected: The preview does not run; the page prompts to tick the review box first.
+
+### T-611 · Smart Trade · Live fire without arming is blocked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Fill in a valid ticket with the arm box unticked. 2. Click the red live-fire button. 3. Observe.
+Expected: Nothing fires; the page requires ticking the arm box first.
+
+### T-623 · Smart Trade · Loading an MCP draft fills the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-08
+Steps: 1. With an MCP draft available, load it. 2. Check side, type, price, leverage, legs, and protections. 3. Compare with the draft.
+Expected: Every ticket field is filled from the draft.
+
+### T-624 · Smart Trade · Loading a draft fires nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-08
+Steps: 1. Load an MCP draft. 2. Watch for orders or confirm screens. 3. Check the arm box.
+Expected: Nothing fires on load; the ticket is not armed — arming and confirming are still required.
+
+### T-629 · Smart Trade · Refresh keeps the ticket draft
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Fill in side, leverage, a stop %, and two TP legs. 2. Refresh the page. 3. Re-read the ticket.
+Expected: The draft values are preserved after refresh.
+
+### T-633 · Smart Trade · Ticket usable at mobile width
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Resize the browser to a narrow phone width. 2. Open the ticket. 3. Scroll through all sections.
+Expected: Every control — legs, protections, arm box, and both buttons — remains reachable with no overlap.
+
+### T-636 · Smart Trade · Changing leverage updates preview JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Read the preview JSON leverage. 2. Change leverage to 5. 3. Re-read the JSON.
+Expected: The JSON leverage value updates to 5.
+
+### T-637 · Smart Trade · Order type change updates preview JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Read the JSON order type. 2. Switch Market to Limit with a valid price. 3. Re-read the JSON.
+Expected: The JSON order type and price update accordingly.
+
+### T-638 · Smart Trade · Removing all legs shows empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Add two TP legs. 2. Remove both. 3. Check the legs area and the preview JSON.
+Expected: The legs area shows its empty state and take_profits is empty in the JSON.
+
+### T-641 · Cockpit sections · Overview section loads with account summary
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the TEST cockpit full page in the browser. 2. Scroll to the Overview section and wait for "Loading overview…" to be replaced. 3. Read the account summary block.
+Expected: The Overview section shows an account and venue summary instead of the placeholder text.
+
+### T-642 · Cockpit sections · Overview shows venue name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and scroll to the Overview section. 2. Wait until "Loading overview…" is replaced with content. 3. Look at the venue label in the summary block.
+Expected: The venue name is displayed and matches the configured venue.
+
+### T-644 · Cockpit sections · Overview shows balance and equity figures
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Overview section and wait for it to load. 3. Read the balance and equity figures shown.
+Expected: Both balance and equity are visible as formatted numeric values with currency units.
+
+### T-647 · Cockpit sections · Positions table column headers present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for the Positions section to load while positions are open. 2. Look at the top of the positions table. 3. Read each column header.
+Expected: Column headers are visible for symbol, side, size, entry price, and unrealized P&L.
+
+### T-649 · Cockpit sections · Position row shows symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with at least one open position. 2. Scroll to the Positions table and wait for load. 3. Read the symbol column of the first row.
+Expected: Each position row shows its trading symbol in a readable format.
+
+### T-650 · Cockpit sections · Position row shows side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with at least one open position. 2. Scroll to the Positions table and wait for load. 3. Read the side value of each row.
+Expected: Each row shows long or short for the position.
+
+### T-651 · Cockpit sections · Position row shows size
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with at least one open position. 2. Scroll to the Positions table and wait for load. 3. Read the size column of each row.
+Expected: Each row shows a numeric position size with sensible decimal places.
+
+### T-652 · Cockpit sections · Position row shows entry price
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with at least one open position. 2. Scroll to the Positions table and wait for load. 3. Read the entry price column of each row.
+Expected: Each row shows a numeric entry price with sensible decimal places.
+
+### T-653 · Cockpit sections · Position row shows unrealized P&L
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with at least one open position. 2. Scroll to the Positions table and wait for load. 3. Read the unrealized P&L column of each row.
+Expected: Each row shows unrealized P&L as a signed number, negative values clearly distinguishable.
+
+### T-654 · Cockpit sections · Positions update after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and note the current positions table contents. 2. Press the browser refresh button and wait. 3. Compare the positions table after reload.
+Expected: The positions table refreshes to the current data with no stale or duplicated rows.
+
+### T-655 · Cockpit sections · Positions section survives page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and let the Positions section load. 2. Press the browser refresh button. 3. Scroll back to the Positions section after reload.
+Expected: The section reloads and shows the table or empty message again with intact layout.
+
+### T-656 · Cockpit sections · Risk control section loads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Risk control section. 3. Wait for "Loading risk control…" to be replaced.
+Expected: The Risk control section shows risk limits and guard information instead of the placeholder.
+
+### T-657 · Cockpit sections · Risk limits displayed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and scroll to the Risk control section. 2. Wait for it to load. 3. Read each listed risk limit.
+Expected: The configured risk limits are listed with their values.
+
+### T-658 · Cockpit sections · Daily loss limit shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+Steps: 1. Open the cockpit page and scroll to the Risk control section. 2. Wait for it to load. 3. Find the daily loss limit entry.
+Expected: The daily loss limit value is shown with its unit (percent or currency).
+
+### T-659 · Cockpit sections · Max drawdown limit shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+Steps: 1. Open the cockpit page and scroll to the Risk control section. 2. Wait for it to load. 3. Find the max drawdown limit entry.
+Expected: The max drawdown limit value is shown with its unit.
+
+### T-660 · Cockpit sections · Guard statuses displayed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-10
+Steps: 1. Open the cockpit page and scroll to the Risk control section. 2. Wait for it to load. 3. Read the status of each guard.
+Expected: Each guard shows a readable status label (on/off or triggered/clear).
+
+### T-661 · Cockpit sections · Risk control empty or default state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-86
+Steps: 1. Open the cockpit page when no custom limits are configured. 2. Scroll to the Risk control section and wait for load. 3. Read what is shown.
+Expected: Sensible default limits or a clear message is shown instead of a blank section.
+
+### T-662 · Cockpit sections · Risk control survives page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and let the Risk control section load. 2. Press the browser refresh button and wait. 3. Scroll to the Risk control section after reload.
+Expected: The section reloads with the same limits and guard statuses displayed.
+
+### T-663 · Cockpit sections · Receipt section loads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Receipt section. 3. Wait for "Loading receipt…" to be replaced.
+Expected: The Receipt section shows order receipt rows or a clear empty message, not the placeholder.
+
+### T-664 · Cockpit sections · Receipt rows show order identifier
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when receipts exist. 2. Scroll to the Receipt section and wait for load. 3. Read the order identifier on the first receipt row.
+Expected: Each receipt row shows a readable order identifier.
+
+### T-665 · Cockpit sections · Receipt rows show symbol and side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when receipts exist. 2. Scroll to the Receipt section and wait for load. 3. Read the symbol and side fields of each receipt row.
+Expected: Each row shows the traded symbol and its side.
+
+### T-666 · Cockpit sections · Receipt rows show price and quantity
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when receipts exist. 2. Scroll to the Receipt section and wait for load. 3. Read the price and quantity fields of each receipt row.
+Expected: Each row shows numeric fill price and quantity with sensible decimals.
+
+### T-667 · Cockpit sections · Receipt rows show timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when receipts exist. 2. Scroll to the Receipt section and wait for load. 3. Read the timestamp field of each receipt row.
+Expected: Each row shows a readable date and time.
+
+### T-668 · Cockpit sections · Receipt rows show venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when receipts exist. 2. Scroll to the Receipt section and wait for load. 3. Read the venue field of each receipt row.
+Expected: Each row shows the venue name matching where the order executed.
+
+### T-669 · Cockpit sections · Receipt empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-86
+Steps: 1. Open the cockpit page when no receipts exist yet. 2. Scroll to the Receipt section and wait for load. 3. Read the message shown.
+Expected: A clear empty message is shown instead of a blank area.
+
+### T-670 · Cockpit sections · Receipt rows text readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+Steps: 1. Open the cockpit page when several receipts exist. 2. Scroll to the Receipt section and wait for load. 3. Visually check each row.
+Expected: Row text does not overlap, truncate awkwardly, or run outside the section.
+
+### T-671 · Cockpit sections · Receipt section survives page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and let the Receipt section load. 2. Press the browser refresh button and wait. 3. Scroll to the Receipt section after reload.
+Expected: The section reloads showing the same receipt rows or empty message.
+
+### T-672 · Cockpit sections · Alerts section loads feed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Alerts section. 3. Wait for "Loading alerts…" to be replaced.
+Expected: The Alerts section shows the alert feed rows or a clear empty message, not the placeholder.
+
+### T-673 · Cockpit sections · Alert rows show venue prefix
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Scroll to the Alerts section and wait for load. 3. Read the prefix at the start of each alert row.
+Expected: Each alert row begins with a venue prefix label identifying where the alert came from.
+
+### T-674 · Cockpit sections · Alert row expands on click
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Scroll to the Alerts section and wait for load. 3. Click the expand toggle on the first alert row.
+Expected: The row expands to show its full alert detail below the row header.
+
+### T-675 · Cockpit sections · Alert row collapses on second click
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist and one row is expanded. 2. Click the same row's toggle again. 3. Observe the row.
+Expected: The expanded detail collapses and the row returns to its single-line state.
+
+### T-676 · Cockpit sections · Expanded alert row shows full detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Expand one alert row by clicking its toggle. 3. Read the detail area.
+Expected: The full alert message and any extra fields are readable in the expanded area.
+
+### T-677 · Cockpit sections · Alert rows show timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Scroll to the Alerts section and wait for load. 3. Read the timestamp on each row.
+Expected: Each alert row shows a readable date and time.
+
+### T-678 · Cockpit sections · Alerts feed empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-86
+Steps: 1. Open the cockpit page when no alerts exist. 2. Scroll to the Alerts section and wait for load. 3. Read the message shown.
+Expected: A clear empty message is shown instead of a blank feed.
+
+### T-679 · Cockpit sections · Alert row toggle keyboard reachable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Press Tab until focus reaches an alert row toggle. 3. Press Enter to toggle it.
+Expected: The row expands with keyboard alone and focus stays visible.
+
+### T-680 · Cockpit sections · Multiple alert rows expand independently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page when at least two alerts exist. 2. Expand the first row. 3. Expand the second row.
+Expected: Both rows stay expanded at once; expanding one does not collapse the other.
+
+### T-681 · Cockpit sections · Alerts survive page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and let the Alerts section load. 2. Press the browser refresh button and wait. 3. Scroll to the Alerts section after reload.
+Expected: The alert feed reloads showing the same rows, all collapsed.
+
+### T-682 · Cockpit sections · Sections load progressively
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Load the cockpit page fresh. 2. Watch the sections as they load. 3. Note the order content appears.
+Expected: Each section shows its "Loading…" placeholder first, then replaces it with content as data arrives.
+
+### T-683 · Cockpit sections · All section placeholders render initially
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Load the cockpit page fresh. 2. Quickly scroll through the page. 3. Note each section's initial text.
+Expected: Each section shows its "Loading…" placeholder text on initial render.
+
+### T-684 · Cockpit sections · Placeholder text removed after data arrives
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for all sections to finish loading. 2. Scroll through every section. 3. Look for any remaining "Loading" text.
+Expected: No "Loading…" placeholder text remains visible once all sections have loaded.
+
+### T-685 · Cockpit sections · Browser refresh reloads all sections
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for all sections to load. 2. Press the browser refresh button. 3. Watch each section during reload.
+Expected: Every section re-shows its loading placeholder and then its refreshed content.
+
+### T-686 · Cockpit sections · Sections re-show placeholders on refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Open the cockpit page with all sections loaded. 2. Press the browser refresh button. 3. Watch a single section, e.g. Alerts.
+Expected: The section briefly shows its "Loading…" text again before the fresh content appears.
+
+### T-687 · Cockpit sections · No stale data after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Open the cockpit page and note a value in Overview and in Alerts. 2. Press the browser refresh button and wait. 3. Compare the values after reload.
+Expected: Values reflect the latest available data; nothing is stuck from before the refresh.
+
+### T-688 · Cockpit sections · Page sections in expected order
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for full load. 2. Scroll from the top of the page to the bottom. 3. Note the section headings in order.
+Expected: Sections appear in a sensible order: Overview, Positions, Risk control, Receipt, Alerts, Strategies, Journal, Funding, AI.
+
+### T-689 · Cockpit sections · Keyboard Tab reaches all sections
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+Steps: 1. Open the cockpit page and wait for full load. 2. Press Tab repeatedly from the top of the page. 3. Note whether focus moves through section controls.
+Expected: Focus reaches the interactive controls in each section in a logical order.
+
+### T-690 · Cockpit sections · No broken section headers after load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for all sections to load. 2. Scroll through the full page. 3. Check each section heading.
+Expected: Every section has a visible, correctly spelled heading with no missing or garbled text.
+
+### T-691 · Cockpit sections · Section shows error message on failed load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Open the cockpit page with the backend unavailable or a section request failing. 2. Scroll to the affected section. 3. Read what is shown.
+Expected: The section shows a plain-language error message instead of a stuck "Loading…" placeholder.
+
+### T-692 · Cockpit sections · Failed section does not block others
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Open the cockpit page with one section's data request failing. 2. Wait for the page to settle. 3. Check the remaining sections.
+Expected: The other sections load normally; only the failed section shows its error.
+
+### T-693 · Cockpit sections · Long alert message keeps layout intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when a very long alert message exists. 2. Expand that alert row. 3. Check the surrounding layout.
+Expected: The long text wraps inside the row without pushing other sections or breaking the page width.
+
+### T-694 · Cockpit sections · Large positions table scrolls inside section
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page with many open positions. 2. Scroll to the Positions section. 3. Scroll within the table area.
+Expected: The table scrolls within its own section area without making the whole page unwieldy.
+
+### T-695 · Cockpit sections · Mobile viewport sections stack vertically
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Resize the browser to a narrow phone-width viewport. 2. Open the cockpit page and wait for load. 3. Scroll through the sections.
+Expected: Sections stack one below another with no side-by-side overlap or horizontal page scroll.
+
+### T-696 · Cockpit sections · Overview numbers use sensible decimals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Overview section and wait for load. 3. Read each numeric figure.
+Expected: Figures use sensible decimal places and thousands separators where appropriate.
+
+### T-697 · Cockpit sections · Negative P&L visually distinct from positive
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-09
+Steps: 1. Open the cockpit page with both winning and losing figures present. 2. Look at P&L values in Overview and Positions. 3. Compare their styling.
+Expected: Negative P&L values are styled distinctly from positive ones (e.g. color or sign).
+
+### T-698 · Cockpit sections · Manual refresh control updates sections
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-18
+Steps: 1. Open the cockpit page and wait for full load. 2. Click the page's refresh control if one is offered, or use browser refresh. 3. Watch the sections.
+Expected: Sections reload with fresh data and any "last updated" indicator changes.
+
+### T-699 · Cockpit sections · Auto-updating sections do not steal focus
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and click into a control, e.g. an alert toggle. 2. Wait for a section to auto-update. 3. Check where focus is.
+Expected: Focus stays where the user left it; updates do not yank focus or scroll the page unexpectedly.
+
+### T-700 · Cockpit sections · Section content does not overlap neighbors
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for full load. 2. Scroll slowly through all sections. 3. Check boundaries between sections.
+Expected: No section's content overlaps or covers an adjacent section's heading or content.

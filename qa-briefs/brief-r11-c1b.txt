@@ -1,0 +1,814 @@
+QA BRIEF — LANE 11 REMAINDER c1b (T-2001–T-2100)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+ALREADY DONE: T-2042–T-2074 (ISS-330 regression coverage — 'No sign-in needed' pinned per page). Do not re-run.
+State cases (T-2001, T-2004, T-2008) → WINDOW SWEEP A. Do NOT run T-2001 until the sweep covers it.
+
+### T-2001 · Notifications · Keyboard-only full-page flow works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Complete the whole page by keyboard: steps, toggles, save.
+
+Expected: Every control is reachable and operable without a mouse.
+
+---
+
+### T-2002 · Notifications · Save button label exactly Save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the Save button.
+
+Expected: The label is exactly "Save" — no surprises like "Submit" or "Apply".
+
+---
+
+### T-2003 · Notifications · Preview message never auto-sends
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-57
+
+Steps: 1. Open the /notifications page. 2. Read the page without clicking anything.
+
+Expected: No preview message sends itself — it only sends on an explicit click.
+
+---
+
+### T-2004 · Notifications · Topic toggles never send messages
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+
+Steps: 1. Open the /notifications page. 2. Flip all four toggles without saving.
+
+Expected: Flipping toggles sends nothing — only the preview and test buttons send.
+
+---
+
+### T-2005 · Notifications · Setup steps link to the keys page where relevant
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the setup steps.
+
+Expected: Where a step needs an exchange key, it links to the /keys page.
+
+---
+
+### T-2006 · Notifications · Page states Telegram is the approval channel
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the explanatory text.
+
+Expected: The page states Telegram carries the approval cards for queued signals.
+
+---
+
+### T-2007 · Notifications · Preview button disabled with no chat configured
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+
+Steps: 1. Open the /notifications page with no chat id saved. 2. Read the "Send a real preview message" button.
+
+Expected: The button is disabled until a chat id is configured - it never sends into the void.
+
+---
+
+### T-2008 · Notifications · Save button shows a running state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Flip a topic toggle. 3. Click Save and watch the button.
+
+Expected: The button shows it is saving until the confirmation appears.
+
+---
+
+### T-2009 · Notifications · Bot-secret field accepts pasting
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Paste a token into the bot-secret field. 3. Clear it without saving.
+
+Expected: The field accepts the paste and stays masked; clearing leaves nothing saved.
+
+---
+
+### T-2010 · Notifications · Green rule points to the preview button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+
+Steps: 1. Open the /notifications page. 2. Read the green-state rule.
+
+Expected: The rule points to the "Send a real preview message" button as the way to go green.
+
+---
+
+## Section O · Cross-route chrome (120 cases: T-2011–T-2130)
+
+### T-2011 · Chrome · Sidebar link Cockpit present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Cockpit" is present in the sidebar.
+
+---
+
+### T-2012 · Chrome · Sidebar link Cockpit navigates to /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Cockpit" sidebar link.
+
+Expected: The page navigates to / and the route's content loads.
+
+---
+
+### T-2013 · Chrome · Sidebar link Cockpit marked current on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open / directly. 2. Read the sidebar.
+
+Expected: The "Cockpit" link is marked as the current page.
+
+---
+
+### T-2014 · Chrome · Sidebar link Trading present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Trading" is present in the sidebar.
+
+---
+
+### T-2015 · Chrome · Sidebar link Trading navigates to /trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Trading" sidebar link.
+
+Expected: The page navigates to /trading and the route's content loads.
+
+---
+
+### T-2016 · Chrome · Sidebar link Trading marked current on /trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /trading directly. 2. Read the sidebar.
+
+Expected: The "Trading" link is marked as the current page.
+
+---
+
+### T-2017 · Chrome · Sidebar link Strategies present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Strategies" is present in the sidebar.
+
+---
+
+### T-2018 · Chrome · Sidebar link Strategies navigates to /strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Strategies" sidebar link.
+
+Expected: The page navigates to /strategies and the route's content loads.
+
+---
+
+### T-2019 · Chrome · Sidebar link Strategies marked current on /strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /strategies directly. 2. Read the sidebar.
+
+Expected: The "Strategies" link is marked as the current page.
+
+---
+
+### T-2020 · Chrome · Sidebar link Backtests present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Backtests" is present in the sidebar.
+
+---
+
+### T-2021 · Chrome · Sidebar link Backtests navigates to /backtests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Backtests" sidebar link.
+
+Expected: The page navigates to /backtests and the route's content loads.
+
+---
+
+### T-2022 · Chrome · Sidebar link Backtests marked current on /backtests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /backtests directly. 2. Read the sidebar.
+
+Expected: The "Backtests" link is marked as the current page.
+
+---
+
+### T-2023 · Chrome · Sidebar link History present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "History" is present in the sidebar.
+
+---
+
+### T-2024 · Chrome · Sidebar link History navigates to /history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "History" sidebar link.
+
+Expected: The page navigates to /history and the route's content loads.
+
+---
+
+### T-2025 · Chrome · Sidebar link History marked current on /history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /history directly. 2. Read the sidebar.
+
+Expected: The "History" link is marked as the current page.
+
+---
+
+### T-2026 · Chrome · Sidebar link API keys present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "API keys" is present in the sidebar.
+
+---
+
+### T-2027 · Chrome · Sidebar link API keys navigates to /keys
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "API keys" sidebar link.
+
+Expected: The page navigates to /keys and the route's content loads.
+
+---
+
+### T-2028 · Chrome · Sidebar link API keys marked current on /keys
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /keys directly. 2. Read the sidebar.
+
+Expected: The "API keys" link is marked as the current page.
+
+---
+
+### T-2029 · Chrome · Sidebar link Notifications present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Notifications" is present in the sidebar.
+
+---
+
+### T-2030 · Chrome · Sidebar link Notifications navigates to /notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Notifications" sidebar link.
+
+Expected: The page navigates to /notifications and the route's content loads.
+
+---
+
+### T-2031 · Chrome · Sidebar link Notifications marked current on /notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /notifications directly. 2. Read the sidebar.
+
+Expected: The "Notifications" link is marked as the current page.
+
+---
+
+### T-2032 · Chrome · Sidebar link Scheduled present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Scheduled" is present in the sidebar.
+
+---
+
+### T-2033 · Chrome · Sidebar link Scheduled navigates to /scheduled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Scheduled" sidebar link.
+
+Expected: The page navigates to /scheduled and the route's content loads.
+
+---
+
+### T-2034 · Chrome · Sidebar link Scheduled marked current on /scheduled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /scheduled directly. 2. Read the sidebar.
+
+Expected: The "Scheduled" link is marked as the current page.
+
+---
+
+### T-2035 · Chrome · Sidebar link Settings present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Settings" is present in the sidebar.
+
+---
+
+### T-2036 · Chrome · Sidebar link Settings navigates to /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Settings" sidebar link.
+
+Expected: The page navigates to /settings and the route's content loads.
+
+---
+
+### T-2037 · Chrome · Sidebar link Settings marked current on /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /settings directly. 2. Read the sidebar.
+
+Expected: The "Settings" link is marked as the current page.
+
+---
+
+### T-2038 · Chrome · Sidebar link Help present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar Pages list.
+
+Expected: A link reading "Help" is present in the sidebar.
+
+---
+
+### T-2039 · Chrome · Sidebar link Help navigates to /help
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Click the "Help" sidebar link.
+
+Expected: The page navigates to /help and the route's content loads.
+
+---
+
+### T-2040 · Chrome · Sidebar link Help marked current on /help
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /help directly. 2. Read the sidebar.
+
+Expected: The "Help" link is marked as the current page.
+
+---
+
+### T-2041 · Chrome · Desk clock visible on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /. 2. Look at the sidebar top.
+
+Expected: The desk clock is visible and ticking.
+
+---
+
+### T-2075 · Chrome · Halt trading button in sidebar on /help
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /help. 2. Read the sidebar.
+
+Expected: The sidebar "Halt trading" button is present.
+
+---
+
+### T-2076 · Chrome · Back link to cockpit on /help
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open /help. 2. Find the way back.
+
+Expected: A "Back to cockpit" control returns to /.
+
+---
+
+### T-2077 · Chrome · Tab title correct on /
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2078 · Chrome · Tab title correct on /trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /trading. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2079 · Chrome · Tab title correct on /strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /strategies. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2080 · Chrome · Tab title correct on /backtests
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /backtests. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2081 · Chrome · Tab title correct on /history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /history. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2082 · Chrome · Tab title correct on /keys
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /keys. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2083 · Chrome · Tab title correct on /notifications
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /notifications. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2084 · Chrome · Tab title correct on /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /settings. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2085 · Chrome · Tab title correct on /help
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-85
+
+Steps: 1. Open /help. 2. Read the browser tab title.
+
+Expected: The tab title names the route in plain words.
+
+---
+
+### T-2086 · Chrome · Sidebar footer TEST MODE line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Read the sidebar footer.
+
+Expected: The footer states the TEST MODE line plainly.
+
+---
+
+### T-2087 · Chrome · Command cockpit button on every route
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open each of the nine routes in turn. 2. Look for the command cockpit button.
+
+Expected: The "Open command cockpit (Ctrl or Cmd K)" button is on every route.
+
+---
+
+### T-2088 · Chrome · Refresh panels button on every route
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open each of the nine routes in turn. 2. Look for "Refresh panels".
+
+Expected: The refresh control is on every route.
+
+---
+
+### T-2089 · Chrome · Sidebar collapses on narrow screens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/) at 390px width. 2. Look at the sidebar.
+
+Expected: The sidebar collapses to a menu control instead of crowding the page.
+
+---
+
+### T-2090 · Chrome · Collapsed menu opens the Pages list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/) at 390px width. 2. Open the menu.
+
+Expected: The full Pages list appears in the menu.
+
+---
+
+### T-2091 · Chrome · Menu closes after navigation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/) at 390px width. 2. Open the menu and tap a link.
+
+Expected: The menu closes itself after navigating.
+
+---
+
+### T-2092 · Chrome · Current page marked in the collapsed menu
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open /strategies at 390px width. 2. Open the menu.
+
+Expected: The Strategies entry is marked current inside the menu.
+
+---
+
+### T-2093 · Chrome · Sidebar never overlaps page content
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open each route at desktop width. 2. Look at the sidebar boundary.
+
+Expected: The sidebar never overlaps the page content on any route.
+
+---
+
+### T-2094 · Chrome · Skip link present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Press Tab as the very first keystroke.
+
+Expected: A "Skip to content" link appears and jumps past the sidebar.
+
+---
+
+### T-2095 · Chrome · Focus visible on every control
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Tab through the page.
+
+Expected: Every focused control shows a visible focus indicator.
+
+---
+
+### T-2096 · Chrome · No keyboard traps on the cockpit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Tab through the entire page.
+
+Expected: Focus never gets stuck — every stop can be tabbed away from.
+
+---
+
+### T-2097 · Chrome · Landmarks labelled on every route
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open each of the nine routes. 2. Check the page landmarks.
+
+Expected: Sidebar, main content and each panel region carry names for assistive tech.
+
+---
+
+### T-2098 · Chrome · Heading order sane on every route
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open each of the nine routes. 2. Check the heading order.
+
+Expected: Headings run in order with no skipped levels on any route.
+
+---
+
+### T-2099 · Chrome · Page language set
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Check the page language.
+
+Expected: The page declares its language so screen readers pronounce text correctly.
+
+---
+
+### T-2100 · Chrome · Text zooms to 200 percent cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open the full cockpit page (/). 2. Zoom text to 200%.
+
+Expected: The layout holds — no text overlaps and no control is lost.
+
+---

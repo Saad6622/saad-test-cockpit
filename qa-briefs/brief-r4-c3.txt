@@ -1,0 +1,407 @@
+QA BRIEF — LANE 4 REMAINDER c3 (T-701–T-750)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+Lane 4 chunk 3. Read-only throughout (no state-changing cases in lane 4's list for this range).
+
+### T-701 · Cockpit sections · Positions empty message wording
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+Steps: 1. Open the cockpit page with no open positions. 2. Scroll to the Positions section and wait for load. 3. Read the empty message text.
+Expected: The message clearly states there are no open positions in plain words.
+
+### T-702 · Cockpit sections · Risk limits show units
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and scroll to the Risk control section. 2. Wait for load. 3. Read each limit value with its unit.
+Expected: Every limit value carries its unit, e.g. % or currency, so meaning is unambiguous.
+
+### T-703 · Cockpit sections · Receipt rows show realized P&L where applicable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page when receipts with realized P&L exist. 2. Scroll to the Receipt section and wait for load. 3. Read the P&L field of a closed-trade receipt.
+Expected: The realized P&L is shown as a signed number on the relevant receipt rows.
+
+### T-704 · Cockpit sections · Alert venue prefix format consistent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Scroll to the Alerts section and wait for load. 3. Compare the prefix format across all rows.
+Expected: Every row uses the same prefix format and position at the start of the row.
+
+### T-705 · Cockpit sections · Alert toggle closes expanded detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Click an alert row toggle to expand it. 3. Click the same toggle once more.
+Expected: The row returns to its collapsed single-line state.
+
+### T-706 · Cockpit sections · Receipt empty message wording
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+Steps: 1. Open the cockpit page with no receipts. 2. Scroll to the Receipt section and wait for load. 3. Read the empty message text.
+Expected: The message clearly states there are no receipts yet in plain words.
+
+### T-707 · Cockpit sections · Overview shows last-updated time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Overview section and wait for load. 3. Look for a last-updated or refreshed timestamp.
+Expected: A last-updated time is visible so the user knows how fresh the summary is.
+
+### T-708 · Cockpit sections · All sections show heading text after load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for every section to finish loading. 2. Scroll from top to bottom. 3. Verify each section has its heading.
+Expected: All nine section headings (Overview, Positions, Risk control, Receipt, Alerts, Strategies, Journal, Funding, AI) are visible.
+
+### T-709 · Cockpit sections · Alert row click stays on page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-86
+Steps: 1. Open the cockpit page when alerts exist. 2. Expand and collapse several alert rows. 3. Check the browser address bar and page.
+Expected: The page never navigates away; toggling rows keeps the user on the cockpit page.
+
+### T-710 · Cockpit sections · Receipt venue label matches execution venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-86
+Steps: 1. Open the cockpit page when receipts exist. 2. Scroll to the Receipt section and wait for load. 3. Read the venue label on several receipt rows.
+Expected: The venue labels are consistent across rows and match the venue where orders executed.
+
+### T-711 · Cockpit sections · Positions numeric columns readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+Steps: 1. Open the cockpit page with open positions. 2. Scroll to the Positions table and wait for load. 3. Read the numeric columns (size, prices, P&L).
+Expected: Numeric values are aligned and readable, not clipped by the column width.
+
+### T-712 · Cockpit sections · Risk guard on/off states labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and scroll to the Risk control section. 2. Wait for load. 3. Read each guard's on/off or active/inactive label.
+Expected: Every guard shows an explicit on/off label, not just a colored dot.
+
+### T-713 · Cockpit sections · Overview shows balance and equity separately
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page. 2. Scroll to the Overview section and wait for load. 3. Read the balance line and the equity line.
+Expected: Balance and equity are shown as two separate labeled figures.
+
+### T-714 · Cockpit sections · Two rapid refreshes keep sections stable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for full load. 2. Press the browser refresh button twice in quick succession. 3. Wait for the page to settle.
+Expected: All sections settle into loaded content with no stuck placeholders or duplicated rows.
+
+### T-715 · Cockpit sections · No placeholder flicker loop after load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-86
+Steps: 1. Open the cockpit page and wait for all sections to load. 2. Watch the page for 30 seconds. 3. Check whether any section keeps flashing between placeholder and content.
+Expected: Loaded sections stay stable; no section flickers in a placeholder loop.
+
+### T-716 · Journal · Journal section loads with KPIs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page. 2. Scroll to the Journal section. 3. Wait for "Loading journal…" to be replaced.
+Expected: The Journal section shows KPI cards and trade rows, or the empty state, instead of the placeholder.
+
+### T-717 · Journal · Trade count KPI visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Find the trade count KPI.
+Expected: A trade count KPI is visible with a clear label.
+
+### T-718 · Journal · Total P&L KPI visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Find the total P&L KPI.
+Expected: A total P&L KPI is visible as a signed number with a clear label.
+
+### T-719 · Journal · KPI trade count matches row count
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Count the per-trade rows and compare with the trade count KPI.
+Expected: The trade count KPI equals the number of per-trade rows shown.
+
+### T-720 · Journal · KPI P&L equals sum of per-trade P&L
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Add up the P&L of the visible per-trade rows and compare with the total P&L KPI.
+Expected: The total P&L KPI matches the sum of the per-trade row P&L values.
+
+### T-721 · Journal · KPIs count fills across all sessions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page when trades were recorded across multiple sessions. 2. Scroll to the Journal section and wait for load. 3. Check the trade count and P&L KPIs against the full history.
+Expected: The KPIs include every recorded fill from all sessions, not just the current one.
+
+### T-722 · Journal · Empty journal shows no-trades message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-82
+Steps: 1. Open the cockpit page when no trades have been recorded. 2. Scroll to the Journal section and wait for load. 3. Read the message shown.
+Expected: A clear "No trades yet" style message is shown instead of a blank section.
+
+### T-723 · Journal · Per-trade rows listed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Look at the trade list.
+Expected: One row per recorded trade is listed below the KPIs.
+
+### T-724 · Journal · Trade row shows symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the symbol on each row.
+Expected: Each trade row shows its trading symbol.
+
+### T-725 · Journal · Trade row shows side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the side on each row.
+Expected: Each trade row shows long or short.
+
+### T-726 · Journal · Trade row shows entry and exit prices
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the entry and exit price fields on a row.
+Expected: Each closed trade row shows both its entry and exit prices as numbers.
+
+### T-727 · Journal · Trade row shows quantity
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the quantity on each row.
+Expected: Each trade row shows a numeric quantity with sensible decimals.
+
+### T-728 · Journal · Trade row shows P&L
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the P&L on each row.
+Expected: Each trade row shows its P&L as a signed number.
+
+### T-729 · Journal · Trade row shows timestamp
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the timestamp on each row.
+Expected: Each trade row shows a readable date and time.
+
+### T-730 · Journal · Trade row detail expands on click
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Click the expand control on one trade row.
+Expected: The row expands to show its full trade detail.
+
+### T-731 · Journal · Trade row detail collapses on second click
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with a trade row expanded. 2. Click the same row's expand control again. 3. Observe the row.
+Expected: The expanded detail collapses and the row returns to single-line form.
+
+### T-732 · Journal · Expanded row shows full trade detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Expand one trade row. 3. Read the detail area.
+Expected: The full trade detail is readable in the expanded area.
+
+### T-733 · Journal · Numbers use sensible decimal places
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Read the prices and P&L values.
+Expected: Values use sensible decimal places, not long unrounded strings.
+
+### T-734 · Journal · P&L signs shown explicitly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with winning and losing trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the P&L values.
+Expected: Wins show a plus sign and losses a minus sign (or equivalent clear styling).
+
+### T-735 · Journal · Currency units shown on P&L
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Read the P&L KPI and row P&L values.
+Expected: P&L figures carry their currency unit so the amounts are unambiguous.
+
+### T-736 · Journal · Win rate KPI if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Look for a win rate KPI.
+Expected: If offered, a win rate KPI is visible as a percentage.
+
+### T-737 · Journal · Average win and loss if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Look for average win and average loss KPIs.
+Expected: If offered, average win and average loss KPIs are visible as signed numbers.
+
+### T-738 · Journal · Sort by date if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Click the date column header if it is a sort control.
+Expected: If offered, clicking sorts the rows by date, newest or oldest first.
+
+### T-739 · Journal · Sort by P&L if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Click the P&L column header if it is a sort control.
+Expected: If offered, clicking sorts the rows by P&L value.
+
+### T-740 · Journal · Filter by symbol if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with trades on multiple symbols. 2. Scroll to the Journal section and wait for load. 3. Use the symbol filter control to select one symbol.
+Expected: If offered, the trade list shows only rows for the chosen symbol.
+
+### T-741 · Journal · Filter by side if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with long and short trades. 2. Scroll to the Journal section and wait for load. 3. Use the side filter control to select long.
+Expected: If offered, the trade list shows only long trades.
+
+### T-742 · Journal · Clear filter restores all rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page and apply a journal filter so the list is narrowed. 2. Click the clear or reset filter control. 3. Observe the trade list.
+Expected: All trade rows return to the list.
+
+### T-743 · Journal · Journal total consistent with history totals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Read the total P&L KPI in the Journal section. 3. Compare with the total on the history page if one is offered.
+Expected: The journal total matches the history total, or a note explains any difference.
+
+### T-744 · Journal · Partial fills represented sensibly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page when a trade had multiple partial fills. 2. Scroll to the Journal trade list and wait for load. 3. Find that trade.
+Expected: The trade appears once with combined quantity, or as labeled partial-fill rows that add up correctly.
+
+### T-745 · Journal · Placeholder dash rows display correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-82
+Steps: 1. Open the cockpit page when some trade fields are unavailable. 2. Scroll to the Journal trade list and wait for load. 3. Look at rows with missing data.
+Expected: Missing fields show a "—" placeholder without breaking the row layout.
+
+### T-746 · Journal · Key field labels correct on rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the field labels on each row.
+Expected: Labels match the data shown (symbol labeled as symbol, side as side, no swapped labels).
+
+### T-747 · Journal · Row expand reachable by keyboard
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Press Tab until focus reaches a trade row's expand control. 3. Press Enter.
+Expected: The row expands with keyboard alone and focus remains visible.
+
+### T-748 · Journal · Journal survives page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page and let the Journal section load. 2. Press the browser refresh button and wait. 3. Scroll to the Journal section after reload.
+Expected: The section reloads with the same KPIs and trade rows.
+
+### T-749 · Journal · Journal refresh picks up new trades
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page and note the current trade count KPI. 2. After a new trade is recorded, press the browser refresh button. 3. Check the trade count KPI and the trade list.
+Expected: The new trade appears and the KPIs update to include it.
+
+### T-750 · Journal · Zero-P&L trades shown as zero
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page when a break-even trade is recorded. 2. Scroll to the Journal trade list and wait for load. 3. Find the break-even trade row.
+Expected: Its P&L reads as 0.00 (or equivalent zero), not blank or "—".

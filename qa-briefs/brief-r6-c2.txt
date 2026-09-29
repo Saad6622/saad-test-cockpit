@@ -1,0 +1,1016 @@
+QA BRIEF — LANE 6 REMAINDER c2 (T-1051–T-1150)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+ALREADY DONE: read-only T-1001–T-1050 (previous session). Do not re-run read-only cases below T-1051.
+State cases in this chunk (T-1056, T-1057, T-1064, T-1066, T-1068, T-1074, T-1075, T-1082, T-1097, T-1102, T-1103, T-1110, T-1114, T-1115, T-1116, T-1123, T-1125, T-1128, T-1135, T-1136, T-1137, T-1138, T-1139, T-1142, T-1143, T-1145, T-1146, T-1147, T-1148, T-1149) → WINDOW SWEEP A.
+
+### T-1051 · Working-strategies · Strategy errors are visible, not silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+Steps: 1. Look for any strategy in an error state. 2. If one exists, read the error text.
+Expected: Errors appear on the strategy row itself with a readable message — failures are never invisible.
+
+---
+
+### T-1052 · Working-strategies · Strategy detail shows its rules
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Open a strategy's detail view. 2. Read the description/rules section.
+Expected: The strategy's name, family, symbol, timeframe, and description/rules are shown.
+
+---
+
+### T-1053 · Working-strategies · Symbol and timeframe match the allowed list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. For each strategy, compare its shown symbol/timeframe against the allowed symbols note (GATEIO:BTCUSDT.P, GATEIO:ETHUSDT.P).
+Expected: Every strategy runs on an allowed symbol — none shows an unexpected market.
+
+---
+
+### T-1054 · Working-strategies · Signals-sent counter increments on a signal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-33
+Steps: 1. Note a strategy's signals-sent count. 2. Wait until it emits a signal. 3. Read the count again.
+Expected: The count goes up by exactly one per signal — the counter is wired to reality.
+
+---
+
+### T-1055 · Working-strategies · Signal carries the strategy name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. When a signal arrives, open it in Alerts/Signals.
+Expected: The signal names the strategy that produced it — the tester can trace every signal to its source.
+
+---
+
+### T-1056 · Working-strategies · Disabled strategy stays quiet for 30 minutes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Disable one strategy. 2. Leave it 30 minutes. 3. Check its signal count.
+Expected: Zero new signals from it — disabled truly means off.
+
+---
+
+### T-1057 · Working-strategies · Enabled strategy evaluates every cycle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-35
+Steps: 1. Enable a strategy with data available. 2. Watch its "last evaluated" time across three runner cycles.
+Expected: It evaluates on every cycle — no skipped runs while enabled.
+
+---
+
+### T-1058 · Working-strategies · "Checking…" runner state resolves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Load the Strategies page fresh and watch the runner status line.
+Expected: Any initial "Checking…" resolves to a real state within a reasonable time — never stuck.
+
+---
+
+### T-1059 · Working-strategies · Upload contract is documented in the UI
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Open the "Add a strategy" upload area. 2. Read the documented .py contract.
+Expected: The required pieces are spelled out (STRATEGY_ID, STRATEGY_META fields, evaluate(bars), optional fetch_bars) — a tester can judge uploads against it.
+
+---
+
+### T-1060 · Working-strategies · Invalid .py upload is rejected with a message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Try uploading a .py file that breaks the contract (missing STRATEGY_ID). 2. Read the response.
+Expected: Rejected with a clear message naming what's wrong — no silent accept.
+
+---
+
+### T-1061 · Working-strategies · Duplicate STRATEGY_ID upload is rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Upload a file reusing an existing STRATEGY_ID. 2. Read the response.
+Expected: Rejected as a duplicate — the list never holds two strategies with one ID.
+
+---
+
+### T-1062 · Working-strategies · Strategy family is shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. For several strategies, read the family label (trend, mean-reversion, etc.).
+Expected: Each strategy shows its family — the tester can see the mix at a glance.
+
+---
+
+### T-1063 · Working-strategies · Signals evaluate on closed bars only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. When a signal arrives, compare its timestamp with the bar close time of its timeframe.
+Expected: Signals reference closed bars — none is stamped mid-bar.
+
+---
+
+### T-1064 · Working-strategies · Halted trading stops strategy signals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Use "Halt trading". 2. Watch the strategies for one cycle. 3. Re-enable afterwards.
+Expected: No new signals are emitted while halted; the halt state is visible on the Strategies page.
+
+---
+
+### T-1065 · Working-strategies · Strategy signal reaches a guard decision
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Wait for a strategy signal. 2. Follow it into the Journal/guards view.
+Expected: The signal shows the guards' allow/block decision with reasons — the full path is traceable.
+
+---
+
+### T-1066 · Working-strategies · All 15 enabled at once stay healthy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. Enable all 15 strategies. 2. Watch the runner for three cycles.
+Expected: The runner cycles cleanly through all 15 — no strategy starved, no cycle overruns shown.
+
+---
+
+### T-1067 · Working-strategies · List survives a page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Note toggle states and counts. 2. Refresh the page.
+Expected: The same 15 strategies, same toggle states, same counts — nothing lost.
+
+---
+
+### T-1068 · Working-strategies · Rapid toggling ends in the correct state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Toggle one strategy on/off five times quickly. 2. Read its final state and wait one cycle.
+Expected: The final toggle position is what's honored — the UI never desyncs from the intended state.
+
+---
+
+### T-1069 · Working-strategies · Feed error is shown on the strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Find a strategy whose data feed errors (or wait for a feed outage). 2. Read its row.
+Expected: The row shows a feed/market-data error — distinguishable from a strategy logic error.
+
+---
+
+### T-1070 · Working-strategies · Feed error vs logic error are distinguishable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Compare the messages of a feed-error strategy and a logic-error strategy (if both occur; otherwise use the documented wording).
+Expected: The two failure kinds read differently — the tester knows whether to blame data or code.
+
+---
+
+### T-1071 · Working-strategies · 24-hour signal count per strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Find each strategy's signal count for the last 24 hours (or the nearest period offered).
+Expected: Every strategy shows its recent activity — the tester can spot a dead one immediately.
+
+---
+
+### T-1072 · Working-strategies · "Last signal" timestamp per strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Read each strategy's last-signal time.
+Expected: Every strategy shows when it last fired — "never" is shown honestly where true.
+
+---
+
+### T-1073 · Working-strategies · Long-silent strategy is flagged
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+Steps: 1. Look for any strategy silent far beyond its normal cadence. 2. Check whether the UI flags it.
+Expected: If the UI offers health flags, the silent strategy carries one; if not, record its silence as an observation.
+
+---
+
+### T-1074 · Working-strategies · Enabling needs no hidden step
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-35
+Steps: 1. Toggle a strategy on and watch for any extra confirmation the UI demands.
+Expected: The toggle either works immediately or shows its required confirmation — never silently half-enabled.
+
+---
+
+### T-1075 · Working-strategies · Toggles are tappable on mobile
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-35
+Steps: 1. On a phone-width viewport, toggle three strategies on and off.
+Expected: Every toggle responds to taps; states are readable at small size.
+
+---
+
+### T-1076 · Working-strategies · Search finds a strategy by name
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. If a search box is offered, type part of a strategy name.
+Expected: Only matching strategies remain.
+
+---
+
+### T-1077 · Working-strategies · Sort by signal count
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+Steps: 1. If sorting is offered, sort strategies by signals sent.
+Expected: The order follows the counts — most active on top (or as labeled).
+
+---
+
+### T-1078 · Working-strategies · Strategy detail shows evaluation history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Open a strategy's detail/history view if offered.
+Expected: Recent evaluations are listed with times and outcomes — the tester sees it working over time, not just its current state.
+
+---
+
+### T-1079 · Working-strategies · Stale strategy shows a warning
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-33
+Steps: 1. Look for any strategy whose last check is far older than the runner cycle. 2. Read its row.
+Expected: A stale strategy carries a visible warning — the tester never mistakes "not checked" for "checked and quiet".
+
+---
+
+### T-1080 · Working-strategies · End-to-end: signal to journal, fully linked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. With an enabled strategy on the TEST setup, wait for its signal. 2. Trace it: signal → alert → guard decision → journal entry.
+Expected: Every hop is visible and linked in the UI — from the strategy firing to the final journal record, nothing vanishes.
+
+---
+
+## Section I — News filter: use it and prove it works (Saad's idea)
+
+The news filter must block new entries around high-impact news (no entries from 30 minutes before to 15 minutes after). These cases make the tester use the filter and prove it is actually working — not just switched on. All UI-only.
+
+### T-1081 · News-filter · Locate the news filter controls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. Look for the news filter panel (Risk control area or Settings). 2. Read its current on/off state and settings.
+Expected: The filter's location, state, and settings are all visible in the UI — the tester can find and operate it.
+
+---
+
+### T-1082 · News-filter · Enable and disable the filter
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. Switch the news filter OFF, note the state. 2. Switch it back ON.
+Expected: Both states are clearly shown; the change takes effect immediately.
+
+---
+
+### T-1083 · News-filter · Upcoming high-impact events are listed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Open the news calendar/list in the UI. 2. Read the next few events.
+Expected: Upcoming high-impact events appear with name, time, and impact level.
+
+---
+
+### T-1084 · News-filter · Event times show the correct timezone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Read an event time. 2. Compare with the app's timezone label.
+Expected: The event time matches the app's stated timezone — no silent UTC confusion.
+
+---
+
+### T-1085 · News-filter · Impact levels are distinguished
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Look at events of high, medium, and low impact (if all occur).
+Expected: Impact levels are labeled distinctly; the tester can tell which ones the filter acts on.
+
+---
+
+### T-1086 · News-filter · No-trade window is shown per event
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Open a high-impact event's detail. 2. Read the blocked window.
+Expected: The UI shows the blocked window (30 min before to 15 min after) for that event.
+
+---
+
+### T-1087 · News-filter · Countdown to the next blocked window
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-20
+Steps: 1. When a high-impact event is approaching, look for a countdown or "blocked in X min" indicator.
+Expected: The UI warns the tester before the window starts — no surprise blocks.
+
+---
+
+### T-1088 · News-filter · Signal inside the window is blocked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. During a live blocked window, wait for (or trigger via a strategy) a signal. 2. Check the guard decision.
+Expected: The signal is blocked with reason "news" (or equivalent) — the filter does its job.
+
+---
+
+### T-1089 · News-filter · Blocked signal is labeled WAIT
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Find a signal that arrived inside a news window. 2. Read its label/status.
+Expected: It is marked WAIT (or equivalent) — distinguishable from other block reasons.
+
+---
+
+### T-1090 · News-filter · Signal outside the window passes the filter
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. Outside any blocked window, note a signal's guard decision regarding news.
+Expected: The news check passes — the filter only blocks inside windows, not always.
+
+---
+
+### T-1091 · News-filter · Window edges are exact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Note a signal 31 minutes before a high-impact event and one 29 minutes before (using timestamps).
+Expected: The 31-minutes-before signal passes the news check; the 29-minutes-before one is blocked.
+
+---
+
+### T-1092 · News-filter · Post-event edge is exact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Note a signal 14 minutes after a high-impact event and one 16 minutes after.
+Expected: The 14-minutes-after signal is blocked; the 16-minutes-after one passes.
+
+---
+
+### T-1093 · News-filter · Medium-impact events do not block (if configured so)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. During a medium-impact event window, note a signal's news decision. 2. Read the filter's impact threshold setting.
+Expected: The behavior matches the configured threshold — medium events block only if the setting says so.
+
+---
+
+### T-1094 · News-filter · Filter applies per relevant symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. During a USD high-impact event, compare the news decision for a USD-pair signal vs a non-USD signal (if both occur).
+Expected: The block applies where the setting says it applies — the tester can see the scope.
+
+---
+
+### T-1095 · News-filter · Past events log
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Open the news history/log if offered. 2. Read the last few entries.
+Expected: Past events are listed with their windows and whether any signal was blocked in each.
+
+---
+
+### T-1096 · News-filter · Blocked-signal count per event
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. After a high-impact event passes, check how many signals were news-blocked in its window.
+Expected: The count is shown — the tester can verify the filter did something.
+
+---
+
+### T-1097 · News-filter · Disabled filter lets signals through
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. Switch the news filter OFF. 2. During a high-impact window, note a signal's news decision. 3. Switch it back ON.
+Expected: With the filter off, the news check passes even inside the window — the toggle is real.
+
+---
+
+### T-1098 · News-filter · Weekend shows no spurious windows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. On a weekend, open the news calendar.
+Expected: No fake weekday windows appear; the calendar is honestly empty or shows the next week's events.
+
+---
+
+### T-1099 · News-filter · Event list refreshes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Note the event list. 2. Wait an hour (or refresh) and compare.
+Expected: The list updates — past events drop off, new ones appear.
+
+---
+
+### T-1100 · News-filter · Data-source failure is shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-20
+Steps: 1. If the news feed fails, read the news panel state.
+Expected: The UI says the feed is unavailable — the tester never mistakes "no events" for "feed down".
+
+---
+
+### T-1101 · News-filter · Stale feed shows a warning
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-20
+Steps: 1. Check the "last updated" time on the news data.
+Expected: A fresh timestamp is shown; if it goes stale, a warning appears.
+
+---
+
+### T-1102 · News-filter · Manual news event entry (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Add a custom news event with a time 10 minutes ahead. 2. Wait for its window.
+Expected: The custom event creates a real blocked window — signals inside it are blocked.
+
+---
+
+### T-1103 · News-filter · Delete custom event (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Delete the custom event from T-1102. 2. Check the calendar.
+Expected: Its window disappears; signals are no longer blocked for it.
+
+---
+
+### T-1104 · News-filter · Invalid custom event rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-20
+Steps: 1. Try adding a custom event with a past time or empty name (if offered).
+Expected: Rejected with a clear message.
+
+---
+
+### T-1105 · News-filter · Block reason names the event
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Find a news-blocked signal. 2. Read the full block reason.
+Expected: The reason names the specific event (e.g. "NFP release") — not just "news".
+
+---
+
+### T-1106 · News-filter · Journal records news blocks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Open the Journal after a news-blocked signal.
+Expected: The block is journaled with the event name and window times.
+
+---
+
+### T-1107 · News-filter · Telegram alert on news block (if configured)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. With trade-block alerts enabled, let a signal be news-blocked.
+Expected: A notification names the event and the blocked signal.
+
+---
+
+### T-1108 · News-filter · Overlapping events merge windows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Find two high-impact events within an hour of each other (if they occur). 2. Read the blocked periods.
+Expected: The windows are shown merged/continuous — no gap where both should block.
+
+---
+
+### T-1109 · News-filter · All-day/tentative events handled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Find a tentative or all-day event (if one appears). 2. Read how the filter treats it.
+Expected: The UI states whether it blocks or not — no silent assumption.
+
+---
+
+### T-1110 · News-filter · Filter state survives refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. Set the filter ON with a custom threshold (if offered). 2. Refresh the page.
+Expected: The same state and settings persist.
+
+---
+
+### T-1111 · News-filter · Settings page mirrors the panel state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Compare the news filter state on its panel vs in Settings.
+Expected: Both show the same on/off state — no desync between two controls.
+
+---
+
+### T-1112 · News-filter · Mobile: event list readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-20
+Steps: 1. Open the news calendar on a phone-width viewport.
+Expected: Event names, times, and impact badges are readable without sideways scrolling.
+
+---
+
+### T-1113 · News-filter · "Why was this blocked?" explainer
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. On a news-blocked signal, look for an explainer link/section.
+Expected: It explains the rule (30 min before / 15 min after high-impact) in plain words.
+
+---
+
+### T-1114 · News-filter · Threshold change takes effect
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. If an impact-threshold setting is offered, change it. 2. Check the next event's blocked status.
+Expected: The new threshold governs blocking — the setting does something.
+
+---
+
+### T-1115 · News-filter · Threshold change is journaled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Change the news filter setting. 2. Check the Journal/settings history.
+Expected: The change is recorded with the old and new values.
+
+---
+
+### T-1116 · News-filter · Rapid on/off ends in correct state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Toggle the filter five times quickly. 2. Read its final state and test with the next signal.
+Expected: The final toggle position is honored.
+
+---
+
+### T-1117 · News-filter · Blocked window visible on a timeline (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Open any timeline/day view showing blocked windows.
+Expected: Blocked periods are shaded/marked; the tester sees at a glance when trading is paused.
+
+---
+
+### T-1118 · News-filter · No duplicate blocks for one signal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Find a signal inside two overlapping event windows. 2. Count its news-block records.
+Expected: One block record naming the event(s) — not two separate blocks for one signal.
+
+---
+
+### T-1119 · News-filter · Filter works during volatile session (if observable)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. During a major release (e.g. NFP), watch the UI through the window.
+Expected: Signals arriving in the window are blocked and labeled; the UI stays responsive throughout.
+
+---
+
+### T-1120 · News-filter · End-to-end: event to blocked journal entry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-20
+Steps: 1. Pick an upcoming high-impact event. 2. Follow it: calendar → countdown → window start → signal blocked → journal entry.
+Expected: Every step is visible in the UI and linked — the tester can prove the filter worked for that event.
+
+---
+
+## Section J — AI integration: check it works or not (Saad's idea)
+
+The software has AI integration (market scans, predictions, direct-trading drafts). These cases make the tester use every AI feature and prove whether it is really working — producing output, handling failures visibly — or just decorative. All UI-only.
+
+### T-1121 · AI · Locate every AI feature in the UI
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Walk the whole UI and list every AI-labeled feature (AI section, scan cards, predictions, direct-trading drafts).
+Expected: The tester has a complete inventory — no AI feature is hidden or discoverable only by accident.
+
+---
+
+### T-1122 · AI · AI section loads with content
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Open the AI section. 2. Wait for it to finish loading.
+Expected: Real content appears — never a permanent "Loading…" placeholder.
+
+---
+
+### T-1123 · AI · Run a market scan
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Start an AI market scan from the UI. 2. Watch it run to completion.
+Expected: The scan finishes and shows results — ranked markets/cards with the scan time.
+
+---
+
+### T-1124 · AI · Scan results are ranked and readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+Steps: 1. Read a completed scan's results.
+Expected: Results are ordered (ranked) with scores or reasons readable per card.
+
+---
+
+### T-1125 · AI · No-edge case: scan says so honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+Steps: 1. Run a scan in flat market conditions (or find a past one). 2. Read its conclusion.
+Expected: If no edge is found, the UI says so plainly ("no edge — no card") instead of inventing a weak signal.
+
+---
+
+### T-1126 · AI · Scan timestamp is shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Read the timestamp on a scan result.
+Expected: Every scan shows when it ran — the tester never mistakes an old scan for a fresh one.
+
+---
+
+### T-1127 · AI · Stale scan is marked stale
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+Steps: 1. Find a scan result older than its freshness window (or wait). 2. Read its state.
+Expected: Old scans are labeled stale/expired — the UI doesn't present them as current.
+
+---
+
+### T-1128 · AI · Re-scan produces fresh results
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Run a scan, note results. 2. Run it again later.
+Expected: The second run shows a new timestamp and fresh data — not a cached copy of the first.
+
+---
+
+### T-1129 · AI · Scan failure is shown, not silent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+Steps: 1. If a scan fails (or its data source is down), read the AI section state.
+Expected: The failure is shown with a readable reason — never a silent empty result.
+
+---
+
+### T-1130 · AI · Prediction card shows confidence
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Open an AI prediction card. 2. Read its confidence value.
+Expected: A confidence score/level is shown — the tester sees how sure the AI claims to be.
+
+---
+
+### T-1131 · AI · Low-confidence prediction abstains
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Find a low-confidence prediction (or a no-trade recommendation).
+Expected: The UI shows abstention ("no trade") rather than pushing a weak prediction.
+
+---
+
+### T-1132 · AI · Prediction shows its reasons
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Open a prediction's detail/reasons.
+Expected: The inputs or reasons behind the prediction are listed in plain words.
+
+---
+
+### T-1133 · AI · Prediction outcome is tracked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Find a past prediction and its outcome record.
+Expected: Predictions are scored against what actually happened — wins and misses both visible.
+
+---
+
+### T-1134 · AI · Prediction honesty: misses are not hidden
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+Steps: 1. Look through the prediction history for wrong calls.
+Expected: Wrong predictions remain visible with their outcomes — the record isn't scrubbed.
+
+---
+
+### T-1135 · AI · Direct-trading draft appears in the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+Steps: 1. Let the AI propose a trade (or trigger a draft). 2. Open the Smart Trade ticket.
+Expected: The AI's draft appears in the ticket with side, size, and reasons — editable before arming.
+
+---
+
+### T-1136 · AI · Draft can be edited before arming
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-12
+Steps: 1. Open an AI draft in the ticket. 2. Change the size. 3. Arm it.
+Expected: The edited values are what gets armed — the draft is a proposal, not a lock-in.
+
+---
+
+### T-1137 · AI · Draft can be discarded
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Open an AI draft. 2. Discard/reject it.
+Expected: The draft is removed; nothing is armed or ordered from it.
+
+---
+
+### T-1138 · AI · Draft never skips the arm confirmation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Follow an AI draft all the way toward ordering.
+Expected: The "I've reviewed every leg — arm the ticket" checkbox (or equivalent) is still required — the AI cannot bypass confirmations.
+
+---
+
+### T-1139 · AI · AI obeys the halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Use "Halt trading". 2. Watch the AI section for a cycle.
+Expected: The AI proposes nothing tradeable while halted; drafts are blocked or labeled halted.
+
+---
+
+### T-1140 · AI · AI obeys the news filter
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-20
+Steps: 1. During a news blocked window, check AI proposals.
+Expected: The AI does not propose entries inside the window — or its proposals are flagged news-blocked.
+
+---
+
+### T-1141 · AI · AI respects risk limits
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Read an AI draft's size vs the configured risk limits.
+Expected: Draft sizes stay within limits; an oversized draft is rejected or resized with a reason shown.
+
+---
+
+### T-1142 · AI · Veto/override control exists
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Look for the AI veto or human-override control. 2. Use it on a draft.
+Expected: The tester can veto AI proposals; the veto is recorded.
+
+---
+
+### T-1143 · AI · Veto is journaled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Veto an AI draft. 2. Check the Journal.
+Expected: The veto appears with the draft details and the reason.
+
+---
+
+### T-1144 · AI · AI activity log
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Open the AI activity/log view if offered.
+Expected: Scans, predictions, and drafts are listed with times — the tester sees everything the AI did.
+
+---
+
+### T-1145 · AI · Scan during data outage
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+Steps: 1. Run a scan while a market-data feed is down.
+Expected: The scan reports the data problem instead of producing garbage predictions.
+
+---
+
+### T-1146 · AI · Two scans don't corrupt each other
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Start a scan, then start another before the first finishes (if the UI allows).
+Expected: Both complete with their own separate results — no mixed or overwritten cards.
+
+---
+
+### T-1147 · AI · AI settings are adjustable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Open AI settings. 2. Change a setting (scan frequency, confidence threshold, etc.).
+Expected: The setting changes and the new behavior is observable.
+
+---
+
+### T-1148 · AI · AI can be switched off entirely
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+Steps: 1. Disable AI integration. 2. Watch the UI for a cycle.
+Expected: No scans run, no drafts appear; the UI shows AI as off.
+
+---
+
+### T-1149 · AI · Re-enabling AI resumes cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Re-enable AI after T-1148. 2. Watch for a cycle.
+Expected: Scans and proposals resume without errors or duplicates.
+
+---
+
+### T-1150 · AI · Mobile: AI cards readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+Steps: 1. Open the AI section on a phone-width viewport.
+Expected: Cards, scores, and buttons are readable and tappable.
+
+---

@@ -1,0 +1,407 @@
+QA BRIEF — LANE 4 REMAINDER c4 (T-751–T-800)
+UI-only, live browser. Enter ONLY via the bookmark https://saad6622.github.io/saad-test-cockpit/ — never hardcode tunnel URLs.
+BASELINE FIRST (record all 5 in your report): 1) model gate OpenRouter / meta/muse-spark-1.3-contributor, 2) 15/15 strategies ON, 3) "Trading · entries allowed", 4) halt OFF, 5) ticket disarmed, no open positions. No "demo"/"paper" wording anywhere — if you see it, file it as an issue.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your final report.
+STATE RULE (HARD): you are READ-ONLY on this run. ANY case whose steps save/flip/toggle/edit/delete/discard/change anything = BLOCKED-pending-window: record BLOCKED with the reason and continue with the next read-only case. A dedicated window-sweep task runs all state-changing cases separately — do NOT run them yourself.
+Lane 4 chunk 4. Read-only throughout.
+
+### T-751 · Journal · Losing trades styled negatively
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-82
+Steps: 1. Open the cockpit page with losing trades recorded. 2. Scroll to the Journal trade list and wait for load. 3. Look at the losing rows.
+Expected: Losing rows are styled distinctly from winning rows (color or sign).
+
+### T-752 · Journal · Loading placeholder shown first
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-82
+Steps: 1. Load the cockpit page fresh. 2. Watch the Journal section area. 3. Wait for load to finish.
+Expected: The section first shows "Loading journal…" and then replaces it with content.
+
+### T-753 · Journal · KPI cards clearly labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Read each KPI card.
+Expected: Every KPI card has a clear label (trade count, total P&L, and any others).
+
+### T-754 · Journal · Long symbol names do not break rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page when a long symbol name is recorded. 2. Scroll to the Journal trade list and wait for load. 3. Find that row.
+Expected: The long name wraps or truncates cleanly without pushing other columns out of place.
+
+### T-755 · Journal · Many trades scroll within section
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with many recorded trades. 2. Scroll to the Journal section. 3. Scroll within the trade list area.
+Expected: The trade list scrolls inside its section without making the whole page unwieldy.
+
+### T-756 · Journal · Mobile viewport journal stacks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Resize the browser to a narrow phone-width viewport. 2. Open the cockpit page and scroll to the Journal section. 3. Check the KPI cards and trade rows.
+Expected: KPI cards stack vertically and trade rows remain readable with no horizontal page scroll.
+
+### T-757 · Journal · Date column format consistent
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Compare timestamps across rows.
+Expected: All rows use the same date and time format.
+
+### T-758 · Journal · Trade detail includes venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Expand one trade row. 3. Read the detail area.
+Expected: The venue where the trade executed is shown in the detail.
+
+### T-759 · Journal · KPI P&L sums all sessions
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page when trades were recorded across multiple days. 2. Scroll to the Journal section and wait for load. 3. Compare the total P&L KPI with the sum of all rows.
+Expected: The KPI includes rows from every session, matching the grand total.
+
+### T-760 · Journal · Empty message clears when first trade lands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-82
+Steps: 1. Open the cockpit page when no trades are recorded and note the empty message. 2. After the first trade is recorded, press the browser refresh button. 3. Scroll to the Journal section.
+Expected: The empty message is gone and the KPI cards plus the first trade row are shown.
+
+### T-761 · Journal · Sort direction indicator if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Click a sortable column header in the Journal trade list. 3. Click it again.
+Expected: If offered, an arrow or label shows the current sort direction and it flips on the second click.
+
+### T-762 · Journal · Row click stays on page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Expand and collapse several trade rows. 3. Check the browser address bar.
+Expected: The page never navigates away while interacting with journal rows.
+
+### T-763 · Journal · Journal table column headers present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal trade list and wait for load. 3. Read the column headers.
+Expected: Column headers are visible for symbol, side, prices, quantity, P&L, and time.
+
+### T-764 · Journal · Totals note explains journal vs history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Scroll to the Journal section and wait for load. 3. Look for a note about totals near the KPIs.
+Expected: If journal and history totals can differ, a short note explains the difference.
+
+### T-765 · Journal · Fees shown per trade if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. Expand one trade row. 3. Look for fee or commission detail.
+Expected: If offered, the fee or commission for the trade is shown in the detail.
+
+### T-766 · Journal · New trade appears after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page and scroll to the Journal trade list. 2. After a new trade is recorded elsewhere, press the browser refresh button. 3. Check the top of the trade list.
+Expected: The newest trade appears in the list after refresh.
+
+### T-767 · Journal · Journal section heading present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page and wait for full load. 2. Scroll to the Journal section. 3. Read its heading.
+Expected: The section shows a clear "Journal" heading.
+
+### T-768 · Journal · Invalid filter input handled gracefully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades. 2. If a text filter is offered, type a value matching no trades. 3. Observe the trade list.
+Expected: A clear "no matching trades" message appears instead of an error or blank break.
+
+### T-769 · Journal · Rows not duplicated after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page with recorded trades and count the rows. 2. Press the browser refresh button and wait. 3. Count the rows again.
+Expected: The row count is the same; no trade appears twice.
+
+### T-770 · Journal · No horizontal scroll on desktop
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-82
+Steps: 1. Open the cockpit page at a normal desktop width with recorded trades. 2. Scroll to the Journal section. 3. Check for horizontal scrolling.
+Expected: The KPI cards and trade rows fit within the page width with no horizontal scroll.
+
+### T-771 · Funding · Funding section loads
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page. 2. Scroll to the Funding section. 3. Wait for "Loading funding…" to be replaced.
+Expected: The Funding section shows the funding rail status or an empty message, not the placeholder.
+
+### T-772 · Funding · Funding loading placeholder clears
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-11
+Steps: 1. Load the cockpit page fresh. 2. Watch the Funding section area. 3. Wait for load to finish.
+Expected: The "Loading funding…" text disappears and real content takes its place.
+
+### T-773 · Funding · Connected state shows venue connected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page when the funding rail is connected. 2. Scroll to the Funding section and wait for load. 3. Read the status label.
+Expected: The section shows a clear connected state naming the venue.
+
+### T-774 · Funding · Not-connected state shown when disconnected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page when no funding rail is connected. 2. Scroll to the Funding section and wait for load. 3. Read the status label.
+Expected: The section shows a clear not-connected state instead of fake values.
+
+### T-775 · Funding · Connected rail shows status label
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Read the status area.
+Expected: A readable status label is shown next to the rail name.
+
+### T-776 · Funding · Funding values readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Read each value shown.
+Expected: All funding values are visible as formatted numbers with labels.
+
+### T-777 · Funding · Available balance figure shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Find the available balance figure.
+Expected: The available balance is shown as a number with its currency unit.
+
+### T-778 · Funding · Funding empty state message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-11
+Steps: 1. Open the cockpit page when no funding data exists. 2. Scroll to the Funding section and wait for load. 3. Read the message shown.
+Expected: A clear empty message is shown in plain words.
+
+### T-779 · Funding · Funding survives page refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page and let the Funding section load. 2. Press the browser refresh button and wait. 3. Scroll to the Funding section after reload.
+Expected: The section reloads with the same connected state and values.
+
+### T-780 · Funding · Refresh updates funding values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected and note the values. 2. After balances change, press the browser refresh button. 3. Compare the values after reload.
+Expected: The funding values update to the latest figures.
+
+### T-781 · Funding · Connected and disconnected icons distinct
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page. 2. Scroll to the Funding section and note the status icon. 3. Compare with the opposite state if reachable.
+Expected: Connected and disconnected states use clearly different icons or colors.
+
+### T-782 · Funding · Connect button if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page when the funding rail is not connected. 2. Scroll to the Funding section and wait for load. 3. Look for a connect button.
+Expected: If offered, a clearly labeled connect button is visible.
+
+### T-783 · Funding · Cancel connect flow if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page and click the connect button in the Funding section if offered. 2. In the connect dialog, click Cancel or Close. 3. Observe the Funding section.
+Expected: The dialog closes and the section stays in its not-connected state.
+
+### T-784 · Funding · Funding values use sensible decimals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Read each numeric value.
+Expected: Values use sensible decimal places, not long unrounded strings.
+
+### T-785 · Funding · Currency labels shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Read each amount with its label.
+Expected: Every amount carries its currency label so values are unambiguous.
+
+### T-786 · Funding · Multiple rails listed if present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page when more than one funding rail is configured. 2. Scroll to the Funding section and wait for load. 3. Read the rail list.
+Expected: Each rail is listed separately with its own status and values.
+
+### T-787 · Funding · Funding error message on failed load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-11
+Steps: 1. Open the cockpit page when the funding request fails. 2. Scroll to the Funding section. 3. Read what is shown.
+Expected: A plain-language error message is shown instead of a stuck "Loading…" placeholder.
+
+### T-788 · Funding · Funding section heading present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page and wait for full load. 2. Scroll to the Funding section. 3. Read its heading.
+Expected: The section shows a clear "Funding" heading.
+
+### T-789 · Funding · Zero-balance rail shows zero
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page when a connected rail has a zero balance. 2. Scroll to the Funding section and wait for load. 3. Read the balance figure.
+Expected: The balance reads as 0.00 (or equivalent zero), not blank.
+
+### T-790 · Funding · Last-updated time shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Look for a last-updated timestamp.
+Expected: A last-updated time is visible so the user knows how fresh the values are.
+
+### T-791 · Funding · Mobile viewport funding stacks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Resize the browser to a narrow phone-width viewport. 2. Open the cockpit page and scroll to the Funding section. 3. Check the layout.
+Expected: Funding values stack vertically and remain readable with no horizontal page scroll.
+
+### T-792 · Funding · Values do not overlap labels
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Visually check each label and value pair.
+Expected: No value overlaps its label or a neighboring value.
+
+### T-793 · Funding · Keyboard focus reaches connect button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-11
+Steps: 1. Open the cockpit page with the connect button visible in the Funding section. 2. Press Tab until focus reaches the button. 3. Check the focus indicator.
+Expected: Focus lands on the connect button with a visible indicator.
+
+### T-794 · Funding · Disconnected state offers guidance
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page when the funding rail is not connected. 2. Scroll to the Funding section and wait for load. 3. Read the full disconnected message.
+Expected: The message explains what to do next to connect the rail.
+
+### T-795 · Funding · Funding amounts aligned and readable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Scroll to the Funding section and wait for load. 3. Read the amounts column.
+Expected: Amounts are aligned and easy to compare, not clipped by the layout.
+
+### T-796 · Funding · Refresh keeps connected state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected. 2. Press the browser refresh button and wait. 3. Scroll to the Funding section after reload.
+Expected: The section still shows the connected state after refresh.
+
+### T-797 · Funding · Connected indicator persists after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected and note the status icon. 2. Press the browser refresh button and wait. 3. Check the status icon again.
+Expected: The same connected indicator is shown after reload.
+
+### T-798 · Funding · No stale data after long idle
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-11
+Steps: 1. Open the cockpit page with the funding rail connected and note the values. 2. Leave the page idle for several minutes. 3. Read the values again and refresh.
+Expected: The values are current after refresh; no obviously stale figures remain.
+
+### T-799 · Funding · Long venue names handled gracefully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page when the rail name is long. 2. Scroll to the Funding section and wait for load. 3. Read the rail name.
+Expected: The long name wraps or truncates cleanly without breaking the layout.
+
+### T-800 · Funding · Funding visible among all sections
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-11
+Steps: 1. Open the cockpit page and wait for every section to load. 2. Scroll from top to bottom. 3. Confirm the Funding section appears in its place.
+Expected: The Funding section renders in the page order with its content intact.
