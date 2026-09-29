@@ -1,0 +1,408 @@
+QA BRIEF — LANE 3 CHUNK 2 (T-451–T-500)
+UI-only, live browser, bookmark https://saad6622.github.io/saad-test-cockpit/ is the authority.
+Run every case in order. Verdict per case: PASS / FAIL / BLOCKED / N-A with the EXACT quoted UI text observed.
+Zero-ignore: every failure or suspicion becomes a full issue write-up (exact observed text) in your report.
+Read-only: lane 6 holds the exclusive state window. Any case whose steps save/flip/toggle/edit/delete/discard/change anything is BLOCKED-pending-window until your granted turn.
+
+### T-451 · Keys · Edit keeps label and exchange unless changed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-54
+Steps: 1. Open /keys with a saved slot. 2. Edit the slot and change only the Exchange Secret. 3. Save and read the Slots list entry.
+Expected: The slot's label and exchange remain as they were; only the secret changed.
+
+### T-452 · Keys · Delete control offered on a slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-55
+Steps: 1. Open /keys with a saved slot. 2. Look at the slot entry. 3. Find the delete control.
+Expected: If deletion is offered, each slot entry shows a visible delete control.
+
+### T-453 · Keys · Delete asks for confirmation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-55
+Steps: 1. Open /keys with a saved slot. 2. Click the slot's delete control. 3. Observe what appears.
+Expected: A confirmation prompt appears asking to confirm the deletion before anything is removed.
+
+### T-454 · Keys · Cancel delete keeps the slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-55
+Steps: 1. Open /keys with a saved slot. 2. Click delete, then click "Cancel" on the confirmation. 3. Check the Slots list.
+Expected: The slot is still present in the Slots list; nothing was deleted.
+
+### T-455 · Keys · Confirm delete removes the slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-55
+Steps: 1. Open /keys with a saved slot. 2. Click delete and confirm the deletion. 3. Check the Slots list.
+Expected: The slot is removed from the Slots list and a confirmation message is shown.
+
+### T-456 · Keys · Deleting the last slot shows empty state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-51
+Steps: 1. Open /keys with exactly one saved slot. 2. Delete it and confirm. 3. Read the Slots list area.
+Expected: The empty-state message appears, explaining no slots are saved yet.
+
+### T-457 · Keys · New key used without restart
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys and save a new valid slot. 2. Do not restart anything. 3. Trigger a connection or check that uses the key (for example the connection check if offered).
+Expected: The newly saved key is picked up automatically on the next connection, with no restart needed.
+
+### T-458 · Keys · Saving one slot does not affect others
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys with two saved slots. 2. Add a third slot with valid inputs. 3. Read all three entries in the Slots list.
+Expected: The two original slots are unchanged; only the new slot was added.
+
+### T-459 · Keys · Refresh keeps the Slots list intact
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-51
+Steps: 1. Open /keys with saved slots. 2. Press F5 to refresh. 3. Read the Slots list.
+Expected: All saved slots are still listed after the refresh, with labels and exchanges intact and values still hidden.
+
+### T-460 · Keys · Tab key moves through the add-slot form
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-53
+Steps: 1. Open /keys and click "Add slot". 2. Press the Tab key repeatedly. 3. Watch the focus order.
+Expected: Focus moves in a logical top-to-bottom order through Slot name, Label, Exchange, Alternate account, Exchange Key, Exchange Secret, Passphrase, and the save/cancel buttons.
+
+## Section D — Notifications & Telegram, Smart Trade ticket
+
+### T-461 · Notifications · Empty state before connecting
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications in the browser. 2. Do not enter anything. 3. Read the "Message alerts (Telegram)" status area.
+Expected: The status shows the not-connected state and is not green.
+
+### T-462 · Notifications · Bot Secret box blank initially
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Look at the "Connect Telegram" Bot Secret field. 3. Note the helper text under it.
+Expected: The box is blank and shows the "re-enter to change (from @BotFather)" guidance plus the note that a saved secret is never shown.
+
+### T-463 · Notifications · Chat ID box blank initially
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Look at the Chat ID field. 3. Note the helper text under it.
+Expected: The box is blank with the "re-enter to change" guidance and the @userinfobot how-to.
+
+### T-464 · Notifications · Alert topic toggles visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Open /notifications. 2. Scroll to "Alert topics". 3. Read each toggle label.
+Expected: Four toggles are visible — trade starts, trade finishes, safety rule blocks an order, Halt trading used — with the note that the Halt trading button is the small red-outlined button in the sidebar.
+
+### T-465 · Notifications · Try it out button visible before setup
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+Steps: 1. Open /notifications. 2. Find the "Try it out" button. 3. Read its description text.
+Expected: The button is visible with text explaining it sends a real message to Telegram right now.
+
+### T-466 · Notifications · Save a valid bot secret
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Type a valid bot secret into the Bot Secret field. 3. Save the form.
+Expected: The secret is accepted and saved; a success confirmation appears.
+
+### T-467 · Notifications · Secret box stays blank after save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Save a valid bot secret. 2. Wait for the save to complete. 3. Look at the Bot Secret field again.
+Expected: The box is still blank — the saved secret is never displayed.
+
+### T-468 · Notifications · Re-enter to change the secret
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+Steps: 1. With a secret already saved, type a different valid secret into the Bot Secret field. 2. Save. 3. Check the field.
+Expected: The new secret replaces the old one; the box stays blank after saving.
+
+### T-469 · Notifications · Saving with empty secret field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Leave the Bot Secret field empty. 3. Attempt to save.
+Expected: An error message explains a secret is required; nothing is saved.
+
+### T-470 · Notifications · Secret with only spaces rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Type only spaces into the Bot Secret field. 3. Attempt to save.
+Expected: The save is rejected with an invalid-secret message; the field stays blank.
+
+### T-471 · Notifications · Secret with surrounding spaces trimmed
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Paste a valid secret with one leading and one trailing space. 3. Save.
+Expected: The secret is accepted; the surrounding spaces are trimmed.
+
+### T-472 · Notifications · Very long secret rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Paste a random string several hundred characters long into the Bot Secret field. 3. Save.
+Expected: A validation error states the secret format is invalid.
+
+### T-473 · Notifications · Save a valid numeric Chat ID
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Type a valid numeric chat ID into the Chat ID field. 3. Save.
+Expected: The chat ID is accepted and saved with a success confirmation.
+
+### T-474 · Notifications · Chat ID with letters rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Type "abc123" into the Chat ID field. 3. Save.
+Expected: An error message states the chat ID must be numeric.
+
+### T-475 · Notifications · Empty Chat ID rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Clear the Chat ID field. 3. Save.
+Expected: An error message states the chat ID is required.
+
+### T-476 · Notifications · Negative Chat ID rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Type "-123456" into the Chat ID field. 3. Save.
+Expected: An error message states the chat ID is invalid.
+
+### T-477 · Notifications · Decimal Chat ID rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Type "123.45" into the Chat ID field. 3. Save.
+Expected: An error message states the chat ID must be a whole number.
+
+### T-478 · Notifications · Chat ID with spaces rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Open /notifications. 2. Type "123 456" into the Chat ID field. 3. Save.
+Expected: An error message states the chat ID format is invalid.
+
+### T-479 · Notifications · Re-enter to change Chat ID
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+Steps: 1. With a chat ID saved, type a different valid numeric chat ID. 2. Save. 3. Press "Try it out".
+Expected: The new chat ID is used for the test message.
+
+### T-480 · Notifications · BotFather how-to text present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Read the help text near the Bot Secret field. 3. Check the @BotFather mention.
+Expected: Clear how-to text explains getting the secret from @BotFather.
+
+### T-481 · Notifications · userinfobot how-to text present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Read the help text near the Chat ID field. 3. Check the @userinfobot mention.
+Expected: Clear how-to text explains getting the chat ID via @userinfobot.
+
+### T-482 · Notifications · Saved-secret privacy note
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Read the note under the Bot Secret field. 3. Save a secret and re-read the field.
+Expected: The note states a saved secret is never shown, and the box stays blank while one is saved.
+
+### T-483 · Notifications · Toggle trade-start alerts on
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Open /notifications. 2. Switch on "Tell me when a trade starts". 3. Save if the page requires it.
+Expected: The toggle shows the on state and the choice is kept.
+
+### T-484 · Notifications · Toggle trade-start alerts off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Switch off "Tell me when a trade starts". 2. Save if the page requires it. 3. Re-check the toggle.
+Expected: The toggle shows the off state and the choice is kept.
+
+### T-485 · Notifications · Toggle trade-finish alerts on
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Switch on "Tell me when a trade finishes". 2. Save if the page requires it. 3. Re-check the toggle.
+Expected: The toggle shows the on state and the choice is kept.
+
+### T-486 · Notifications · Toggle trade-finish alerts off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Switch off "Tell me when a trade finishes". 2. Save if the page requires it. 3. Re-check the toggle.
+Expected: The toggle shows the off state and the choice is kept.
+
+### T-487 · Notifications · Toggle safety-block alerts on
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Switch on "Tell me when a safety rule blocks an order". 2. Save if the page requires it. 3. Re-check the toggle.
+Expected: The toggle shows the on state and the choice is kept.
+
+### T-488 · Notifications · Toggle safety-block alerts off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Switch off "Tell me when a safety rule blocks an order". 2. Save if the page requires it. 3. Re-check the toggle.
+Expected: The toggle shows the off state and the choice is kept.
+
+### T-489 · Notifications · Toggle Halt-trading alerts on
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Switch on "Tell me when Halt trading is used". 2. Save if the page requires it. 3. Re-check the toggle.
+Expected: The toggle shows the on state and the choice is kept.
+
+### T-490 · Notifications · Toggle Halt-trading alerts off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Switch off "Tell me when Halt trading is used". 2. Save if the page requires it. 3. Re-check the toggle.
+Expected: The toggle shows the off state and the choice is kept.
+
+### T-491 · Notifications · All four topics on
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-58
+Steps: 1. Switch all four alert-topic toggles on. 2. Save. 3. Re-read each toggle.
+Expected: All four toggles show the on state.
+
+### T-492 · Notifications · All four topics off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-58
+Steps: 1. Switch all four alert-topic toggles off. 2. Save. 3. Re-read each toggle.
+Expected: All four toggles show the off state.
+
+### T-493 · Notifications · Topic toggles persist after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Set a mix of states (for example trade starts on, the rest off). 2. Save. 3. Refresh the page.
+Expected: Each toggle still shows the state set before the refresh.
+
+### T-494 · Notifications · Secret still blank after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-56
+Steps: 1. Save a valid bot secret. 2. Refresh /notifications. 3. Look at the Bot Secret field.
+Expected: The box is still blank; the saved secret remains in effect without being shown.
+
+### T-495 · Notifications · Status not green after saving secret alone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Save only a valid bot secret (no chat ID, no test). 2. Read the status area.
+Expected: The status does not turn green — saving alone never claims delivery.
+
+### T-496 · Notifications · Status not green after token check alone
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Complete any secret/token validation the page offers without pressing "Try it out". 2. Read the status.
+Expected: The status is not green; the page states green requires a real preview message reaching Telegram.
+
+### T-497 · Notifications · Try it out sends a real message and turns status green
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+Steps: 1. Save a valid secret and chat ID. 2. Press "Try it out". 3. Check Telegram on the phone and the status area.
+Expected: A real preview message arrives in Telegram and the status turns green.
+
+### T-498 · Notifications · Status text explains the green condition
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Read the status help text. 3. Compare before and after a successful "Try it out".
+Expected: The text states the status turns green only after a real preview message reaches Telegram — a token check alone never claims delivery.
+
+### T-499 · Notifications · Status stays green after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Reach the green status via a successful "Try it out". 2. Refresh /notifications. 3. Read the status.
+Expected: The status is still green.
+
+### T-500 · Notifications · Try it out with no chat ID shows error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+Steps: 1. Save a valid secret but leave Chat ID empty. 2. Press "Try it out". 3. Read the result.
+Expected: A clear error states the chat ID is missing; no message is claimed sent.
+
