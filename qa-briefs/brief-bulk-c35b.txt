@@ -1,0 +1,638 @@
+### T-7446 · Rollback flows wave-7 · rolling back a never-saved group reads "back to the original defaults" — never "restored to your last save"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DK-RB7
+
+Steps: 1. Find a group with no saved version yet (fresh group, or one never saved in this session) and make an edit. 2. Roll it back. 3. Read the confirmation verbatim.
+Expected: With no last save in existence, the confirmation says the group returned to the original defaults — it never claims "restored to your last save" or names a version that never existed. A "last save" claim over a group with no saves is a FAIL. (The factory-state wording twin of T-7449's version-naming case; if every group already has saves in this environment, record N-A with the absence stated.)
+
+---
+
+### T-7447 · Rollback flows wave-7 · pressing rollback with zero unsaved changes mints no "rolled back" confirmation — an honest no-op
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DK-RB7
+
+Steps: 1. On a clean group (no dirty markers, no edits this session), press the rollback control. 2. Read the group's status line verbatim and count confirmation lines. 3. Reload and confirm nothing was "restored".
+Expected: With nothing to roll back, the UI says so plainly ("no unsaved changes") or leaves the control inert — it never mints a "rolled back" confirmation for changes that never existed. A confirmation line claiming a restore that did nothing is a FAIL — confirmation must be earned. (BF proved no-dirty honesty for the control state; this pins the confirmation-minting seam.)
+
+---
+
+### T-7448 · Rollback flows wave-7 · rolling back after a validation error on the same control clears the error line — the invalid value is gone, so is its complaint
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DK-RB7
+
+Steps: 1. In a settings group, type an invalid value (e.g. a garbage string into a number field) and let the validation error line appear. 2. Without fixing it manually, roll the group back. 3. Read the group's error line and the field's restored value verbatim.
+Expected: The rollback replaces the invalid value with the pre-edit value and the error line clears — no orphaned error complaining about a value that no longer exists. An error line still standing next to the restored valid value is a FAIL. (BN/BW proved save-time validation honesty; the rollback-clears-error contract was never covered.)
+
+---
+
+### T-7449 · Rollback flows wave-7 · the rollback confirmation names the target version — "back to version N", never a bare "restored"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DK-RB7
+
+Steps: 1. In a group with a version counter, make and save a real change (raising the version), then make another edit. 2. Roll the second edit back. 3. Read the confirmation verbatim: does it name the version it restored to?
+Expected: The confirmation names its target — e.g. "rolled back to version 3" — so the tester can verify against the group's version line; it never reads a bare "restored" that leaves the target ambiguous. A bare "restored" with no version, or a version number that disagrees with the group's version line, is a FAIL. (DB proved the last-saved line vs rollback time agreement; the version-number naming twin was never covered.)
+
+---
+
+### T-7450 · Rollback flows wave-7 · a second tab saves the same group mid-edit — this tab's rollback names which save it rolled back from
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DK-RB7
+
+Steps: 1. In tab A, edit a group and leave it unsaved. 2. In tab B, save a real change to the same group (one the tester would want live). 3. Back in tab A, roll back. 4. Read tab A's fields and confirmation verbatim: which values stand, and does the confirm name the save it restored (tab B's newer save or tab A's pre-edit baseline)?
+Expected: The rollback is explicit about what it did — it either restores tab A's pre-edit baseline or adopts tab B's save, and the confirmation names the source; tab B's saved value is never silently clobbered without the confirm saying so. A rollback that restores stale values while claiming "your latest save" is a FAIL. (DH proved the non-saving tab marks itself stale on saves; the rollback-side contract was never covered.)
+
+---
+
+### T-7451 · Rollback flows wave-7 · after a partial save — one write saved, one failed — rollback restores the failed side without touching the saved side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DK-RB7
+
+Steps: 1. In a group whose save writes more than one store (e.g. value + secret slot), watch for a natural partial failure — never break the server to manufacture it; if none occurs during the pass, record N-A with the absence stated. 2. If one occurs, roll back. 3. Read both stores' rendered values verbatim afterward.
+Expected: The rollback restores the failed side to its pre-save value and leaves the successfully saved side exactly as saved — the confirm names both halves. A rollback that "restores" the saved side to stale values, or claims a full restore while one side stayed failed, is a FAIL. (BN proved whole-save rollback-after-failed-save honesty; the partial-save twin was never covered.)
+
+---
+
+### T-7452 · Rollback flows wave-7 · on a sealed group the rollback control is absent or disabled with the sealed reason — never a fake "Rolled back" line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DK-RB7
+
+Steps: 1. Open a sealed group (e.g. the AI profile with its "Sealed" badge). 2. Read the rollback control's state verbatim: present, disabled with a reason, or absent. 3. If a control exists and is clickable, press it once and read what happens.
+Expected: A sealed group offers no live rollback — the control is absent or disabled naming the seal; pressing anything present changes nothing and claims nothing. A "Rolled back" confirmation on a sealed group whose values cannot change is a FAIL. (DH proved Reset refuses on sealed groups with the seal named; the rollback-control twin was never covered.)
+
+---
+
+### T-7453 · Rollback flows wave-7 · a keystroke still uncommitted in the focused field is discarded or committed honestly by the rollback — and the confirm says which
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DK-RB7
+
+Steps: 1. In a settings group, type a new value into a field but keep focus in the field (never tab out, never press Enter — the keystroke may be uncommitted). 2. Roll the group back. 3. Read the field's value and the confirmation verbatim: does the field show the pre-edit value, and does the confirm acknowledge the uncommitted input?
+Expected: The rollback leaves no phantom half-value — the field shows exactly the pre-edit value (or the input's committed twin, named as such), and the confirmation does not pretend it restored something it never saw. A field showing a half-typed value after a "rolled back" confirmation is a FAIL. (CV proved whitespace fidelity for committed values; the focused-uncommitted-input seam was never covered.)
+
+## Section DL · Regression ISS-126 — Test connection names the key it tested (6 cases: T-7454–T-7459)
+
+Gardener regression block, 2026-09-28 ~00:42 PDT. ISS-126 (found 2026-09-28 ~00:30 PDT by the eyes-on T-6829 run, Section BB chunk 2; registry max ISS-128; status OPEN at append time): /settings → AI providers → "Test connection" returned verbatim "Connection OK — the key ending …6653 is valid. Spend limit $50; about $0.04 used so far; about $49.96 left." — but every other surface (settings slot "Saved key: ••••••••3653", brain "key ••••••••••••3653", /keys slot "API key saved") showed …3653. The Test path validated/reported a different key than the one the UI says is saved. These six cases pin the identity contract: the Test result names the same masked last-4 the slot shows, mask discipline holds on the result line, all four surfaces agree, a tested-but-different credential is named plainly, the spend figures on the Test line agree with the slot figures, and a post-rotation Test names the new key's last-4. Zero overlap with DI's Delivered-row last-4 naming (T-7430), T-5122's masked indicator, or T-7437's budget-figure agreement — those proved naming and figures on notification rows; this pins the Test-connection identity contract end to end.
+
+Honest-gap rules (as CT): never save a wrong key or rotate a key just to exercise a seam — key rows stay as found unless a genuine rotation is already underway. Where no second key, no mismatch, and no rotation occurs during the pass, record N-A with the absence stated — never manufacture a mismatch.
+
+### T-7454 · ISS-126 regression · the Test result names the same masked last-4 the slot shows — never a stranger key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DL-126
+
+Steps: 1. On /settings → AI providers, read the saved-slot line verbatim (e.g. "Saved key: ••••••••3653"). 2. Press "Test connection" on that slot. 3. Read the result line verbatim.
+Expected: The result names the SAME masked last-4 the slot shows (…3653). A result reading "the key ending …6653 is valid" while the slot shows …3653 is a FAIL — the ISS-126 incident verbatim. The "valid" verdict is only trustworthy if it names the key the UI says is saved.
+
+---
+
+### T-7455 · ISS-126 regression · mask discipline — the Test result carries no key material beyond ••••NNNN
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DL-126
+
+Steps: 1. Press "Test connection" on the AI provider slot and on each exchange key row. 2. Read every result line verbatim, character by character.
+Expected: Every result line carries at most a masked last-4 (••••NNNN); zero full keys, zero partials longer than the last-4, zero token prefixes in the result text. Any key material beyond the last-4 on a Test result line is a FAIL. (ISS-126's mask discipline itself PASSed — the fix must keep it that way.)
+
+---
+
+### T-7456 · ISS-126 regression · cross-surface agreement — slot vs brain panel vs /keys slot vs Test result all name the same key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DL-126
+
+Steps: 1. Read the AI provider slot line ("Saved key: ••••••••3653"). 2. Read the brain panel's key line ("key ••••••••••••3653"). 3. Read the /keys slot line for the same provider. 4. Press "Test connection" and read the result's last-4. 5. Compare all four.
+Expected: All four surfaces name the same last-4. Any two surfaces naming different last-4s is a FAIL — the agreement contract the ISS-126 fix must satisfy. (T-7430 proved last-4 naming on Delivered rows; this is the four-surface agreement for the credential identity itself.)
+
+---
+
+### T-7457 · ISS-126 regression · if the tested credential differs from the saved one, the result says so plainly — never a silent mismatch
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DL-126
+
+Steps: 1. If a natural mismatch occurs during the pass (e.g. after a rotation where the slot changed but the Test path still reaches the old credential), press "Test connection" and read the result verbatim. 2. If no mismatch occurs, record N-A with the absence stated — never manufacture one.
+Expected: A mismatched result names the difference in plain words — e.g. "tested the credential ending …NNNN, which differs from the saved key ending …MMMM" — never a bare "valid" line carrying the wrong last-4. An OK verdict that silently carries a different key than the slot shows is a FAIL.
+
+---
+
+### T-7458 · ISS-126 regression · the spend figures on the Test line agree with the slot/panel figures — same limit, same used, same left
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DL-126
+
+Steps: 1. Press "Test connection" and read the spend figures verbatim (e.g. "Spend limit $50; about $0.04 used so far; about $49.96 left"). 2. Read the settings slot and brain panel spend figures. 3. Compare limit, used, and left.
+Expected: All three figures agree across the Test line and the slot/panel (honest rounding allowed). A Test line naming a different spend limit or used figure than the slot shows — evidence it reached a different credential — is a FAIL. (T-7437 proved figure agreement on budget-exhausted notification rows; this is the Test-line figure twin.)
+
+---
+
+### T-7459 · ISS-126 regression · Test after a key rotation names the new key's last-4 — never a stale cached identity
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DL-126
+
+Steps: 1. After a genuine key rotation (never rotate a key just for the test; if none occurs during the pass, record N-A with the absence stated). 2. Read the new slot line. 3. Press "Test connection" and read the result's last-4 verbatim.
+Expected: The result names the NEW last-4. A result naming the pre-rotation last-4 — a stale cached identity surviving the rotation — is a FAIL. (T-7374 proved the OK→failed stale-green flip for key rows; this is the stale-identity twin on the Test path.)
+
+---
+
+## Section DM · Regression ISS-127 — the brain never silently templates (8 cases: T-7460–T-7467)
+
+Gardener regression block, 2026-09-28 ~00:42 PDT. ISS-127 (found 2026-09-28 ~00:33 PDT during Section BB chunk 2; status FIXED ~00:40 PDT by a keepalive.sh venv restart): the ISS-125 fix wave's fixer restarted the 8124 server with bare `python -m uvicorn` (system python, no litellm) instead of the venv interpreter `~/workspace/venvs/tvvenv/bin/python`, so every AI model call failed over to deterministic templates — verbatim "stub: model unreachable (openrouter/meta/muse-spark-1.3-contributor (draft) failed after 1 retry: No module named 'litellm'): template fallback" — producing template drafts at $0.000000 while the UI looked normal. Several chunk-2 cases were BLOCKED by it. These eight cases pin the UI-visible degradation contract: internal stub phrasing never reaches the UI, a template is always labeled a template, a whole-brain outage gets a global notice, template rows bill zero and never count as real spend or consume sealed caps, the first post-restart answer names its model id (a template claims no model id), Test connection never implies model-reachability from a key-validity OK, and status lines stay truthful after a restart. Zero overlap with DJ's unusable-answer fallback honesty (T-7443) — that proved the discard copy for a single answer; this pins the whole-brain-degradation contract — or CL's template-fallback tagging, which covered tagging mechanics, not the caps/spend/announcement half.
+
+Honest-gap rules (as CT): never force a model failure, never restart the server to exercise a seam. AI questions in these cases count against the sealed call caps (MAX PER DAY 6 / MAX PER HOUR 2) — keep the pass to a handful of questions; never burn the daily cap for completeness. Where no degradation, no fallback, and no restart occurs during the pass, record N-A with the absence stated.
+
+### T-7460 · ISS-127 regression · "stub: model unreachable" phrasing reaching the UI is a FAIL — internal stub strings never surface verbatim
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DM-127
+
+Steps: 1. Ask a few AI questions naturally (within the sealed caps). 2. Read every answer line and every status line verbatim. 3. Search the visible text for "stub:", "No module named", "litellm", or any import-error phrasing.
+Expected: No internal stub phrasing is visible anywhere in the UI. Any line containing "stub: model unreachable", "No module named 'litellm'", or backend import-error text on a user-facing surface is a FAIL — the ISS-127 incident verbatim. A failure belongs in the logs, never in Saad's panel.
+
+---
+
+### T-7461 · ISS-127 regression · a template-fallback answer is labeled as a template — never presented as a model answer
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DM-127
+
+Steps: 1. Ask AI questions naturally until a template fallback occurs (never force a model failure; if none occurs during the pass, record N-A with the absence stated). 2. Read the answer block verbatim — every line of it.
+Expected: The block carries a "template" label; it never claims a model id and never reads as model prose without the label. Template text presented as a model answer — the ISS-127 silent-degradation class — is a FAIL. (T-7443 proved the unusable-answer discard copy for one answer; this is the whole-brain-degradation twin: every template, every time, labeled.)
+
+---
+
+### T-7462 · ISS-127 regression · a whole-brain degradation gets a global visible notice — not hidden in a per-row line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DM-127
+
+Steps: 1. While template fallbacks are occurring across questions (N-A if the brain answers healthily all pass). 2. Look at the full page: is there a banner, pill, or panel-level notice naming the degradation?
+Expected: A global visible notice names the outage in plain words (e.g. "AI model unreachable — answers are templates until the model path recovers"). Per-row template tags alone, with no page-level notice while every answer is a template, is a FAIL — the degradation must be announced where a user can see it, not buried in a row.
+
+---
+
+### T-7463 · ISS-127 regression · template rows bill $0.000000, are tagged template, and never count as real spend
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DM-127
+
+Steps: 1. After any template rows appear (N-A if none during the pass). 2. Read each template row's cost line verbatim. 3. Read the spend/usage panel's "used" figure before and after the fallback run.
+Expected: Every template row shows $0.000000 and a template tag; the used-spend figure never folds template rows in as real model spend. A template row billed at a model rate, or template volume silently inflating the "about $0.04 used" line, is a FAIL. (CL proved exactly-once billing for fired calls; this is the zero-billing twin for template rows.)
+
+---
+
+### T-7464 · ISS-127 regression · the sealed caps (MAX PER DAY 6 / MAX PER HOUR 2) are not consumed by template answers
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DM-127
+
+Steps: 1. While template fallbacks are occurring (N-A if the brain is healthy all pass). 2. Read the sealed cap counters (calls today / this hour) before and after a run of fallback answers.
+Expected: Template answers never decrement MAX PER DAY or MAX PER HOUR. A degraded night must not eat the daily budget — a template consuming a cap slot is a FAIL.
+
+---
+
+### T-7465 · ISS-127 regression · after any server restart, the first AI question's answer names its model id — no model id claimed for a template
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DM-127
+
+Steps: 1. After the next natural server restart (never restart the server to test; if none occurs during the pass, record N-A with the absence stated). 2. Ask one AI question. 3. Read the answer block verbatim.
+Expected: The answer is either a real model answer naming its model id verbatim (e.g. the configured muse-spark model), or an honest template label — never a model id attached to template text. (The DE wave's T-7392 proved the answering-identity seam on the probe path; this is the post-restart answering-identity contract — a wrong-interpreter restart must be visible on the first question.)
+
+---
+
+### T-7466 · ISS-127 regression · Test connection distinguishes key-validity from model-reachability — an OK line never implies the model is answering
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DM-127
+
+Steps: 1. Press "Test connection" on the AI provider and read the result verbatim. 2. Ask an AI question and read the answer state.
+Expected: The OK line names the key's validity (and spend) — it never claims the model is answering. A "Connection OK" that reads as "the model works" while questions fall back to templates is a FAIL. Key-validity and model-reachability are two different claims; the UI must never blur them.
+
+---
+
+### T-7467 · ISS-127 regression · model/key-check status lines stay truthful post-restart — no stale green from before the restart
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DM-127
+
+Steps: 1. After a natural server restart (N-A if none during the pass). 2. Before asking any AI question, read the provider/brain status lines verbatim.
+Expected: The lines reflect a fresh post-restart check, or honestly say "not yet checked" — never a pre-restart green carried over onto a server whose model path was never re-proven. A stale "model OK" standing over a wrong-interpreter server is a FAIL. (T-7374 proved the key-row OK→failed flip; this is the post-restart staleness twin for the model path.)
+
+---
+
+## Section DN · Regression ISS-128 — the collapsed header hints at changed values (6 cases: T-7468–T-7473)
+
+Gardener regression block, 2026-09-28 ~00:42 PDT. ISS-128 (found 2026-09-28 ~00:25 PDT by the eyes-on T-6792 run, Section AZ chunk 1 completion; status OPEN): changed AI profile max_per_day 6→7 via the sealed 3-step code flow ("Saved group b-profile-closed — version 2."), collapsed the group and reloaded — the collapsed header showed only "AI profile Drafts only", no dot, no "modified" tag, no change hint, while the true value was 7. Also observed: the wire format demands cooldown_s as int seconds — "every 1 hour" was refused ("Not saved: wire-rejected: b-profile-closed.cooldown_s must be an int, got 'every 1 hour'"); retry with 3600 succeeded — and the 5-min group cooldown silently blocked a rollback attempt. These six cases pin the collapse-hint contract end to end plus the two adjacent honesty rules: the header hints at changed values (and the hint survives reload, and clears on restore), human-duration input is refused in plain words naming the required format (never a raw wire dump), a cooldown-blocked save says so plainly, and the expanded body and header hint never contradict. Zero overlap with CT's collapsed-dirty markers (T-73xx), CX's unsaved-indicator cases, or DH's sealed-reset — those proved markers for ordinary groups and reset behavior; this pins the sealed AI-profile change hint, the wire-format refusal copy, and the cooldown-block honesty the T-6792 run caught missing.
+
+Honest-gap rules (as CT): no case saves a value the tester wouldn't want live — every dirty change is either saved deliberately or restored to the original value afterward (the T-7468 change is restored in T-7470). Never break the server or manufacture a failure to exercise a seam. Where no cooldown blocks and no human-duration refusal occurs during the pass, record N-A with the absence stated.
+
+### T-7468 · ISS-128 regression · sealed 3-step change + collapse — the header carries a change hint or the group stays expanded while dirty
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DN-128
+
+Steps: 1. Change the AI profile max_per_day 6→7 via the sealed 3-step code flow (restore to 6 afterward). 2. Collapse the group. 3. Read the collapsed header verbatim.
+Expected: The header carries a change hint (a dot, a "modified" tag, or the new value itself) — or the group stays expanded while dirty. A collapsed header reading only "AI profile Drafts only" while the true value is 7 is a FAIL — the ISS-128 incident verbatim. A collapse that silently hides changed values is never honest.
+
+---
+
+### T-7469 · ISS-128 regression · the change hint survives a page reload — a reload never launders a dirty group into a clean-looking one
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DN-128
+
+Steps: 1. With the T-7468 change in place (max_per_day 7), reload the page. 2. Read the collapsed AI profile header verbatim. 3. Expand and confirm the body still shows 7.
+Expected: The change hint is still on the header after reload. A reload that wipes the hint while the value stays at 7 — laundering the dirty group into a clean-looking one — is a FAIL.
+
+---
+
+### T-7470 · ISS-128 regression · the hint clears when the value is restored to the original — no lingering "modified" on a clean group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DN-128
+
+Steps: 1. Restore max_per_day 7→6 via the sealed 3-step flow. 2. Reload the page. 3. Read the collapsed header and the expanded body verbatim.
+Expected: The header hint clears; the header reads clean and the body shows 6. A "modified" tag or dot lingering on the true original value — the hint crying wolf — is a FAIL.
+
+---
+
+### T-7471 · ISS-128 regression · human-duration input is refused in plain words naming the required format — never a raw wire dump
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DN-128
+
+Steps: 1. In the AI profile group, type "every 1 hour" into the cooldown field and press Save (the refusal is expected wire-side; restore the field afterward regardless). 2. Read the refusal line verbatim.
+Expected: The refusal is plain words naming the required format — e.g. "cooldown must be a whole number of seconds (3600 for an hour)". A raw wire dump like "Not saved: wire-rejected: b-profile-closed.cooldown_s must be an int, got 'every 1 hour'" is a FAIL — the ISS-128 incident verbatim. The tester should never need the field's wire name to understand the refusal.
+
+---
+
+### T-7472 · ISS-128 regression · a save pressed inside the 5-min group cooldown says so plainly — never fails silently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DN-128
+
+Steps: 1. Press Save on the AI profile group inside its 5-minute cooldown window (right after a successful save; if no cooldown is active during the pass, record N-A with the absence stated — never manufacture one). 2. Read the response verbatim.
+Expected: The response names the cooldown in plain words — e.g. "this group was saved X minutes ago; you can save again in Y" — never silence. A press that does nothing with no line, while the version never moves, is a FAIL — the ISS-128 silent-cooldown-block incident. (BN/CV proved save-time validation copy; the cooldown-block honesty was never covered.)
+
+---
+
+### T-7473 · ISS-128 regression · the expanded body and the header hint always agree — no contradiction either way
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DN-128
+
+Steps: 1. With a changed value in place (max_per_day 7), read the expanded body's value line and the collapsed header hint. 2. Restore the original (max_per_day 6) and read both again.
+Expected: The two agree in both directions — body shows 7 ⟺ header hints changed; body shows 6 ⟺ header clean. A header hint over an unchanged body value, or a changed body value under a clean header, is a FAIL — either direction is a lie.
+
+---
+
+## Section DO · Proactive: error/empty states wave-7 — the seams AK/AN/BG/BO/CJ/DC didn't touch (10 cases: T-7474–T-7483)
+
+Proactive gardener block, 2026-09-28 ~00:42 PDT. Error/empty states wave-7 — the seams the first six waves didn't touch. AK (T-6509–T-6518, the foundational sweep: backtests/journal/history-filter/check-now/AI-Test-empty-key/wrong-key/notifications-history/drafts/zero-activity-cap-bars + the universal no-dead-end rule), AN (T-6539–T-6548, wave-2: receipt timeline, alerts strip, rejections strip, empty journal note, empty envelope payload, wrong file type, halt-while-halted, delete-cancel, SmartTrade no symbol, empty-ledger export), BG (T-6913–T-6924, wave-3: receipt load failure, empty alert log, lone Backtest filters button, backtests-empty honesty, journal zeroes, empty downloads, disclosure consistency, notifications-empty, "last poll never", unknown route, /-unreachable, "No drafts"), BO (T-7009–T-7018, wave-4: veto-storm feed, per-strategy partial failure, failed backtest row, never-tested key row, zero-match strategy search, zero-spend budget, alert-no-receipt-yet, empty scan universe, three-part error cards, error copy surviving reload), CJ (T-7195–T-7204, wave-5: STALE-badge clearing, advisory zero-consults, bot cage, zero-row export, single-fill boundary, command-palette zero-match, multi-field rejection enumeration, single-panel Retry, Telegram outbox empty, veto missing-reason), DC (T-7368–T-7377, wave-6: failure-line replace-not-stack, live-region announcement, in-flight POST mid-rotation, never-resolving spinner timeout, two-panel Retries, filters surviving failed refresh, key-row OK→failed flip, failed-journal-save text preserved, "never checked" line, unknown veto code) did not touch: an exchange key row with no key ever saved reading "no key saved" — never a masked-looking blank (T-7474), the push-budget line at $0 remaining staying honest — never negative, never hidden (T-7475), a halt/kill confirm with a wrong PIN refused in plain words — no raw error, no lockout scare (T-7476), an AI advisory consult that completes with zero insights saying so — never a blank result card (T-7477), the /backtests run-new form with end-before-start dates refused in plain words — never a raw error or a phantom zero-P&L row (T-7478), SmartTrade Load on a draft whose strategy no longer exists failing gracefully — never a crash, never a phantom submit (T-7479), a whitespace-only journal note refused like an empty one — never a blank row (T-7480), the envelope validator naming a replayed nonce in plain words — never a raw error, never a double-execute (T-7481), copy-trading rankings with zero simulated histories saying so — never a broken table (T-7482), and the funding rail for a symbol with no funding data saying so — never an eternal "Loading funding…" (T-7483). Zero overlap with the six prior waves verified programmatically title-by-title against all 7453 existing cases (normalized title, area prefix ignored; title+expected similarity gates per the dedupe registry).
+
+Honest-gap rules (as CT): never delete a real key, draft, or strategy to exercise a seam — no-destructive-state cases stay read-only; where the state under test doesn't exist naturally (no empty key row, no dangling draft, no insight-less consult, no funding-less symbol), record N-A with the absence stated. Never manufacture a failure, never force a model error, never submit a backtest the tester wouldn't want run.
+
+### T-7474 · Error/empty states wave-7 · an exchange key row with no key ever saved says "no key saved" — never a masked-looking blank
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DO-EE7
+
+Steps: 1. On /keys, find an exchange row with no key saved (if every row has a key, record N-A with the absence stated — never delete a key to test). 2. Read the row verbatim. 3. Press its "Test connection" if present and read the result.
+Expected: The row says "no key saved" (or equivalent plain words) — never a blank masked field that reads as a saved secret, and never a false green. A "Test connection" on the empty row refuses in plain words ("save a key first"), never a raw 500. (T-6557 proved the masked last-4 on saved keys; T-7012 proved "never tested" rows; the never-saved row was never covered.)
+
+---
+
+### T-7475 · Error/empty states wave-7 · the push-budget line at $0 remaining stays honest — never negative, never hidden
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DO-EE7
+
+Steps: 1. Read the push/notification budget line (e.g. "daily budget $1.0") at $0 remaining — naturally exhausted, never spend to exhaust it. 2. If the budget is not exhausted during the pass, read the line anyway and record the current figure. 3. If a send is attempted at $0 (read-only observation of the natural refusal path only), read the refusal.
+Expected: The line stays visible reading "$0 of $1.0 remaining" (or equivalent) — never negative, never hidden for reading "nothing", and any send refusal names the exhausted budget in plain words. A $0 budget rendered as a blank, a dash, or a negative figure is a FAIL. (T-7014 proved the zero-spend line stays visible; DA T-7357 proved the refusal-before-send path; DI T-7437 proved the figure agreement on failure rows — the exhausted-but-visible line seam is new.)
+
+---
+
+### T-7476 · Error/empty states wave-7 · the halt/kill confirm with a wrong PIN refuses in plain words — no raw error, no lockout scare
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DO-EE7
+
+Steps: 1. Open the halt confirm modal (read-only: open and Cancel — never arm the halt). 2. If the flow allows a wrong-PIN attempt without arming anything, type a wrong PIN and read the refusal verbatim. 3. If the flow cannot be reached without risk, record N-A with the absence stated — never arm a halt to test.
+Expected: The refusal is plain words ("PIN didn't match — nothing was halted"), never a raw 403/401 string, never a lockout scare ("too many attempts" with no such policy). A wrong PIN that silently closes the modal, or one that shows backend error text, is a FAIL. (T-6545 proved halt-while-halted honesty; the wrong-PIN refusal copy was never covered.)
+
+---
+
+### T-7477 · Error/empty states wave-7 · an AI advisory consult that completes with zero insights says so — never a blank result card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DO-EE7
+
+Steps: 1. Run an AI advisory consult naturally (within the sealed caps; never force a no-insight outcome). 2. If the consult completes but flags nothing, read the result card verbatim. 3. If every consult during the pass returns insights, record N-A with the absence stated.
+Expected: The card says "no signals worth flagging" (or equivalent plain words) — never a blank result card, never an eternal spinner on a completed consult. (T-7196 proved the zero-consults log is an honest empty state; the completed-but-empty consult twin is new.)
+
+---
+
+### T-7478 · Error/empty states wave-7 · the /backtests run-new form with end-before-start dates refuses in plain words — never a raw error, never a phantom row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DO-EE7
+
+Steps: 1. On /backtests, open the run-new form and fill an end date earlier than the start date. 2. Submit and read the response verbatim — then discard the form without running anything real. 3. Check the saved-results list for a phantom row.
+Expected: The form refuses in plain words ("end date must be after the start date"), nothing is queued, and no zero-P&L phantom row appears in the results list. A raw validation string, or a failed run row presented as a real result, is a FAIL. (T-7011 proved a failed run shows a failure; the invalid-input refusal seam is new.)
+
+---
+
+### T-7479 · Error/empty states wave-7 · SmartTrade Load on a draft whose strategy no longer exists fails gracefully — never a crash, never a phantom submit
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DO-EE7
+
+Steps: 1. If the drafts combobox naturally holds a draft whose strategy is gone (never delete a strategy to test; otherwise N-A with the absence stated). 2. Select it and press Load. 3. Read the response verbatim.
+Expected: A plain-words line names the missing strategy ("this draft's strategy no longer exists — pick another draft"), the ticket never loads phantom values, and nothing is submitted. A crash, a blank ticket, or a submit of the dead draft's values is a FAIL. (T-6916 proved the lone-filter-button honesty; the dangling-draft twin is new.)
+
+---
+
+### T-7480 · Error/empty states wave-7 · a whitespace-only journal note is refused like an empty one — never a blank row
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DO-EE7
+
+Steps: 1. On /journal, type a note of only spaces and press Save. 2. Read the response verbatim. 3. Check the notes list for a blank row.
+Expected: The save is refused in plain words ("a note needs some text first") and no blank row is minted. A whitespace-only note saved as an empty row is a FAIL. (T-6542 proved the empty-note refusal; the whitespace twin is new.)
+
+---
+
+### T-7481 · Error/empty states wave-7 · the envelope validator names a replayed nonce in plain words — never a raw error, never a double-execute
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DO-EE7
+
+Steps: 1. Paste a valid envelope into the validator and record the verdict. 2. Paste the SAME envelope again (same nonce) and read the second verdict verbatim. 3. Confirm nothing executed twice.
+Expected: The second verdict refuses in plain words ("this envelope was already used — nonce already seen"), never a raw error, and nothing executes a second time. A replayed envelope accepted silently or a double-execution is a FAIL. (T-7201 proved multi-field rejection enumerates every missing field; the replay-nonce seam is new.)
+
+---
+
+### T-7482 · Error/empty states wave-7 · copy-trading rankings with zero simulated histories say so — never a broken table
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DO-EE7
+
+Steps: 1. Open the copy-trading rankings surface. 2. If zero simulated histories exist, read the panel verbatim (never wipe histories to test; otherwise read normally and note the state).
+Expected: The panel says "no simulated histories yet" (or equivalent plain words) — never a broken table, never NaN ranks, never a spinner that never resolves. (No prior wave touched the copy-trading empty state.)
+
+---
+
+### T-7483 · Error/empty states wave-7 · the funding rail for a symbol with no funding data says so — never an eternal "Loading funding…"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DO-EE7
+
+Steps: 1. Find a symbol with no funding data on the funding rail (if every symbol has data, record N-A with the absence stated — never manufacture one). 2. Read the rail line verbatim and watch it for one full refresh cycle.
+Expected: The rail says "no funding data for this symbol" (or equivalent plain words) — never an eternal "Loading funding…", never a blank gap that reads as missing chrome. (T-7210 proved the outage re-anchor; the no-data-first-load twin is new.)
+
+---
+
+## Section DP · Regression ISS-129 — the brain cites guard/risk constraints in its verdicts (6 cases: T-7484–T-7489)
+
+Gardener regression block, 2026-09-28 ~01:10 PDT. ISS-129 (found 2026-09-28 ~01:00 PDT, Section BC chunk 3, T-6859 FAIL; status OPEN): reading 5 fresh verdicts' reasoning, only 1 of 5 referenced a guard/risk constraint — the single good one read "AI unavailable — the guards decided alone." The other 4 referenced data-availability or test-name heuristics only: "No entry price or chart details were shared to judge the trade", "No entry price or setup details were provided", "Strategy name looks like a test, not a real trading plan", "strategy name looks like a test fire not a real trade plan". These six cases pin the reasoning-content contract on fresh verdicts: count the constraint references again (most must name a guard/risk rule), the guard-vetoed verdict names the vetoing guard on the guard side, approved verdicts enumerate the constraints they checked, the "guards decided alone" row names WHICH guards decided, the first verdict after a halt references the halt state, and no verdict's deciding factor is ONLY a strategy-name/test-name heuristic.
+
+### T-7484 · ISS-129 regression · the newest 3–5 verdicts are counted for constraint references — most must name a guard/risk rule
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DP-129
+
+Steps: 1. Open the newest signal rows carrying AI verdicts — count 3 to 5 (if fewer than 3 exist, record N-A with the count stated). 2. Copy each verdict's reasoning verbatim. 3. Count how many reasonings name at least one guard/risk constraint (risk ceiling, halt state, news filter, sizing rule, a vetoing guard).
+Expected: Most of the counted verdicts name at least one guard/risk constraint — the ISS-129 fix holds on fresh verdicts. If most still cite only data-availability or strategy-name heuristics ("No entry price or chart details were shared to judge the trade", "Strategy name looks like a test, not a real trading plan"), ISS-129 is still OPEN and the case FAILs. (T-6859 proved the 1-in-5 observation that founded ISS-129; the fresh-verdict counting contract is new.)
+
+---
+
+### T-7485 · ISS-129 regression · a guard-vetoed verdict names the vetoing guard and its reason on the guard side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DP-129
+
+Steps: 1. Find a signal the guard vetoed or blocked where the AI also gave a verdict (if none exists, record N-A with the absence stated). 2. Copy the guard-side reason verbatim. 3. Copy the verdict's reasoning verbatim.
+Expected: The guard side names the specific vetoing constraint (which cap, which filter, which rule) in plain words — never a bare "blocked" whose reason can only be guessed; and the AI verdict's reasoning acknowledges the same constraint rather than contradicting it. (T-6590 proved a guard-blocked signal still reads blocked; the vetoing-guard naming contract is new.)
+
+---
+
+### T-7486 · ISS-129 regression · an approved verdict lists which guard/risk constraints it checked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DP-129
+
+Steps: 1. Find the newest APPROVED (take) verdict. 2. Copy its reasoning verbatim. 3. List every guard/risk constraint the reasoning claims to have checked.
+Expected: The reasoning names the constraints it checked against (risk ceiling, sizing, halt state, news filter, or their UI equivalents) — an approval that names zero constraints is a FAIL of this case; the list must be concrete, never "checked everything". (T-6586 proved every verdict carries its reasoning; the approved-verdict constraint enumeration is new.)
+
+---
+
+### T-7487 · ISS-129 regression · the "AI unavailable — guards decided alone" row names which guards decided
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DP-129
+
+Steps: 1. Find a verdict row reading "AI unavailable — guards decided alone." (the single constraint-referencing verdict from the ISS-129 observation; if no such row exists, record N-A with the absence stated). 2. Copy the row verbatim. 3. Look wherever the UI lets you — expansion, tooltip, linked guard panel — for WHICH guards decided.
+Expected: The row names WHICH guards decided (risk ceiling, halt, news filter, or equivalents) somewhere reachable — the verdict that already cited a constraint proves it cites a NAMED one; a row that says "guards decided alone" with no guard named anywhere is a FAIL. (The ISS-129 observation found this row; naming the deciding guards was never required.)
+
+---
+
+### T-7488 · ISS-129 regression · the first verdict after a halt references the halt state in its reasoning
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DP-129
+
+Steps: 1. Under Saad's standing approval authority, halt trading and then resume (restore the disarmed state at case end). 2. Read the first verdict that lands after the resume. 3. Copy its reasoning verbatim.
+Expected: The reasoning acknowledges the halt window it arrived after (or states plainly that the halt is over and trading is live) — never a verdict that reads as if the halt never happened, and never stale "trading halted" framing surviving the resume. (T-6844 proved verdicts say the halt plainly while halted; the post-resume first-verdict framing is new.)
+
+---
+
+### T-7489 · ISS-129 regression · reasoning never cites ONLY strategy-name/test-name heuristics as its deciding factor
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DP-129
+
+Steps: 1. Read the newest 5 verdict reasonings. 2. For each, identify the deciding factor the reasoning presents. 3. Flag any verdict whose deciding factor is only a name-based heuristic.
+Expected: No verdict's deciding factor is ONLY a strategy-name/test-name heuristic ("Strategy name looks like a test, not a real trading plan" as the entire why) — a name heuristic may appear as context, but the deciding factor must reference the trade's data or a guard/risk constraint. A heuristic-only deciding factor is ISS-129's exact failure mode and a FAIL. (T-6667 proved reasoning must add information beyond the signal's own text; the heuristic-only deciding factor is new.)
+
+---
+
+## Section DQ · Regression ISS-130 — "Re-ask the brain" works or states its real window (6 cases: T-7490–T-7495)
+
+Gardener regression block, 2026-09-28 ~01:10 PDT. ISS-130 (found 2026-09-28 ~01:00 PDT, Section BC chunk 3, re-ask probe on T-6844/T-6864, live tunnel; status OPEN): "Re-ask the brain (latest signal)" on the NEWEST available signal returned "Re-ask unavailable for this signal. The saved data for signal strategy-trend1361-1790571600000 is no longer available (archived or rotated out)." — identical failure while keyless. The button advertises "Works while halted" but worked on no signal older than the archive window — effectively never. These six cases pin the re-ask liveness contract: the newest signal's re-ask works or the control states its real availability window, refusals name the window (never a bare "no longer available"), the "works while halted" promise is exercised while halted, keyless re-ask names the missing key (never archive-blame), a signal with saved data gets an answer or a named refusal, and two consecutive re-asks produce exactly one fresh answer.
+
+### T-7490 · ISS-130 regression · re-ask on the newest signal works — or the control states its real availability window
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DQ-130
+
+Steps: 1. Find the NEWEST signal carrying a saved verdict. 2. Press its "Re-ask the brain" control. 3. Read the outcome verbatim.
+Expected: The re-ask produces a fresh answer on the newest signal — or the control states its real availability window honestly (how fresh a signal must be, in plain words). "Re-ask unavailable for this signal" on the newest available signal — the ISS-130 dead end — is a FAIL unless the window is now stated. (T-6648 proved a re-ask keeps both verdicts in the trail; the newest-signal liveness contract is new.)
+
+---
+
+### T-7491 · ISS-130 regression · a re-ask refusal names the availability window — never a bare "no longer available"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DQ-130
+
+Steps: 1. Press re-ask on an older signal (or the newest — whichever refuses). 2. Copy the refusal verbatim. 3. Compare against the ISS-130 copy: "Re-ask unavailable for this signal. The saved data for signal ... is no longer available (archived or rotated out)."
+Expected: The refusal names the window (signal age versus the archive/retention window) in plain words — the tester learns how fresh a signal must be; a bare "no longer available" with no window, no age, no retention named is a FAIL. (ISS-130's refusal named the archive but not the window; naming the window is the fix contract.)
+
+---
+
+### T-7492 · ISS-130 regression · "Works while halted" is exercised while halted on the freshest signal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DQ-130
+
+Steps: 1. Under Saad's standing approval authority, halt trading. 2. On the freshest signal, press "Re-ask the brain". 3. Read the outcome verbatim; then resume trading and restore the disarmed state.
+Expected: The re-ask works while halted (fresh answer) or refuses in the same honest terms as the unhalted path — the "Works while halted" promise is real, not label-only; a refusal that blames the halt, or a dead end while halted, contradicts the button's own copy and is a FAIL. (T-6844 proved the brain names the halt plainly; exercising the advertised halt-time path is new.)
+
+---
+
+### T-7493 · ISS-130 regression · keyless re-ask names the missing key — never blames the archive
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DQ-130
+
+Steps: 1. Check the AI provider key state on /settings — if a key is saved, record N-A with the absence stated (never delete a key to test). 2. If keyless: press re-ask on the newest signal. 3. Copy the refusal verbatim.
+Expected: The refusal names the missing key ("no AI key saved", "key required", or equivalent) — never the archive-blame copy from ISS-130, which would send a keyless tester chasing a retention problem that isn't the problem. (ISS-130 proved the failure was identical keyless and keyed; the keyless-specific refusal is the honesty fix.)
+
+---
+
+### T-7494 · ISS-130 regression · a signal with saved data gets an answer or a named refusal — the button is never dead
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DQ-130
+
+Steps: 1. Find a signal whose row proves saved data exists (verdict plus reasoning visible). 2. Press its "Re-ask the brain" control. 3. Read the outcome verbatim.
+Expected: The press resolves to a fresh answer or a named refusal (window, key, halt, connection) — never the ISS-130 dead end on data that provably exists; a control that fails on saved data with the archive copy is a FAIL. (T-6656 proved the ask-AI control must be real; the saved-data re-ask liveness contract is new.)
+
+---
+
+### T-7495 · ISS-130 regression · two consecutive re-asks on one fresh signal produce exactly one fresh answer — no duplicates, no stale rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DQ-130
+
+Steps: 1. On the freshest signal, press re-ask twice in a row. 2. After both land, copy the full verdict trail verbatim. 3. Count the fresh answers.
+Expected: Exactly one fresh answer from the two presses (the second press either refreshes the same answer or is refused as "already fresh") — never two duplicate answers, never a stale first answer presented as new; and the original verdict stays marked superseded, never erased. (T-6648 proved change-of-mind trails keep both verdicts; the consecutive-press idempotency is new.)
+
+---
+
+## Section DR · Regression ISS-131 — the kill switch: named, real, or no longer phantom (6 cases: T-7496–T-7501)
+
+Gardener regression block, 2026-09-28 ~01:10 PDT. ISS-131 (found 2026-09-28 ~01:00 PDT, Section BC chunk 3, T-6848 BLOCKED triage; status OPEN): no kill-switch control exists in the UI — the cockpit risk panel has only "Halt trading", "Run halt drill", "Kill all orders"; command palette search for "kill" → "No matching command — try a different search."; the Strategies page has none. The only kill reference is the halt-drill description: "proves the kill switch blocks a fake order". Nothing to execute or recover via. These six cases pin the triage contract: palette search "kill" surfaces every kill-related control that exists (or says plainly what exists), the drill copy either names the real control or drops the phantom reference, the "Kill all orders" confirm states what it does and whether it claims the kill-switch name, the drill's kill-proof step list has zero dead references, no two controls claim "the kill switch" at once, and — if the fix added a real control — its state reads in the UI and its press drives the real halt path.
+
+### T-7496 · ISS-131 regression · palette search "kill" surfaces every kill-related control that exists — or says plainly what exists
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DR-131
+
+Steps: 1. Open the command palette. 2. Type "kill". 3. Copy the results (or the no-match line) verbatim. 4. Inventory every kill-related control the UI exposes elsewhere (risk panel, drills, halt).
+Expected: The results name every kill-related control the UI actually exposes ("Kill all orders", the halt control, the drills — whatever exists) — or the palette says plainly what exists; "No matching command — try a different search." is a FAIL when kill-related controls provably exist elsewhere in the UI. (ISS-131 quoted the no-match copy; the palette-versus-UI inventory agreement is new.)
+
+---
+
+### T-7497 · ISS-131 regression · the drill copy either names the real control or no longer references a phantom "kill switch"
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DR-131
+
+Steps: 1. Open the halt-drill description everywhere it appears (risk panel, /trading drills card, any drill hint). 2. Copy each verbatim. 3. Check whether a kill-switch control exists in the UI.
+Expected: Every drill reference either names the real control it exercises ("Kill all orders", the halt path) or no longer mentions a kill switch — "proves the kill switch blocks a fake order" with no kill-switch control anywhere is a FAIL of this case. (T-3031 proved drill hints match drill behavior; the phantom-reference contract is ISS-131's fix.)
+
+---
+
+### T-7498 · ISS-131 regression · the "Kill all orders" confirm copy states what it does — and whether it claims to be the kill switch
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: COPY-STATE
+Feature: DR-131
+
+Steps: 1. On the risk panel, open the "Kill all orders" confirm dialog. 2. Copy the confirm text verbatim. 3. Cancel the dialog (do not confirm in this case).
+Expected: The confirm states exactly what will happen (which orders, what "kill" means here) in plain words, and either claims the kill-switch name honestly or doesn't claim it at all — a confirm that borrows "the kill switch" name while a different control also claims it is a FAIL (see T-7500). (T-7266 proved kill/disarm forms render complete; the confirm-copy identity claim is new.)
+
+---
+
+### T-7499 · ISS-131 regression · the drill page lists its kill-proof steps with zero dead references
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER-HONESTY
+Feature: DR-131
+
+Steps: 1. Open every surface where the halt/kill drill describes its steps (drills card, drill result panel, drill help text). 2. Copy each step list verbatim. 3. Check every named control or step exists in the UI and is reachable.
+Expected: Every named step maps to a real, reachable control — no step references a control that doesn't exist, no "kill switch" step with no control behind it; a step list with a phantom step is a FAIL. (T-2546 quoted the drill confirm; the step-list inventory is the triage twin.)
+
+---
+
+### T-7500 · ISS-131 regression · no two controls both claim "the kill switch" — one name, one control
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: STATE-OBSERVATION
+Feature: DR-131
+
+Steps: 1. Search the whole visible UI copy for "kill switch" occurrences (every page the drills and risk controls appear on). 2. List every control or copy block that uses the name. 3. Map each occurrence to the control it describes.
+Expected: At most one control owns the "kill switch" name — two controls (for example the drill copy and the "Kill all orders" confirm) both claiming "the kill switch" is a FAIL; the fix either gives the name to one real control or retires the name everywhere. (The naming-collision contract is new; T-7501 covers the control itself.)
+
+---
