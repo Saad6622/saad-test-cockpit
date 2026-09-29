@@ -1,0 +1,403 @@
+QA LANE 1 — CHUNK 4 — cases T-151–T-200 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-151 · Trading sessions · cancel on the confirm screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Click Start. 3. Click Cancel (or Back) on the confirm screen. 4. Check /trading.
+Expected: The page returns to the start form and no session was started.
+
+### T-152 · Trading sessions · closing the tab on the confirm screen starts nothing
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Click Start. 3. Close the browser tab without confirming. 4. Reopen /trading.
+Expected: No session is running; the page is in its idle state.
+
+### T-153 · Trading sessions · browser back on the confirm screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Click Start. 3. Press the browser Back button. 4. Check the session state.
+Expected: The page returns to the start form and no session was started.
+
+### T-154 · Trading sessions · stop session control visible during a run
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Look at /trading.
+Expected: A clearly labeled Stop session control is visible.
+
+### T-155 · Trading sessions · stop a session mid-run
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Click Stop session. 3. Look at /trading.
+Expected: The session stops and the page returns to its idle state with Start available.
+
+### T-156 · Trading sessions · cancelling the stop confirmation keeps the session running
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Click Stop session. 3. If a confirmation dialog appears, click Cancel. 4. Look at /trading.
+Expected: The session is still running and the page still shows the running state.
+
+### T-157 · Trading sessions · stop-loss reached stops the session on its own
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session with a small stop-loss value. 2. Wait until losses reach the stop-loss level. 3. Read the session status on /trading.
+Expected: The session stops on its own and the page names the stop-loss as the reason it stopped.
+
+### T-158 · Trading sessions · 2-hour expiry stops the session on its own
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Wait until the 2-hour run time elapses. 3. Read the session status on /trading.
+Expected: The session stops on its own and the page shows the 2-hour limit as the reason.
+
+### T-159 · Trading sessions · Halt trading button visible during a session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Look at /trading.
+Expected: The Halt trading button is present and visible during the session.
+
+### T-160 · Trading sessions · Halt trading during a session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Click the Halt trading button. 3. Read the status on /trading.
+Expected: All trading halts and the running session is stopped.
+
+### T-161 · Trading sessions · session status after halt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Click the Halt trading button. 3. Read the session status on /trading.
+Expected: The page shows the session as halted or stopped with a clear, unambiguous status.
+
+### T-162 · Trading sessions · refresh during a running session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Press F5 to refresh the page. 3. Read the session status.
+Expected: The running session is still shown as running after the reload.
+
+### T-163 · Trading sessions · second session while one runs is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Start a session and confirm it. 2. Try to start another session from /trading.
+Expected: The second start is blocked with an explanatory message.
+
+### T-164 · Trading sessions · idle state before any session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-29
+Steps: 1. Open /trading when no session has ever been run. 2. Read the page.
+Expected: An empty idle state is shown: no session history, no running session, and Start is available.
+
+### T-165 · Trading sessions · completed session appears in history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Run a session to completion (stop it or let it expire). 2. Look at /trading.
+Expected: The finished session is listed in a session history with its outcome.
+
+### T-166 · Trading sessions · error displayed if start fails
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Click Start and confirm while the start fails (e.g. during a known outage window).
+Expected: A visible error message appears on the page explaining the start failed.
+
+### T-167 · Trading sessions · start-failure error is plain language
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-29
+Steps: 1. Trigger a failed start. 2. Read the error message.
+Expected: The message is in plain language with no stack trace or technical jargon.
+
+### T-168 · Trading sessions · inputs keep their values after a failed start
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-29
+Steps: 1. Fill both inputs with distinctive valid values. 2. Trigger a failed start. 3. Look at the form.
+Expected: The typed values are still in the inputs.
+
+### T-169 · Trading sessions · double-clicking Start creates only one session
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Double-click the Start button quickly. 3. Confirm once. 4. Check the session state.
+Expected: Only one confirm screen appears and only one session starts.
+
+### T-170 · Trading sessions · Enter key in an input submits the form
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Focus one of the inputs. 3. Press Enter.
+Expected: The form behaves exactly as if Start had been clicked.
+
+### T-171 · Trading sessions · logical tab order through the form
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+Steps: 1. Open /trading. 2. Press Tab repeatedly from the top of the form.
+Expected: Focus moves in a logical order: largest-position input, stop-loss input, then Start.
+
+### T-172 · Trading sessions · visible keyboard focus on form controls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+Steps: 1. Open /trading. 2. Tab through the inputs and buttons.
+Expected: A visible focus indicator appears on each input and button as it receives focus.
+
+### T-173 · Trading sessions · stop-loss equal to largest position
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type the same value (e.g. 100) in both money inputs. 2. Try to proceed.
+Expected: The values are either accepted, or refused with a clear message explaining the rule.
+
+### T-174 · Trading sessions · stop-loss larger than largest position
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type 100 in the largest-position field. 2. Type 150 in the stop-loss field. 3. Try to proceed.
+Expected: A clear message explains the relationship required between the two numbers.
+
+### T-175 · Trading sessions · more than two decimal places
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Type 10.999 in "The largest position this session can open." 2. Fill the stop-loss with a valid value. 3. Observe the result.
+Expected: The value is either accepted and rounded with no error, or refused with a clear message.
+
+### T-176 · Trading sessions · Halt trading with no session running
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Open /trading with no session running. 2. Click the Halt trading button.
+Expected: The page either confirms there is nothing to halt or asks for confirmation before halting all trading.
+
+### T-177 · Trading sessions · Start available again after a session ends
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Run a session to completion. 2. Look at /trading.
+Expected: The Start button is enabled again and a new session can be configured.
+
+### T-178 · Trading sessions · refresh on the confirm screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Fill both inputs with valid values. 2. Click Start. 3. Press F5 on the confirm screen. 4. Check the session state.
+Expected: The page either returns to the start form or keeps the confirm screen, and no session starts by itself.
+
+### T-179 · Trading sessions · form usable on a narrow phone viewport
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+Steps: 1. Resize the browser to a phone-width viewport. 2. Open /trading. 3. Fill the inputs and click Start.
+Expected: Both inputs and the Start button are reachable and usable with no overlapping elements.
+
+### T-180 · Trading sessions · invalid then valid input then Start works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-29
+Steps: 1. Type an invalid value and confirm the error. 2. Correct both inputs to valid values. 3. Click Start. 4. Confirm on the confirm screen.
+Expected: The confirm screen is reached and the session starts normally.
+
+### T-181 · Strategies · /strategies loads with header text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Open /strategies in the browser. 2. Read the page heading.
+Expected: The page loads and the heading reads "Your uploaded strategies. Enabled ones are checked on closed bars — every signal goes through the engine's guards."
+
+### T-182 · Strategies · runner status block present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Open /strategies. 2. Look at the runner status block.
+Expected: All four values are visible: Runner, Last check, Next check, and Signals sent.
+
+### T-183 · Strategies · Runner shows Checking… on load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Open /strategies and watch the runner status block immediately.
+Expected: The Runner value initially shows "Checking…".
+
+### T-184 · Strategies · Runner settles to a healthy status
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Open /strategies. 2. Wait for the Runner value to update past "Checking…".
+Expected: The Runner value updates to a status showing the runner is active.
+
+### T-185 · Strategies · Last check timestamp present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Open /strategies. 2. Read the Last check value in the runner status block.
+Expected: A timestamp or time value is shown for the last check.
+
+### T-186 · Strategies · Next check shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Open /strategies. 2. Read the Next check value in the runner status block.
+Expected: A time or countdown is shown for the next check.
+
+### T-187 · Strategies · Signals sent counter present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-32
+Steps: 1. Open /strategies. 2. Read the Signals sent value in the runner status block.
+Expected: A numeric count is shown.
+
+### T-188 · Strategies · Last check updates over time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-32
+Steps: 1. Open /strategies and note the Last check value. 2. Wait about two minutes without touching the page. 3. Read the Last check value again.
+Expected: The Last check value has changed to a newer time.
+
+### T-189 · Strategies · "How signals flow" explainer present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-41
+Steps: 1. Open /strategies. 2. Look for the "How signals flow" section.
+Expected: The explainer text describing how signals flow is visible on the page.
+
+### T-190 · Strategies · closed-bars and guards statement present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Open /strategies. 2. Read the text near the strategy list.
+Expected: The page states that enabled strategies are checked on closed bars and every signal goes through the engine's guards.
+
+### T-191 · Strategies · "Add a strategy" section visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+Steps: 1. Open /strategies. 2. Scroll to the "Add a strategy" section.
+Expected: The section is visible with an upload control for a .py file.
+
+### T-192 · Strategies · upload a valid .py file is accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-89
+Steps: 1. Prepare a .py file with a valid STRATEGY_ID, STRATEGY_META (name and symbol GATEIO:BTCUSDT.P), and an evaluate(bars) function. 2. Open /strategies. 3. Upload the file through "Add a strategy".
+Expected: The file passes the check, is accepted, and appears in the "Your strategies" list.
+
+### T-193 · Strategies · newly uploaded strategy starts OFF
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-89
+Steps: 1. Upload a valid .py file. 2. Find it in the "Your strategies" list. 3. Check its enable toggle.
+Expected: The strategy's toggle is in the OFF position right after upload.
+
+### T-194 · Strategies · upload a .txt file is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-89
+Steps: 1. Prepare a valid strategy file but save it with a .txt extension. 2. Upload it through "Add a strategy".
+Expected: The file is refused with a reason stating only .py files are accepted.
+
+### T-195 · Strategies · upload an image file is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-89
+Steps: 1. Prepare a .png image file. 2. Upload it through "Add a strategy".
+Expected: The file is refused with a reason stating it is not a valid strategy file.
+
+### T-196 · Strategies · upload an empty .py file is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-89
+Steps: 1. Create an empty .py file (0 bytes). 2. Upload it through "Add a strategy".
+Expected: The file is refused with a reason.
+
+### T-197 · Strategies · .py file with a syntax error is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with broken Python syntax (e.g. a missing colon). 2. Upload it through "Add a strategy".
+Expected: The file is refused with a reason mentioning the syntax problem.
+
+### T-198 · Strategies · .py missing STRATEGY_ID is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_META and evaluate(bars) but no STRATEGY_ID. 2. Upload it.
+Expected: The file is refused and the reason names the missing STRATEGY_ID.
+
+### T-199 · Strategies · empty-string STRATEGY_ID is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_ID set to an empty string. 2. Upload it.
+Expected: The file is refused with a reason about the invalid STRATEGY_ID.
+
+### T-200 · Strategies · uppercase STRATEGY_ID is refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-33
+Steps: 1. Create a .py file with STRATEGY_ID = "MY-STRAT". 2. Upload it.
+Expected: The file is refused with a reason about the STRATEGY_ID format (lowercase only).
