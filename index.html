@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<noscript><meta http-equiv="refresh" content="0; url=https://e24bcaa6f51001.lhr.life/home"></noscript>
+<noscript><meta http-equiv="refresh" content="0; url=https://7b4a4a58bd27afd5-104-28-228-77.serveousercontent.com/home"></noscript>
 <style>
 /* Night Desk theme tokens (static/night-desk.css :root, 2026-09-25):
    --ink #020617, --text #f8fafc, --text-2 #b9c3da, --signal #f5a524, --line #334155.
@@ -33,11 +33,12 @@ button:active{transform:scale(.97)}
 <h1 id="headline">Connecting to your cockpit…</h1>
 <p id="detail" class="small">Finding the fastest route — this usually takes a few seconds.</p>
 <p><button id="retry" type="button">Try again now</button></p>
-<p class="small">If this keeps spinning, you can <a id="direct" href="https://e24bcaa6f51001.lhr.life/home">open the cockpit directly</a>.</p>
+<p class="small">If this keeps spinning, you can <a id="direct" href="https://7b4a4a58bd27afd5-104-28-228-77.serveousercontent.com/home">open the cockpit directly</a>.</p>
+<p class="small" id="gap-note">Seeing the tunnel provider's "no tunnel here" page instead? The test tunnel is rotating — come back here and tap "Try again now".</p>
 </main>
 <script>
 (function(){
-var LANDING="https://e24bcaa6f51001.lhr.life/home";
+var LANDING="https://7b4a4a58bd27afd5-104-28-228-77.serveousercontent.com/home";
 var headline=document.getElementById('headline');
 var detail=document.getElementById('detail');
 var direct=document.getElementById('direct');
@@ -74,10 +75,15 @@ function load(){
       window.location.replace(target);
     })
     .catch(function(){
-      // Calm, honest status — no error codes, no "connection lost" language.
-      // schedule() keeps retrying on its own; the button and the direct
-      // link below stay as manual fallbacks.
-      say('Reconnecting…','The cockpit link is refreshing. This usually clears in under a minute.');
+      // ISS-393 (2026-09-29): name the rotation gap honestly. When the
+      // tunnel dies mid-rotation the bookmark can land on the provider's
+      // "no tunnel here" dead page with no guidance; this loader is the
+      // operator's way back — say what's happening and that retrying
+      // works. Calm, honest status — no error codes, no "connection
+      // lost" language. schedule() keeps retrying on its own; the button
+      // and the direct link below stay as manual fallbacks.
+      say('The test tunnel is rotating — retry in a moment.',
+          'The cockpit link is refreshing. This page retries on its own — or tap "Try again now" below.');
       schedule();
     });
 }
