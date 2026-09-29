@@ -1,0 +1,403 @@
+QA LANE 3 — CHUNK 4 — cases T-551–T-600 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-551 · Smart Trade · Leverage at venue maximum
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Set leverage to the venue's stated maximum. 2. Check the display. 3. Tick the arm box and preview.
+Expected: The maximum is accepted and the preview succeeds.
+
+### T-552 · Smart Trade · Leverage above maximum rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type a leverage above the venue's limit. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the leverage exceeds the venue limit.
+
+### T-553 · Smart Trade · Leverage below 1 rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type 0 into the leverage field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states leverage must be at least 1x.
+
+### T-554 · Smart Trade · Fractional leverage handled explicitly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Type 2.5 into the leverage field. 2. Observe what the field shows. 3. Tick the arm box and preview.
+Expected: The ticket either accepts 2.5x and shows it in the preview JSON, or rejects it with a clear whole-number-only message — never a silent mismatch.
+
+### T-555 · Smart Trade · Non-numeric leverage rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type "high" into the leverage field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the leverage must be a number.
+
+### T-556 · Smart Trade · Leverage change leaves estimates blank
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Change leverage from 1 to 10. 2. Read the Estimates area. 3. Read the note below it.
+Expected: Estimates still show "—"; the preview never prices the ticket, so nothing here is a quote.
+
+### T-557 · Smart Trade · Add a take-profit leg
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. In the take-profits area, add one leg. 2. Enter a price and a fraction. 3. Check the leg list.
+Expected: The leg appears with the entered price and fraction.
+
+### T-558 · Smart Trade · Add legs up to 8
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Add take-profit legs one by one until 8 exist. 2. Count them. 3. Check the add control.
+Expected: All 8 legs are listed; the add control indicates the 8-leg maximum is reached.
+
+### T-559 · Smart Trade · Ninth leg refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. With 8 legs present, try to add a 9th. 2. Observe the add control. 3. Count the legs.
+Expected: The 9th leg is refused with a message stating the 8-leg maximum; 8 legs remain.
+
+### T-560 · Smart Trade · Remove a leg
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. With several legs present, remove one. 2. Count the legs. 3. Check the add control.
+Expected: The leg is removed and the add control allows adding again.
+
+### T-561 · Smart Trade · Fractions totaling exactly 1.00 accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+Steps: 1. Set leg fractions to sum exactly 1.00 (for example 0.5 + 0.5). 2. Tick the arm box and preview. 3. Read the result.
+Expected: The preview accepts the ticket.
+
+### T-562 · Smart Trade · Fractions totaling more than 1.00 refused
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Set fractions summing to 1.20. 2. Tick the arm box and preview. 3. Read the result.
+Expected: The preview is refused with a message that fractions must total no more than 1.00.
+
+### T-563 · Smart Trade · Fractions totaling less than 1.00
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+Steps: 1. Set fractions summing to 0.60. 2. Tick the arm box and preview. 3. Read the result.
+Expected: The preview states plainly what happens to the remainder — accepted as a partial close or rejected — with no ambiguity.
+
+### T-564 · Smart Trade · Negative fraction rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Set a leg fraction to -0.2. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states fractions must be positive.
+
+### T-565 · Smart Trade · Single fraction above 1.00 rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Set one leg fraction to 1.5. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states fractions must total no more than 1.00.
+
+### T-566 · Smart Trade · Non-numeric fraction rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type "half" as a leg fraction. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the fraction must be a number.
+
+### T-567 · Smart Trade · TP leg with invalid price rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Add a leg with price "abc". 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error flags the leg's price.
+
+### T-568 · Smart Trade · Ticket with no protection at all rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Build a ticket with no take-profit legs, no stop %, no breakeven trigger, and no trail. 2. Tick the arm box. 3. Press Preview.
+Expected: The preview rejects the ticket with a message that at least one of take-profit, stop, trail, or breakeven is required.
+
+### T-569 · Smart Trade · Stop-only ticket accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Set only a valid stop %, with no TP legs, no breakeven, and no trail. 2. Tick the arm box and preview. 3. Read the result.
+Expected: The preview accepts the ticket.
+
+### T-570 · Smart Trade · Breakeven-only ticket accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Set only a breakeven trigger %. 2. Tick the arm box and preview. 3. Read the result.
+Expected: The preview accepts the ticket.
+
+### T-571 · Smart Trade · Trail-only ticket accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Set only trail offset % and trail step %. 2. Tick the arm box and preview. 3. Read the result.
+Expected: The preview accepts the ticket.
+
+### T-572 · Smart Trade · Valid stop %
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Type 2 into the Stop % field. 2. Tick the arm box and preview. 3. Check the preview JSON.
+Expected: The preview succeeds and the JSON shows stop_pct 2.
+
+### T-573 · Smart Trade · Zero stop % rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type 0 into Stop % (keep another protection present so only the stop value is under test). 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the stop % must be greater than zero.
+
+### T-574 · Smart Trade · Negative stop % rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type -1 into Stop %. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the stop % must be positive.
+
+### T-575 · Smart Trade · Non-numeric stop % rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type "two" into Stop %. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the stop % must be a number.
+
+### T-576 · Smart Trade · Huge stop % rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type 500 into Stop %. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the stop % is out of range.
+
+### T-577 · Smart Trade · Valid breakeven trigger %
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Type 1.5 into the Breakeven trigger % field. 2. Tick the arm box and preview. 3. Check the preview JSON.
+Expected: The preview succeeds and the JSON reflects the breakeven trigger.
+
+### T-578 · Smart Trade · Zero breakeven trigger rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type 0 into the Breakeven trigger % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the breakeven trigger must be greater than zero.
+
+### T-579 · Smart Trade · Negative breakeven trigger rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type -0.5 into the Breakeven trigger % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the breakeven trigger must be positive.
+
+### T-580 · Smart Trade · Non-numeric breakeven trigger rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type "soon" into the Breakeven trigger % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the breakeven trigger must be a number.
+
+### T-581 · Smart Trade · Valid trail offset %
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Type 1 into the Trail offset % field. 2. Tick the arm box and preview. 3. Check the preview JSON.
+Expected: The preview succeeds and the JSON reflects the trail offset.
+
+### T-582 · Smart Trade · Zero trail offset rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type 0 into the Trail offset % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the trail offset must be greater than zero.
+
+### T-583 · Smart Trade · Negative trail offset rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type -1 into the Trail offset % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the trail offset must be positive.
+
+### T-584 · Smart Trade · Non-numeric trail offset rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type "wide" into the Trail offset % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the trail offset must be a number.
+
+### T-585 · Smart Trade · Valid trail step %
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Type 0.5 into the Trail step % field. 2. Tick the arm box and preview. 3. Check the preview JSON.
+Expected: The preview succeeds and the JSON reflects the trail step.
+
+### T-586 · Smart Trade · Zero trail step rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type 0 into the Trail step % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the trail step must be greater than zero.
+
+### T-587 · Smart Trade · Negative trail step rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type -0.5 into the Trail step % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the trail step must be positive.
+
+### T-588 · Smart Trade · Non-numeric trail step rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Type "tiny" into the Trail step % field. 2. Tick the arm box and preview. 3. Read the result.
+Expected: A validation error states the trail step must be a number.
+
+### T-589 · Smart Trade · Estimates labels visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Open the ticket. 2. Find the Estimates area. 3. Read each label.
+Expected: Labels read "Est. notional", "Est. margin", and "Est. taker fee", each showing "—" before pricing.
+
+### T-590 · Smart Trade · Estimates stay blank — never a quote
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Fill in a valid ticket. 2. Read the estimates. 3. Read the note below them.
+Expected: Estimates remain "—" with the note that the preview never prices the ticket, so estimates stay blank — nothing here is a quote.
+
+### T-591 · Smart Trade · Fee note text
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Read the fee note under Estimates. 2. Confirm the venue and rates.
+Expected: The note reads "Gate.io USDT-M futures VIP0 · maker 0.020% / taker 0.050%".
+
+### T-592 · Smart Trade · Estimates unchanged after preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Note the estimates before preview. 2. Tick the arm box and preview a valid ticket. 3. Re-read the estimates.
+Expected: Estimates still show "—"; the preview does not fill in priced values.
+
+### T-593 · Smart Trade · Preview JSON block visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Open the ticket. 2. Find the preview block. 3. Read its heading.
+Expected: A JSON block is visible headed "Preview — nothing is sent".
+
+### T-594 · Smart Trade · Preview JSON shows symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Read the preview JSON. 2. Find the symbol field. 3. Confirm the value.
+Expected: The symbol reads GATEIO:BTCUSDT.P.
+
+### T-595 · Smart Trade · Preview JSON shows fires false
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Read the preview JSON. 2. Find "fires". 3. Confirm the value.
+Expected: "fires" is false — the preview never sends.
+
+### T-596 · Smart Trade · Preview JSON side follows selector
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Select Short. 2. Read the JSON side. 3. Select Long and re-read.
+Expected: The side value updates to match the selector each time.
+
+### T-597 · Smart Trade · Preview JSON qty fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Read the preview JSON. 2. Find qty_mode and qty_value. 3. Confirm the values.
+Expected: qty_mode reads risk_pct with the entered qty_value.
+
+### T-598 · Smart Trade · Preview JSON updates as fields change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-08
+Steps: 1. Read the preview JSON. 2. Change the stop %. 3. Re-read the JSON.
+Expected: The stop_pct value in the JSON updates immediately.
+
+### T-599 · Smart Trade · Preview JSON take_profits list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Add two TP legs. 2. Read the preview JSON. 3. Count the entries in take_profits.
+Expected: take_profits lists both legs with their prices and fractions.
+
+### T-600 · Smart Trade · Preview JSON is valid JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Copy the preview JSON text. 2. Check it in a JSON validator. 3. Confirm the result.
+Expected: The block parses as valid JSON with no truncation.

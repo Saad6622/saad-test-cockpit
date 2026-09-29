@@ -1,0 +1,403 @@
+QA LANE 5 — CHUNK 3 — cases T-901–T-950 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-901 · Settings · Unprotected change persists after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Change an Interface setting and save it. 2. Reload the page. 3. Reopen the Interface group.
+Expected: The saved value is still shown after the refresh.
+
+### T-902 · Settings · Protected change persists after refresh
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Complete the full three-step flow to change the Risk caps daily loss cap. 2. Reload the page. 3. Reopen the Risk caps group.
+Expected: The new cap value is still shown; the change survived the refresh.
+
+### T-903 · Settings · Change made on /settings appears on the cockpit page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. On /settings, change an Interface setting and save it. 2. Open the cockpit page and find its settings panel. 3. Compare the same setting there.
+Expected: The cockpit page shows the same new value — both places read from the same source of truth.
+
+### T-904 · Settings · Change made on the cockpit page appears on /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. On the cockpit page's settings panel, change an Interface setting and save it. 2. Open /settings. 3. Compare the same setting there.
+Expected: /settings shows the same new value as the cockpit page.
+
+### T-905 · Settings · Group version increments on every change
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-94
+Steps: 1. Open the Interface group and note its current version (if shown). 2. Save a change. 3. Check the version again.
+Expected: The group's version number has increased by one after the save.
+
+### T-906 · Settings · Persistence group explains what is stored
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-80
+Steps: 1. Open the Persistence group. 2. Read the editor text and fields. 3. Look for any stored-state info.
+Expected: The group explains in plain words what state is persisted and shows its current status, with no dead controls.
+
+### T-907 · Settings · Unknown group deep link is ignored gracefully
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Open /settings?group=does-not-exist directly. 2. Wait for the settings to load. 3. Observe the page.
+Expected: The group list renders normally with no error and no broken state; the unknown parameter is ignored.
+
+### T-908 · Settings · Refresh mid three-step flow leaves no partial save
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-94
+Steps: 1. Start the three-step flow on the Risk caps group, change a value, and request a code. 2. Reload the page before approving. 3. Reopen the Risk caps group.
+Expected: The flow is reset and the original value is unchanged; no partial change was saved.
+
+### T-909 · Settings · Copy trading group editor loads and saves
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-75
+Steps: 1. Open the Copy trading group. 2. Change a visible setting to a different valid value. 3. Click Save.
+Expected: A success confirmation appears and the new value is shown as current.
+
+### T-910 · Settings · All 19 groups still listed after a failed group load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-94
+Steps: 1. Open /settings. 2. If one group editor shows an error instead of loading, scroll the group list. 3. Count the groups.
+Expected: All 19 groups remain listed and the other groups still open and work; one broken group does not break the page.
+
+### T-911 · Replay · Time-travel replay section loads on the home page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open / (the home page) in the browser. 2. Scroll to the replay booth area. 3. Look for its heading.
+Expected: A "Time-travel replay" section is present with its stage, lanes, and controls visible.
+
+### T-912 · Replay · Bar indicator shows the placeholder before any tape
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+Steps: 1. Open the replay section with no tape loaded. 2. Look at the bar/timecode indicator. 3. Read its text.
+Expected: The indicator shows "Bar —/—" and "--:--" as honest placeholders — not a fake "Bar 0/0" or invented position.
+
+### T-913 · Replay · Empty state says No tape outright
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-17
+Steps: 1. Open the replay section with no tape feed wired. 2. Look at the timecode area. 3. Read the empty-state wording.
+Expected: The empty state plainly says "No tape" instead of showing a confusing blank counter.
+
+### T-914 · Replay · Projection note is visible and worded honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+Steps: 1. Open the replay section. 2. Find the note above the lanes. 3. Read it in full.
+Expected: The note reads "Fills below are the engine's retained fills — not a backtest. Repaint fence: signals use confirmed closes with a 1-bar delay, so replaying never changes past signals."
+
+### T-915 · Replay · Repaint-fence banner is visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section. 2. Look for the fence banner near the note. 3. Read its text.
+Expected: A banner reads "Repaint fence on · confirmed close + 1-bar delay".
+
+### T-916 · Replay · Director keys details panel opens
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Find the "Director keys — keyboard shortcuts for replay" summary in the replay section. 2. Click it to expand. 3. Read the listed shortcuts.
+Expected: The panel expands showing rows for ←/→ step one bar, Space play/pause, +/- zoom in/out, 0 reset view, Home/End jump to tape ends, and the reduced-motion note.
+
+### T-917 · Replay · Reduced-motion note is visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Expand the Director keys panel. 2. Read the note at the bottom. 3. Observe replay behavior on load.
+Expected: The note reads "Reduced motion: static frames only, no autoplay." and replay does not start playing on its own when the page loads.
+
+### T-918 · Replay · Signals lane shows 0 before a tape
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section with no tape loaded. 2. Look at the Signals lane header. 3. Read the counter.
+Expected: The Signals counter shows 0 and the lane itself is empty.
+
+### T-919 · Replay · Verdicts lane shows 0 before a tape
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section with no tape loaded. 2. Look at the Verdicts lane header. 3. Read the counter.
+Expected: The Verdicts counter shows 0 and the lane itself is empty.
+
+### T-920 · Replay · Fills lane shows an honest dash while loading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+Steps: 1. Open the replay section with the fills load not yet finished. 2. Look at the Fills lane header. 3. Read the counter.
+Expected: The Fills counter shows "—" (honest unknown) instead of claiming "0" before the engine answers.
+
+### T-921 · Replay · Fills lane shows a count once the engine answers
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section and wait for the fills load to finish. 2. Look at the Fills lane header. 3. Read the counter.
+Expected: The Fills counter now shows a real number and the lane lists the engine's retained fill rows.
+
+### T-922 · Replay · Play button starts paused before a tape
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section with no tape. 2. Look at the play button. 3. Check its pressed state.
+Expected: The play button shows the play icon with aria-pressed="false" — it is paused, not playing.
+
+### T-923 · Replay · Transport controls explain why they are inactive with no tape
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-17
+Steps: 1. Open the replay section with no tape feed wired. 2. Look at the play, step, and jump buttons. 3. Check the disabled-reason text.
+Expected: The transport controls are disabled and an accessible reason says playback needs a price tape.
+
+### T-924 · Replay · Play starts moving the playhead on a wired tape
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section with a tape feed wired. 2. Click the play button. 3. Watch the bar indicator and playhead for a few seconds.
+Expected: The playhead advances forward through the bars, the play button switches to the pause icon with aria-pressed="true".
+
+### T-925 · Replay · Play button toggles to pause
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-17
+Steps: 1. With a tape wired, click the play button to start playback. 2. Click the same button again. 3. Observe the playhead.
+Expected: The playhead stops moving and the button returns to the play icon with aria-pressed="false".
+
+### T-926 · Replay · Right arrow key steps one bar forward
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired and the replay section focused, pause playback. 2. Note the current bar number. 3. Press the → key once.
+Expected: The playhead moves forward exactly one bar and the bar indicator updates.
+
+### T-927 · Replay · Left arrow key steps one bar back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired and replay paused, note the current bar number. 2. Press the ← key once. 3. Check the bar indicator.
+Expected: The playhead moves back exactly one bar and the bar indicator updates.
+
+### T-928 · Replay · +1 bar button steps forward
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired and replay paused, note the current bar number. 2. Click the "+1 bar" transport button. 3. Check the bar indicator.
+Expected: The playhead moves forward exactly one bar.
+
+### T-929 · Replay · -1 bar button steps back
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired and replay paused, note the current bar number. 2. Click the "−1 bar" transport button. 3. Check the bar indicator.
+Expected: The playhead moves back exactly one bar.
+
+### T-930 · Replay · Bar indicator updates on every step
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-17
+Steps: 1. With a tape wired and replay paused, step forward five times with the → key. 2. Read the bar indicator after each step. 3. Compare the numbers.
+Expected: The indicator advances one bar per key press with no skips and no lag behind the playhead.
+
+### T-931 · Replay · Clock shows the playhead time on a wired tape
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section with no tape. 2. Note the "--:--" clock. 3. Wire a tape and step the playhead forward.
+Expected: Once a tape is present, the clock shows the real time at the playhead instead of "--:--".
+
+### T-932 · Replay · Position-at-playhead readout shows flat when no position
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, move the playhead to a bar with no position. 2. Look at the position-at-playhead readout (lower third). 3. Read it.
+Expected: The readout shows "Flat" and "No position at playhead", with Entry and Mark shown as dashes.
+
+### T-933 · Replay · Position-at-playhead readout shows the position when one exists
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired and retained fills present, scrub to a bar covered by a position. 2. Look at the position-at-playhead readout. 3. Read the Entry and Mark values.
+Expected: The readout shows the position state (e.g. direction/size) with real Entry and Mark values at the playhead.
+
+### T-934 · Replay · Signals counter grows as the playhead passes signals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired that contains signals, start from the tape start. 2. Play forward through the tape. 3. Watch the Signals counter.
+Expected: The Signals counter increases as the playhead passes each signal marker.
+
+### T-935 · Replay · Verdicts counter grows as the playhead passes verdicts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired that contains verdicts, start from the tape start. 2. Play forward through the tape. 3. Watch the Verdicts counter.
+Expected: The Verdicts counter increases as the playhead passes each verdict marker.
+
+### T-936 · Replay · Scrubbing the tape moves the playhead
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-17
+Steps: 1. With a tape wired, grab the scrub control ("Scrub the tape"). 2. Drag it to roughly the middle of the tape. 3. Release and check the bar indicator.
+Expected: The playhead jumps to the dragged position and the bar indicator shows the matching bar.
+
+### T-937 · Replay · Scrub to the start shows the first bar
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, drag the scrub control fully to the left. 2. Release. 3. Read the bar indicator.
+Expected: The playhead sits on the first bar of the tape.
+
+### T-938 · Replay · Scrub to the end shows the last bar
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, drag the scrub control fully to the right. 2. Release. 3. Read the bar indicator.
+Expected: The playhead sits on the last bar of the tape.
+
+### T-939 · Replay · Plus key zooms the chart in
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, focus the replay section. 2. Press the + key. 3. Observe the chart view.
+Expected: The chart zooms in, showing fewer bars at a larger size.
+
+### T-940 · Replay · Minus key zooms the chart out
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired and the chart zoomed in, press the − key. 2. Observe the chart view. 3. Press − again.
+Expected: Each press zooms the chart out, showing more bars at a smaller size.
+
+### T-941 · Replay · Zero key resets the chart view
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, zoom in with + and scrub to the middle. 2. Press the 0 key. 3. Observe the chart view and playhead.
+Expected: The chart view resets to its default zoom and position.
+
+### T-942 · Replay · Speed control offers the documented options
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. Open the replay section. 2. Click the Speed dropdown. 3. Read the options.
+Expected: The dropdown offers 0.5×, 1×, 2×, 4×, 8× with 1× selected by default.
+
+### T-943 · Replay · Higher speed plays faster
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, set Speed to 1× and start playback. 2. Stop, set Speed to 4×, start playback again. 3. Compare how fast the bar indicator advances.
+Expected: At 4× the playhead advances noticeably faster than at 1×.
+
+### T-944 · Replay · Half speed plays slower
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, set Speed to 0.5× and start playback. 2. Watch the bar indicator for a few seconds. 3. Compare with 1×.
+Expected: At 0.5× the playhead advances noticeably slower than at 1×.
+
+### T-945 · Replay · Home key jumps to the tape start
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, scrub the playhead to the middle of the tape. 2. Press the Home key. 3. Read the bar indicator.
+Expected: The playhead jumps to the first bar of the tape.
+
+### T-946 · Replay · End key jumps to the tape end
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, scrub the playhead to the middle of the tape. 2. Press the End key. 3. Read the bar indicator.
+Expected: The playhead jumps to the last bar of the tape.
+
+### T-947 · Replay · Start transport button jumps to tape start
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, move the playhead to the middle. 2. Click the "start" transport button (|◀). 3. Read the bar indicator.
+Expected: The playhead jumps to the first bar of the tape.
+
+### T-948 · Replay · End transport button jumps to tape end
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired, move the playhead to the middle. 2. Click the "end" transport button (▶|). 3. Read the bar indicator.
+Expected: The playhead jumps to the last bar of the tape.
+
+### T-949 · Replay · Scrubbing back and forth never changes past signals
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-17
+Steps: 1. With a tape wired containing signals, play through part of the tape and note the signal markers. 2. Scrub the playhead back and forth across those bars several times. 3. Compare the signal markers with before.
+Expected: The past signal markers are identical — replaying never changes past signals (the repaint fence holds).
+
+### T-950 · Replay · Empty fills state is honest with no retained fills
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-17
+Steps: 1. Open the replay section when the engine has no retained fills. 2. Wait for the fills load to finish. 3. Look at the Fills lane.
+Expected: The lane shows an honest empty state (count 0 or "no fills") instead of stale rows or a stuck "—".

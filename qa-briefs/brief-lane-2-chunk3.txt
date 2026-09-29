@@ -1,0 +1,403 @@
+QA LANE 2 — CHUNK 3 — cases T-301–T-350 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-301 · Backtests · Browser refresh reloads cleanly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests. 2. Press F5 to refresh. 3. Wait for the page to finish loading.
+Expected: The page reloads fully with title, notes, results list, and winners section intact; no error is shown.
+
+### T-302 · Backtests · Refresh during a running sweep
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests while a sweep is running. 2. Press F5 to refresh. 3. Wait for loading to finish and watch for one minute.
+Expected: The running sweep reappears and keeps updating progressively after the refresh.
+
+### T-303 · Backtests · Refresh does not duplicate entries
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests and count the visible sweep entries. 2. Press F5 to refresh. 3. Count the visible sweep entries again after loading.
+Expected: The entry count matches; no sweep entry appears twice after the refresh.
+
+### T-304 · Backtests · New entries do not yank the scroll position
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests while a sweep is running. 2. Scroll up to read an older entry. 3. Wait for a new entry to arrive.
+Expected: The page does not jump or yank the scroll position when a new entry loads; the older entry stays readable.
+
+### T-305 · Backtests · Long list scrolls to the end
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests with a long results list. 2. Scroll down through the list with the mouse wheel. 3. Continue to the bottom.
+Expected: The full list scrolls smoothly and the oldest entries are reachable at the bottom.
+
+### T-306 · Backtests · Scroll to bottom reveals latest entry
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests with results present. 2. Scroll to the very bottom of the results list. 3. Read the last entry.
+Expected: The most recent sweep entry is visible at the bottom of the list.
+
+### T-307 · Backtests · Tab key moves through entries
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Press the Tab key repeatedly. 3. Watch where keyboard focus goes.
+Expected: Focus moves in a logical order through the interactive elements and entries of the results list.
+
+### T-308 · Backtests · Focused entry visibly highlighted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Tab until a sweep entry or its control has focus. 3. Look at the focused element.
+Expected: The focused entry shows a clear visible highlight or outline.
+
+### T-309 · Backtests · Arrow keys move within the list if focusable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Focus a sweep entry with Tab. 3. Press the Up and Down arrow keys.
+Expected: If the list supports arrow navigation, focus moves between entries; if not, the arrow keys cause no error and the page stays stable.
+
+### T-310 · Backtests · Enter on a focused entry is safe
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Tab to focus a sweep entry. 3. Press Enter.
+Expected: Pressing Enter either expands the entry's details or does nothing harmful; no error appears and no navigation away from the page occurs.
+
+### T-311 · Backtests · Filter tabs filter the list if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Look for filter tabs or buttons near the results list. 3. Click one if present.
+Expected: If filters are offered, clicking one narrows the list to the chosen subset; if none are offered, the full list remains.
+
+### T-312 · Backtests · "Winners only" filter if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests with results and saved winners. 2. Find a filter labeled "Winners" or similar. 3. Click it.
+Expected: If offered, the list shows only winner entries; entries that are not winners are hidden.
+
+### T-313 · Backtests · Clearing a filter restores the full list
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests and apply a filter if one is offered. 2. Click the "All" filter or clear control. 3. Count the visible entries.
+Expected: The full results list is restored with all entries visible again.
+
+### T-314 · Backtests · Entry text is selectable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Click and drag across the text of a sweep entry. 3. Press Ctrl+C to copy.
+Expected: The entry text can be selected and copied to the clipboard.
+
+### T-315 · Backtests · Numbers formatted readably
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Read the numeric metrics in several entries. 3. Check decimal places and units.
+Expected: Numbers are formatted readably (sensible decimals, clear units or labels); no raw unformatted values confuse the reader.
+
+### T-316 · Backtests · Browser Back returns to previous page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. From another cockpit page, click "Backtests". 2. Press the browser Back button. 3. Observe the result.
+Expected: The browser returns to the previous page with no error.
+
+### T-317 · Backtests · Page is watch-only, no start-sweep controls
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests. 2. Scan the entire page for buttons or forms. 3. Compare against the "Nothing to do here — just watch." note.
+Expected: There are no controls to start, stop, or configure a sweep; the page is read-only as the note promises.
+
+### T-318 · Backtests · Honesty note readable on a narrow screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-43
+Steps: 1. Open /backtests. 2. Resize the browser window to a phone width or use a mobile device. 3. Find both honesty notes.
+Expected: Both honesty notes are fully readable without horizontal scrolling or clipped text.
+
+### T-319 · Backtests · Results list readable on a narrow screen
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Resize the browser window to a phone width. 3. Scroll through the results list.
+Expected: Sweep entries remain readable on a narrow screen; no text is cut off or overlapping.
+
+### T-320 · Backtests · Entries show timestamps
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+Steps: 1. Open /backtests with results loaded. 2. Read several sweep entries. 3. Look for when each sweep ran.
+Expected: Each sweep entry shows when it ran (date and time), so results can be placed in time.
+
+### T-321 · History · Page loads with heading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open the TEST cockpit in the browser. 2. Click the "History" link in the navigation. 3. Wait for the page to finish loading.
+Expected: The /history page opens and shows the heading "See everything your past sessions did, trade by trade."
+
+### T-322 · History · Money and open positions section visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Wait for the page to load. 3. Look for the money section.
+Expected: A "Money & open positions" section is visible near the top of the page.
+
+### T-323 · History · "Loading balances…" indicator on load
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-50
+Steps: 1. Open /history in a fresh tab. 2. Watch the balances area during the first seconds. 3. Note what appears before the numbers.
+Expected: The text "Loading balances…" (or a similar loading indicator) is shown until balance data arrives.
+
+### T-324 · History · Balances resolve to numbers
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+Steps: 1. Open /history. 2. Wait for the loading indicator to clear. 3. Read the balances area.
+Expected: The "Loading balances…" text is replaced by actual balance figures.
+
+### T-325 · History · Balance rows labeled clearly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-50
+Steps: 1. Open /history. 2. Wait for balances to load. 3. Read each balance row's label.
+Expected: Every balance figure has a clear label (such as equity, cash, or total) so the reader knows what each number means.
+
+### T-326 · History · Open positions subsection visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Wait for balances to load. 3. Look inside the "Money & open positions" section.
+Expected: An open-positions area is visible, showing either positions or a clear "no open positions" message.
+
+### T-327 · History · Open position row shows symbol
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history while at least one position is open. 2. Find the open-positions area. 3. Read a position row.
+Expected: Each open position row names the traded symbol.
+
+### T-328 · History · Open position row shows side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history while at least one position is open. 2. Read a position row. 3. Find the direction of the trade.
+Expected: Each open position row shows its side (long or short).
+
+### T-329 · History · Open position row shows size and entry price
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history while at least one position is open. 2. Read a position row. 3. Find the size and entry price.
+Expected: Each open position row shows its size and the entry price.
+
+### T-330 · History · Open position row shows unrealized P&L
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-47
+Steps: 1. Open /history while at least one position is open. 2. Read a position row. 3. Find the unrealized profit or loss.
+Expected: Each open position row shows its current unrealized P&L.
+
+### T-331 · History · Empty open positions state
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-46
+Steps: 1. Open /history when no positions are open. 2. Look at the open-positions area. 3. Read its content.
+Expected: A clear message states there are no open positions, instead of a blank area or an error.
+
+### T-332 · History · Trade history table visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Scroll past the balances section. 3. Look for the trade history area.
+Expected: A "Trade history" table of completed round trips is visible on the page.
+
+### T-333 · History · Table has a Time column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Find the "Trade history" table. 3. Read the column headers.
+Expected: The table has a Time (or Date/Time) column showing when each trade happened.
+
+### T-334 · History · Table has a Symbol column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Find the "Trade history" table. 3. Read the column headers.
+Expected: The table has a Symbol column showing what was traded.
+
+### T-335 · History · Table has a Side column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Find the "Trade history" table. 3. Read the column headers.
+Expected: The table has a Side column showing long or short for each trade.
+
+### T-336 · History · Table has an Entry price column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Find the "Trade history" table. 3. Read the column headers.
+Expected: The table has an Entry price column showing the fill price on the way in.
+
+### T-337 · History · Table has an Exit price column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Find the "Trade history" table. 3. Read the column headers.
+Expected: The table has an Exit price column showing the fill price on the way out.
+
+### T-338 · History · Table has a Quantity column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history. 2. Find the "Trade history" table. 3. Read the column headers.
+Expected: The table has a Quantity (or Size) column showing how much was traded.
+
+### T-339 · History · Table has a P&L column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-47
+Steps: 1. Open /history. 2. Find the "Trade history" table. 3. Read the column headers.
+Expected: The table has a P&L column showing the profit or loss of each completed trade.
+
+### T-340 · History · Column headers stay visible while scrolling
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history with enough trades to scroll the table. 2. Scroll down through the rows. 3. Look at the top of the table.
+Expected: The column headers remain visible (sticky) while scrolling through the rows.
+
+### T-341 · History · Rows show completed round trips only
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history with trades recorded. 2. Read several rows of the table. 3. Check each row has both an entry and an exit.
+Expected: Every row represents a completed round trip (entry plus exit); open positions are not mixed into the table.
+
+### T-342 · History · Row shows strategy name if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history with trades recorded. 2. Read a table row fully. 3. Look for the strategy name.
+Expected: If a strategy column is offered, each row names the strategy that took the trade.
+
+### T-343 · History · Row shows fees if offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-46
+Steps: 1. Open /history with trades recorded. 2. Read a table row fully. 3. Look for fee information.
+Expected: If a fees column is offered, each row shows the fees paid on the trade.
+
+### T-344 · History · Sort by time offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-46
+Steps: 1. Open /history with several trades. 2. Click the Time column header. 3. Watch the row order.
+Expected: If sorting is offered, clicking the Time header reorders the rows by trade time.
+
+### T-345 · History · Sort toggles ascending and descending
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-46
+Steps: 1. Open /history with several trades. 2. Click the Time column header once and note the order. 3. Click the Time column header again.
+Expected: The second click reverses the sort direction (ascending becomes descending, or vice versa).
+
+### T-346 · History · Sort by P&L offered
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-47
+Steps: 1. Open /history with several trades of differing results. 2. Click the P&L column header. 3. Watch the row order.
+Expected: If sorting is offered, clicking the P&L header reorders the rows from best to worst (or worst to best).
+
+### T-347 · History · Sort indicator visible on sorted column
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-46
+Steps: 1. Open /history. 2. Click a sortable column header. 3. Look at that header.
+Expected: The sorted column shows a visible indicator (such as an up or down arrow) of the active sort direction.
+
+### T-348 · History · Sort keeps all rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-46
+Steps: 1. Open /history and count the table rows. 2. Click a sortable column header twice. 3. Count the rows again.
+Expected: Sorting changes the order only; no rows are lost or duplicated.
+
+### T-349 · History · Empty history state message
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-46
+Steps: 1. Open /history on a cockpit with no recorded trades. 2. Scroll to the "Trade history" area. 3. Read its content.
+Expected: A clear message explains there is no trade history yet, instead of an empty table or an error.
+
+### T-350 · History · Timezone label present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-49
+Steps: 1. Open /history. 2. Scan the page for the timezone note. 3. Read the full label.
+Expected: A "Times shown in" timezone label is present on the page.

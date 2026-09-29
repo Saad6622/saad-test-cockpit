@@ -1,0 +1,403 @@
+QA LANE 3 — CHUNK 3 — cases T-501–T-550 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-501 · Notifications · Try it out with invalid secret shows error
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-59
+Steps: 1. Enter an invalid bot secret and a valid chat ID. 2. Press "Try it out". 3. Read the result.
+Expected: A clear error states the message could not be delivered; the status stays not green.
+
+### T-502 · Notifications · Double-pressing Try it out
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+Steps: 1. With a valid setup, press "Try it out" twice quickly. 2. Watch the button. 3. Check Telegram.
+Expected: The button shows a sending state and blocks a second send while the first is in flight; no duplicate preview messages arrive.
+
+### T-503 · Notifications · Try it out button label and description
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+Steps: 1. Open /notifications. 2. Read the "Try it out" button and its nearby text. 3. Confirm the wording.
+Expected: The button is labeled "Try it out" with text saying it sends a real message to Telegram right now.
+
+### T-504 · Notifications · Push section visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-61
+Steps: 1. Open /notifications. 2. Scroll to "Push notifications". 3. Read the section.
+Expected: The section shows ntfy or Apprise options with a daily message budget.
+
+### T-505 · Notifications · Open push settings link target
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-62
+Steps: 1. Open /notifications. 2. Find the "Open push settings" link. 3. Hover over it to see its target without clicking.
+Expected: The link points to /settings?group=push.
+
+### T-506 · Notifications · Open push settings link navigates
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-62
+Steps: 1. Click "Open push settings". 2. Wait for the page to load. 3. Check the address bar.
+Expected: The browser lands on /settings?group=push with the push settings group open.
+
+### T-507 · Notifications · Back navigation from push settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-61
+Steps: 1. Go to /settings?group=push via the link. 2. Press the browser Back button. 3. Check the page.
+Expected: The browser returns to /notifications with the prior entries intact.
+
+### T-508 · Notifications · Daily message budget shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-61
+Steps: 1. Open /notifications. 2. Read the push notifications section. 3. Find the budget figure.
+Expected: A daily message budget limit is clearly stated.
+
+### T-509 · Notifications · Push provider choice ntfy vs Apprise
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-61
+Steps: 1. Open /settings?group=push. 2. Look for the provider options. 3. Select ntfy, then Apprise.
+Expected: Both ntfy and Apprise are selectable and the choice is kept.
+
+### T-510 · Notifications · Editing secret then leaving without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. With a secret saved, type a new value into the Bot Secret field. 2. Navigate to the main page without saving. 3. Return to /notifications.
+Expected: The unsaved change is discarded; the previously saved secret remains in effect and the box is blank.
+
+### T-511 · Notifications · Editing chat ID then leaving without saving
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. With a chat ID saved, type a new value into the Chat ID field. 2. Navigate to the main page without saving. 3. Return to /notifications.
+Expected: The unsaved change is discarded; the previously saved chat ID remains in effect.
+
+### T-512 · Notifications · Inline error message placement
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Enter an invalid chat ID. 2. Save. 3. Look at where the error appears.
+Expected: The error appears next to the Chat ID field in plain language.
+
+### T-513 · Notifications · Success confirmation placement
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Save a valid secret and chat ID. 2. Watch for the confirmation. 3. Note its location.
+Expected: A success confirmation appears near the form, naming what was saved.
+
+### T-514 · Notifications · Keyboard tab order through the form
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+Steps: 1. Open /notifications. 2. Press Tab repeatedly from the top. 3. Note the focus order.
+Expected: Focus moves logically — Bot Secret, Chat ID, topic toggles, Try it out, push link — with a visible focus indicator.
+
+### T-515 · Notifications · Enter key in Chat ID field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+Steps: 1. Type a valid chat ID. 2. Press Enter while focused in the field. 3. Observe.
+Expected: The form saves; Enter does not silently do nothing.
+
+### T-516 · Notifications · Toggle changes are kept or prompted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Flip one alert-topic toggle. 2. Refresh without explicitly saving. 3. Re-check the toggle.
+Expected: Either the toggle saves immediately and persists, or the page warns about unsaved changes — no silent loss.
+
+### T-517 · Notifications · Status area readable with all topics off
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-58
+Steps: 1. Switch all four topics off and save. 2. Read the status area. 3. Press "Try it out".
+Expected: The status and test still work; switching topics off only stops future alerts, not the preview message.
+
+### T-518 · Notifications · Changing secret keeps chat ID and topics
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Save a secret, a chat ID, and one topic on. 2. Change only the secret and save. 3. Check the chat ID and topics.
+Expected: The chat ID and topic choices are unchanged by the secret update.
+
+### T-519 · Notifications · Changing chat ID keeps secret and topics
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Save a secret, a chat ID, and one topic on. 2. Change only the chat ID and save. 3. Check the secret state and topics.
+Expected: The saved secret stays in effect (box still blank) and the topic choices are unchanged.
+
+### T-520 · Notifications · Halt-topic note references the sidebar button
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-58
+Steps: 1. Read the note on the "Tell me when Halt trading is used" toggle. 2. Open the sidebar. 3. Find the small red-outlined button.
+Expected: The note matches reality — the sidebar shows the small red-outlined Halt trading button.
+
+### T-521 · Notifications · Long secret paste works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Copy a realistic-length bot secret. 2. Paste it into the Bot Secret field. 3. Save.
+Expected: The pasted secret is accepted and saved.
+
+### T-522 · Notifications · Chat ID paste works
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Copy a numeric chat ID. 2. Paste it into the Chat ID field. 3. Save.
+Expected: The pasted chat ID is accepted and saved.
+
+### T-523 · Notifications · Secret field does not reveal on focus
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-56
+Steps: 1. Save a secret. 2. Click into the Bot Secret field. 3. Try selecting and copying.
+Expected: Nothing of the saved secret is revealed — the box stays blank even on focus.
+
+### T-524 · Notifications · Slow network on Try it out
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-59
+Steps: 1. With a valid setup, press "Try it out". 2. Wait without pressing again. 3. Watch for timeout handling.
+Expected: The button shows progress; on timeout a clear error appears instead of a stuck spinner.
+
+### T-525 · Notifications · Refresh during editing keeps saved values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Save a valid secret and chat ID. 2. Type but do not save a new chat ID. 3. Refresh.
+Expected: The previously saved values are in effect; the unsaved edit is gone.
+
+### T-526 · Notifications · Mobile-width layout of the form
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Resize the browser to a narrow phone width. 2. Open /notifications. 3. Scroll the whole page.
+Expected: All fields, toggles, the Try it out button, and the push section remain reachable with no overlap.
+
+### T-527 · Notifications · Toggles operable by keyboard
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+Steps: 1. Tab to an alert-topic toggle. 2. Press Space. 3. Check its state.
+Expected: The toggle flips state via the keyboard.
+
+### T-528 · Notifications · Try it out operable by keyboard
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+Steps: 1. Tab to "Try it out". 2. Press Enter. 3. Observe.
+Expected: The preview message flow starts exactly as with a mouse click.
+
+### T-529 · Notifications · Error clears after correction
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Trigger a chat ID error with letters. 2. Correct it to a numeric value. 3. Save.
+Expected: The error clears and the save succeeds.
+
+### T-530 · Notifications · Duplicate save of identical values
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Save the same valid secret and chat ID twice in a row. 2. Observe the messages.
+Expected: The second save succeeds harmlessly with a confirmation; no error.
+
+### T-531 · Notifications · Green status needs a real message — regression check
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Note the status text. 2. Save a fresh valid secret and chat ID. 3. Refresh without pressing "Try it out".
+Expected: The status is not green until "Try it out" delivers a real message.
+
+### T-532 · Notifications · Push settings group preselected via URL
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-61
+Steps: 1. Open /settings?group=push directly in the address bar. 2. Wait for load. 3. Check which settings group is shown.
+Expected: The push settings group is open and selected on arrival.
+
+### T-533 · Notifications · Alert topic labels are plain language
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-58
+Steps: 1. Read all four toggle labels aloud. 2. Check for jargon. 3. Confirm each maps to one event.
+Expected: Each label plainly states its event — trade starts, trade finishes, safety rule blocks an order, Halt trading used.
+
+### T-534 · Notifications · Connect Telegram heading present
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Open /notifications. 2. Find the "Connect Telegram" heading. 3. Confirm both fields sit under it.
+Expected: The heading "Connect Telegram" introduces the Bot Secret and Chat ID fields.
+
+### T-535 · Notifications · Full connect flow end to end
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-56
+Steps: 1. Starting blank, enter a valid bot secret and numeric chat ID. 2. Save. 3. Switch on two topics, save, press "Try it out", then refresh.
+Expected: The save succeeds, the boxes stay blank, the chosen topics persist after refresh, a real message arrives, and the status turns green.
+
+### T-536 · Smart Trade · Default side
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Open the full cockpit page /. 2. Find the Smart Trade ticket. 3. Note the Long/Short selector state.
+Expected: One side is preselected and clearly highlighted.
+
+### T-537 · Smart Trade · Switch Long to Short
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Select Long. 2. Click Short. 3. Check the preview JSON block.
+Expected: The selector shows Short and the preview JSON side updates to short.
+
+### T-538 · Smart Trade · Switch Short back to Long
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. With Short selected, click Long. 2. Check the selector. 3. Check the preview JSON.
+Expected: The selector shows Long and the preview JSON side reads long.
+
+### T-539 · Smart Trade · Side change keeps other fields
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Fill in leverage and a stop %. 2. Switch the side Long to Short and back to Long. 3. Re-read leverage and stop.
+Expected: The leverage and stop values are unchanged by side switching.
+
+### T-540 · Smart Trade · Default order type
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Open the ticket. 2. Look at the Order Type control. 3. Note which type is active.
+Expected: Market is the default active order type.
+
+### T-541 · Smart Trade · Switch to Limit reveals price field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. Click Limit. 2. Look for the Limit price field. 3. Read its helper text.
+Expected: The Limit price field appears with the note about resting on the book and immediate fill above the ask or below the bid.
+
+### T-542 · Smart Trade · Switch back to Market hides price field
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+Steps: 1. With Limit active, click Market. 2. Look for the Limit price field. 3. Check the preview JSON.
+Expected: The price field is hidden and the preview JSON order type reads market.
+
+### T-543 · Smart Trade · Limit price empty shows validation
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Select Limit. 2. Leave the Limit price field empty. 3. Tick the arm box and press Preview.
+Expected: A validation error states the limit price is required.
+
+### T-544 · Smart Trade · Valid limit price accepted
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Select Limit. 2. Type a positive limit price. 3. Tick the arm box and press Preview.
+Expected: The preview succeeds and the JSON shows the limit price.
+
+### T-545 · Smart Trade · Negative limit price rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Select Limit. 2. Type -50000. 3. Tick the arm box and press Preview.
+Expected: A validation error states the limit price must be positive.
+
+### T-546 · Smart Trade · Zero limit price rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Select Limit. 2. Type 0. 3. Tick the arm box and press Preview.
+Expected: A validation error states the limit price must be greater than zero.
+
+### T-547 · Smart Trade · Non-numeric limit price rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Select Limit. 2. Type "abc". 3. Tick the arm box and press Preview.
+Expected: A validation error states the limit price must be a number.
+
+### T-548 · Smart Trade · Extremely large limit price rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-08
+Steps: 1. Select Limit. 2. Type 999999999. 3. Tick the arm box and press Preview.
+Expected: The preview rejects it with a clear out-of-range message.
+
+### T-549 · Smart Trade · Limit price helper text visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Select Limit. 2. Read the helper text under the price field. 3. Confirm the wording.
+Expected: The text explains the order rests on the book and that a buy limit above the ask (sell limit below the bid) fills immediately at market.
+
+### T-550 · Smart Trade · Leverage minimum 1x
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-08
+Steps: 1. Set leverage to 1. 2. Check the displayed value. 3. Tick the arm box and preview a valid ticket.
+Expected: 1x is accepted and the preview succeeds.

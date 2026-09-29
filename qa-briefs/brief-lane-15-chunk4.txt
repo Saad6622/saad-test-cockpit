@@ -1,0 +1,605 @@
+QA LANE 15 — CHUNK 4 — cases T-2951–T-3000 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-2951 · Grading · AI profile group renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-81
+
+Steps: 1. Open /settings. 2. Find AI profile group -- the AI profile group.
+
+Expected: AI profile group looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+### T-2952 · Grading · AI profile group is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-81
+
+Steps: 1. Open /settings. 2. read the profile values, then read the AI panel on / and compare
+
+Expected: The panel behaves the way the profile describes -- profile and panel agree.
+
+---
+
+### T-2953 · Grading · AI profile group does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-81
+
+Steps: 1. Open /settings. 2. read the group's description
+
+Expected: It describes the AI's operating profile, and the panel matches.
+
+---
+
+### T-2954 · Grading · AI profile group is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-81
+
+Steps: 1. Open /settings. 2. ask whether the AI's leash is visible
+
+Expected: A tester can see the AI's boundaries in the profile before trusting its output.
+
+---
+
+### T-2955 · Grading · Grade verdict: AI profile group
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-81
+
+Steps: 1. Review the four checks above for AI profile group. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+### T-2956 · Grading · Alert id matches from table to detail
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Open /. 2. Pick the newest alert row and note its alert id. 3. Expand its detail.
+
+Expected: The detail carries the same id -- the row and its detail are one record.
+
+---
+
+### T-2957 · Grading · Alert id matches from detail to Deliveries
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Open /. 2. Note an alert id from the alerts table. 3. Find the same id in the Deliveries table.
+
+Expected: The same id appears in Deliveries with a matching status -- one story across both tables.
+
+---
+
+### T-2958 · Grading · Delivery status matches the alert status
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Open /. 2. For one alert, read its STATUS cell and its Deliveries row status.
+
+Expected: The two statuses agree (e.g. VETOED alert with a drained-vetoed delivery).
+
+---
+
+### T-2959 · Grading · Veto reason names the guard
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-10
+
+Steps: 1. Open /. 2. Expand a VETOED alert's detail. 3. Read the reason.
+
+Expected: The reason names the guard that vetoed it in plain words -- not just "vetoed".
+
+---
+
+### T-2960 · Grading · Guard value readable on /settings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-63
+
+Steps: 1. Open /. 2. Note the guard named in a VETOED alert's reason. 3. Open /settings and find that guard's group. 4. Read its current value.
+
+Expected: The guard's value is readable -- the tester can see the rule that fired.
+
+---
+
+### T-2961 · Grading · Vetoed alert never reaches the journal as a fill
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-82
+
+Steps: 1. Open /. 2. Note a VETOED alert's id and time. 3. Open the Journal panel and look for it.
+
+Expected: No fill corresponds to the vetoed alert -- vetoed means nothing was placed, provably.
+
+---
+
+### T-2962 · Grading · Accepted alert traces to a journal fill
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Open /. 2. Note an accepted alert's id and time. 3. Find its fill in the Journal panel.
+
+Expected: The fill references the alert -- the chain from signal to fill is unbroken.
+
+---
+
+### T-2963 · Grading · Journal fill traces to /history
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Open /. 2. Note one journal fill's trade reference. 3. Open /history and find the round trip.
+
+Expected: The round trip matches the fill -- journal and history describe the same trade.
+
+---
+
+### T-2964 · Grading · Chain grades: full marks only if every hop matches
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Walk one alert through table, detail, Deliveries, journal, and /history. 2. Grade each hop.
+
+Expected: Full grade only if every hop matches; one broken link withholds the grade for the chain.
+
+---
+
+### T-2965 · Grading · Chain works for the newest alert, not just old ones
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Open /. 2. Take the single newest alert and walk the full chain.
+
+Expected: The newest alert traces end to end -- the chain is current, not a fossil.
+
+---
+
+### T-2966 · Grading · Ticket preview shows the guard verdict
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open /. 2. Draft a ticket with default amounts. 3. Click Preview-only. 4. Read the guard verdict.
+
+Expected: The preview names each guard and its verdict -- PASS or FAIL per guard, none skipped.
+
+---
+
+### T-2967 · Grading · Over-cap amount fails the cap guard in preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-10
+
+Steps: 1. Open /. 2. Read the PER_TRADE cap in the Risk Control panel. 3. Draft a ticket above that cap. 4. Click Preview-only and read the verdict.
+
+Expected: The cap guard FAILS and names the cap -- the preview blocks what settings forbid.
+
+---
+
+### T-2968 · Grading · Blocked preview never arms the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open /. 2. Draft an over-cap ticket. 3. Click Preview-only. 4. Check the ticket state.
+
+Expected: The ticket stays unarmed -- a failed guard never arms anything.
+
+---
+
+### T-2969 · Grading · Guard verdict is plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-10
+
+Steps: 1. Open /. 2. Draft any ticket. 3. Click Preview-only. 4. Read the verdict lines.
+
+Expected: Verdicts read like "PER_TRADE cap: PASS" -- guard names plus plain verdicts, no codes alone.
+
+---
+
+### T-2970 · Grading · Preview-only never places anything
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open /. 2. Draft a ticket. 3. Click Preview-only twice. 4. Check receipts and journal.
+
+Expected: No receipt and no fill appear -- Preview-only is pure preview, provably.
+
+---
+
+### T-2971 · Grading · Guard chain grade: verdict before commitment
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-10
+
+Steps: 1. Review the ticket guard cases above. 2. Grade the chain.
+
+Expected: Full grade only if every guard verdict appears before any arming is possible.
+
+---
+
+### T-2972 · Grading · Signal chip count matches Deliveries rows
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-34
+
+Steps: 1. Open /strategies. 2. Note one strategy's signal chip count. 3. Open / and count its rows in the Deliveries table.
+
+Expected: The counts agree -- chips summarize the real delivery rows.
+
+---
+
+### T-2973 · Grading · Newest delivery names its strategy
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-04
+
+Steps: 1. Open /. 2. Read the newest Deliveries row.
+
+Expected: The row names the strategy that produced the signal -- attribution is explicit.
+
+---
+
+### T-2974 · Grading · Delivery time matches the alert time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-04
+
+Steps: 1. Open /. 2. For one delivery row, compare its time with the matching alert row's age/time.
+
+Expected: The times agree -- the delivery is the alert's journey, not a different event.
+
+---
+
+### T-2975 · Grading · Delivered-and-filled signal reaches the journal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+
+Steps: 1. Open /. 2. Find a delivered signal that filled. 3. Find its fill in the Journal panel.
+
+Expected: The fill is present and references the signal -- the full path is traceable.
+
+---
+
+### T-2976 · Grading · Held signal stays out of the journal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-82
+
+Steps: 1. Open /. 2. Note an UNCERTAIN-HELD alert. 3. Check the Journal panel for it.
+
+Expected: No fill exists for the held alert -- held means held, provably.
+
+---
+
+### T-2977 · Grading · Signal path grade: no silent drops
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-32
+
+Steps: 1. Walk three signals through chips, Deliveries, and journal. 2. Grade the path.
+
+Expected: Full grade only if every signal is accounted for at each stage -- nothing vanishes silently.
+
+---
+
+### T-2978 · Grading · Topic toggle persists after reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+
+Steps: 1. Open /notifications. 2. Switch the "trade finishes" topic off. 3. Reload and check. 4. Switch it back on.
+
+Expected: The toggle keeps its state after the reload and after switching back -- topics persist.
+
+---
+
+### T-2979 · Grading · All four topics toggle independently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-58
+
+Steps: 1. Open /notifications. 2. Switch each topic off and on one at a time.
+
+Expected: Each topic toggles without affecting the others.
+
+---
+
+### T-2980 · Grading · Topic labels match real events
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-58
+
+Steps: 1. Open /notifications. 2. Read each topic label. 3. Compare with the events named in ALERTS & LOGS.
+
+Expected: Labels name the same events the system logs -- no invented or missing topics.
+
+---
+
+### T-2981 · Grading · Try-it-out proves the path before real alerts
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-59
+
+Steps: 1. Open /notifications. 2. Click "Try it out". 3. Read the result.
+
+Expected: The result says plainly whether the test message was sent -- the path is proven, not assumed.
+
+---
+
+### T-2982 · Grading · Message-alerts status turns green only after a real preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-57
+
+Steps: 1. Open /notifications. 2. Read the message-alerts status. 3. Click "Try it out" if it is not green, then re-read.
+
+Expected: The status turns green only after a real preview message -- never green by default.
+
+---
+
+### T-2983 · Grading · Telegram chain grade: proven delivery
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-59
+
+Steps: 1. Review the Telegram cases above. 2. Grade the chain.
+
+Expected: Full grade only if connect state, topics, and the test message all check out.
+
+---
+
+### T-2984 · Grading · Halt modal identical on / and /home
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-03
+
+Steps: 1. Open /. 2. Open the Halt modal, read it, Cancel. 3. Open /home. 4. Open the Halt modal, read it, Cancel.
+
+Expected: Both modals carry the same heading and the same confirm text -- one halt, one wording.
+
+---
+
+### T-2985 · Grading · Halt modal identical on /trading and /strategies
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-03
+
+Steps: 1. Open /trading. 2. Open the Halt modal, read it, Cancel. 3. Open /strategies. 4. Open the Halt modal, read it, Cancel.
+
+Expected: Same heading, same confirm text -- the halt promise is uniform.
+
+---
+
+### T-2986 · Grading · Halt confirm names the consequence everywhere
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-03
+
+Steps: 1. Open the Halt modal on any route, read the confirm, Cancel.
+
+Expected: The confirm names that ALL trading halts -- never a vague "are you sure".
+
+---
+
+### T-2987 · Grading · Cancel is safe on every route
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-03
+
+Steps: 1. Open the Halt modal on /, /home, and /trading in turn; Cancel each time.
+
+Expected: Every Cancel leaves the page unchanged -- the modal is safe to open anywhere.
+
+---
+
+### T-2988 · Grading · Halt chain grade: two clicks, no traps
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-03
+
+Steps: 1. Review the halt cases above. 2. Grade the chain.
+
+Expected: Full grade only if halt is two clicks away on every route and Cancel is always safe.
+
+---
+
+### T-2989 · Grading · Risk caps value matches the ticket's enforced max
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+
+Steps: 1. Open /settings. 2. Read the PER_TRADE cap in Risk caps. 3. Open / and draft a ticket at exactly that cap. 4. Preview-only and read the verdict.
+
+Expected: The guard PASSES at exactly the cap -- the enforced value equals the shown value.
+
+---
+
+### T-2990 · Grading · One unit over the cap fails
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-63
+
+Steps: 1. Open /. 2. Draft a ticket one unit above the PER_TRADE cap. 3. Preview-only and read the verdict.
+
+Expected: The guard FAILS -- the boundary is exact, not approximate.
+
+---
+
+### T-2991 · Grading · Daily loss cap visible before the day's trading
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-63
+
+Steps: 1. Open /settings. 2. Read the daily loss cap in Risk caps. 3. Open / and read the DAILY CLUSTER bar.
+
+Expected: The bar reflects the same cap the group shows -- one value, two views.
+
+---
+
+### T-2992 · Grading · Settings change flows to the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-08
+
+Steps: 1. Open /settings. 2. Note the PER_TRADE cap. 3. Open / and Preview-only a ticket at that cap. 4. The verdict passes.
+
+Expected: What settings says, the ticket enforces -- the tester can verify the link without changing anything.
+
+---
+
+### T-2993 · Grading · Guard names match between settings and verdict
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-63
+
+Steps: 1. Open /settings and note a guard's name in Risk caps. 2. Open / and Preview-only any ticket. 3. Find that guard in the verdict.
+
+Expected: The verdict uses the same guard name the settings group uses -- no aliasing.
+
+---
+
+### T-2994 · Grading · Settings-to-guard grade: one source of truth
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-63
+
+Steps: 1. Review the settings-to-guard cases above. 2. Grade the chain.
+
+Expected: Full grade only if settings values and enforced behavior always agree.
+
+---
+
+### T-2995 · Grading · Draft ticket shows estimates before preview
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open /. 2. Draft a ticket with defaults. 3. Read the Estimates.
+
+Expected: Fees and worst-case cost are shown before the preview step -- costs are visible early.
+
+---
+
+### T-2996 · Grading · Preview JSON matches the ticket inputs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+
+Steps: 1. Open /. 2. Draft a ticket with a chosen side and amounts. 3. Click Preview-only. 4. Read the Preview JSON block.
+
+Expected: The JSON mirrors the inputs -- side, amounts, legs all match what was typed.
+
+---
+
+### T-2997 · Grading · Arm checkbox required before arming
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open /. 2. Draft a ticket and open the preview. 3. Look for the "I've reviewed every leg" checkbox state.
+
+Expected: Arming requires the checkbox -- the ticket cannot be armed without the explicit review step.
+
+---
+
+### T-2998 · Grading · Guard verdict precedes any arming
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-10
+
+Steps: 1. Open /. 2. Draft a ticket. 3. Click Preview-only. 4. Read the order of verdict vs arm controls.
+
+Expected: The guard verdict is shown before arming is possible -- verdict first, commitment second.
+
+---
+
+### T-2999 · Grading · Armed ticket decision lands in the journal
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-08
+
+Steps: 1. Open /. 2. Read how the ticket describes its journaling. 3. Check the Journal panel's columns.
+
+Expected: The journal has a place for ticket decisions -- the design accounts for the full trail.
+
+---
+
+### T-3000 · Grading · Ticket chain grade: no blind commitments
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-08
+
+Steps: 1. Review the ticket cases above. 2. Grade the chain.
+
+Expected: Full grade only if estimates, preview, verdict, and the review checkbox all stand between intent and arming.
+
+---
+
+## Section T · Dead-text verification (160 cases: T-3001–T-3160)

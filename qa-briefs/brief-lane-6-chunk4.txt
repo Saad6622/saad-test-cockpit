@@ -1,0 +1,587 @@
+QA LANE 6 — CHUNK 4 — cases T-1151–T-1200 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-1151 · AI · Prediction vs strategy signal agreement
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+Steps: 1. Compare an AI prediction with the strategy signals for the same market and time.
+Expected: Both are shown side by side (or the UI states their relationship) — the tester sees whether they agree.
+
+---
+
+### T-1152 · AI · AI draft flows to guards like any order
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Arm an AI draft on the TEST setup. 2. Follow the guard decision.
+Expected: The draft passes through the same guard checks as a manual ticket — no fast lane.
+
+---
+
+### T-1153 · AI · Soak/approval gates visible (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-12
+Steps: 1. Look for soak or approval gates on AI direct trading.
+Expected: The gates are shown with their state — the tester knows what stands between a draft and an order.
+
+---
+
+### T-1154 · AI · Honesty ledger / calibration view (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+Steps: 1. Open the AI honesty or calibration view.
+Expected: Claimed confidence vs actual outcomes is shown — the tester can judge calibration.
+
+---
+
+### T-1155 · AI · AI error messages are plain-worded
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Trigger (or find) an AI error. 2. Read the message.
+Expected: The error is in plain words ("Plain words on every screen") — no raw traceback shown to the tester.
+
+---
+
+### T-1156 · AI · Long scan shows progress
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Start a scan that takes a while. 2. Watch the progress indicator.
+Expected: Progress is shown (spinner, percent, or step list) — the tester knows it's working, not frozen.
+
+---
+
+### T-1157 · AI · Cancel a running scan (if offered)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Start a scan and cancel it mid-run.
+Expected: The scan stops; the UI returns to a clean state with no partial ghost results.
+
+---
+
+### T-1158 · AI · AI section survives refresh mid-scan
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Start a scan, refresh the page mid-run. 2. Check the AI section.
+Expected: The scan's state is shown honestly (running, finished, or restarted) — never a frozen spinner.
+
+---
+
+### T-1159 · AI · Notifications for AI events (if configured)
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. With alerts enabled, let the AI complete a scan and issue a draft.
+Expected: Notifications arrive per the configured topics — the tester is told what the AI did.
+
+---
+
+### T-1160 · AI · End-to-end: scan to guarded decision
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+Steps: 1. Run a fresh AI scan on the TEST setup. 2. Follow its top proposal: draft → ticket → arm → guard decision → journal.
+Expected: The full chain is visible and linked in the UI — from scan to the final journaled decision, provable step by step.
+
+---
+
+## Section W · AI integration working end-to-end (120 cases: T-1161–T-1280)
+
+Jev via the Vercel AI Gateway with paid credits, switched on today. This section tests the live integration: gateway state, real predictions with confidence, veto and uncertain-held states, failure visibility, cost display, cross-checks against strategy signals, enable/disable, and cooldown. The tester never enters, pastes, or handles any API key -- credentials are Saad's own.
+
+### T-1161 · AI · Gateway state badge renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the gateway connection state line.
+
+Expected: A badge reads exactly "Connected" or "Not connected" -- never a raw status code.
+
+---
+
+### T-1162 · AI · Gateway state text is exact, not a code
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the gateway state text character for character.
+
+Expected: Plain words only -- no HTTP codes, no provider error slugs.
+
+---
+
+### T-1163 · AI · Paid-credits indicator renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the billing indicator near the gateway state.
+
+Expected: It shows paid credits are active -- never a 'free tier' label.
+
+---
+
+### T-1164 · AI · Recheck updates the state line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the gateway recheck control. Read the state line and its timestamp twice.
+
+Expected: The check runs visibly and the 'last checked' timestamp advances -- the state is live, not painted once.
+
+---
+
+### T-1165 · AI · Last-checked timestamp ticks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the gateway 'last checked' time, wait a minute, read it again.
+
+Expected: The timestamp moves forward on its own schedule.
+
+---
+
+### T-1166 · AI · Recheck control runs a live check
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the gateway recheck control and watch for 10 seconds.
+
+Expected: A checking state appears, then a fresh result -- the button is never silent.
+
+---
+
+### T-1167 · AI · Gateway details expand
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the gateway details disclosure, if offered.
+
+Expected: Endpoint, model name and region render in plain words; clicking again collapses.
+
+---
+
+### T-1168 · AI · Not-connected state reads calmly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If the gateway currently reads Not connected, read the whole state block.
+
+Expected: Calm plain-words explanation of what is wrong and what to do -- no alarm language, no blame.
+
+---
+
+### T-1169 · AI · Checking state never sticks
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click recheck and watch the checking indicator for 30 seconds.
+
+Expected: It resolves to Connected or to a named error -- never a permanent spinner.
+
+---
+
+### T-1170 · AI · Error state names the problem
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a gateway error is currently shown, read it fully.
+
+Expected: It names the problem in words (bad key, timeout, out of credits) -- never a blank failure.
+
+---
+
+### T-1171 · AI · Key value never visible
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan the whole AI panel and gateway section for any key-like string.
+
+Expected: No API key value appears anywhere on screen -- masked fields show dots or stay blank.
+
+---
+
+### T-1172 · AI · Error text has no raw JSON
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a gateway error is currently shown, read it fully.
+
+Expected: No raw JSON, no stack trace, no 'undefined' -- words a trader can act on.
+
+---
+
+### T-1173 · AI · Key field stays masked
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find the gateway key field, if shown. Try selecting its content.
+
+Expected: Dots or blank only -- the value can never be revealed or copied from the UI.
+
+---
+
+### T-1174 · AI · Tester is never asked to paste a key
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Walk the AI panel and gateway section looking for any credential prompt.
+
+Expected: No control asks the tester for an API key -- credentials are Saad's own and stay out of the tester's hands.
+
+---
+
+### T-1175 · AI · Gateway state matches the AI panel state line
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-97
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the gateway badge, then the AI panel's own status line.
+
+Expected: Both say the same thing -- connected here means connected there.
+
+---
+
+### T-1176 · AI · Prediction card layout renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Look at the newest prediction card.
+
+Expected: Direction, confidence, symbol, timeframe and scan time are all present and readable -- nothing truncated.
+
+---
+
+### T-1177 · AI · Confidence shown as a percentage
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the confidence value on the newest prediction card.
+
+Expected: A percentage like "62%" -- not 0.62, not a raw score.
+
+---
+
+### T-1178 · AI · Symbol and timeframe labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the market label on the newest prediction card.
+
+Expected: A full label such as GATEIO:BTCUSDT.P 15m -- never a bare internal code.
+
+---
+
+### T-1179 · AI · New predictions arrive with timestamps
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the newest prediction and its scan time. Wait for the next scan cycle. Read again.
+
+Expected: A new card appears or the scan time advances -- predictions are live, not painted once.
+
+---
+
+### T-1180 · AI · Confidence updates between scans
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Note a prediction's confidence. Wait for the next scan. Compare.
+
+Expected: The value can change between scans -- it is computed, not printed.
+
+---
+
+### T-1181 · AI · Stale predictions are labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find a prediction older than the current scan window.
+
+Expected: It is marked stale or expired -- old calls are never presented as fresh.
+
+---
+
+### T-1182 · AI · Prediction symbol is a traded market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the symbol on the newest prediction. Compare with the strategy list and universe.
+
+Expected: The symbol is one the software actually watches -- not an invented market.
+
+---
+
+### T-1183 · AI · Prediction time matches the scan time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the card's scan time and the panel's last-scan line.
+
+Expected: They agree -- the card belongs to the scan it claims.
+
+---
+
+### T-1184 · AI · No-edge empty state reads honestly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Open the AI panel when no prediction is active.
+
+Expected: "No edge found" or equivalent -- the panel admits it found nothing instead of inventing a call.
+
+---
+
+### T-1185 · AI · Expired predictions removed or labeled
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch a prediction age past its window.
+
+Expected: It is labeled expired or leaves the active list -- never silently stays as if fresh.
+
+---
+
+### T-1186 · AI · Direction words are plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the direction on three prediction cards.
+
+Expected: Plain words (up, down, neutral) -- no model jargon.
+
+---
+
+### T-1187 · AI · No raw model strings on cards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Scan every visible prediction card for machine text.
+
+Expected: No model ids, tensor shapes, or log-probabilities -- trader-readable only.
+
+---
+
+### T-1188 · AI · Prediction detail expands
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Click the newest prediction card.
+
+Expected: A detail view opens with the reasoning summary; clicking again collapses it.
+
+---
+
+### T-1189 · AI · Dismiss a prediction
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. If a dismiss control is offered on a prediction card, click it.
+
+Expected: The card leaves the active list; nothing else changes.
+
+---
+
+### T-1190 · AI · Prediction never places an order by itself
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: GUARD
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read the newest prediction card fully, including its fine print.
+
+Expected: It states no order is placed -- there is no fire control on the card, and the tester never looks for one.
+
+---
+
+### T-1191 · AI · Vetoed prediction state renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find a vetoed prediction, if one is currently shown.
+
+Expected: A clear vetoed badge or state line -- visible without expanding.
+
+---
+
+### T-1192 · AI · Uncertain-held prediction state renders
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Find an uncertain-held prediction, if one is currently shown.
+
+Expected: A clear held badge or state line -- distinct from vetoed.
+
+---
+
+### T-1193 · AI · Veto names the guard in plain words
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Open the detail of a vetoed prediction.
+
+Expected: It names which guard vetoed it and why, in words.
+
+---
+
+### T-1194 · AI · Held prediction explains why it is held
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Open the detail of an uncertain-held prediction.
+
+Expected: The reason for holding is stated -- never a bare 'held' with no reason.
+
+---
+
+### T-1195 · AI · Held prediction is not re-fired silently
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch an uncertain-held prediction across one scan cycle.
+
+Expected: It stays held or resolves openly -- it never becomes an order without a visible state change.
+
+---
+
+### T-1196 · AI · Veto text has no raw engine strings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read a vetoed prediction's full text.
+
+Expected: No rule codes or engine internals -- plain words only.
+
+---
+
+### T-1197 · AI · Held text has no raw engine strings
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Read an uncertain-held prediction's full text.
+
+Expected: No internal state names -- plain words only.
+
+---
+
+### T-1198 · AI · Vetoed prediction never reaches the ticket
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Note a vetoed prediction's symbol and time. Open the SmartTrade ticket.
+
+Expected: No draft ticket was created from the vetoed prediction.
+
+---
+
+### T-1199 · AI · Vetoed prediction never reaches the journal as a fill
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Note a vetoed prediction's symbol and time. Check the journal fills.
+
+Expected: No fill exists for it -- vetoed means nothing was placed.
+
+---
+
+### T-1200 · AI · Veto appears after the guard runs
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-12
+
+Steps: 1. Open the full cockpit page (/). 2. Scroll to the AI panel. 3. Watch a fresh prediction through one guard cycle.
+
+Expected: The veto state appears visibly after the guard runs -- the transition is observable, not retroactive.
+
+---

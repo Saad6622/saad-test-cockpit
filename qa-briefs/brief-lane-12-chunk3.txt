@@ -1,0 +1,605 @@
+QA LANE 12 — CHUNK 3 — cases T-2301–T-2350 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-2301 · Market · Copy button copies the full script
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Click "Copy Pine alert script to clipboard". 2. Paste into a text editor.
+
+Expected: The full script pastes cleanly with its version line intact.
+
+---
+
+### T-2302 · Market · Pasted script validates in the envelope box
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Copy the Pine script's sample JSON output. 2. Paste it into the envelope validator. 3. Click Validate.
+
+Expected: The sample envelope passes every ingress rule.
+
+---
+
+### T-2303 · Market · Webhook secret matches the validator secret
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Read the webhook secret region on /notifications. 2. Read the validator's secret rule.
+
+Expected: Both name the same sealed WEBHOOK_SECRET — the script, the webhook and the validator agree.
+
+---
+
+### T-2304 · Market · Delivered webhook alert appears in Deliveries
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire the TradingView webhook. 2. Read the Deliveries table.
+
+Expected: The alert appears with its id and machine status.
+
+---
+
+### T-2305 · Market · Delivered alert appears in the alerts table
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire the TradingView webhook. 2. Read the ALERTS & LOGS table.
+
+Expected: The alert appears as a row with its status.
+
+---
+
+### T-2306 · Market · Bad-secret webhook rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire the webhook with a wrong secret. 2. Read the Deliveries table.
+
+Expected: No delivery row appears — the bad secret is refused at ingress.
+
+---
+
+### T-2307 · Market · Stale webhook alert dropped
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-04
+
+Steps: 1. Fire the webhook with a timestamp older than 120s. 2. Read the tables.
+
+Expected: No alert row appears — the stale envelope is dropped.
+
+---
+
+### T-2308 · Market · Replayed webhook dedupes
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Fire the same webhook envelope twice. 2. Read the Deliveries table.
+
+Expected: One delivery row appears — the replay dedupes to the first fire.
+
+---
+
+### T-2309 · Market · Out-of-order seq rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire two envelopes with a non-increasing seq. 2. Read the Deliveries table.
+
+Expected: The out-of-order envelope is refused.
+
+---
+
+### T-2310 · Market · Unknown symbol webhook rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire the webhook with a non-tradeable symbol. 2. Read the tables.
+
+Expected: No alert row appears — the symbol rule holds at ingress.
+
+---
+
+### T-2311 · Market · Non-live mode webhook rejected
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. Fire the webhook with mode set wrong. 2. Read the tables.
+
+Expected: No alert row appears — the mode rule holds at ingress.
+
+---
+
+### T-2312 · Market · Webhook alert flows through guards
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire a valid webhook during live hours. 2. Follow the alert through the guards.
+
+Expected: The alert passes caps, blackout, funding and news checks like any other signal.
+
+---
+
+### T-2313 · Market · Deliveries row shows received time
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Read the Deliveries table. 2. Find the received-time column.
+
+Expected: Every delivery row shows when the alert arrived.
+
+---
+
+### T-2314 · Market · Webhook alert names its source
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-04
+
+Steps: 1. Fire the TradingView webhook. 2. Expand the alert detail. 3. Look for the source.
+
+Expected: The alert detail names TradingView as the signal source.
+
+---
+
+### T-2315 · Market · Receipt shows the true venue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. After a fill, read the receipt timeline. 2. Read the venue on the receipt.
+
+Expected: The venue reads "gateio" — the venue the engine actually used.
+
+---
+
+### T-2316 · Market · Receipt venue matches the keys slot
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Read a receipt's venue. 2. Open /keys and read the slot's exchange.
+
+Expected: Both name the same venue.
+
+---
+
+### T-2317 · Market · No receipt claims a venue not in use
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read every receipt on the timeline.
+
+Expected: No receipt names a venue the engine did not use.
+
+---
+
+### T-2318 · Market · Receipt shows the order mode
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt. 2. Find the mode field.
+
+Expected: The receipt states the order mode plainly.
+
+---
+
+### T-2319 · Market · Receipt shows fill price and size
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt.
+
+Expected: Fill price and size are shown with units.
+
+---
+
+### T-2320 · Market · Receipt shows fees paid
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt.
+
+Expected: The fee paid on the fill is shown.
+
+---
+
+### T-2321 · Market · Receipt timestamp shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read a receipt.
+
+Expected: The fill timestamp is shown.
+
+---
+
+### T-2322 · Market · Receipts ordered newest-first
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the receipt timeline.
+
+Expected: Receipts run newest-first so the latest fill is on top.
+
+---
+
+### T-2323 · Market · Receipt timeline survives reload
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Note the receipts. 2. Reload. 3. Re-read the timeline.
+
+Expected: The same receipts appear in the same order.
+
+---
+
+### T-2324 · Market · Receipt count shown
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Read the receipt timeline heading.
+
+Expected: The count of receipts is shown.
+
+---
+
+### T-2325 · Market · Empty receipts state plain
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: BOUNDARY
+Feature: U-13
+
+Steps: 1. With no fills yet, read the receipt timeline region.
+
+Expected: The region states plainly there are no receipts yet.
+
+---
+
+### T-2326 · Market · Receipt text selectable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Drag-select a receipt's details.
+
+Expected: The text selects cleanly for copying into a report.
+
+---
+
+### T-2327 · Market · Receipts readable by assistive tech
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-13
+
+Steps: 1. Check the receipt timeline with assistive tech.
+
+Expected: Each receipt is announced with its key details.
+
+---
+
+### T-2328 · Market · Receipt matches the Telegram card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-13
+
+Steps: 1. Approve a card, then read the resulting receipt. 2. Compare.
+
+Expected: Venue, symbol, side and size match the approved card.
+
+---
+
+### T-2329 · Market · Receipt matches the journal fill
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: CROSSCHECK
+Feature: U-82
+
+Steps: 1. Read a receipt. 2. Find the fill in the journal/history. 3. Compare.
+
+Expected: Price, size and time agree between receipt and journal.
+
+---
+
+### T-2330 · Market · History trade row references its receipt
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Open /history. 2. Read a closed-trade row. 3. Find the matching receipt on the cockpit.
+
+Expected: The trade row carries enough detail (time, symbol, size) to match its receipt.
+
+---
+
+## Section Q · Mobile 390px (110 cases: T-2331–T-2440)
+
+### T-2331 · Mobile · Route / loads at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open / at 390px width. 2. Wait for the page to settle.
+
+Expected: The page loads fully with no sideways scrolling.
+
+---
+
+### T-2332 · Mobile · Route / sidebar collapses to menu
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-01
+
+Steps: 1. Open / at 390px width. 2. Look at the sidebar.
+
+Expected: The sidebar collapses to a menu control.
+
+---
+
+### T-2333 · Mobile · Route / menu reaches every page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open / at 390px width. 2. Open the menu.
+
+Expected: Every one of the ten Pages links is in the menu.
+
+---
+
+### T-2334 · Mobile · Route / text readable without zoom
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. Open / at 390px width. 2. Read the body text.
+
+Expected: Body text is readable at the default size — no pinch-zoom needed.
+
+---
+
+### T-2335 · Mobile · Route / primary action tappable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-01
+
+Steps: 1. Open / at 390px width. 2. Find the page's primary action.
+
+Expected: The primary action is big enough to tap reliably.
+
+---
+
+### T-2336 · Mobile · Route /trading loads at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading at 390px width. 2. Wait for the page to settle.
+
+Expected: The page loads fully with no sideways scrolling.
+
+---
+
+### T-2337 · Mobile · Route /trading sidebar collapses to menu
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Open /trading at 390px width. 2. Look at the sidebar.
+
+Expected: The sidebar collapses to a menu control.
+
+---
+
+### T-2338 · Mobile · Route /trading menu reaches every page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading at 390px width. 2. Open the menu.
+
+Expected: Every one of the ten Pages links is in the menu.
+
+---
+
+### T-2339 · Mobile · Route /trading text readable without zoom
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. Open /trading at 390px width. 2. Read the body text.
+
+Expected: Body text is readable at the default size — no pinch-zoom needed.
+
+---
+
+### T-2340 · Mobile · Route /trading primary action tappable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading at 390px width. 2. Find the page's primary action.
+
+Expected: The primary action is big enough to tap reliably.
+
+---
+
+### T-2341 · Mobile · Route /strategies loads at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open /strategies at 390px width. 2. Wait for the page to settle.
+
+Expected: The page loads fully with no sideways scrolling.
+
+---
+
+### T-2342 · Mobile · Route /strategies sidebar collapses to menu
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-33
+
+Steps: 1. Open /strategies at 390px width. 2. Look at the sidebar.
+
+Expected: The sidebar collapses to a menu control.
+
+---
+
+### T-2343 · Mobile · Route /strategies menu reaches every page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open /strategies at 390px width. 2. Open the menu.
+
+Expected: Every one of the ten Pages links is in the menu.
+
+---
+
+### T-2344 · Mobile · Route /strategies text readable without zoom
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. Open /strategies at 390px width. 2. Read the body text.
+
+Expected: Body text is readable at the default size — no pinch-zoom needed.
+
+---
+
+### T-2345 · Mobile · Route /strategies primary action tappable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-33
+
+Steps: 1. Open /strategies at 390px width. 2. Find the page's primary action.
+
+Expected: The primary action is big enough to tap reliably.
+
+---
+
+### T-2346 · Mobile · Route /backtests loads at 390px
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+
+Steps: 1. Open /backtests at 390px width. 2. Wait for the page to settle.
+
+Expected: The page loads fully with no sideways scrolling.
+
+---
+
+### T-2347 · Mobile · Route /backtests sidebar collapses to menu
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-43
+
+Steps: 1. Open /backtests at 390px width. 2. Look at the sidebar.
+
+Expected: The sidebar collapses to a menu control.
+
+---
+
+### T-2348 · Mobile · Route /backtests menu reaches every page
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+
+Steps: 1. Open /backtests at 390px width. 2. Open the menu.
+
+Expected: Every one of the ten Pages links is in the menu.
+
+---
+
+### T-2349 · Mobile · Route /backtests text readable without zoom
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: PLAINWORDS
+Feature: U-86
+
+Steps: 1. Open /backtests at 390px width. 2. Read the body text.
+
+Expected: Body text is readable at the default size — no pinch-zoom needed.
+
+---
+
+### T-2350 · Mobile · Route /backtests primary action tappable
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-43
+
+Steps: 1. Open /backtests at 390px width. 2. Find the page's primary action.
+
+Expected: The primary action is big enough to tap reliably.
+
+---
