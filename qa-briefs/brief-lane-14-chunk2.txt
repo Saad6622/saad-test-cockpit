@@ -1,0 +1,704 @@
+QA LANE 14 — CHUNK 2 — cases T-2651–T-2700 (50 cases)
+Source: manual-test-plan-1000.md, extracted verbatim. Run in order. Read-only cases run any time; state-changing cases ONLY inside a granted state window (request via ask_for_information first). Never invent steps — this text is authoritative.
+================================================================================
+
+### T-2651 · Grading · Sign-in widget renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-93
+
+Steps: 1. Open /. 2. Find Sign-in widget -- the sign-in widget with the operator-token field.
+
+Expected: Sign-in widget looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2652 · Grading · Sign-in widget is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-93
+
+Steps: 1. Open /. 2. read its state, reload the page, read it again
+
+Expected: The widget shows the same state after the reload -- it reflects the real session.
+
+---
+
+---
+
+### T-2653 · Grading · Sign-in widget does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-93
+
+Steps: 1. Open /. 2. check what it shows when signed out
+
+Expected: It says plainly whether the tester is signed in or out -- never a false signed-in state.
+
+---
+
+---
+
+### T-2654 · Grading · Sign-in widget is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-93
+
+Steps: 1. Open /. 2. ask whether the widget prevents mistaken identity
+
+Expected: A tester always knows which operator the UI is acting as.
+
+---
+
+---
+
+### T-2655 · Grading · Grade verdict: Sign-in widget
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-93
+
+Steps: 1. Review the four checks above for Sign-in widget. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2656 · Grading · Failed-message queue renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-13
+
+Steps: 1. Open /. 2. Find Failed-message queue -- the failed-message queue below the alerts table.
+
+Expected: Failed-message queue looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2657 · Grading · Failed-message queue is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-13
+
+Steps: 1. Open /. 2. read the row count and each row's reason cell
+
+Expected: Reasons are plain words (like blackout-veto) and the count is exact.
+
+---
+
+---
+
+### T-2658 · Grading · Failed-message queue does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Open /. 2. click Discard on a row, read the confirm, then press Cancel
+
+Expected: The confirm names the message; Cancel keeps the row untouched.
+
+---
+
+---
+
+### T-2659 · Grading · Failed-message queue is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-13
+
+Steps: 1. Open /. 2. ask whether a stuck message can be cleared safely
+
+Expected: A trader can see what failed, why, and clear it deliberately -- or leave it.
+
+---
+
+---
+
+### T-2660 · Grading · Grade verdict: Failed-message queue
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-13
+
+Steps: 1. Review the four checks above for Failed-message queue. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2661 · Grading · Trading card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-21
+
+Steps: 1. Open /home. 2. Find Trading card -- the "Trading" card on /home.
+
+Expected: Trading card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2662 · Grading · Trading card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-21
+
+Steps: 1. Open /home. 2. click the "Trading" card
+
+Expected: The /trading view opens -- the card is wired to its destination, not decorative.
+
+---
+
+---
+
+### T-2663 · Grading · Trading card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-21
+
+Steps: 1. Open /home. 2. read the card's description, then open the view it leads to
+
+Expected: The description matches the view -- the card promises exactly what opens.
+
+---
+
+---
+
+### T-2664 · Grading · Trading card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-21
+
+Steps: 1. Open /home. 2. ask whether the card earns its place on the home screen
+
+Expected: The card's description tells a trader why this view matters before they open it.
+
+---
+
+---
+
+### T-2665 · Grading · Grade verdict: Trading card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-21
+
+Steps: 1. Review the four checks above for Trading card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2666 · Grading · Strategies card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-22
+
+Steps: 1. Open /home. 2. Find Strategies card -- the "Strategies" card on /home.
+
+Expected: Strategies card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2667 · Grading · Strategies card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-22
+
+Steps: 1. Open /home. 2. click the "Strategies" card
+
+Expected: The /strategies view opens -- the card is wired to its destination, not decorative.
+
+---
+
+---
+
+### T-2668 · Grading · Strategies card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-22
+
+Steps: 1. Open /home. 2. read the card's description, then open the view it leads to
+
+Expected: The description matches the view -- the card promises exactly what opens.
+
+---
+
+---
+
+### T-2669 · Grading · Strategies card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-22
+
+Steps: 1. Open /home. 2. ask whether the card earns its place on the home screen
+
+Expected: The card's description tells a trader why this view matters before they open it.
+
+---
+
+---
+
+### T-2670 · Grading · Grade verdict: Strategies card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-22
+
+Steps: 1. Review the four checks above for Strategies card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2671 · Grading · Backtests card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-23
+
+Steps: 1. Open /home. 2. Find Backtests card -- the "Backtests" card on /home.
+
+Expected: Backtests card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2672 · Grading · Backtests card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-23
+
+Steps: 1. Open /home. 2. click the "Backtests" card
+
+Expected: The /backtests view opens -- the card is wired to its destination, not decorative.
+
+---
+
+---
+
+### T-2673 · Grading · Backtests card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-23
+
+Steps: 1. Open /home. 2. read the card's description, then open the view it leads to
+
+Expected: The description matches the view -- the card promises exactly what opens.
+
+---
+
+---
+
+### T-2674 · Grading · Backtests card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-23
+
+Steps: 1. Open /home. 2. ask whether the card earns its place on the home screen
+
+Expected: The card's description tells a trader why this view matters before they open it.
+
+---
+
+---
+
+### T-2675 · Grading · Grade verdict: Backtests card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-23
+
+Steps: 1. Review the four checks above for Backtests card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2676 · Grading · History card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-24
+
+Steps: 1. Open /home. 2. Find History card -- the "History" card on /home.
+
+Expected: History card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2677 · Grading · History card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-24
+
+Steps: 1. Open /home. 2. click the "History" card
+
+Expected: The /history view opens -- the card is wired to its destination, not decorative.
+
+---
+
+---
+
+### T-2678 · Grading · History card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-24
+
+Steps: 1. Open /home. 2. read the card's description, then open the view it leads to
+
+Expected: The description matches the view -- the card promises exactly what opens.
+
+---
+
+---
+
+### T-2679 · Grading · History card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-24
+
+Steps: 1. Open /home. 2. ask whether the card earns its place on the home screen
+
+Expected: The card's description tells a trader why this view matters before they open it.
+
+---
+
+---
+
+### T-2680 · Grading · Grade verdict: History card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-24
+
+Steps: 1. Review the four checks above for History card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2681 · Grading · Keys card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-25
+
+Steps: 1. Open /home. 2. Find Keys card -- the "Keys" card on /home.
+
+Expected: Keys card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2682 · Grading · Keys card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-25
+
+Steps: 1. Open /home. 2. click the "Keys" card
+
+Expected: The /keys view opens -- the card is wired to its destination, not decorative.
+
+---
+
+---
+
+### T-2683 · Grading · Keys card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-25
+
+Steps: 1. Open /home. 2. read the card's description, then open the view it leads to
+
+Expected: The description matches the view -- the card promises exactly what opens.
+
+---
+
+---
+
+### T-2684 · Grading · Keys card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-25
+
+Steps: 1. Open /home. 2. ask whether the card earns its place on the home screen
+
+Expected: The card's description tells a trader why this view matters before they open it.
+
+---
+
+---
+
+### T-2685 · Grading · Grade verdict: Keys card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-25
+
+Steps: 1. Review the four checks above for Keys card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2686 · Grading · Notifications card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-26
+
+Steps: 1. Open /home. 2. Find Notifications card -- the "Notifications" card on /home.
+
+Expected: Notifications card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2687 · Grading · Notifications card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-26
+
+Steps: 1. Open /home. 2. click the "Notifications" card
+
+Expected: The /notifications view opens -- the card is wired to its destination, not decorative.
+
+---
+
+---
+
+### T-2688 · Grading · Notifications card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-26
+
+Steps: 1. Open /home. 2. read the card's description, then open the view it leads to
+
+Expected: The description matches the view -- the card promises exactly what opens.
+
+---
+
+---
+
+### T-2689 · Grading · Notifications card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-26
+
+Steps: 1. Open /home. 2. ask whether the card earns its place on the home screen
+
+Expected: The card's description tells a trader why this view matters before they open it.
+
+---
+
+---
+
+### T-2690 · Grading · Grade verdict: Notifications card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-26
+
+Steps: 1. Review the four checks above for Notifications card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2691 · Grading · Cockpit card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-27
+
+Steps: 1. Open /home. 2. Find Cockpit card -- the "Cockpit" card on /home.
+
+Expected: Cockpit card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2692 · Grading · Cockpit card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-27
+
+Steps: 1. Open /home. 2. click the "Cockpit" card
+
+Expected: The / view opens -- the card is wired to its destination, not decorative.
+
+---
+
+---
+
+### T-2693 · Grading · Cockpit card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-27
+
+Steps: 1. Open /home. 2. read the card's description, then open the view it leads to
+
+Expected: The description matches the view -- the card promises exactly what opens.
+
+---
+
+---
+
+### T-2694 · Grading · Cockpit card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-27
+
+Steps: 1. Open /home. 2. ask whether the card earns its place on the home screen
+
+Expected: The card's description tells a trader why this view matters before they open it.
+
+---
+
+---
+
+### T-2695 · Grading · Grade verdict: Cockpit card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-27
+
+Steps: 1. Review the four checks above for Cockpit card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
+### T-2696 · Grading · Start card renders correctly
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: RENDER
+Feature: U-29
+
+Steps: 1. Open /trading. 2. Find Start card -- the "Start trading" card.
+
+Expected: Start card looks finished on screen: headings readable, text not cut off, numbers formatted, controls not overlapping.
+
+---
+
+---
+
+### T-2697 · Grading · Start card is connected to live data
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: LIVENESS
+Feature: U-29
+
+Steps: 1. Open /trading. 2. read the amounts, reload the page, read them again
+
+Expected: The amounts match the saved settings after the reload -- the card reflects the real configuration.
+
+---
+
+---
+
+### T-2698 · Grading · Start card does what it claims
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Open /trading. 2. read what the card says a session does
+
+Expected: The card states the session length, the market, and the stop rule before any start.
+
+---
+
+---
+
+### T-2699 · Grading · Start card is useful in the actual market
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: HONEST-STATES
+Feature: U-29
+
+Steps: 1. Open /trading. 2. ask whether a trader understands the commitment before starting
+
+Expected: Risk amount, stop rule, and duration are all visible before the Start button.
+
+---
+
+---
+
+### T-2700 · Grading · Grade verdict: Start card
+**UI-ONLY:** every step through the live browser UI exactly as Saad sees it — clicks, typing, scrolling, keyboard. No backend, no code, no terminals, no API calls, no cheating.
+**BACKEND-CHECK:** a separate agent team independently verifies behind the scenes that the action truly took effect as intended — the UI claiming success is never proof on its own.
+Method: INTERACTION
+Feature: U-29
+
+Steps: 1. Review the four checks above for Start card. 2. Write down the grade.
+
+Expected: Full grade is recorded only if renders, connected, does-what-it-claims, and useful-in-market all passed. Otherwise the tester writes exactly which check failed and why -- the feature does not get full grade.
+
+---
+
+---
+
